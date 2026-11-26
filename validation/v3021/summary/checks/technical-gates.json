@@ -1,0 +1,130 @@
+{
+  "gates": [
+    {
+      "gate": "final-python",
+      "passed": true,
+      "log_sha256": "fac29a14173f90cad13b56b26af5ceb2110979e30e471cc5fec5bafa4382dbc4",
+      "results": [
+        "test_restore_with_older_native_library_keeps_scalar_checks (test_remake_hazard_marches.HazardMarchTests.test_restore_with_older_native_library_keeps_scalar_checks) ... skipped 'Native fallback is exercised by the Rust regression job'",
+        "Ran 1938 tests in 4969.649s",
+        "OK (skipped=1)"
+      ]
+    },
+    {
+      "gate": "final-rust",
+      "passed": true,
+      "log_sha256": "4b5cb3ac0b764dd20614f1dc2af2f5125a4121801a824622d42e7103a8919eeb",
+      "results": [
+        "Ran 1938 tests in 6131.718s",
+        "OK"
+      ]
+    },
+    {
+      "gate": "final-node",
+      "passed": true,
+      "log_sha256": "1744c79e0c2a780d020fe93d0e2a76f76b62085aa163cdac5762576972ac46c9",
+      "results": [
+        "ℹ tests 66"
+      ]
+    },
+    {
+      "gate": "final-wasm-build",
+      "passed": true,
+      "log_sha256": "acbb12d97974b2d163acab35a44e4056f9e91236b28dd1e6dc14abf4aa6951d2",
+      "results": []
+    },
+    {
+      "gate": "final-wasm-parity",
+      "passed": true,
+      "log_sha256": "3f627da366df1f5c5c4d6992d945c92b70222cc9695b1894bc3f954e322a3f5a",
+      "results": [
+        "Rust/WASM parity: 24689Python reference vectors passed; raw ABI buffers reused; no RNG/state access."
+      ]
+    },
+    {
+      "gate": "final-rust-crate",
+      "passed": true,
+      "log_sha256": "e76d16f1c42465b96f9e84f2e5a50c847b1ba703f2844637dcf63864752ccdec",
+      "results": [
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ]
+    },
+    {
+      "gate": "final-pyodide",
+      "passed": true,
+      "log_sha256": "6432a9b435ddfa8275384f7b187aa925ae675f9d405b7b4d62df5dc6f434dbcf",
+      "results": [
+        "{\"ok\":true,\"pyodide\":\"314.0.7\",\"previews\":29,\"catalogs\":4,\"requests\":79,\"ai_turns\":1,\"battle_settlements\":0,\"logistics_route_parity\":true,\"save_sha256\":\"9348378e4d592521a01d9f8e362d9e5da341d1867769bd679f27b28668de37dd\",\"rng\":{\"state\":1487971761,\"draws\":34},\"cpu_save_bytes_equal\":true,\"v212_observer_turns\":0,\"weather_observer_turns\":3,\"weather_save_sha256\":\"7c4dc799b89b57b26594c894b9bad7af22b0938500efd5b9a81ed7ec9d511535\",\"regional_market_roundtrip\":null,\"granary_convoy_roundtrip\":1}"
+      ]
+    },
+    {
+      "gate": "browser-granary-3021",
+      "passed": true,
+      "log_sha256": "c66ddb6a00e83122ae212f8dbaddf464a6b625ef99c05c3e8733179cabf989c7",
+      "results": []
+    },
+    {
+      "gate": "browser-granary-302",
+      "passed": true,
+      "log_sha256": "a907d9bfba06ed8f5416d03eb331e7885dc04ffd5e76da9f4a858e1815bcf618",
+      "results": []
+    },
+    {
+      "gate": "final-backend-state",
+      "passed": true,
+      "log_sha256": "2ae7ba9d9e5dd3d3d300a753bc409968460afb4c1d297a376c6c69f406ed6c64",
+      "results": []
+    }
+  ],
+  "legacy_guandu": {
+    "scenario": "200-01",
+    "fixture_kind": "previous_user_save",
+    "input_sha256": "a6a0cf4e8ef1a611f4b961f8b4c89b52d313196e927bad32bb97c25edb8bc138",
+    "runs": [
+      {
+        "backend": "python",
+        "loaded": false,
+        "reason": "此存档与当前剧本版本不兼容。请使用创建存档时的游戏版本。"
+      },
+      {
+        "backend": "rust",
+        "loaded": false,
+        "reason": "此存档与当前剧本版本不兼容。请使用创建存档时的游戏版本。"
+      }
+    ],
+    "baseline_load_result": "此存档与当前剧本版本不兼容。请使用创建存档时的游戏版本。",
+    "baseline_version": "159e4da823afbc7041dbbf4d08521ea8fbec794a",
+    "prior_generated_controls": [
+      {
+        "backend": "python",
+        "compact": false,
+        "checksum": "0cc53d19c5433eb88207268eb4ae68131c801225de140cead9de87715ef7d9ba",
+        "roundtrip_exact": true
+      },
+      {
+        "backend": "python",
+        "compact": true,
+        "checksum": "0cc53d19c5433eb88207268eb4ae68131c801225de140cead9de87715ef7d9ba",
+        "roundtrip_exact": true
+      },
+      {
+        "backend": "rust",
+        "compact": false,
+        "checksum": "0cc53d19c5433eb88207268eb4ae68131c801225de140cead9de87715ef7d9ba",
+        "roundtrip_exact": true
+      },
+      {
+        "backend": "rust",
+        "compact": true,
+        "checksum": "0cc53d19c5433eb88207268eb4ae68131c801225de140cead9de87715ef7d9ba",
+        "roundtrip_exact": true
+      }
+    ],
+    "current_source": "22711e467a7edfd2278bc405095f24e4a8047e6c"
+  },
+  "source": "22711e467a7edfd2278bc405095f24e4a8047e6c"
+}

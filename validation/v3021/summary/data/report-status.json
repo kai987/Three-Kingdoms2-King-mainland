@@ -1,0 +1,24 @@
+{
+  "expected_runs": 45,
+  "completed_runs": 45,
+  "reused_runs": 20,
+  "warning_count": 21,
+  "outcomes": {
+    "complete": 45
+  },
+  "fixed_state_parity": {
+    "samples": 24,
+    "turns": 216,
+    "by_checkpoint": {
+      "chibi-long": 54,
+      "late-three-kingdoms": 54,
+      "yellow-212-winter": 54,
+      "yellow-long": 54
+    },
+    "all_exact": true
+  },
+  "weather_traces_compared": 36,
+  "weather_traces_exact": 36,
+  "city_account_errors": 0,
+  "reserve_account_errors": 0
+}

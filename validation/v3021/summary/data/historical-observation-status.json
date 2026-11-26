@@ -1,0 +1,98 @@
+[
+  {
+    "scenario": "184-02",
+    "group": "S1",
+    "seed": 2026,
+    "strategy": 211,
+    "weather": 221,
+    "measured_shortage_turns": 1092,
+    "source_dispatches": 0,
+    "dispatch_with_following_shortage": 0,
+    "budget_faults_confirmed": null,
+    "actual_timely_grain": 0
+  },
+  {
+    "scenario": "184-02",
+    "group": "S2",
+    "seed": 2026,
+    "strategy": 211,
+    "weather": 221,
+    "measured_shortage_turns": 965,
+    "source_dispatches": 0,
+    "dispatch_with_following_shortage": 0,
+    "budget_faults_confirmed": null,
+    "actual_timely_grain": 0
+  },
+  {
+    "scenario": "184-02",
+    "group": "S3",
+    "seed": 2026,
+    "strategy": 211,
+    "weather": 221,
+    "measured_shortage_turns": 2166,
+    "source_dispatches": 1092,
+    "dispatch_with_following_shortage": 7,
+    "budget_faults_confirmed": null,
+    "actual_timely_grain": 1436370
+  },
+  {
+    "scenario": "184-02",
+    "group": "S4",
+    "seed": 2026,
+    "strategy": 211,
+    "weather": 221,
+    "measured_shortage_turns": 2117,
+    "source_dispatches": 946,
+    "dispatch_with_following_shortage": 1,
+    "budget_faults_confirmed": null,
+    "actual_timely_grain": 1553382
+  },
+  {
+    "scenario": "208-10",
+    "group": "S1",
+    "seed": 2026,
+    "strategy": 211,
+    "weather": 221,
+    "measured_shortage_turns": 2159,
+    "source_dispatches": 0,
+    "dispatch_with_following_shortage": 0,
+    "budget_faults_confirmed": null,
+    "actual_timely_grain": 0
+  },
+  {
+    "scenario": "208-10",
+    "group": "S2",
+    "seed": 2026,
+    "strategy": 211,
+    "weather": 221,
+    "measured_shortage_turns": 1682,
+    "source_dispatches": 0,
+    "dispatch_with_following_shortage": 0,
+    "budget_faults_confirmed": null,
+    "actual_timely_grain": 0
+  },
+  {
+    "scenario": "208-10",
+    "group": "S3",
+    "seed": 2026,
+    "strategy": 211,
+    "weather": 221,
+    "measured_shortage_turns": 1158,
+    "source_dispatches": 779,
+    "dispatch_with_following_shortage": 4,
+    "budget_faults_confirmed": null,
+    "actual_timely_grain": 1145909
+  },
+  {
+    "scenario": "208-10",
+    "group": "S4",
+    "seed": 2026,
+    "strategy": 211,
+    "weather": 221,
+    "measured_shortage_turns": 1626,
+    "source_dispatches": 1008,
+    "dispatch_with_following_shortage": 7,
+    "budget_faults_confirmed": null,
+    "actual_timely_grain": 1939533
+  }
+]

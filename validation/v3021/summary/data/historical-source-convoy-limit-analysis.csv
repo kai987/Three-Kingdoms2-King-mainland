@@ -1,0 +1,9 @@
+scenario,group,seed,strategy,weather,pair_rejections,lost_qualified_grain,lost_timely_grain,note
+184-02,S1,2026,211,221,0,null,null,capacity counterfactual not captured in V3.0.2
+184-02,S2,2026,211,221,0,null,null,capacity counterfactual not captured in V3.0.2
+184-02,S3,2026,211,221,139027,null,null,capacity counterfactual not captured in V3.0.2
+184-02,S4,2026,211,221,149809,null,null,capacity counterfactual not captured in V3.0.2
+208-10,S1,2026,211,221,0,null,null,capacity counterfactual not captured in V3.0.2
+208-10,S2,2026,211,221,0,null,null,capacity counterfactual not captured in V3.0.2
+208-10,S3,2026,211,221,72999,null,null,capacity counterfactual not captured in V3.0.2
+208-10,S4,2026,211,221,104048,null,null,capacity counterfactual not captured in V3.0.2

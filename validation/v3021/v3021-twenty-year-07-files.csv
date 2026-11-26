@@ -1,0 +1,7 @@
+member,source_path,size,sha256
+observed/long/w221/G4/212/2026/240/208-10/war-quotes.csv,frozen-run/observed/long/w221/G4/212/2026/240/208-10/war-quotes.csv,38871881,f3c57ef0958066ab089ef90e5b7b3951d60fe408031330f685b5ffcad7454a80
+observed/long/w221/G4/212/2026/240/208-10/war-recovery.csv,frozen-run/observed/long/w221/G4/212/2026/240/208-10/war-recovery.csv,957088,0693a940bbda9dd53c59e009bcc320e686960e2580c6c7717d8131735f6063f6
+observed/long/w221/G4/212/2026/240/208-10/warehouse-postings.csv.gz,frozen-run/observed/long/w221/G4/212/2026/240/208-10/warehouse-postings.csv.gz,6979991,159560c8f9f75213702aa82241df157844e37aa0a4ebe9e4fd4c4603942b56f8
+observed/long/w221/G4/212/2026/240/208-10/weather-route-impacts.csv,frozen-run/observed/long/w221/G4/212/2026/240/208-10/weather-route-impacts.csv,530918,eb35ace470ad76ff7d4355d0fc2f538e60087b77b9c4e3e49d50bade9d9224aa
+observed/long/w221/G4/212/2026/240/208-10/winter-cargo-impacts.csv,frozen-run/observed/long/w221/G4/212/2026/240/208-10/winter-cargo-impacts.csv,82234,594c3ba5c68b35267ea9e2806d514e7838c5a2f6c8a7aadd7788ac162a1c0993
+observed/long/w221/G4/212/2026/240/208-10/winter-military-actions.csv,frozen-run/observed/long/w221/G4/212/2026/240/208-10/winter-military-actions.csv,7739802,a6f99d8f91e176e5ec06bdd014088c92e3b39279b953d05b9d711633d613f330

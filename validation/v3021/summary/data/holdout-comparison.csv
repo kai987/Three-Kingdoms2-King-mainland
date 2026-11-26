@@ -1,0 +1,7 @@
+wave,scenario,seed,strategy,weather,requested_months,group,completed_turns,unpaid_city_turns,rations_missing,convoy_hunger_losses,winter_timely_percent,strategic_delivered,timely_grain,late_grain,grain_stock,gold_stock,battles,ai_sorties,small_faction_survival_percent,mean_turn_cpu
+holdout,184-02,2035,211,221,60,G0,180,16,6211,0,63.531184,not_applicable,not_applicable,not_applicable,3564642,26212,271,282,66.6667,0.795972
+holdout,184-02,2035,211,221,60,G1,180,37,31058,0,85.316212,485253,446652,38601,2674569,29336,218,225,66.6667,0.717905
+holdout,184-02,2035,211,221,60,G4,180,53,27457,0,75.393697,466703,466703,0,3070092,23878,214,228,55.5556,1.042522
+holdout,208-10,2036,212,221,60,G0,180,44,18575,0,84.410737,not_applicable,not_applicable,not_applicable,4990711,66981,231,250,10.0,1.429324
+holdout,208-10,2036,212,221,60,G1,180,52,38562,1307,73.55584,370219,347482,22737,4373017,36306,213,225,10.0,1.85163
+holdout,208-10,2036,212,221,60,G4,180,85,34376,1307,78.922544,369236,369236,0,4085838,35369,221,239,10.0,1.635577

@@ -1,0 +1,31 @@
+{
+  "version": 3021,
+  "candidate": "22711e467a7edfd2278bc405095f24e4a8047e6c",
+  "candidate_frozen_at": "2026-11-27T00:55:27+0900",
+  "weather_seed_rule": "sha256(tk2/winter/22/{campaign_seed})",
+  "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+  "observer_config_sha256": "79ee057e8ab92e6f107b2f74e7877809cac5df6c615a493cb7beb6f6f3611b83",
+  "historical_archive_index_sha256": "b12fc5cca412728881be7d6ced9197c5b2e9a7b834a0e44b2b833ae92035aabb",
+  "expected_runs": 45,
+  "completed_runs": 45,
+  "reused_runs": 20,
+  "warning_count": 21,
+  "outcomes": {
+    "complete": 45
+  },
+  "fixed_state_parity": {
+    "samples": 24,
+    "turns": 216,
+    "by_checkpoint": {
+      "chibi-long": 54,
+      "late-three-kingdoms": 54,
+      "yellow-212-winter": 54,
+      "yellow-long": 54
+    },
+    "all_exact": true
+  },
+  "weather_traces_compared": 36,
+  "weather_traces_exact": 36,
+  "city_account_errors": 0,
+  "reserve_account_errors": 0
+}

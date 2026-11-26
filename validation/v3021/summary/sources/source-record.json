@@ -1,0 +1,20 @@
+{
+  "candidate_runtime": "22711e467a7edfd2278bc405095f24e4a8047e6c",
+  "candidate_tree": "a7aec45a951ca50ddc28850f1b616fa0993d338b",
+  "baseline_main": "4a2402401e6f3a077c659cec9a5dcbc1737d9da2",
+  "baseline_runtime": "159e4da823afbc7041dbbf4d08521ea8fbec794a",
+  "archived_observer": "3f01f3f1ec429cc338bac949414253ba26e5c18d",
+  "relay_fix": "ab5fe760a1e5e227f6423675d60b5ac1d499bb12",
+  "performance_only": "bbefdeb8c47634b0939b4323dacd1ec0f661fe7f",
+  "prior_archive": "d7e7db6981576fb8bdec28b05742026267bb0bf1",
+  "scripts": {
+    "tools/economy-balance/v3021_capacity.py": "f357bd06cfb7a52570588e9c00d2085055426af9ac842438c6c71443dc2cf1d0",
+    "tools/economy-balance/v3021_checkpoints.py": "1ef56fd7a5db62fa9ec3e2f89f7152fe62fade0807ec35584141255113ef653d",
+    "tools/economy-balance/v3021_experiments.py": "9f51309f8b46e25fac721910396ce8868f1a015a7e4ebc9a5ff62d24e7211696",
+    "tools/economy-balance/v3021_history.py": "2896affca91e7f72aa7bf200b559d9990fc4b0ae58bf40094e8571ff4a553207",
+    "tools/economy-balance/v3021_narrative.py": "04bd8c59d154b2a531ee7c02f02421eb424d8736cb6ea03768ea4a9b45b7b905",
+    "tools/economy-balance/v3021_package.py": "4892b5c3478f68a5bf77dee2742512c20f26a0742f8f201c7bd34b181f233c36",
+    "tools/economy-balance/v3021_report.py": "3e02c1b9ae568d3a16fe08436232772f952508c69ad7df3c63118500204d4863",
+    "tools/economy-balance/v3021_returns.py": "8873dbb23111f2ae2876d28725f37a0cf9bc24b9163e15f65e63ffb486d76c55"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "scenario": "208-10",
+  "strategy": 211,
+  "seed": 2026,
+  "months": 240,
+  "checks": [
+    {
+      "file": "monthly.csv",
+      "previous": "4a99165fb536d154922c134ad4f5a109b37d6e881af42c05f8c784a404010c14",
+      "new": "4a99165fb536d154922c134ad4f5a109b37d6e881af42c05f8c784a404010c14",
+      "byte_exact": true
+    },
+    {
+      "file": "factions.csv",
+      "previous": "0448d8f788a1c6f7cc36cc928080c912e0537929dd82c73b6c360d4b77d5b1ea",
+      "new": "0448d8f788a1c6f7cc36cc928080c912e0537929dd82c73b6c360d4b77d5b1ea",
+      "byte_exact": true
+    },
+    {
+      "file": "cities.csv",
+      "previous": "933f17ede41aefcfc6836aa416568b5b59fb19fb6758fd9f6dd92a7f7ddfe6c2",
+      "new": "933f17ede41aefcfc6836aa416568b5b59fb19fb6758fd9f6dd92a7f7ddfe6c2",
+      "byte_exact": true
+    },
+    {
+      "file": "shortages.csv",
+      "previous": "565b878d7e43d001c9cdd931eaaab8e1b8737b0e314e5b75dbf603f01aba757b",
+      "new": "565b878d7e43d001c9cdd931eaaab8e1b8737b0e314e5b75dbf603f01aba757b",
+      "byte_exact": true
+    },
+    {
+      "file": "convoy-events.csv",
+      "previous": "7335c0de17e66f969ceb9ed81d509edc39a2260c02937088b7f0d2efb8f0129d",
+      "new": "7335c0de17e66f969ceb9ed81d509edc39a2260c02937088b7f0d2efb8f0129d",
+      "byte_exact": true
+    },
+    {
+      "file": "regional-weather-daily.csv",
+      "previous": "31afacf7ce9df4a3eb8b6b980fb76290d5e3798fac9502510155bfe19290888f",
+      "new": "31afacf7ce9df4a3eb8b6b980fb76290d5e3798fac9502510155bfe19290888f",
+      "byte_exact": true
+    },
+    {
+      "file": "river-ice-daily.csv",
+      "previous": "f2349f0000575ecb94c1e147da1452c885fb005a6db21cb0de3226eff932576d",
+      "new": "f2349f0000575ecb94c1e147da1452c885fb005a6db21cb0de3226eff932576d",
+      "byte_exact": true
+    }
+  ]
+}

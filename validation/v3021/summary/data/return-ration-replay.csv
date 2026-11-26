@@ -1,0 +1,4 @@
+convoy,archived,control_matches_historical,archived_received_city,archived_terminal_tick,archived_hunger,new_received_city,new_terminal_tick,new_hunger,receipt_balanced,new_node_actions
+2170,observed/long/w221/S3/211/2026/240/184-02,true,hanzhong,5690,298,hanzhong,5690,298,true,[]
+1228,observed/long/w221/S3/211/2026/240/208-10,true,chenliu,4070,396,chenliu,4063,0,true,"[{""amount"":null,""city"":""chenliu"",""decision"":""dock_return_at_node"",""kind"":""emergency_decision"",""tick"":4063}]"
+219,observed/holdout/w221/S3/211/2034/60/207-09,true,wei,1240,199,wei,1240,0,true,"[{""amount"":2316,""city"":""yingchuan"",""decision"":null,""kind"":""emergency_refill"",""tick"":1220},{""amount"":null,""city"":""yingchuan"",""decision"":""fund_return_at_node"",""kind"":""emergency_plan"",""tick"":1221}]"

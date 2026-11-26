@@ -1,0 +1,8 @@
+wave,scenario,seed,strategy,weather,requested_months,group,id,source,hub,target,deadline,received,outcome
+relay,208-10,2026,211,221,60,G4-relay,44,henan,anping,liaoxi,69,345,need_covered
+relay,208-10,2026,211,221,60,G4-relay,61,donglai,beihai,liaoxi,75,440,second_leg_dispatched
+relay,208-10,2026,211,221,60,G4-relay,140,lujiang,beihai,liaoxi,108,609,need_covered
+relay,208-10,2026,211,221,60,G4-relay,228,wujun,danyang,xiapi,156,5909,second_leg_dispatched
+relay,208-10,2026,211,221,60,G4-relay,244,nanhai,cangwu,qichun,165,1019,second_leg_dispatched
+relay,208-10,2026,211,221,60,G4-relay,278,wei,beihai,donglai,174,4306,need_covered
+relay,208-10,2026,211,221,60,G4-relay,293,nanhai,cangwu,qichun,183,1025,second_leg_dispatched
