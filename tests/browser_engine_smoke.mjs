@@ -335,7 +335,9 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  if(granarySave){
   const source='wujun',target='kuaiji',quantity=4000;
   let granary=load(fs.readFileSync(granarySave,'utf8'),state(seat).revision,seat);
-  assert.equal(granary.game.extension.strategic_granary_rules_version,302);
+  const granaryVersion=Number(process.env.TK2_GRANARY_TEST_VERSION||302);
+  assert.equal(granary.game.extension.strategic_granary_rules_version,granaryVersion);
+  if(granaryVersion===3021)assert.ok(granary.catalog.strategic_granary.cities[target].demand);
   const initial=request('/api/save',{instance:seat});
   const quotePath='/api/strategic-granary-preview';
   const quoteBody=JSON.stringify({source,target,quantity,revision:granary.revision});
