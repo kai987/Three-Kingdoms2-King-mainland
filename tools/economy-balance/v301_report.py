@@ -74,7 +74,11 @@ def selected(identity,*keys):
 
 
 def match_digest(path,prior):
-    actual,reference=digest(path),digest(prior)
+    if path.suffix=='.gz':
+        with gzip.open(path,'rb') as a,gzip.open(prior,'rb') as b:
+            actual,reference=file_digest(a,'sha256').hexdigest(),file_digest(b,'sha256').hexdigest()
+    else:
+        actual,reference=digest(path),digest(prior)
     return dict(file=path.name,actual=actual,reference=reference,equal=actual==reference)
 
 
@@ -316,14 +320,22 @@ def analyze(case,run,directory,exports):
         exports['regional-market-shortages'].append(dict(tag,region=region,city_samples=values['samples'],
             empty=values['empty'],severe=values['severe'],ample=values['ample'],
             empty_percent=pct(values['empty'],values['samples'])))
+    actual_shortages=defaultdict(Counter)
+    for event in rows(directory/'shortages.csv'):
+        label=economic_regions.region(event['city'])
+        period=n(event,'year')*12+n(event,'month')
+        actual_shortages[label,period].update(unpaid_city_turns=1,grain_shortage=n(event,'missing'))
     for row in rows(directory/'regional-market-monthly.csv'):
         values={key:n(row,key) for key in ('turn','year','month','day','markets','stock','capacity','supply')}
         values['in_transit']=int(row['in_transit'] or 0)
         region=row['region']
         period=values['year']*12+values['month']
         window=sum((dated_market[region,m] for m in range(period-2,period+1)),Counter())
-        exports['regional-supply-demand'].append(dict(tag,region=row['region'],**values,
+        shortages=actual_shortages[region,period]
+        exports['regional-supply-demand'].append(dict(tag,region=region,**values,
             buy_mean=float(row['buy_mean']),sell_mean=float(row['sell_mean']),stock_coverage=float(row['stock_coverage']),
+            shortage_city_turns=shortages['unpaid_city_turns'],actual_warehouse_grain_gap=shortages['grain_shortage'],
+            severe_markets=n(row,'severe'),ample_markets=n(row,'ample'),
             market_bought_during_month=dated_market[region,period]['buy'],
             market_sold_during_month=dated_market[region,period]['sell'],
             market_bought_three_calendar_months=window['buy'],market_sold_three_calendar_months=window['sell']))
@@ -523,6 +535,29 @@ def discover(root):
         yield case,run,directory
 
 
+def compare_climate(results):
+    matched=defaultdict(dict)
+    for case,run,directory in results:
+        seed,scene,strategy,group,months,weather=case
+        if weather==221 and group in ('R0','R2'):
+            matched[seed,scene,strategy,months][group]=(run,directory)
+    output=[]
+    for (seed,scene,strategy,months),arms in matched.items():
+        if len(arms)!=2:
+            continue
+        a,first=arms['R0']
+        b,second=arms['R2']
+        adjacent=(a['weather_seed'],a['catalog_sha256'],a['emergency'])==(b['weather_seed'],b['catalog_sha256'],b['emergency'])
+        if not adjacent:
+            raise ValueError((seed,scene,strategy,months,'paired weather input differs'))
+        checks=[match_digest(second/name,first/name) for name in ('regional-weather-daily.csv','river-ice-daily.csv')] \
+            if a['completed_turns']==b['completed_turns'] else []
+        output.append(dict(seed=seed,scenario=scene,strategy=strategy,months=months,
+            weather_seed=a['weather_seed'],input_match=adjacent,days_identical=all(x['equal'] for x in checks) if checks else None,
+            status='matched_cutoff' if checks else 'different_cutoff',files=checks))
+    return output
+
+
 def add_file(bundle,path,member,manifest):
     sha=digest(path)
     bundle.write(path,member,compress_type=ZIP_STORED if path.suffix in ('.gz','.png') else ZIP_DEFLATED)
@@ -542,7 +577,8 @@ def deliver(root,results,report):
         'convoy-1706-replay.log regional-market-tests.log node-tests.log rust-tests.log wasm-vectors.log '
         'browser-engine-smoke.log browser-ui.log regional-market-zh.png regional-market-ja-mobile.png '
         'web-build.log march-build.log full-suite.log prior-archives.json commercial-fixture.json '
-        'regional-runtime-tests.log commercial-fixture.log locales-final.log python-shard-2-rerun.log'.split())
+        'regional-runtime-tests.log commercial-fixture.log locales-final.log python-shard-2-rerun.log '
+        'browser-ui-local-market.log city-market-stock-zh.png gates-final.json'.split())
     evidence_names.update(f'{backend}-shard-{part}.log' for backend in ('python','rust') for part in range(1,7))
     paths.extend((path,'checks/'+path.name) for path in sorted((root/'checks').iterdir()) if path.name in evidence_names)
     replay=root/'replay-1706'
@@ -617,13 +653,14 @@ def main():
         original=run_directory(root,key)
         if reference.joinpath('run.json').is_file():
             for name in audit_names:
-                if name.endswith('.gz'):
-                    with gzip.open(reference/name,'rb') as a,gzip.open(original/name,'rb') as b:
-                        x,y=file_digest(a,'sha256').hexdigest(),file_digest(b,'sha256').hexdigest()
-                    result=dict(file=name,actual=x,reference=y,equal=x==y)
-                else:
-                    result=match_digest(reference/name,original/name)
-                controls.append(dict(group=group,**result))
+                controls.append(dict(group=group,**match_digest(reference/name,original/name)))
+    warehouse_checks=[]
+    for group,source in (('R0',root),('R2',root/'final-candidates')):
+        key=(2026,'208-10',211,group,60,0)
+        observed=run_directory(root/'warehouse-account',key)
+        original=run_directory(source,key)
+        if observed.joinpath('run.json').is_file() and original.joinpath('run.json').is_file():
+            warehouse_checks.extend(dict(group=group,**match_digest(observed/name,original/name)) for name in audit_names)
     matrix_cmp=comparisons(scores)
     tables['scenario-scores']=scores
     tables['pairwise']=matrix_cmp
@@ -653,7 +690,8 @@ def main():
         source=source_identity(),map_and_campaign_inputs=hashes,historical_archives=archives,
         historical_baseline_files=sum(len(entry['checks']) for entry in historical),
         historical_baseline_equal=sum(check['equal'] for entry in historical for check in entry['checks']),
-        historical_baseline=historical,archived_convoys=archived_cases,final_control_checks=controls,warehouse_posting_replays=[
+        historical_baseline=historical,archived_convoys=archived_cases,final_control_checks=controls,
+        paired_weather=compare_climate(results),warehouse_observer_readonly_checks=warehouse_checks,warehouse_posting_replays=[
             identity(case,run) for case,run,_ in results if run.get('warehouse_postings')],
         tags={'0':'observed zero','not_collected':'not recorded by that observer','not_applicable':'mechanism unavailable',
               'null':'undefined denominator, censored receipt or missing reference','partial':'expected required case pending'})
