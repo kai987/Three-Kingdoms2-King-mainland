@@ -213,6 +213,10 @@ class RegionalMarketTests(TestCase):
         second=planner.options(st.cities[TARGET],1200,source=SOURCE)
         self.assertEqual(first,second)
         self.assertEqual((planner.work['route_searches'],planner.work['cache_hits']),(1,1))
+        quote=first[0][0]
+        self.assertEqual(quote['return_route'],[TARGET,SOURCE])
+        self.assertEqual((quote['source_stock'],quote['source_market_capacity']),(25_000,30_000))
+        self.assertGreaterEqual(quote['transport_capacity'],quote['cargo'])
         self.assertEqual(st,before)
         legacy=controlled(0)
         self.assertNotIn('regional_market',legacy.view()['catalog'])

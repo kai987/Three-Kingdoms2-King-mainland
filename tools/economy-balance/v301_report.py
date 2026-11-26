@@ -578,7 +578,7 @@ def deliver(root,results,report):
         'browser-engine-smoke.log browser-ui.log regional-market-zh.png regional-market-ja-mobile.png '
         'web-build.log march-build.log full-suite.log prior-archives.json commercial-fixture.json '
         'regional-runtime-tests.log commercial-fixture.log locales-final.log python-shard-2-rerun.log '
-        'browser-ui-local-market.log city-market-stock-zh.png gates-final.json'.split())
+        'browser-ui-local-market.log city-market-stock-zh.png gates-final.json regional-python-final.log'.split())
     evidence_names.update(f'{backend}-shard-{part}.log' for backend in ('python','rust') for part in range(1,7))
     paths.extend((path,'checks/'+path.name) for path in sorted((root/'checks').iterdir()) if path.name in evidence_names)
     replay=root/'replay-1706'

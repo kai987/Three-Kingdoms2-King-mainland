@@ -182,6 +182,8 @@ class Planner:
             if self.decision is not None:
                 roles[city.id]=role_scores(city,grain_market.row(state,city.id),self.decision.budgets[city.id],
                     legal_modes={leg['mode'] for _,quote in outward for leg in quote['routes']},contacts=1)
+            market=grain_market.row(state,city.id)
+            free_space=logistics.LIMIT-target.grain
             for mode,route in outward:
                 meal=_meal(game,state,route,escort)
                 back=_meal(game,state,backward[0][1],escort,offset=meal[0] if meal else 0)
@@ -193,7 +195,7 @@ class Planner:
                 if protect>ration_stock:
                     failures['source_rations']+=1
                     continue
-                cap=min(amount,policy['max_grain'],logistics.LIMIT-target.grain)
+                cap=min(amount,policy['max_grain'],free_space)
                 if cap<=0:
                     failures['destination_capacity']+=1
                     continue
@@ -249,6 +251,11 @@ class Planner:
                          landed_cents=cost,sale_rate=sale,estimate_sale_grain=sold,estimated_revenue=revenue,
                          economic_result_milli=econ_milli)
                 row['token']=sha256(repr(tuple(sorted(row.items()))).encode()).hexdigest()[:24]
+                # These describe the same executable route and balances. They
+                # are independent of the signed terms used by the purchase.
+                row.update(source_stock=market['stock'],source_market_capacity=market['capacity'],
+                    target_warehouse_room=free_space,transport_capacity=cap,return_route=backward[0][1]['path'],
+                    return_route_types=sorted({leg['mode'] for leg in backward[0][1]['routes']}))
                 results.append(row)
         self.work['evaluations']+=1
         role='commercial_purchase' if purpose=='trade' else 'agricultural_output'

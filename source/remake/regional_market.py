@@ -87,7 +87,10 @@ def start(game, state, order, *, automatic=False):
             rate=offer['rate'],estimated_net=order['net'],landed_cents=order['landed_cents'],
             estimated_days=order['days'],route=order['route'],route_types=order['route_types'],
             expected_rations=order['expected_rations'],reserved_rations=order['escort_rations'],
-            estimated_loss=order['estimated_loss'],deadline=order['deadline'],reference_price=item['reference_price'])
+            estimated_loss=order['estimated_loss'],deadline=order['deadline'],reference_price=item['reference_price'],
+            return_days=order['return_days'],return_route=order['return_route'],return_rations=order['return_rations'],
+            source_stock=order['source_stock'],source_market_capacity=order['source_market_capacity'],
+            transport_capacity=order['transport_capacity'])
     try:
         convoy=logistics.dispatch(game,state,dict(source=source.id,target=order['target'],officers=[actor],
                     cargo=dict(gold=0,grain=offer['grain'],reserves=0),route_mode=order['route_mode']),
@@ -410,6 +413,11 @@ def view(game,state):
     for item in orders:
         if item['status']=='dispatched':
             regions[economic_regions.region(item['target'])].update(inbound=item['estimated_net'])
+    for convoy in logistics._pool(state)['convoys']:
+        if ('regional' in convoy and not convoy['delivery_done']
+                and (convoy['owner']==state.player or state.player==observer.SEAT)):
+            regions[economic_regions.region(convoy['original_target'])].update(
+                in_transit_commodity=convoy['regional']['cargo'])
     return dict(stage=pricing.stage(state),cities=cities,labels=economic_regions.REGIONS,orders=orders,
                 regions=dict(regions),order_costs=dict(buy=2,sell=1,cancel=0),max_quantity=logistics.LIMIT)
 
