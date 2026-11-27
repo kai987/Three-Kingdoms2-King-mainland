@@ -8,7 +8,7 @@ from copy import copy, deepcopy
 
 from . import grain_units
 from .errors import GameError
-from . import winter_travel, winter_weather
+from . import winter_climate, winter_travel, winter_weather
 from . import command_books, logistics_rules, historical_campaigns, logistics_strategy, transport_capacity
 from .officers import OFFICER_TROOP_CAP, parse_officer_ref
 from .route_hazards import allocate_survivors, _python_route_allowed
@@ -517,6 +517,11 @@ def escort_rations(game, state, ids, outward, backward, *, reserves=0):
     from .march_supply import quote_supply, ration_units
     from . import transport_emergency, winter_transport
     emergency = transport_emergency.stage(state)
+    if winter_climate.forecast_enabled(state):
+        from . import winter_forecast
+        out=winter_forecast.estimate(game,state,outward)
+        back=winter_forecast.estimate(game,state,backward,start_in=out['expected_arrival_days'])
+        return winter_transport.seasonal_meals(state,ids,out,back,reserves=reserves)[2]
     if winter_transport.enabled(state) or emergency and winter_weather.movement(state):
         out=winter_transport.protected_cost(game,state,outward,ration_units(state,ids,reserves))
         back=winter_transport.protected_cost(game,state,backward,ration_units(state,ids))

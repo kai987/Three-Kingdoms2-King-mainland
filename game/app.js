@@ -5,7 +5,7 @@ let cloudSave=null,cloudSaveUI=null;
 let civilStaffUI=null,domesticUI=null,treasuryUI=null,facilitiesUI=null,cityDevelopmentUI=null,diplomacyUI=null;
 let campaignDifficulty='normal';
 let campaignLifespan='historical';
-let campaignWinter=false,campaignClimate=false,campaignColdWave=false,campaignEmergency=false,weatherLayerVisible=false;
+let campaignWinter=false,campaignClimate=false,campaignForecast=false,campaignColdWave=false,campaignEmergency=false,weatherLayerVisible=false;
 let campaignRegional=false,campaignRegionalTrade=false;
 let campaignGranary=false,campaignGranaryCandidate=false,campaignGranaryDispatch=false,campaignGranaryWinter=false,campaignGranaryRelay=false;
 let campaignTransportCapacity=false;
@@ -498,6 +498,7 @@ function selectFaction(){
   <p id="lifespan-help" class="small">${battleText('選「無」時，武將不會因年齡自然死亡。','「なし」では、武将は加齢による自然死を迎えません。')}</p>
   <label class="setup-winter"><input id="winter-weather-option" type="checkbox" ${campaignWinter?'checked':''}> ${battleText('啟用冬季天氣（實驗）','冬季天候を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="winter-climate-option" type="checkbox" ${campaignClimate?'checked':''}> ${battleText('啟用冬季氣候與農業 V2.3（實驗）','冬季気候・農業 V2.3 を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="winter-forecast-option" type="checkbox" ${campaignForecast?'checked':''} ${campaignClimate?'':'disabled'}> ${battleText('啟用季節預報 V2.3.1（實驗）','季節予報 V2.3.1 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="winter-cold-wave-option" type="checkbox" ${campaignColdWave?'checked':''} ${campaignClimate?'':'disabled'}> ${battleText('啟用江南異常寒潮（實驗）','江南の異常寒波を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="transport-emergency-option" type="checkbox" ${campaignEmergency?'checked':''}> ${battleText('啟用運輸應急 V2.2.2（實驗）','輸送の緊急対応 V2.2.2 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="regional-market-option" type="checkbox" ${campaignRegional?'checked':''}> ${battleText('啟用區域市場 V3.0.1（實驗）','地域市場 V3.0.1 を有効にする（実験）')}</label>
@@ -535,11 +536,16 @@ function selectFaction(){
   $('#scenario').onchange=()=>draw($('#scenario').value);
   $('#difficulty').onchange=()=>{campaignDifficulty=$('#difficulty').value;};
   $('#lifespan').onchange=()=>{campaignLifespan=$('#lifespan').value;};
-  const winterOption=$('#winter-weather-option'),climateOption=$('#winter-climate-option'),waveOption=$('#winter-cold-wave-option');
+  const winterOption=$('#winter-weather-option'),climateOption=$('#winter-climate-option');
+  const forecastOption=$('#winter-forecast-option'),waveOption=$('#winter-cold-wave-option');
   const refreshWeatherOptions=()=>{
    winterOption.checked=campaignWinter;climateOption.checked=campaignClimate;
    waveOption.disabled=!campaignClimate;
-   if(!campaignClimate)waveOption.checked=campaignColdWave=false;
+   forecastOption.disabled=!campaignClimate;
+   if(!campaignClimate){
+    waveOption.checked=campaignColdWave=false;
+    forecastOption.checked=campaignForecast=false;
+   }
   };
   winterOption.onchange=event=>{
    campaignWinter=event.target.checked;
@@ -552,6 +558,7 @@ function selectFaction(){
    refreshWeatherOptions();
   };
   waveOption.onchange=event=>{campaignColdWave=event.target.checked;};
+  forecastOption.onchange=event=>{campaignForecast=event.target.checked;};
   $('#transport-emergency-option').onchange=event=>{campaignEmergency=event.target.checked;};
   $('#regional-market-option').onchange=event=>{
    campaignRegional=event.target.checked;
@@ -576,7 +583,8 @@ function selectFaction(){
    const pending=setupPreview;setupPreview=null;
    weatherLayerVisible=false;
    if(await command('new',{faction:f,seed,scenario,difficulty:campaignDifficulty,lifespan:campaignLifespan,
-       ...(campaignClimate?{weather_rules_version:23,weather_options:{exceptional_cold_wave:campaignColdWave}}:
+       ...(campaignClimate?{weather_rules_version:23,weather_options:{exceptional_cold_wave:campaignColdWave},
+          ...(campaignForecast?{weather_forecast_version:231}:{})}:
           campaignWinter?{weather_rules_version:221}:{}),
        ...(campaignEmergency?{transport_emergency_rules_version:222}:{}),
        ...(campaignRegional?{regional_market_rules_version:301}:{}),
@@ -586,7 +594,7 @@ function selectFaction(){
        ...(campaignGranary?{strategic_granary_rules_version:campaignGranaryCandidate?3021:302,
          strategic_granary_options:{proactive:campaignGranaryDispatch,winter:campaignGranaryWinter,relay:campaignGranaryRelay,
           ...(campaignGranaryCandidate?{coordination:true,return_safety:true}:{})}}:{})})){
-    campaignWinter=campaignClimate=campaignColdWave=false;
+    campaignWinter=campaignClimate=campaignForecast=campaignColdWave=false;
     campaignEmergency=false;
     campaignRegional=campaignRegionalTrade=false;
     campaignGranary=campaignGranaryCandidate=campaignGranaryDispatch=campaignGranaryWinter=campaignGranaryRelay=false;
@@ -914,6 +922,9 @@ function cityWeatherHtml(id){
   <p>${battleText(`道路 ${WINTER_SNOW_NAMES[['clear','light_snow','heavy_snow','blizzard'].indexOf(row.road)][0]} · 本月每旬降雪機率 ${row.season_chance}%`,
    `道路 ${WINTER_SNOW_NAMES[['clear','light_snow','heavy_snow','blizzard'].indexOf(row.road)][1]}・今月の降雪確率は1旬あたり ${row.season_chance}%`)}</p>
   ${snowCover!==undefined?`<p>${battleText(`連續積雪 ${snowCover} 日`,`積雪継続 ${snowCover} 日`)}</p>`:''}
+  ${row.snowpack_risk!==undefined?`<p data-snowpack-outlook>${battleText(
+   `10 日後預估道路雪況風險 ${Math.round(row.snowpack_risk/100)}%`,
+   `10日後の道路の積雪・降雪リスク予測 ${Math.round(row.snowpack_risk/100)}%`)}</p>`:''}
   ${agriculture&&production?`<details data-agricultural-climate><summary>${battleText(
    `${agriculture.year} 年農業氣候`,`${agriculture.year} 年の農業気候`)}</summary>
    ${cropRegion!==region?`<p>${battleText('農業氣候區','農業気候区')} ${battleText(...WINTER_REGION_NAMES[cropRegion])}</p>`:''}
@@ -923,6 +934,9 @@ function cityWeatherHtml(id){
    ${agriculture.finalized&&agriculture.spring_observed&&agriculture.status!=='disabled'?`<p>${battleText(
     `年度產糧倍率 ${agriculture.multiplier}% · 適用 6～9 月`,
     `年間の生産補正 ${agriculture.multiplier}%・適用期間 6～9月`)}</p>`:''}
+   ${!agriculture.finalized&&agriculture.risk_multiplier!==undefined?`<p data-agriculture-risk>${battleText(
+    `基準產量 100% · 風險情境 ${agriculture.risk_multiplier}% · 實際倍率待定`,
+    `基準の生産量 100%・リスク想定 ${agriculture.risk_multiplier}%・実際の補正は未確定`)}</p>`:''}
    <p>${battleText(`常規月產糧 ${production.regular.toLocaleString()} · 氣候調整後 ${production.adjusted.toLocaleString()}`,
     `通常の月間生産 ${production.regular.toLocaleString()}・気候補正後 ${production.adjusted.toLocaleString()}`)}</p>
   </details>`:''}
@@ -2039,6 +2053,21 @@ function logisticsPreviewForDialog(element,purpose){
   return undefined;
  };
 }
+function seasonalForecastHtml(outlook){
+ if(!outlook)return '';
+ const risk=value=>Math.round(value/100)+'%';
+ const time=battleText(
+  `季節預估 ${outlook.expected_arrival_days} 日 · 保守預估 ${outlook.conservative_arrival_days} 日 · 平時 ${outlook.base_days} 日`,
+  `季節予報 ${outlook.expected_arrival_days} 日・慎重な見積り ${outlook.conservative_arrival_days} 日・平時 ${outlook.base_days} 日`);
+ const rations=outlook.extra_grain===undefined?'':battleText(
+  `額外口糧 ${outlook.extra_grain} · 預計送達糧 ${outlook.expected_net_grain}`,
+  `追加兵糧 ${outlook.extra_grain}・到着時の推定兵糧 ${outlook.expected_net_grain}`);
+ const ice=battleText(`冰封風險 ${risk(outlook.seasonal_freeze_risk)}`,`結氷リスク ${risk(outlook.seasonal_freeze_risk)}`);
+ const returning=outlook.return_freeze_risk===undefined?'':battleText(
+  `返程冰封風險 ${risk(outlook.return_freeze_risk)}`,`帰路の結氷リスク ${risk(outlook.return_freeze_risk)}`);
+ const closed=outlook.currently_blocked?battleText('目前河段封凍','現在は河川区間が結氷中'):'';
+ return `<p class="small" data-seasonal-forecast>${[time,rations,ice,returning,closed].filter(Boolean).join(' · ')}</p>`;
+}
 function logisticsTiming(timings,ticksPerDay,percent){
  const labels={plain:['平原','平地'],mountain:['山地','山地'],desert:['沙漠','砂漠'],river_downstream:['順流','下り'],river_still:['靜水','静水'],river_upstream:['逆流','上り'],sea:['海路','海路'],embark:['登船','乗船'],node_wait:['等待','待機']};
  return Object.entries(timings).map(([mode,ticks])=>battlePlain(...(labels[mode]||[mode,mode]))+' '+
@@ -2057,7 +2086,7 @@ function logisticsQuoteHtml(quote,comparison){
  return '<div class="small" data-logistics-quote data-march-grain="'+q.total_grain+'"><p>'+battleText(
   '基礎口糧 '+q.base_grain+' · 額外後勤 '+q.extra_grain+' · 返程糧 '+(q.return_grain??'—'),
   '基本兵糧 '+q.base_grain+'・追加補給 '+q.extra_grain+'・帰路 '+(q.return_grain??'—'))+'</p><p>'+times+'</p>'+
-  winter+(comparison?'<p>'+[line(comparison.fastest,battleText('最快','最速')),line(comparison.minimum,battleText('最低耗糧','最小消費'))].filter(Boolean).join('　')+'</p>':'')+'</div>';
+  winter+seasonalForecastHtml(q.weather?.outlook)+(comparison?'<p>'+[line(comparison.fastest,battleText('最快','最速')),line(comparison.minimum,battleText('最低耗糧','最小消費'))].filter(Boolean).join('　')+'</p>':'')+'</div>';
 }
 function marchRefillForecastHtml(quote,ids,loaded,owner,rows){
  if(!quote||!ids.length)return '';

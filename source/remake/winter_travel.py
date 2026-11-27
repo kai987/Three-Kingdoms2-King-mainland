@@ -236,6 +236,14 @@ def seasonal_forecast(game,state,quote,*,start_in=0,position=0,pressure=False):
     if pool is None:
         return dict(extra_days=0,extra_weight=0,reaches=())
     from . import winter_climate
+    if winter_climate.forecast_enabled(state):
+        from . import winter_forecast
+        result=winter_forecast.estimate(game,state,quote,start_in=start_in,position=position,
+                                        conservative=pressure)
+        # The risk is represented by the ETA and budget. Only an exhausted
+        # forecast horizon makes this planning quote unusable.
+        return dict(result,risk_reaches=result['reaches'],
+                    reaches=result['reaches'] if result['bounded'] else ())
     new_climate = winter_climate.enabled(state)
     elapsed=start_in*QUANTA
     delay=extra=0
@@ -414,7 +422,7 @@ def closed_at_node(state, quote, position):
     return None
 
 
-def preview(game, state, quote, *, units=0, cargo=0):
+def preview(game, state, quote, *, units=0, cargo=0, back=None):
     if weather.stage(state) < 2:
         return {}
     days, ration, _, blocked = forecast(game,state,quote)
@@ -447,6 +455,17 @@ def preview(game, state, quote, *, units=0, cargo=0):
         result.update(winter_warmth=charged(ration)-without_warmth,
                       winter_route_overhead=without_warmth-base_for_delay,
                       winter_delay_grain=base_for_delay-result['normal_grain'])
+    from . import winter_climate
+    if winter_climate.forecast_enabled(state):
+        from . import winter_forecast
+        outlook=winter_forecast.trip(game,state,quote,back)
+        result['outlook']=dict(outlook,grain=charged(outlook['total_ration_weight']),
+            extra_grain=charged(outlook['total_ration_weight'])-charged(outlook['base_ration_weight']),
+            return_grain=charged(outlook['return_ration_weight']) if 'return_ration_weight' in outlook else None,
+            expected_net_grain=winter_forecast.net_cargo(cargo,outlook),
+            conservative_net_grain=winter_forecast.net_cargo(cargo,dict(outlook,
+                cargo_loss_weight=outlook['conservative_cargo_loss_weight'],
+                expected_arrival_days=outlook['conservative_arrival_days'])))
     return result
 
 

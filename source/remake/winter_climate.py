@@ -4,6 +4,8 @@ from functools import lru_cache
 from .climate_regions import REGIONS, WINTER_MONTHS
 
 VERSION = 23
+FORECAST_FIELD = 'weather_forecast_version'
+FORECAST_VERSION = 231
 OPTIONS = 'weather_options'
 DEFAULTS = {
     'monthly_snow_probability': True,
@@ -65,6 +67,10 @@ LEGACY_DEPTH = 30
 
 def enabled(state):
     return state.extension.get('weather_rules_version') == VERSION
+
+
+def forecast_enabled(state):
+    return state.extension.get(FORECAST_FIELD) == FORECAST_VERSION
 
 
 def options(state):

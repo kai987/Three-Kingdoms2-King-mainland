@@ -212,7 +212,7 @@ def preview_transfer(game, state, source, target, ids, mode, revision):
                 primary=with_geometry(primary), detour=with_geometry(alternative))
 
 
-def logistics_cost(game, state, ids, quote, *, cargo=0, reserves=0):
+def logistics_cost(game, state, ids, quote, *, cargo=0, reserves=0, back=None):
     from . import logistics_rules as rules, logistics, march_supply
 
     parts = rules.plan(quote, march_supply.travel_rules(game))
@@ -252,7 +252,7 @@ def logistics_cost(game, state, ids, quote, *, cargo=0, reserves=0):
                 ticks_per_day=rules.DAY_TICKS,percent=dict(rules.MARCH_SUPPLY_PERCENT) if weighted else {},
                 hazards=[leg['hazard'] for leg in quote['routes'] if leg.get('hazard')])
     if dynamic:
-        result['weather']=winter_travel.preview(game,state,quote,units=units,cargo=cargo)
+        result['weather']=winter_travel.preview(game,state,quote,units=units,cargo=cargo,back=back)
     return result
 
 
@@ -289,7 +289,7 @@ def preview_logistics(game,state,source,target,ids,mode,purpose,cargo,reserves,r
         if quote is None:
             return None
         result=dict(quote,segments=_quote_segments(data,quote['routes']),
-                    logistics=dict(logistics_cost(game,state,ids,quote,cargo=cargo,reserves=reserves),
+                    logistics=dict(logistics_cost(game,state,ids,quote,cargo=cargo,reserves=reserves,back=back),
                                    return_grain=expected_return))
         if capacity:
             result['capacity']=logistics.capacity_quote(game,state,state.cities[source],state.cities[target],

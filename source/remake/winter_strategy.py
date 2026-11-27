@@ -1,12 +1,16 @@
 """Reserve grain only for a scheduled cold-season operation."""
 from collections import defaultdict
 
-from . import logistics_rules as rules, march_supply, winter_travel, winter_weather
+from . import logistics_rules as rules, march_supply, winter_climate, winter_travel, winter_weather
 from .climate_regions import REGIONS
 
 
+def season_open(state):
+    return state.month in (9,10,11,12,1,2,3) or state.month==4 and winter_climate.forecast_enabled(state)
+
+
 def planned_reserves(game,state,owner,*,seasonal=False):
-    if winter_weather.stage(state)<5 or state.month not in (9,10,11,12,1,2,3):
+    if winter_weather.stage(state)<5 or not season_open(state):
         return {}
     if not seasonal and winter_weather.corrected(state,winter_weather.PREPARATION):
         return {}
@@ -22,13 +26,14 @@ def planned_reserves(game,state,owner,*,seasonal=False):
         quote=game._travel_path(state,source,target,owner,order['mode'],adjacent=True)
         if not quote:
             continue
-        normal=march_supply.route_weight(quote,quote['days'],game=game,version=rules.CURRENT)
-        current=winter_travel.ration_weight(game,state,quote)
-        # This uses monthly eligibility and published conditions, never the
-        # future event draw. Reserve the expected premium of light snow.
-        allowance=sum(part.work*REGIONS[part.region][1] for part in winter_travel.plan(game,quote)
-                      if departure in REGIONS[part.region][0] and part.mode in ('plain','mountain','desert'))
-        margin=max(0,current-normal,allowance*15*rules.RATION_SCALE//(winter_travel.QUANTA*10_000))
+        if winter_climate.forecast_enabled(state):
+            margin=winter_travel.seasonal_forecast(game,state,quote,start_in=days)['extra_weight']
+        else:
+            normal=march_supply.route_weight(quote,quote['days'],game=game,version=rules.CURRENT)
+            current=winter_travel.ration_weight(game,state,quote)
+            allowance=sum(part.work*REGIONS[part.region][1] for part in winter_travel.plan(game,quote)
+                          if departure in REGIONS[part.region][0] and part.mode in ('plain','mountain','desert'))
+            margin=max(0,current-normal,allowance*15*rules.RATION_SCALE//(winter_travel.QUANTA*10_000))
         people=march_supply.ration_units(state,order['officers'])
         extra=rules.ceil_div(people*margin,march_supply.denominator()*rules.RATION_SCALE)
         if extra:
@@ -83,14 +88,17 @@ def prepare(ai,owner):
 def seasonal_requirements(game,state,owner,plans):
     """Apply published route risk to the same city timeline used by ordinary relief."""
     from . import faction_economy, logistics
-    if state.month not in (9,10,11,12,1,2,3):
+    if not season_open(state):
         return {}
+    seasonal = winter_climate.forecast_enabled(state)
     ordinary=defaultdict(lambda: defaultdict(int))
     winter=defaultdict(lambda: defaultdict(int))
     remove=defaultdict(lambda: defaultdict(int))
     extra=defaultdict(lambda: defaultdict(int))
     risk=defaultdict(set)
     exposed=set()
+    dated_receipts = ({fact['convoy']:fact for forecast in plans.cities.values()
+                       for fact in forecast.convoy_receipts} if seasonal else {})
     for city,(_,amount) in planned_reserves(game,state,owner,seasonal=True).items():
         if city in plans.cities:
             extra[city][1]+=amount
@@ -105,20 +113,31 @@ def seasonal_requirements(game,state,owner,plans):
         quote=journey['quote']
         position=winter_travel.work(supply)
         outlook=winter_travel.seasonal_forecast(game,state,quote,position=position)
-        days,_,ice=winter_travel.checkpoint_forecast(game,state,quote,position=position)
+        if seasonal:
+            days,ice=outlook['expected_arrival_days'],outlook['currently_blocked']
+        else:
+            days,_,ice=winter_travel.checkpoint_forecast(game,state,quote,position=position)
         normal=max(0,quote['days']-supply['route_days'])
         if not (outlook['extra_days'] or outlook['reaches'] or ice or days!=normal):
             continue
         exposed.add(target)
-        risk[target].update(outlook['reaches'])
+        risk[target].update(outlook.get('risk_reaches',outlook['reaches']))
         if ice is not None:
             risk[target].add(ice)
         expected=logistics.inbound_grain(game,row,state)
-        remove[target][max(1,journey['arrival_turn']-state.turn)]+=expected
+        fact=dated_receipts.get(row['id'])
+        if fact is None:
+            remove[target][max(1,journey['arrival_turn']-state.turn)]+=expected
+        elif fact['status']=='reliable':
+            remove[target][fact['eta']]+=fact['net']
         normal_net=logistics.projected_grain(game,quote,row['cargo']['grain'],progress=supply['route_days'],
                                              remainder=row[logistics.LOSS_FIELD])
         ordinary[target][max(1,rules.ceil_div(normal,10))]+=normal_net
-        if days is not None and not outlook['reaches']:
+        if seasonal and not outlook['bounded']:
+            from . import winter_forecast
+            reduced=min(expected,winter_forecast.net_cargo(row['cargo']['grain'],outlook,row[logistics.LOSS_FIELD]))
+            winter[target][max(1,rules.ceil_div(days,10))]+=reduced
+        elif not seasonal and days is not None and not outlook['reaches']:
             delay=outlook['extra_days']
             reduced=expected-min(expected,rules.ceil_div(expected*delay,100))
             winter[target][max(1,rules.ceil_div(max(days,normal+delay),10))]+=reduced
@@ -130,9 +149,10 @@ def seasonal_requirements(game,state,owner,plans):
             continue
         book=march['supply']; quote=march['quote']
         progress=book['route_days']; position=winter_travel.work(book)
-        outlook=winter_travel.seasonal_forecast(game,state,quote,position=position)
-        if not outlook['extra_weight']:
-            continue
+        if not seasonal:
+            outlook=winter_travel.seasonal_forecast(game,state,quote,position=position)
+            if not outlook['extra_weight']:
+                continue
         # Extra provision is associated with the next existing owned supply node.
         offset=0
         for index,leg in enumerate(quote['routes']):
@@ -142,8 +162,15 @@ def seasonal_requirements(game,state,owner,plans):
                 break
         else:
             continue
-        expected,weight,_=winter_travel.checkpoint_forecast(game,state,quote,position=position,
-                                                          stop=offset*winter_travel.QUANTA)
+        if seasonal:
+            from . import winter_forecast
+            outlook=winter_forecast.estimate(game,state,quote,position=position,stop=offset*winter_travel.QUANTA)
+            expected,weight=outlook['expected_arrival_days'],outlook['total_ration_weight']
+            if outlook['bounded']:
+                continue
+        else:
+            expected,weight,_=winter_travel.checkpoint_forecast(game,state,quote,position=position,
+                                                              stop=offset*winter_travel.QUANTA)
         if expected is None:
             continue
         normal=march_supply.route_weight(quote,offset-progress,offset=progress,game=game,version=rules.CURRENT)
@@ -185,7 +212,7 @@ def seasonal_requirements(game,state,owner,plans):
 def prepare_seasonally(ai,owner):
     from . import command_books, escort_planning, facilities, logistics
     game,state=ai.game,ai.state
-    if state.month not in (9,10,11,12,1,2,3):
+    if not season_open(state):
         return
     plans=ai.economy_plan(owner)
     proposals=seasonal_requirements(game,state,owner,plans)
