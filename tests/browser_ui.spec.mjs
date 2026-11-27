@@ -145,7 +145,8 @@ async function tacticalSettle(page,{returnToMacro=false}={}){
   // aggregate reply. Close only through its ordinary visible Withdraw action
   // so the finite enemy AP phase can resume and finish honestly.
   for(let count=0;count<32;count++){
-   const pending=await page.evaluate(async()=>{const r=await fetch('/api/save');const s=(await r.json()).state;return !!s.battle?.extended?.siege;});
+   // waitIdle has settled the command whose Worker response hydrated this view.
+   const pending=await page.evaluate(()=>Boolean(view.game?.battle?.extended?.siege));
    if(!pending)return;
    await tacticalControl(page,'siege-withdraw');await tacticalSettle(page);
   }
