@@ -7,7 +7,7 @@ from .errors import GameError
 from .officers import ref_sort_key
 
 
-def _donors(game, state, plan, *, coordinated=False):
+def _donors(game, state, plan, *, coordinated=False, reserve=False):
     owner = plan.owner
     pool = state.extension['logistics']
     active = transport_capacity.activity(state)
@@ -22,7 +22,7 @@ def _donors(game, state, plan, *, coordinated=False):
         city, ledger = state.cities[key], pool['cities'][key]
         policy=transport_capacity.ai_policy(state,owner,ledger['policy'],automatic=transport_capacity.automation(state,owner))
         minimum = max(policy['reserve_grain'], budget['minimum_export_floor'])
-        if coordinated or budget['threatened']:
+        if budget['threatened'] or coordinated and (not reserve or budget['front']):
             minimum = max(minimum, budget['safety_reserve'])
         if transport_capacity.dispatch_blocker(state,city,active):
             excluded[key] = 'source_convoy_limit'
@@ -61,10 +61,11 @@ def _reverse_shipments(state, owner):
         and row['turn'] >= state.turn - 2}
 
 
-def _options(game, state, plan, keys, *, route_cache=None, returns=None):
+def _options(game, state, plan, keys, *, route_cache=None, returns=None, donors=None, reserve=False):
     owner = plan.owner
     coordinated = route_cache is not None
-    groups, failures = _donors(game, state, plan, coordinated=coordinated)
+    groups, failures = (_donors(game, state, plan, coordinated=coordinated, reserve=reserve)
+                        if donors is None else donors)
     reverse = _reverse_shipments(state, owner)
     detailed = logistics_strategy.enabled(state, logistics_strategy.TRANSPORT)
     candidates, rejected = defaultdict(list), {key: Counter(

@@ -9,7 +9,7 @@ let campaignWinter=false,campaignClimate=false,campaignForecast=false,campaignCo
 let campaignRegional=false,campaignRegionalTrade=false;
 let campaignGranary=false,campaignGranaryCandidate=false,campaignGranaryDispatch=false,campaignGranaryWinter=false,campaignGranaryRelay=false;
 let campaignTransportCapacity=false;
-let campaignTransportCoordination=false;
+let campaignTransportCoordination=0;
 let campaignTransshipment=false;
 const lifespanLabels={historical:['史實','史実'],none:['無','なし']};
 let allocationDialogContext=null,allocationCloseEpoch=0;
@@ -549,7 +549,8 @@ function selectFaction(){
   <label class="setup-winter"><input id="strategic-granary-candidate-option" type="checkbox" ${campaignGranaryCandidate?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('使用 V3.0.2.1 候選調糧規則','V3.0.2.1 の候補ルールを使用する')}</label>
   <label class="setup-winter"><input id="transport-capacity-option" type="checkbox" ${campaignTransportCapacity?'checked':''}> ${battleText('啟用水陸運輸容量 V3.0.3（實驗）','水陸輸送容量 V3.0.3 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="transshipment-option" type="checkbox" ${campaignTransshipment?'checked':''}> ${battleText('啟用城池中轉 V3.0.4（實驗）','都市間の積み替え V3.0.4 を有効にする（実験）')}</label>
-  <label class="setup-winter"><input id="transport-coordination-option" type="checkbox" ${campaignTransportCoordination?'checked':''}> ${battleText('啟用 AI 輸送統籌 V3.0.4.1（實驗）','AIの輸送調整 V3.0.4.1 を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="transport-coordination-option" type="checkbox" ${campaignTransportCoordination===3041?'checked':''}> ${battleText('啟用 AI 輸送統籌 V3.0.4.1（實驗）','AIの輸送調整 V3.0.4.1 を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="transport-coordination-recovery-option" type="checkbox" ${campaignTransportCoordination===30411?'checked':''}> ${battleText('啟用 AI 輸送統籌 V3.0.4.1.1（實驗）','AIの輸送調整 V3.0.4.1.1 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="strategic-dispatch-option" type="checkbox" ${campaignGranaryDispatch?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用 AI 主動調糧','AIの事前輸送を有効にする')}</label>
   <label class="setup-winter"><input id="strategic-winter-option" type="checkbox" ${campaignGranaryWinter?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用冬季戰略儲備','冬季備蓄を有効にする')}</label>
   <label class="setup-winter"><input id="strategic-relay-option" type="checkbox" ${campaignGranaryRelay?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用單站中轉（實驗）','1都市での積み替えを有効にする（実験）')}</label>
@@ -616,7 +617,11 @@ function selectFaction(){
   $('#strategic-granary-candidate-option').onchange=event=>{campaignGranaryCandidate=event.target.checked;};
   $('#transport-capacity-option').onchange=event=>{campaignTransportCapacity=event.target.checked;};
   $('#transshipment-option').onchange=event=>{campaignTransshipment=event.target.checked;};
-  $('#transport-coordination-option').onchange=event=>{campaignTransportCoordination=event.target.checked;};
+  const coordinationOptions={3041:$('#transport-coordination-option'),30411:$('#transport-coordination-recovery-option')};
+  for(const [version,control] of Object.entries(coordinationOptions))control.onchange=()=>{
+   campaignTransportCoordination=control.checked?Number(version):0;
+   for(const [other,option] of Object.entries(coordinationOptions))option.checked=Number(other)===campaignTransportCoordination;
+  };
   $('#strategic-dispatch-option').onchange=event=>{campaignGranaryDispatch=event.target.checked;};
   $('#strategic-winter-option').onchange=event=>{campaignGranaryWinter=event.target.checked;};
   $('#strategic-relay-option').onchange=event=>{campaignGranaryRelay=event.target.checked;};
@@ -634,7 +639,7 @@ function selectFaction(){
        ...(campaignRegional?{regional_market_rules_version:301}:{}),
        ...(campaignTransportCapacity?{transport_capacity_rules_version:303}:{}),
        ...(campaignTransshipment?{transshipment_rules_version:304}:{}),
-       ...(campaignTransportCoordination?{transport_coordination_rules_version:3041}:{}),
+       ...(campaignTransportCoordination?{transport_coordination_rules_version:campaignTransportCoordination}:{}),
        ...(campaignRegionalTrade?{regional_trade_automation:true}:{}),
        ...(campaignGranary?{strategic_granary_rules_version:campaignGranaryCandidate?3021:302,
          strategic_granary_options:{proactive:campaignGranaryDispatch,winter:campaignGranaryWinter,relay:campaignGranaryRelay,
@@ -645,7 +650,7 @@ function selectFaction(){
     campaignGranary=campaignGranaryCandidate=campaignGranaryDispatch=campaignGranaryWinter=campaignGranaryRelay=false;
     campaignTransportCapacity=false;
     campaignTransshipment=false;
-    campaignTransportCoordination=false;
+    campaignTransportCoordination=0;
     cityCommandGroups.clear();
     selectedCity=view.catalog.factions.find(x=>x.id===f)?.city||pending.focus;actor=target=null;mapMode='all';dialog.close();render();
     if(isObserver())setObserverPlaying(true);

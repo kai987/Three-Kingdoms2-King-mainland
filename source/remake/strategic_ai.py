@@ -614,7 +614,9 @@ class StrategicAI:
             requests.sort()
         for _, _, key, gold, grain in requests:
             if self.coordinated_transport:
-                transport_coordination.request(self.state, owner, key, grain, gold, self.settings['max_route_turns'])
+                transport_coordination.request(
+                    self.state, owner, key, grain, gold, self.settings['max_route_turns'],
+                    purpose='front_defence' if key in recovery or key in occupied else 'front_reserve')
                 continue
             if logistics.dispatch_ai_supply(self.game, self.state, self.state.cities[key], gold, grain,
                                             protected_officers=protected, require_return=True,
@@ -670,7 +672,7 @@ class StrategicAI:
             source = self.state.cities[source_id]
             if self.coordinated_transport:
                 transport_coordination.request(self.state, owner, source_id, grain, gold,
-                                               self.settings['max_route_turns'])
+                                               self.settings['max_route_turns'], purpose='military_candidate', target=key)
                 continue
             if (not any(logistics.supply_shortages(self.state,source,gold,grain))
                     or logistics.dispatch_ai_supply(self.game,self.state,source,gold,grain,
@@ -828,7 +830,8 @@ class StrategicAI:
         if scheduled>=grain:
             result='awaiting_transport'
         elif self.coordinated_transport:
-            transport_coordination.request(self.state, owner, key, city.grain + grain, 0, eta)
+            transport_coordination.request(self.state, owner, key, city.grain + grain, 0, eta,
+                                           purpose='military_candidate')
             result='coordination_requested'
         elif facilities._ready(self.state,owner) and command_books.can_spend(self.state,owner,'trade_grain'):
             budget=economy.budgets[key]

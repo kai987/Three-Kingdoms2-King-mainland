@@ -78,6 +78,30 @@ def available(state, city, *, army=None):
     return max(0, city.grain - held(state, city.id, army))
 
 
+def refill_budget(game, state, city, army, route_day, stock, meal_floors):
+    """One warehouse: honor the booking at this node before discretionary draws."""
+    from . import city_economy
+
+    protected = sum(row['reserved'] for row in active(state)
+                    if row['city'] == city.id and row['army'] == army and row['route_day'] == route_day)
+    if city.id not in meal_floors:
+        absent = city_economy.absent_troops(game, state)
+        stationed = sum(state.officers[ident].troops for ident in city.roster.officer_ids
+                        if ident not in absent and state.officers[ident].alive)
+        monthly = city_economy.garrison_grain_cost(game.catalog.data, city.id, state.year, state.month,
+                                                 stationed, city.reserves)
+        row = state.extension.get('city_development', {}).get('cities', {}).get(city.id, {})
+        monthly += city_economy.civilian_grain(row.get('population', 0),
+                                             city_economy.town_level(game, state, city.id), state=state)
+        meal_floors[city.id] = city_economy.turn_rations(monthly, (state.day - 1)//10 + 1)
+    # The stage ledger held other armies, but deliberately excluded this one.
+    # A booking for a different stop by the same army still occupies stock.
+    all_held = held(state, city.id)
+    own = min(protected, stock, city.grain)
+    discretionary = min(stock - own, max(0, city.grain-all_held-meal_floors[city.id]))
+    return own + max(0, discretionary), own, meal_floors[city.id]
+
+
 def reserve(state, row, proposals):
     if not proposals:
         return

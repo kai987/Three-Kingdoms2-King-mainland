@@ -1,7 +1,7 @@
 """Dated demand derived from the faction's published grain forecasts."""
 from dataclasses import dataclass
 
-from . import army_relief, convoy_relief, faction_economy, winter_strategy, winter_weather
+from . import army_relief, convoy_relief, faction_economy, historical_campaigns, winter_strategy, winter_weather
 
 
 @dataclass(frozen=True)
@@ -20,10 +20,12 @@ class Demand:
     created: int = 0
     original: int | None = None
     gold: int = 0
+    plan_id: str | None = None
 
     @property
     def key(self):
-        return f'{self.owner}/{self.kind}/{self.target}'
+        base = f'{self.owner}/{self.kind}/{self.target}'
+        return base if self.plan_id is None else f'{base}/{self.plan_id}'
 
     @property
     def original_deadline(self):
@@ -36,7 +38,14 @@ class Demand:
     def after(self, tick):
         if self.installments:
             return sum(amount for due, amount in self.installments if tick < due)
+        if self.plan_id is not None:
+            return self.remaining if tick < self.deadline else 0
         return self.remaining if tick <= self.deadline else 0
+
+    def original_balance(self):
+        if not self.installments:
+            return self.remaining
+        return sum(amount for due, amount in self.installments if due <= self.original_deadline)
 
 
 def city_shortage(game, state, plan, key):
@@ -64,7 +73,7 @@ def city_shortage(game, state, plan, key):
                   ('local', 'ordinary', 'granary', 'regional'))
 
 
-def reserves(game, state, plan, supported, *, include_storage):
+def reserves(game, state, plan, supported, *, include_storage, preparations=False):
     """Plans competing for the same closing stock are alternate claims on it."""
     now = army_relief._calendar_tick(state)
     winter = (winter_strategy.seasonal_requirements(game, state, plan.owner, plan)
@@ -74,7 +83,27 @@ def reserves(game, state, plan, supported, *, include_storage):
         budget = plan.budgets[key]
         if any(missing for _, missing in forecast.gaps):
             continue  # Cover installments first and refresh readiness from the remainder.
-        if key in supported:
+        if preparations:
+            for priority, due, ident, kind, goal, gold in supported.get(key, ()):
+                if priority == 6 and not include_storage:
+                    continue
+                if due < 1 or due > len(forecast.balances):
+                    continue
+                city = state.cities[key]
+                # Balances are closing balances after the same-date receipt.
+                # A plan must use the preceding balance to load its rations.
+                reliable = sum(grain for t, grain in forecast.receipts.items() if t < due)
+                need = max(0, goal - city.grain - reliable)
+                gold_gap = max(0, gold - city.gold)
+                if need or gold_gap:
+                    yield Demand(plan.owner, kind, key, priority, now+due*10, need+reliable, need, reliable,
+                                 channels=('local', 'ordinary', 'granary', 'regional'), gold=gold_gap, plan_id=ident)
+                    break
+            else:
+                priority = None
+            if priority is not None:
+                continue
+        elif key in supported:
             goal, gold, turns = supported[key]
             ahead = min(len(forecast.balances), max(1, turns))
             # A reserve that can only be restored after a seasonal purchase
@@ -87,18 +116,18 @@ def reserves(game, state, plan, supported, *, include_storage):
                 yield Demand(plan.owner, 'mobilization', key, 3, now + ahead * 10, need + reliable,
                              need, reliable, channels=('local', 'ordinary', 'granary', 'regional'), gold=gold)
                 continue
-        preparations = []
+        seasonal = []
         if key in winter and winter[key]['extra']:
             row = winter[key]
-            preparations.append((row['deadline'], row['extra'], 'winter'))
+            seasonal.append((row['deadline'], row['extra'], 'winter'))
         if key in agro:
             due, grain = agro[key]
-            preparations.append((due, grain, 'agriculture'))
-        if preparations:
+            seasonal.append((due, grain, 'agriculture'))
+        if seasonal:
             # These are incremental forecast gaps in one physical warehouse.
             # Apply an earlier increment before evaluating a later claim.
             dated = {}
-            for due, grain, label in sorted(preparations):
+            for due, grain, label in sorted(seasonal):
                 covered = sum(t for t, _ in dated.values())
                 if grain > covered:
                     dated[due] = (dated.get(due, (0, label))[0] + grain - covered, label)
@@ -146,6 +175,43 @@ def approved_orders(state, owner):
         if provision > city.grain:
             sources[city.id] = (provision, 0, max(1, order['departure_turn'] - now))
     return sources
+
+
+def preparations(state, plan, requests):
+    """Keep approved orders, candidate plans and defensive storage distinct."""
+    owner, now = plan.owner, state.turn
+    result, ordered = {}, set()
+    strategy = state.extension['ai_strategy'].get(owner, {})
+    for order in strategy.get('orders', ()):
+        key = order['source']
+        if key not in plan.cities:
+            continue
+        ordered.add((key, order['target']))
+        target = state.cities[order['target']]
+        if (order['march_id'] is not None or order['departure_turn'] < now
+                or target.owner == owner or historical_campaigns.allied(state, owner, target.owner)):
+            continue
+        ident = f"{strategy['created_turn']}:{key}:{order['target']}:{order['departure_turn']}"
+        result.setdefault(key, []).append((3, max(1, order['departure_turn']-now), ident,
+                                          'mobilization', order.get('provision') or 0, 0))
+    for key, tasks in requests.items():
+        if key not in plan.cities:
+            continue
+        for ident, task in tasks.items():
+            kind, target = task['kind'], task['target']
+            if target is not None and ((key, target) in ordered or state.cities[target].owner == owner
+                                       or historical_campaigns.allied(state, owner, state.cities[target].owner)):
+                continue
+            if kind == 'front_defence' and not plan.budgets[key]['threatened']:
+                kind = 'front_reserve'
+            priority = {'front_defence': 4, 'military_candidate': 5, 'front_reserve': 6}[kind]
+            actual_deadline = task['deadline']-now
+            # Unapproved stock goals use the forecast horizon, never an expired attack date.
+            due = min(len(plan.cities[key].balances), actual_deadline)
+            if due > 0:
+                result.setdefault(key, []).append((priority, due, f'{now}:{ident}', kind,
+                                                   task['grain'], task['gold']))
+    return {key: sorted(rows) for key, rows in result.items()}
 
 
 def source_stock(state, plan):

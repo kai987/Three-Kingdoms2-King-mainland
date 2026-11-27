@@ -613,9 +613,14 @@ test('faction resources show current allies and large factions receive 40 comman
 test('transport coordination is opt-in and its observer ledger follows the selected language',async({page})=>{
  await opening(page);
  const option=page.locator('#transport-coordination-option');
+ const recovery=page.locator('#transport-coordination-recovery-option');
  await expect(option).not.toBeChecked();
+ await expect(recovery).not.toBeChecked();
  await expect(option).toHaveAccessibleName(/AI 輸送統籌 V3\.0\.4\.1/);
  await option.check();
+ await recovery.check();
+ await expect(option).not.toBeChecked();
+ await expect(recovery).toBeChecked();
  for(const id of ['#transport-capacity-option','#transshipment-option','#winter-forecast-option']){
   await expect(page.locator(id)).not.toBeChecked();
  }
@@ -630,6 +635,9 @@ test('transport coordination is opt-in and its observer ledger follows the selec
   await tacticalDismiss(page);
  }
  await expect(ledger.locator('tbody tr')).not.toHaveCount(0,{timeout:120_000});
+ const saved=await tacticalSave(page);
+ expect(saved.state.extension.transport_coordination_rules_version).toBe(30411);
+ expect(saved.state.extension.transport_coordination.features.pagination).toBe(true);
  if(await ledger.getAttribute('open')===null)await ledger.locator('summary').click();
  await expect(ledger.getByRole('columnheader',{name:'未覆蓋糧'})).toBeVisible();
  await ledger.screenshot({path:test.info().outputPath('coordination-zh-Hant.png')});

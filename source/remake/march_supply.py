@@ -225,10 +225,13 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
     if dynamic is not None and weather_parts is None:
         weather_parts=winter_travel.plan(game,quote)
     divisor=book_denominator(supply)
-    from . import staging_supply, transport_emergency, winter_transport
+    from . import staging_supply, transport_coordination, transport_emergency, winter_transport
     emergency = unit_kind=='convoy' and transport_emergency.stage(state)
     convoy_safety=(unit_kind=='convoy' and not self_funded and (winter_transport.enabled(state) or emergency))
     has_staging=staging_supply.FIELD in getattr(state,'extension',{})
+    shared_meals = (unit_kind == 'march' and hasattr(state, 'extension')
+                    and transport_coordination.feature(state, 'transit'))
+    meal_floors = {}
     spent=0
     for tick in range(supply['clock_tick']+1,target+1):
         if supply['route_days']>=quote['days'] and not supply['waiting']:
@@ -301,6 +304,13 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
                 stock=transport_emergency.stock(game,state,city)
             elif convoy_safety:
                 stock=winter_transport.city_stock(game,state,city,stock)
+            if shared_meals:
+                allowed, committed, essential = staging_supply.refill_budget(
+                    game, state, city, army, progress, stock, meal_floors)
+                transport_coordination.observe('transit_refill_budget', state, owner=unit['owner'], city=city_id,
+                    army=army, tick=tick, stock=city.grain, reserved_for_army=committed, city_rations=essential,
+                    requested=wanted, allowed=min(wanted, allowed, LIMIT-supply['remaining']))
+                stock = allowed
             amount=min(wanted,stock,LIMIT-supply['remaining'])
             if unit_kind=='convoy' and cargo is not None and transport_capacity.enabled(state,'physical_capacity'):
                 amount=min(amount,transport_capacity.refill_room(game,state,unit,city_id,cargo_grain=cargo['grain']))

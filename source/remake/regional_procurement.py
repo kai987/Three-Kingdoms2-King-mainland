@@ -61,7 +61,8 @@ def _meal(game, state, quote, escort, *, offset=0):
     return days,budget.outbound+budget.wait
 
 
-def _entity(game, state, owner, source, active, absent, decision, posts, *, automatic, coordinated=False):
+def _entity(game, state, owner, source, active, absent, decision, posts, *,
+            automatic, coordinated=False, recovery_reserve=False):
     ledger = logistics._pool(state)['cities'][source.id]
     policy=transport_capacity.ai_policy(state,owner,ledger['policy'],automatic=automatic)
     if transport_capacity.dispatch_blocker(state,source,active):
@@ -103,7 +104,8 @@ def _entity(game, state, owner, source, active, absent, decision, posts, *, auto
         unreserved = min(unreserved, strategic_granary.available(state,source))
     floor = max(policy['reserve_grain'], budget.get('minimum_export_floor',0),
                 budget.get('next_installment',0),
-                budget.get('safety_reserve',0) if coordinated or budget.get('threatened') else 0)
+                budget.get('safety_reserve',0) if budget.get('threatened')
+                or coordinated and (not recovery_reserve or budget.get('front')) else 0)
     return (source,policy,escort,max(0,unreserved-floor)), None
 
 
@@ -142,7 +144,8 @@ class Planner:
                 self.work['cache_hits']+=1
         return {k: self.routes[k if self.coordinated else (target.id, k)][0] for k in groups}
 
-    def options(self, target, requested, *, source=None, purpose='procurement', deadline=None):
+    def options(self, target, requested, *, source=None, purpose='procurement', deadline=None,
+                coordination_safety=None, recovery_reserve=False):
         game,state,owner=self.game,self.state,self.owner
         failures=Counter()
         if (market_pricing.stage(state)<market_pricing.PROCUREMENT or not facilities._ready(state,owner)
@@ -170,7 +173,8 @@ class Planner:
                          'source_gold' if available_gold*BASE<prices['buy'] else 'source_capacity']+=1
                 continue
             entity,reason=_entity(game,state,owner,city,self.active,self.absent,self.decision,self.posts,
-                                  automatic=self.automatic,coordinated=self.coordinated)
+                                  automatic=self.automatic,coordinated=self.coordinated,
+                                  recovery_reserve=recovery_reserve)
             if reason:
                 failures[reason]+=1
                 continue
@@ -206,6 +210,18 @@ class Planner:
                     continue
                 days, outbound=meal
                 protect=logistics_rules.ceil_div((outbound+back[1])*110,100)
+                demand = requested
+                if coordination_safety is not None:
+                    safety = coordination_safety(route, backward[0][1], escort)
+                    if safety is None:
+                        failures['unsafe_ice'] += 1
+                        continue
+                    required, remaining = safety
+                    if not remaining:
+                        failures['too_late_or_already_covered'] += 1
+                        continue
+                    demand = min(requested, remaining)
+                    protect = max(protect, required)
                 if protect>ration_stock:
                     failures['source_rations']+=1
                     continue
@@ -240,7 +256,7 @@ class Planner:
                         failures['too_small_to_sell']+=1
                         continue
                 else:
-                    cargo,net=army_relief.shipment(game,route,requested,cap,parts,risks,state=state)
+                    cargo,net=army_relief.shipment(game,route,demand,cap,parts,risks,state=state)
                     sold=0
                 if not net:
                     failures['no_net_delivery']+=1

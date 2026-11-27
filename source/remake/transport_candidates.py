@@ -17,7 +17,7 @@ BUY = command_books.cost('trade_grain')
 class Pass:
     """Keep routes within one turn phase; rebuild resource eligibility after a debit."""
 
-    def __init__(self, game, state, owner, *, efficient):
+    def __init__(self, game, state, owner, *, efficient, features=None):
         self.game, self.state, self.owner = game, state, owner
         self.now = army_relief._calendar_tick(state)
         self.efficient = efficient
@@ -25,6 +25,12 @@ class Pass:
         self.trips = {}
         self.failures = defaultdict(Counter)
         self.work = Counter()
+        self.features = features or {}
+        self.next_plan()
+
+    def next_plan(self):
+        self.donors = self.network = self.regional = None
+        self.failures.clear()
 
     def trip(self, quote, back, ids, *, strict):
         game, state = self.game, self.state
@@ -86,6 +92,11 @@ class Pass:
                     effective < strategic_granary.RULES['minimum_load'] and candidate.period >= 30):
                 self.failures[demand.key]['below_economic_load'] += 1
                 return False
+        if (self.features.get('economics') and demand.kind in ('storage', 'military_candidate', 'front_reserve')
+                and candidate.mode and candidate.days >= 20
+                and min(candidate.net, demand.after(at)) < 1000):
+            self.failures[demand.key]['deferred_small_long_haul'] += 1
+            return False
         return True
 
     def _market(self, demand, plan, buyers):
@@ -171,6 +182,33 @@ class Pass:
                          self._arrival(worst), net, lower, cargo, rations, days, returning,
                          books, quote, quote.get('gold', 0))
 
+    def _route_shortlist(self, rows):
+        if self.features.get('diversity'):
+            self.work['complete_route_checks'] += len(rows)
+            return rows
+        self.work['pruned_route_quotes'] += max(0, len(rows) - SHORTLIST)
+        return rows[:SHORTLIST]
+
+    def _granary_quote(self, network, row, demand, trip):
+        deadline = self.state.turn + max(1, (demand.deadline-self.now)//10)
+        if trip and self.features.get('requote'):
+            arrival = self._arrival(trip[2] if demand.priority <= 2 else trip[0])
+            if trip[3] > row['rations']:
+                required = trip[3]
+                limit = min(row['limit'], row['free']-required)
+                updated = dict(row, rations=required, limit=limit)
+                physical = row.get('capacity', {}).get('physical_capacity')
+                if physical is not None:
+                    limit = min(limit, physical-required)
+                    updated.update(limit=limit)
+                if limit <= 0:
+                    self.failures[demand.key]['repriced_source_rations'] += 1
+                    return None
+                self.work['granary_requotes'] += 1
+                row = updated
+            return network.shipment(row, demand.after(arrival), deadline)
+        return network.shipment(row, demand.after(self._arrival(row['days'])), deadline)
+
     def _city_routes(self, demands, plan):
         game, state, owner = self.game, self.state, self.owner
         active = [d for d in demands if d.kind not in ('march', 'convoy', 'transshipment')]
@@ -179,22 +217,31 @@ class Pass:
         accepted = {d.target: d for d in active}
         returns = {}
         outstanding = [d.target for d in active if d.remaining or d.gold]
-        ordinary, blocked = grain_dispatch._options(game, state, plan, outstanding,
-                                                    route_cache=self.routes, returns=returns)
+        reserve = self.features.get('reserve', False)
+        if self.features.get('incremental') and self.donors is None and outstanding:
+            self.donors = grain_dispatch._donors(game, state, plan, coordinated=True, reserve=reserve)
+        ordinary, blocked = grain_dispatch._options(
+            game, state, plan, outstanding, route_cache=self.routes, returns=returns,
+            donors=self.donors, reserve=reserve)
         granular = [d.target for d in active if 'granary' in d.channels]
         if granular and strategic_granary.enabled(state, 'proactive'):
-            network = granary_planning.Network(game, state, owner, plan, automatic=True)
+            network = self.network or granary_planning.Network(game, state, owner, plan, automatic=True)
             network.route_cache = self.routes
+            if self.features.get('incremental'):
+                self.network = network
+                network.rejected.clear()
             strategic = network.collect(granular, urgent_targets={d.target for d in active if d.priority <= 2},
                                         include_return=True)
         else:
             network, strategic = None, {}
-        regional = (regional_market.Planner(game, state, owner, decision=plan, automatic=True,
-                                            include_routes=True, coordinated=True)
+        regional = ((self.regional or regional_market.Planner(game, state, owner, decision=plan, automatic=True,
+                                             include_routes=True, coordinated=True))
                     if regional_market.pricing.stage(state) >= regional_market.pricing.PROCUREMENT
                     and command_books.can_spend(state, owner, BUY + BOOK) else None)
         if regional is not None:
             regional.routes = self.routes
+            if self.features.get('incremental'):
+                self.regional = regional
         assigned = {ident for row in state.extension['ai_strategy'].get(owner, {}).get('orders', ())
                     if row['march_id'] is None and row['departure_turn'] >= state.turn for ident in row['officers']}
         for key, demand in accepted.items():
@@ -204,20 +251,26 @@ class Pass:
                     yield candidate
             self.failures[demand.key].update(blocked.get(key, {}))
             routes = sorted(ordinary.get(key, ()), key=lambda row: (row[3]['days'], -row[6], row[0], row[2]))
-            self.work['pruned_route_quotes'] += max(0, len(routes) - SHORTLIST)
-            for raw in routes[:SHORTLIST]:
+            for raw in self._route_shortlist(routes):
                 candidate = self._ordinary(demand, plan, raw, returns[raw[0], key, raw[2]])
                 if candidate and self._usable(candidate):
                     yield candidate
             if network is not None:
                 self.failures[demand.key].update(network.rejected[key])
                 rows = sorted(strategic.get(key, ()), key=lambda row: (row['days'], -row['limit'], row['source'], row['mode']))
-                for row in rows[:SHORTLIST]:
-                    needed = demand.after(self._arrival(row['days']))
-                    quote = network.shipment(row, needed, state.turn+max(1, (demand.deadline-self.now)//10))
+                for row in self._route_shortlist(rows) if self.features else rows[:SHORTLIST]:
+                    trip = None
+                    if self.features.get('requote'):
+                        trip = self.trip(row['route'], row['return_quote'], [row['escort']],
+                                         strict=demand.priority <= 2)
+                        if trip is None:
+                            self.failures[demand.key]['unsafe_weather_window'] += 1
+                            continue
+                    quote = self._granary_quote(network, row, demand, trip)
                     if not quote:
                         continue
-                    trip = self.trip(row['route'], row['return_quote'], [quote['escort']], strict=demand.priority <= 2)
+                    if trip is None:
+                        trip = self.trip(row['route'], row['return_quote'], [quote['escort']], strict=demand.priority <= 2)
                     result = (self._market_route(demand, quote, trip, channel='granary', mode=quote['mode'],
                               cargo=quote['load'], rations=quote['rations'], books=BOOK, officer=quote['escort'])
                               if trip else None)
@@ -225,9 +278,17 @@ class Pass:
                         yield result
             if regional is not None and 'regional' in demand.channels and demand.remaining:
                 requested = min(plan.cities[key].monthly * 2, demand.remaining)
-                quotes, rejected = regional.options(state.cities[key], requested, deadline=demand.deadline-self.now)
+                safety = None
+                if self.features.get('requote'):
+                    def safety(outbound, backward, escort):
+                        trip = self.trip(outbound, backward, [escort], strict=demand.priority <= 2)
+                        if not trip:
+                            return None
+                        return trip[3], demand.after(self._arrival(trip[2] if demand.priority <= 2 else trip[0]))
+                quotes, rejected = regional.options(state.cities[key], requested, deadline=demand.deadline-self.now,
+                                                    coordination_safety=safety, recovery_reserve=reserve)
                 self.failures[demand.key].update(rejected)
-                for quote in quotes[:SHORTLIST]:
+                for quote in self._route_shortlist(quotes) if self.features else quotes[:SHORTLIST]:
                     if regional_market.conflicts(state, quote):
                         self.failures[demand.key]['active_market_order'] += 1
                         continue
@@ -313,7 +374,11 @@ class Pass:
 
     def build(self, demands, plan, army, convoys, rejected):
         results = defaultdict(list)
-        self.failures.clear()
+        if self.features:
+            for demand in demands:
+                self.failures.pop(demand.key, None)
+        else:
+            self.failures.clear()
         from itertools import chain
         possible = chain(self._city_routes(demands, plan), self._relief(demands, plan, army, convoys),
                          self._transshipment(demands, plan))
@@ -325,8 +390,35 @@ class Pass:
         for rows in results.values():
             rows.sort(key=lambda row: order(row, efficient=self.efficient))
             self.work['pruned_candidates'] += max(0, len(rows) - MAX_OFFERS)
-            selected.extend(rows[:MAX_OFFERS])
+            selected.extend(_alternatives(rows) if self.features.get('diversity') else rows[:MAX_OFFERS])
         return selected
+
+
+def _alternatives(ranked):
+    if len(ranked) <= MAX_OFFERS:
+        return ranked
+    chosen, rest = [], []
+    sources = set()
+    for row in ranked:
+        if row.source in sources:
+            rest.append(row)
+            continue
+        chosen.append(row)
+        sources.add(row.source)
+        if len(chosen) == MAX_OFFERS:
+            return chosen
+    alternatives = {(row.source, row.mode, row.escorts) for row in chosen}
+    remaining = []
+    for row in rest:
+        identity = row.source, row.mode, row.escorts
+        if identity in alternatives:
+            remaining.append(row)
+        else:
+            chosen.append(row)
+            alternatives.add(identity)
+        if len(chosen) == MAX_OFFERS:
+            return chosen
+    return chosen + remaining[:MAX_OFFERS-len(chosen)]
 
 
 def commit(game, state, candidate):
