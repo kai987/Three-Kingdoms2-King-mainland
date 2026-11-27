@@ -1,0 +1,50 @@
+name: WASM smoke targeted profile
+on:
+  push:
+    branches: [codex/ci-wasm-smoke-profile-6d709026]
+permissions:
+  contents: read
+jobs:
+  profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    env:
+      MARCH_CORE_BACKEND: python
+      PYTHONDONTWRITEBYTECODE: '1'
+      INPUT_COMMIT: 6d7090264274c9867fc3e0daca0b22bfde050cb4
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tools/web-runtime/package-lock.json
+      - name: Record the pinned source tree and build one Web candidate
+        run: |
+          git diff --exit-code "$INPUT_COMMIT" HEAD -- game source crates tools/web-runtime tests/browser_engine_smoke.mjs
+          mkdir -p evidence
+          lscpu > evidence/runner.txt
+          git rev-parse HEAD "$INPUT_COMMIT" >> evidence/runner.txt
+          npm ci --prefix tools/web-runtime --ignore-scripts
+          python -B game/build_web.py --output build/web
+          python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" > evidence/candidate-sha256.txt
+      - name: Time the original replay without changing its assertions
+        env:
+          TK2_WASM_PROFILE_REPORT: evidence/profile.json
+        run: |
+          python -B tools/ci-experiments/profile_wasm_smoke.py
+          node tests/_ci_wasm_profile.mjs build/web
+          python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$(cat evidence/candidate-sha256.txt)"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: wasm-smoke-profile
+          path: evidence
+          if-no-files-found: error
+          retention-days: 14
