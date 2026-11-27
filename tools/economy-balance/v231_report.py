@@ -864,6 +864,17 @@ def southern_report(docs,data,cases):
     classified=(data/'channel-transport-actual-ledger.csv').is_file()
     split_note=('赤壁 F2 和 F4 另采集运队的实际渠道、出粮、押运备粮及入账。逐月汇总只在细分结果与仓库实账一致时列出分项。'
                 if classified else '原版仓库总运输可核实。渠道标签依赖补采的运输事件。')
+    channels=('regional_purchase_received','strategic_transport_received','ordinary_transport_received')
+    regional=defaultdict(Counter)
+    if classified:
+        for row in rows(data/'regional-grain-flow-account.csv'):
+            if all(value(row,field) is not None for field in channels):
+                regional[row['group']].update({field:value(row,field) for field in channels})
+    channel_table=(
+        '\n\n'+table(('组','区域市场运达粮','战略粮仓运达粮','普通运达粮','已分账合计'),
+                    [(group,*(integer(totals[field]) for field in channels),integer(sum(totals.values())))
+                     for group,totals in sorted(regional.items())])
+        if regional else '')
     md(docs,'southern-basin-shortage-root-cause','赤壁 211 南方盆地缺粮溯源',(
         f'F2 实际复跑 {base.month} 个月，天下累计缺粮 {integer(ref)}，南方盆地缺粮 '
         f'{base.regions[base.month,"southern_basins"]["unpaid_city_turns"]:,} 城旬。三张逐月报表、期末完整状态和随机数与 V2.3 基准一致。'
@@ -885,7 +896,7 @@ def southern_report(docs,data,cases):
         '巴东的最快合法报价为 47 天，起始检查点已有严重缺粮。建安的同势力他城有余额，但该检查点无合格调粮来源。'
         '已记录的限制包括来源安全储备、合格押运者、发运上限及实际路线。'
         '市场成交和运输入城均按实际事件记账。长期战局分叉时，战争、易主、市场及征召会同时改变粮源、粮耗和路线。'
-        +split_note+'\n\n'
+        +split_note+channel_table+'\n\n'
         '[逐月粮账](../data/regional-grain-flow-account.csv) · [首次重缺前九旬](../data/prior-nine-turn-city-grain-postings.csv) · '
         '[当旬状态](../data/prior-nine-turn-city-shortage-context.csv) · [原始基线身份](../checks/baseline-identity.json)'))
     return dict(original_gap=ref,original_southern_turns=base.regions[base.month,'southern_basins']['unpaid_city_turns'],
