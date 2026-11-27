@@ -157,7 +157,9 @@ def available(state, city, *, except_id=None, military=True):
     if enabled(state,'relay'):
         from . import granary_relay
         relay = granary_relay.credit(state,city.id)
-    return max(0, city.grain - reserve_grain(state, city) - committed(state, city.id, except_id=except_id) - held - relay)
+    from . import transshipment
+    return max(0, city.grain - reserve_grain(state, city) - committed(state, city.id, except_id=except_id)
+               - held - relay - transshipment.credit(state,city.id))
 
 
 def change_reserve(state, city, grain, reason, *, target=None, set_target=False):

@@ -65,6 +65,12 @@ def technical_files(build, work):
     allowed={'.log','.txt','.exit'}
     rows=[copy_portable(path,work/'logs'/path.name) for path in sorted(logs.iterdir())
           if path.is_file() and path.suffix in allowed and not path.name.startswith('package')]
+    if build.name=='verified':
+        for name in ('node.log','browser-full.log','browser-full-isolated.log','first-chain.log','second-chain.log'):
+            path=build.parent/'logs'/name
+            if path.is_file():
+                record=copy_portable(path,work/'logs'/('earlier-'+name))
+                rows.append(dict(record,file='earlier-'+name))
     if not rows:
         raise ValueError('No actual technical reports available')
     to_csv(work/'log-provenance.csv',rows)

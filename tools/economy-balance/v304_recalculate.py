@@ -123,8 +123,8 @@ def concurrency(summary):
                 finite_concurrency_full_delta=totals['D2']['full']-totals['D1']['full'])
 
 
-def intermodal(summary):
-    e0,e1=read(summary/'checks'/'controlled-route-results.json')
+def proof_lane(summary,filename):
+    e0,e1=read(summary/'checks'/filename)
     if e0['opening_sha256']!=e1['opening_sha256'] or e0['candidate_303']!=e1['candidate_303']:
         raise ValueError('Both controls must share their exact opening')
     plan=e1['plan']
@@ -154,14 +154,36 @@ def intermodal(summary):
         if batch['target']!=plan['target'] and (batch['receipt']['grain']!=usage[ident]+batch['available']
                                               +sum(batch['released'].values())):
             raise ValueError('A hub credited more than its genuine receipt')
-    book=read(summary/'checks'/'end-to-end-grain-account.json')
+    book=Counter()
+    for batch in plan['batches']:
+        terminal=batch['terminal']
+        cargo=terminal['cargo']
+        if not batch['stage']:
+            book.update(origin_cargo=batch['grain'],origin_rations=batch['rations'])
+        book.update(external_ration_draw=terminal['external_rations'],
+            travel_and_wait_rations=terminal['spent_rations'],route_loss=cargo['cargo_route_loss'],
+            weather_loss=cargo['cargo_weather_loss'],returned_grain=cargo['cargo_returned']+terminal['returned_rations'],
+            abandoned_grain=cargo['cargo_abandoned'],unloaded_grain=cargo.get('cargo_waypoint_unloaded',0))
+        if batch['target']==plan['target']:
+            book['final_received']+=batch['receipt']['grain']
+        else:
+            book['tag_left_at_hub']+=batch['available']+sum(batch['released'].values())
     inflow=book['origin_cargo']+book['origin_rations']+book['external_ration_draw']
     outflow=sum(book[key] for key in ('travel_and_wait_rations','route_loss','weather_loss','returned_grain',
                                     'abandoned_grain','unloaded_grain','tag_left_at_hub','final_received'))
-    if inflow!=outflow or book['residual'] or result['E1']['actual_final']!=book['final_received']:
+    if inflow!=outflow or result['E1']['actual_final']!=book['final_received']:
         raise ValueError('Transshipment chain failed grain conservation')
     result['ledger']=dict(source_and_waypoint_grain=inflow,accounted_grain=outflow,residual=inflow-outflow)
-    return result
+    book['residual']=inflow-outflow
+    return result,book
+
+
+def intermodal(summary):
+    main,book=proof_lane(summary,'controlled-route-results.json')
+    if book!=read(summary/'checks'/'end-to-end-grain-account.json'):
+        raise ValueError('Recalculated grain account differs from the published chain')
+    short,_=proof_lane(summary,'short-chain-comparison.json')
+    return dict(three_stage=main,two_stage=short)
 
 
 def main():

@@ -1262,3 +1262,6 @@ dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;
 
 .granary-actions{display:flex;flex-wrap:wrap;gap:.5rem;align-items:end}
 [data-strategic-granary] li{overflow-wrap:anywhere}
+[data-transshipment] section{border-bottom:1px solid currentColor;margin-block:0 1rem;padding-bottom:.6rem}
+[data-transshipment] form{display:grid;gap:.5rem;max-width:32rem}
+[data-transshipment] li{overflow-wrap:anywhere}
