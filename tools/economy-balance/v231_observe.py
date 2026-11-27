@@ -104,7 +104,7 @@ class CampaignObservation(Record):
             source=row['source'],target=row['target'],year=state.year,month=state.month,day=state.day,
             reason=reason,grain=amounts['grain'],first_arrival_turn=first['arrival_turn'],
             original_eta=row.get('original_eta'),rations=first['supply']['loaded'],
-            original_request=relief.get('need_id'),original_need_deadline=relief.get('deadline')))
+            original_request=relief.get('request_id'),original_need_deadline=relief.get('deadline')))
 
     def attach(self,stack):
         advance, event = march_supply.advance_unit, logistics._event
@@ -136,7 +136,7 @@ class CampaignObservation(Record):
         def published_estimates(planner,ident,**values):
             found=list(estimates(planner,ident,**values))
             need=planner.demands.get(ident)
-            if need is not None and need.required and not values and found:
+            if need is not None and need.required and values.get('exclude') is None and found:
                 covered=sum(grain for eta,grain in found if eta<=need.deadline)
                 key=(planner.state.turn,ident,need.deadline,need.required,covered)
                 if key not in self.planning_seen:
