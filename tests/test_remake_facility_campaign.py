@@ -50,9 +50,7 @@ def facility_catalog(*,month=4,disasters=False):
 
 def _monthly_wages(state, city):
     """These fixtures have enough stock to pay the full wage once per month."""
-    wages = [payroll.wage(state.officers[ident]) for ident in city.roster.officer_ids
-             if state.officers[ident].alive and state.officers[ident].faction_id == city.owner]
-    return {field: sum(wage[field] for wage in wages) for field in ('gold', 'grain')}
+    return payroll.monthly_due(state, city)
 
 
 class FacilityCampaignTests(unittest.TestCase):

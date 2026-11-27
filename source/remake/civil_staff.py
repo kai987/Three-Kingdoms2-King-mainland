@@ -319,9 +319,12 @@ def settle_payroll(campaign, state):
         legacy_bonus = 'domestic' not in state.extension
         base = _base_income(campaign, key, state) if legacy_bonus else {}
         contributions = dict(gold=0, grain=0, reserves=0)
+        staff_receipts = []
         for person in employees:
-            receipt = receipts[person['id']]
-            if receipt['gold_paid'] < receipt['gold'] or receipt['grain_paid'] < receipt['grain']:
+            receipt = receipts.get(person['id'])
+            if receipt is not None:
+                staff_receipts.append(receipt)
+            if receipt and (receipt['gold_paid'] < receipt['gold'] or receipt['grain_paid'] < receipt['grain']):
                 person['unpaid_months'] += 1
                 person['working'] = False
                 continue
@@ -335,15 +338,15 @@ def settle_payroll(campaign, state):
         for field, amount in bonus.items():
             setattr(city, field, getattr(city, field) + amount)
         state.soldiers['recruited'] += bonus['reserves']
-        if city.owner == state.player:
+        if city.owner == state.player and staff_receipts:
             first_city = first_city or city
-            summary['amount'] += len(employees) * RULES['monthly_salary']
-            summary['paid'] += sum(receipts[p['id']]['gold_paid'] for p in employees)
-            summary['grain_amount'] += len(employees) * RULES['monthly_salary_grain']
-            summary['grain_paid'] += sum(receipts[p['id']]['grain_paid'] for p in employees)
+            summary['amount'] += sum(receipt['gold'] for receipt in staff_receipts)
+            summary['paid'] += sum(receipt['gold_paid'] for receipt in staff_receipts)
+            summary['grain_amount'] += sum(receipt['grain'] for receipt in staff_receipts)
+            summary['grain_paid'] += sum(receipt['grain_paid'] for receipt in staff_receipts)
             for field, amount in bonus.items():
                 summary['bonus'][field] += amount
-            summary['counts']['staff'] += len(employees)
+            summary['counts']['staff'] += len(staff_receipts)
             summary['counts']['total_unpaid'] += sum(not p['working'] for p in employees)
             summary['counts']['cities'] += 1
     if shortfalls:

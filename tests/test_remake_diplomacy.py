@@ -276,6 +276,7 @@ class DiplomacyTests(unittest.TestCase):
         attacker = capital.roster.officer_ids[0]
         escort = origin.roster.officer_ids[0]
         game._queue_march(state, capital, target, [attacker], 'attack', mode='land')
+        domestic.set_policy(game, state, dict(faction='wei', civil=None, military=None), 'wei')
         logistics.set_policy(game, state, dict(city=origin.id, policy=dict(reserve_officers=0)), 'wei')
         convoy = logistics.dispatch(game, state, dict(source=origin.id, target=capital.id,
             officers=[escort], cargo=dict(gold=100, grain=200, reserves=300, treasure=1), route_mode='land'), 'wei')
@@ -417,6 +418,7 @@ class ObserverDiplomacyTests(unittest.TestCase):
         officer.troops = 0
         officer.faction_id = None
         self.assertTrue(diplomacy.capture(game.state, officer, city='nanyang', captor='wei', origin='shu'))
+        domestic.synchronize(game, game.state)
         treasures.synchronize(game, game.state)
         game.validate(game.state)
         self.advance(game)

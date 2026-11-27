@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import battle_placement, battle_reinforcements, city_development, civil_staff, events, facilities, historical_campaigns as history, strategic_ai, treasures
+from remake import battle_placement, battle_reinforcements, city_development, civil_staff, domestic, events, facilities, historical_campaigns as history, strategic_ai, treasures
 from remake.historical_chapters import CHAPTERS, GOGURYEO_EXPEDITION, GUANQIU_JIAN, WANG_QI, DONGCHEON
 from remake.march_core import using_backend
 from remake.officers import transfer_officers
@@ -216,6 +216,7 @@ class HistoricalCampaignTests(unittest.TestCase):
         from remake import runan_campaign as runan
 
         game = self.opening('200-01', 'shu', start_month=7)
+        game.command('set_domestic', dict(faction='shu', military=None), game.revision)
         liu_bei, liu_pi, gong_du = (game.catalog.ids[person]
                                     for person in (runan.LIU_BEI, runan.LIU_PI, runan.GONG_DU))
         self.assertEqual(game.state.extension['free_locations'][str(liu_pi)], 'runan')
@@ -703,8 +704,10 @@ class HistoricalCampaignTests(unittest.TestCase):
                                     'officers': [source.roster.officer_ids[0]]}, game.revision)
         self.assertEqual(game.export_save(), before)
         self.advance(game)
-        army, = [row for row in game.state.extension['travel']['marches']
-                 if row['owner'] == 'wei' and row['target'] == 'fengyi' and row['kind'] == 'attack']
+        armies = [row for row in game.state.extension['travel']['marches']
+                  if row['owner'] == 'wei' and row['target'] == 'fengyi' and row['kind'] == 'attack']
+        self.assertTrue(armies)
+        army = min(armies, key=lambda row: (row['arrival_turn'], row['id']))
         self.assertIn(army['source'], ('hongnong', 'jingzhao'))
         self.assertEqual(army['quote']['path'], [army['source'], 'fengyi'])
         self.assertGreater(army['arrival_turn'], army['departure_turn'])
@@ -1440,6 +1443,8 @@ class HistoricalCampaignTests(unittest.TestCase):
         officer = game.state.officers[zhuge_liang]
         officer.faction_id = rival_city.owner
         officer.loyalty = 80
+        domestic.synchronize(game, game.state)
+        treasures.synchronize(game, game.state)
         game.validate(game.state)
 
         before = game.export_save()

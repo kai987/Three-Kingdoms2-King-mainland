@@ -49,15 +49,21 @@ def wage(officer):
 
 
 
+def _paid_roster(state, city):
+    ruler = state.extension.get('leaders', {}).get(city.owner)
+    for ident in city.roster.officer_ids:
+        officer = state.officers[ident]
+        if ident != ruler and officer.alive and officer.faction_id == city.owner:
+            yield officer
+
+
 def monthly_due(state, city):
     """Gross payroll for the same roster billed by pay_city."""
     due = dict(gold=0, grain=0)
-    for ident in city.roster.officer_ids:
-        officer = state.officers[ident]
-        if officer.alive and officer.faction_id == city.owner:
-            amount = wage(officer)
-            due['gold'] += amount['gold']
-            due['grain'] += amount['grain']
+    for officer in _paid_roster(state, city):
+        amount = wage(officer)
+        due['gold'] += amount['gold']
+        due['grain'] += amount['grain']
     return due
 
 def rules():
@@ -71,8 +77,7 @@ def _stopped(row):
 
 def pay_city(state, city, previous, shortfalls):
     """Use each stockpile independently, sharing shortages proportionally."""
-    roster = [state.officers[ident] for ident in sorted(city.roster.officer_ids, key=ref_sort_key)
-              if state.officers[ident].alive and state.officers[ident].faction_id == city.owner]
+    roster = sorted(_paid_roster(state, city), key=lambda officer: ref_sort_key(officer.runtime_id))
     if not roster:
         return {}
     wages = [wage(officer) for officer in roster]
@@ -113,9 +118,12 @@ def prune(game, state):
     if ledger is None:
         return
     rows = ledger['shortfalls']
+    leaders = state.extension.get('leaders', {})
     for key, row in list(rows.items()):
-        officer = state.officers.get(deserialize_officer_ref(key, game.catalog.rules))
-        if officer is None or not officer.alive or officer.faction_id != row['owner']:
+        ident = deserialize_officer_ref(key, game.catalog.rules)
+        officer = state.officers.get(ident)
+        if (officer is None or not officer.alive or officer.faction_id != row['owner']
+                or ident == leaders.get(row['owner'])):
             del rows[key]
     if not rows:
         del state.extension[FIELD]
@@ -138,7 +146,7 @@ def finish_turn(game, state):
             continue
         ident = deserialize_officer_ref(key, game.catalog.rules)
         officer = state.officers[ident]
-        if officer.loyalty < 95 and ident != leaders.get(row['owner']):
+        if officer.loyalty < 95:
             overdue.setdefault(row['owner'], []).append((ident, row))
     if not overdue:
         return

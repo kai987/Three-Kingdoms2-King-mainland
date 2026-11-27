@@ -171,6 +171,7 @@ class DatedEventsTests(unittest.TestCase):
 
     def test_song_retires_in_october_upper_and_uses_normal_succession_and_death_event(self):
         game=self.game('retirement');ident=game.catalog.ids[SONG]
+        game.command('set_domestic', dict(faction='shu', military=None), game.revision)
         def garrison(state):
             city = state.cities['xiangyang']
             return city.reserves + sum(state.officers[i].troops for i in city.roster.officer_ids)

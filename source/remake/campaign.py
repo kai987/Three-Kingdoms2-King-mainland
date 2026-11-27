@@ -1017,7 +1017,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     from . import battle_experience
                     battle_experience.validate_load(candidate.battle)
                 with validating_load(self.catalog.data, candidate):
+                    legacy_appointments = domestic.migrate_appointments(candidate)
+                    if legacy_appointments:
+                        treasures.migrate_auto_governors(self, candidate)
                     self.validate(candidate)
+                    if legacy_appointments:
+                        domestic.synchronize(self, candidate)
+                        domestic.validate(self, candidate)
                 from .battle_experience_v1 import validate_reports
                 validate_reports(candidate.extension['events'])
             except (ValueError, TypeError, KeyError, AttributeError, OverflowError) as exc:

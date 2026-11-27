@@ -332,6 +332,23 @@ class CivilStaffTests(unittest.TestCase):
         staff.settle_payroll(game, state)
         self.assertEqual(state, snapshot)
 
+    def test_current_ruler_is_exempt_and_payroll_follows_succession(self):
+        game, state = fixture()
+        city = state.cities['capital']
+        state.extension['leaders'] = {'one': 1}
+        state.officers[1].experience = 15_000
+        city.gold, city.grain = 100, 100
+        self.assertEqual(payroll.monthly_due(state, city), dict(gold=5, grain=10))
+        advance_month(game, state)
+        staff.settle_payroll(game, state)
+        self.assertEqual((city.gold, city.grain), (95, 90))
+
+        state.extension['leaders']['one'] = 2
+        self.assertEqual(payroll.monthly_due(state, city), dict(gold=10, grain=22))
+        advance_month(game, state)
+        staff.settle_payroll(game, state)
+        self.assertEqual((city.gold, city.grain), (85, 68))
+
     def test_wage_bands_cover_every_experience_boundary_and_legacy_receipts(self):
         published = payroll.rules()
         self.assertEqual(published['experience_per_band'], 1_000)

@@ -8,7 +8,10 @@ model.begin(first);const before=JSON.stringify(first);model.observe(first,'b');a
 model.command('allocate',{},first,first);assert.equal(model.state().step,'allocate','A failed/uncommitted allocation cannot advance guidance');
 const allocated=view(1,2);model.command('allocate',{},first,allocated);assert.equal(model.state().step,'domestic');
 const one=clone(allocated);one.game.extension.domestic.factions.p.civil=1;model.observe(one);assert.equal(model.state().step,'domestic');
-const two=clone(one);two.game.extension.domestic.factions.p.military=2;model.observe(two);assert.equal(model.state().step,'route');model.routePreview();assert.equal(model.state().step,'turn');
+const two=clone(one);two.game.extension.domestic.factions.p.military=2;model.observe(two);
+assert.equal(model.state().step,'domestic','The default pair still leaves time to review the policy');
+const reviewed=clone(two);reviewed.revision++;model.command('set_domestic',{},two,reviewed);
+assert.equal(model.state().step,'route');model.routePreview();assert.equal(model.state().step,'turn');
 model.observe(view(2));assert.equal(model.state().status,'active');model.observe(view(3));assert.equal(model.state().status,'active');model.observe(view(4));assert.equal(model.state().status,'complete');
 assert.equal(JSON.stringify(first),before,'Guidance must not modify resources, officers, command books, RNG or saves');
 model.begin(first);model.observe(view(4));assert.equal(model.state().status,'expired','Three turns without required actions is expiry, not fabricated completion');

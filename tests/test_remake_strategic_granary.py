@@ -225,6 +225,7 @@ class StrategicGranaryTests(TestCase):
         from remake import granary_relay
         final = 'xiangyang'
         g = start(relay=True,proactive=True)
+        g.command('set_domestic',dict(faction=OWNER,civil=None),g.revision)
         g.command('set_logistics',dict(city=TARGET,policy={'reserve_officers':0,'max_officers':1,
             'reserve_grain':0,'max_grain':25_000}),g.revision)
         s = g.state

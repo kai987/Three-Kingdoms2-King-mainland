@@ -24,6 +24,7 @@ class LogisticsV211Tests(TestCase):
     def game(self):
         game=Headless(self.catalog,record_journal=False)
         game.command('new',dict(faction='shu',seed=2026),0)
+        game.command('set_domestic',dict(faction='shu',civil=None),game.revision)
         return game
 
     def advance(self,game):

@@ -602,6 +602,58 @@ test('faction resources show current allies and large factions receive 40 comman
  expect(errors.get(page)).toEqual([]);
 });
 
+test('city intelligence shows the development figures and uses the map name for headquarters',async({page},testInfo)=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland200-01');
+ await page.locator('input[name=faction][value=wei]').check();
+ const city='yingchuan';
+ const mapLabel=()=>page.locator(`#world-map [data-city-label="${city}"]`).textContent();
+ const assertFigures=async(source,locale)=>{
+  const stats=page.locator(`#dialog [data-city-development="${city}"]:visible`);
+  await expect(stats).toBeInViewport({ratio:0.75});
+  await expect(stats.locator('dt')).toHaveText(['土地',locale==='ja'?'産業':'產業','人口','統治度']);
+  await expect(stats.locator('dd')).toHaveText([
+   `${source.land} / 999`,`${source.industry} / 999`,`${source.population} / 1999999`,`${source.governance} / 100`
+  ]);
+ };
+ await expect(page.locator(`#setup-summary [data-setup-faction-base="${city}"]`)).toHaveText(await mapLabel());
+ await page.locator('#city-jump').selectOption(city);
+ const previewCity=await page.evaluate(async id=>
+  (await (await fetch('/api/city-preview?scenario=mainland200-01&city='+id)).json()).city,city);
+ await assertFigures(previewCity.city_development,'zh-Hant');
+ await page.locator('#dialog-language').selectOption('ja');
+ await assertFigures(previewCity.city_development,'ja');
+ await closeDialog(page);
+ await expect(page.locator(`#setup-summary [data-setup-faction-base="${city}"]`)).toHaveText(await mapLabel());
+
+ await page.locator('#begin-observation').click();await waitIdle(page);await tacticalDismiss(page);
+ await expect(page.locator('#observer-status')).toHaveAttribute('data-observer-state','playing');
+ await tacticalControl(page,'observer-toggle');
+ await expect(page.locator('#observer-status')).toHaveAttribute('data-observer-state','paused');
+ await page.locator('#city-jump').selectOption(city);
+ const ledger=page.locator('#inspector .faction-ledger');
+ await ledger.locator('summary').click();
+ await expect(ledger.locator('[data-faction-base="wei"]')).toHaveText(await mapLabel());
+ const before=await tacticalSave(page);
+ const ruler=before.state.extension.leaders.wei;
+ const roster=before.state.cities[city].roster.officer_ids;
+ expect(roster).toContain(ruler);
+ await tacticalControl(page,'observer-city');
+ await assertFigures(before.state.extension.city_development.cities[city],'ja');
+ await page.locator('#dialog-language').selectOption('zh-Hant');
+ await assertFigures(before.state.extension.city_development.cities[city],'zh-Hant');
+ await page.locator('#dialog').screenshot({path:testInfo.outputPath('city-intelligence.png')});
+ await page.locator(`[data-city-information-officer="${ruler}"]`).click();
+ await expect(page.locator('[data-officer-payroll]:visible')).toHaveText('君主免領月俸',{useInnerText:true});
+ await page.locator('#back-city-roster').click();
+ await page.locator(`[data-city-information-officer="${roster.find(id=>id!==ruler)}"]`).click();
+ await expect(page.locator('[data-officer-payroll]:visible')).toContainText(/月俸 資金\d+、糧\d+/,{useInnerText:true});
+ await closeDialog(page);
+ await expect(ledger.locator('[data-faction-base="wei"]')).toHaveText(await mapLabel());
+ expect(await tacticalSave(page)).toEqual(before);
+ expect(errors.get(page)).toEqual([]);
+});
+
 test('observer speed changes cadence without resuming a pause and city counts follow ownership',async({page})=>{
  await opening(page);
  const hanResources=/金\s*17,?360\s*·\s*糧\s*602,?610\s*·\s*兵士\s*124,?000\s*·\s*預備兵\s*13,?243\s*·\s*現役\s*49/;
@@ -3606,10 +3658,11 @@ test.describe('first-session assistance',()=>{
   await page.locator('#city-jump').selectOption('henan');await expect(page.locator('#game-tutorial')).toContainText('兵の編制を確定する');expect(await raw()).toEqual(before);
   await page.locator('#tutorial-focus').click();expect(['allocate','city-command-tab-army']).toContain(await page.evaluate(()=>document.activeElement?.id));expect(await raw()).toEqual(before);
   await openAllocation(page);const input=page.locator('#allocation-troops'),oldAmount=Number(await input.inputValue()),maximum=Number(await input.getAttribute('max')),amount=String(oldAmount<maximum?oldAmount+1:Math.max(0,oldAmount-1));await input.fill(amount);await page.locator('#confirm-allocation').click();await waitIdle(page);await expect(page.locator('#allocation-troops')).toHaveValue(amount);await closeDialog(page);await waitIdle(page);
-  await expect(page.locator('#game-tutorial')).toContainText('勢力の内政官を2人任命する');
+  await expect(page.locator('#game-tutorial')).toContainText('勢力の内政担当を確認する');
   await page.locator('#tutorial-focus').click();await page.locator('#faction-domestic').click();
   const officers=await page.locator('#office-civil option').evaluateAll(rows=>rows.map(row=>row.value).filter(value=>/^(?:[0-9]+|clerk-[0-9]+)$/.test(value)));expect(officers.length).toBeGreaterThan(1);
-  await page.locator('#office-civil').selectOption(officers[0]);await page.locator('#office-military').selectOption(officers[1]);await page.locator('#save-domestic').click();await waitIdle(page);if(await page.locator('#dialog').isVisible())await closeDialog(page);await tacticalDismiss(page);
+  await expect(page.locator('#office-civil')).toHaveValue('auto');await expect(page.locator('#office-military')).toHaveValue('auto');
+  await page.locator('#save-domestic').click();await waitIdle(page);if(await page.locator('#dialog').isVisible())await closeDialog(page);await tacticalDismiss(page);
   await expect(page.locator('#game-tutorial')).toContainText('行軍の見積りを確認する');const quotedBefore=await raw();
   await clickCityCommand(page,'depart');const destination=await page.locator('#world-map .city-hit.action-target').first().getAttribute('data-city');await page.locator('#city-jump').selectOption(destination);
   await page.locator('#continue-map-departure').click();
@@ -3629,7 +3682,7 @@ test('original development commands keep pure quotes, real costs and portable sa
  await expect(page.locator('#end-turn')).toBeEnabled();await waitIdle(page);await dismissHistoryOpening(page);
  await page.locator('#city-jump').selectOption('shujun');
  await tacticalControl(page,'city-command-tab-city');await page.locator('#city-development').click();
- await expect(page.locator('#development-governor-bonus')).toContainText('+5%');
+ await expect(page.locator('#development-governor-bonus')).toContainText('+20%');
  await closeDialog(page);
  await clickCityCommand(page,'city-treasury');
  await page.locator('#treasury-governor').selectOption('439');
