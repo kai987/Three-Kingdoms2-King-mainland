@@ -27,12 +27,16 @@ async function opening(page){
 }
 async function idle(page){await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);}
 async function save(page){return page.evaluate(async()=>{const r=await fetch('/api/save');if(!r.ok)throw Error('Actual soldier save could not be inspected');return r.json();});}
-async function read(page,withView=true,{openingTroopSources}={}){
+async function read(page,withView=true,{openingTroopSources,facilityActor}={}){
  if(!withView)return {save:await save(page)};
- return page.evaluate(async sourceKinds=>{
+ return page.evaluate(async({sourceKinds,facilityActor})=>{
   const [a,b]=await Promise.all([fetch('/api/save'),fetch('/api/state')]);
   if(!a.ok||!b.ok)throw Error('Actual soldier state could not be inspected');
   const state=await b.json(),save=await a.json(),view=state.view||state;
+  if(facilityActor!==undefined){
+   const id=String(facilityActor),facility=view.catalog.battle_tactical.actors[id].facility;
+   return {save,view:{catalog:{battle_tactical:{actors:{[id]:{facility}}}}}};
+  }
   if(!sourceKinds)return {save,view};
 
   const host=document.querySelector('[data-battle-scene]'),selected=host.dataset.battleSelectedActor;
@@ -48,7 +52,7 @@ async function read(page,withView=true,{openingTroopSources}={}){
    battle_tactical:{actors:{[selected]:{attack_targets:tactical.actors[selected].attack_targets}}},
    library:examples,
   }}};
- },openingTroopSources);
+ },{sourceKinds:openingTroopSources,facilityActor});
 }
 async function load(page,value,name='controlled-soldier-boundary.json'){
  await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name,mimeType:'application/json',buffer:Buffer.from(JSON.stringify(value))});
@@ -505,7 +509,7 @@ test('native battlefield hospital rice shop and weapon shop use the current cell
  const cases=fixture('facilities'),proof=[];await opening(page);
  for(const [index,kind]of ['hospital','market','armory'].entries()){
   const value=cases[kind];await locale(page,index===1?'ja':'zh-Hant');await load(page,value.save,'controlled-native-'+kind+'-cell.json');
-  await page.locator(`[data-actor="${value.actor}"]`).click();const before=await read(page),quote=before.view.catalog.battle_tactical.actors[String(value.actor)].facility;
+  await page.locator(`[data-actor="${value.actor}"]`).click();const before=await read(page,true,{facilityActor:value.actor}),quote=before.view.catalog.battle_tactical.actors[String(value.actor)].facility;
   expect(quote.kind).toBe(kind);expect(quote.x).toBe(value.site.x);expect(quote.y).toBe(value.site.y);
   await control(page,'battle-facility-open');await expect(page.locator('#dialog')).toBeVisible();
   const side=before.save.state.battle.attacker===before.save.state.player?'attackers':'defenders';
