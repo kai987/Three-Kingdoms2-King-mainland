@@ -111,15 +111,16 @@ async function setTroops(page,value){
  await expect(page.locator('#allocation-troops')).toHaveValue(String(value));
  await expect(page.locator('#dialog')).toBeVisible();
 }
-async function tacticalRead(page,placementStage){
+async function tacticalRead(page,viewScope){
  return page.evaluate(async stage=>{
   const [saveResponse,stateResponse]=await Promise.all([fetch('/api/save'),fetch('/api/state')]);
   if(!saveResponse.ok||!stateResponse.ok)throw Error('Tactical inspection failed');
   const value=await stateResponse.json(),view=value.view||value,save=await saveResponse.json();
   if(!stage)return {save,view};
 
-  // Keep the save intact and return only the state fields used by the placement checks.
+  // Keep the independent save intact and send the view fields used by each check.
   const board=view.catalog.battle_tactical;
+  if(stage==='battle')return {save,view:{game:{battle:view.game.battle},catalog:{battle_tactical:board}}};
   const {pending,confirmed,total}=board.placement;
   if(stage==='before')return {save,view:{catalog:{battle_tactical:{placement:{pending,confirmed,total}}}}};
 
@@ -132,7 +133,7 @@ async function tacticalRead(page,placementStage){
    game:{player,battle:{attacker,attackers:roster(attackers),defenders:roster(defenders),extended:{tactical:{schema,positions}}}},
    catalog:{battle_tactical:{schema:board.schema,grid:board.grid,points:board.points,actors,placement:{pending}}},
   }};
- },placementStage);
+ },viewScope);
 }
 async function tacticalSave(page){return page.evaluate(async()=>{const response=await fetch('/api/save');if(!response.ok)throw Error('Tactical raw save inspection failed');return response.json();});}
 async function tacticalDismiss(page){
@@ -199,7 +200,7 @@ async function tacticalSoldierExchange(page,{bothSides=false,anySide=false,testI
   await tacticalControl(page,'siege-withdraw');await tacticalSettle(page,{returnToMacro:true});
  }
  await expect(page.locator('[data-battle-scene]')).toHaveAttribute('data-battle-scene-mode','tactical');
- return tacticalRead(page);
+ return tacticalRead(page,'battle');
 }
 async function tacticalCell(page,point,touch=false){
  const canvas=page.locator('[data-battle-canvas]');await canvas.scrollIntoViewIfNeeded();const box=await canvas.boundingBox();expect(box).toBeTruthy();
@@ -255,7 +256,7 @@ async function tacticalApproach(page,{touch=false,preferred=null,max=18}={}){
   const rows=Object.entries(board.actors).filter(([,row])=>row.can_act),canContact=row=>row.attack_targets.length&&board.points[own]>board.attack_cost,
    direct=rows.find(([id,row])=>(preferred===null||String(preferred)===id)&&canContact(row))||rows.find(([,row])=>canContact(row));
   if(direct){
-   const state=await tacticalRead(page),[id,row]=direct;
+   const state=await tacticalRead(page,'battle'),[id,row]=direct;
    expect(state.view.game.battle).toEqual(b);
    expect(state.save.state.battle).toEqual(b);
    expect(state.view.catalog.battle_tactical).toEqual(board);
@@ -2840,7 +2841,7 @@ test('authoritative tactical movement, shared points and contact attacks persist
  if(touch)await tacticalControl(page,'battle-move');else{await page.locator(`[data-actor="${id}"]`).focus();await page.keyboard.press('Enter');}
  await expect.poll(()=>page.evaluate(({id,origin,first})=>window.__tacticalMotion.some(p=>p.actor===String(id)&&(p.x!==origin.x*16+8||p.y!==origin.y*16+8)&&(p.x!==first.x*16+8||p.y!==first.y*16+8)),{id,origin,first})).toBe(true);
  const firstMotion=await page.evaluate(()=>{window.__tacticalMotionObserver.disconnect();return window.__tacticalMotion;});await tacticalSettle(page);
- const moved=await tacticalRead(page);expect(moved.save.state.battle.extended.tactical.positions[id]).toEqual({x:first.x,y:first.y});expect(moved.save.state.battle.extended.tactical.points[own]).toBe(selected.save.state.battle.extended.tactical.points[own]-first.cost);expect(moved.save.state.rng).toEqual(selected.save.state.rng);await expect(page.locator(`[data-actor="${id}"]`)).toBeEnabled();
+ const moved=await tacticalRead(page,'battle');expect(moved.save.state.battle.extended.tactical.positions[id]).toEqual({x:first.x,y:first.y});expect(moved.save.state.battle.extended.tactical.points[own]).toBe(selected.save.state.battle.extended.tactical.points[own]-first.cost);expect(moved.save.state.rng).toEqual(selected.save.state.rng);await expect(page.locator(`[data-actor="${id}"]`)).toBeEnabled();
  const another=[...moved.view.catalog.battle_tactical.actors[id].reachable].sort((a,b)=>a.cost-b.cost||a.y-b.y||a.x-b.x).find(p=>p.cost<moved.view.catalog.battle_tactical.points[own]-2);expect(another).toBeTruthy();
  await tacticalCell(page,another,touch);await tacticalControl(page,'battle-move');await tacticalSettle(page);const twice={save:await tacticalSave(page)};
  expect(twice.save.state.battle.extended.tactical.positions[id]).toEqual({x:another.x,y:another.y});expect(twice.save.state.battle.extended.tactical.points[own]).toBe(moved.save.state.battle.extended.tactical.points[own]-another.cost);expect(twice.save.state.rng).toEqual(moved.save.state.rng);
