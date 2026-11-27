@@ -1091,7 +1091,7 @@ function openTransshipment(back){
     ${b.receipt?`${t('實收','実到着')} ${number(b.receipt.grain)}`:b.terminal?t('未交付即終結','未到着で終了'):t('等待實際到貨','到着待ち')}</li>`).join('')}</ul>`:''}
    ${interactive&&p.status==='active'?p.offers.map((row,index)=>`<div class="transshipment-stage"><p>${t('第','第')}${row.stage+1}${t('段','区間')} · ${city(row.source)}${row.target?` → ${city(row.target)}`:''}
     ${row.blocked?` · ${t(...blocked[row.blocked])}`:`<br>${t('總容量','総積載量')} ${number(row.capacity)} · ${t('可裝貨糧','貨物上限')} ${number(row.max_cargo)} · ${t('往返口糧','往復口糧')} ${number(row.rations)} · ${t('預計最終到達','最終到着見込み')} ${row.final_eta} ${t('旬','旬')}`}</p>
-    ${row.blocked?'':`<form data-ts-send="${p.id}:${index}" class="granary-actions"><label class="field">${t('裝載貨糧','積載する荷糧')}<input name="grain" type="number" min="1" max="${row.max_cargo}" value="${row.max_cargo}" required></label>
+    ${row.blocked?'':`<form data-ts-send="${p.id}:${index}" class="granary-actions"><label class="field">${t('裝載貨糧','積載する荷糧')}${amountInput(`ts-amount-${p.id}-${index}`,row.max_cargo,row.max_cargo)}</label>
      <button type="submit">${t('發運（1 本命令書）','発送（命令書1枚）')}</button></form>`}</div>`).join('')+`<p><button type="button" data-ts-cancel="${p.id}">${t('停止中轉計畫','中継計画を停止')}</button></p>`:''}
    </section>`).join('')}
    ${!ledger.plans.length?`<p>${t('目前沒有中轉計畫。','現在、中継計画はありません。')}</p>`:''}
@@ -1103,8 +1103,8 @@ function openTransshipment(back){
     ${modeSelect('ts-mode-2',['第三段路線','第3区間の経路'],'land')}
     <label class="field">${t('用途','用途')}<select id="ts-purpose"><option value="reserve">${t('補充儲備','備蓄を補充')}</option>
     <option value="shortage">${t('填補預計缺糧','見込みの不足を補う')}</option></select></label>
-    <label class="field">${t('目標實到糧','目標到着量')}<input id="ts-grain" type="number" min="1" max="100000000" value="60000" required></label>
-    <label class="field">${t('承諾期限（旬）','約束期限（旬）')}<input id="ts-promise" type="number" min="2" max="90" value="30" required></label>
+    <label class="field">${t('目標實到糧','目標到着量')}${amountInput('ts-grain',100000000,60000)}</label>
+    <label class="field">${t('承諾期限（旬）','約束期限（旬）')}${amountInput('ts-promise',90,30,2)}</label>
     <button type="submit">${t('建立計畫','計画を作成')}</button></form></details>`:''}
    ${ledger.unloads.length?`<ul class="regional-market-list">${ledger.unloads.map(receipt=>`<li>#${receipt.convoy} · ${city(receipt.city)} · ${t('改道卸貨','迂回時の荷下ろし')} ${number(receipt.grain)} → ${city(receipt.target)}</li>`).join('')}</ul>`:''}
   </section>`;
@@ -1120,21 +1120,29 @@ function openTransshipment(back){
   }
  };
  const create=$('#transshipment-create');
- if(create)create.onsubmit=event=>{
-  event.preventDefault();
-  const selected=id=>$(id).value;
-  const hubs=[selected('#ts-hub'),selected('#ts-hub-2')].filter(Boolean);
-  return send({action:'create',sources:[selected('#ts-origin'),selected('#ts-origin-2')].filter(Boolean),hubs,
-   target:selected('#ts-target'),modes:hubs.map((_,i)=>selected('#ts-mode-'+i)).concat(selected('#ts-mode-'+hubs.length)),
-   purpose:selected('#ts-purpose'),grain:Number(selected('#ts-grain')),promise_turns:Number(selected('#ts-promise'))});
- };
- dialog.querySelectorAll('[data-ts-send]').forEach(form=>{form.onsubmit=event=>{
-  event.preventDefault();
-  const [plan,index]=form.dataset.tsSend.split(':').map(Number);
-  const row=ledger.plans.find(candidate=>candidate.id===plan).offers[index];
-  return send({action:'dispatch',plan,stage:row.stage,source:row.source,officer:row.officer,
-   grain:Number(form.elements.grain.value)});
- };});
+ if(create){
+  const grain=$('#ts-grain'),promise=$('#ts-promise');
+  bindNumberInput(grain);bindNumberInput(promise);
+  create.onsubmit=event=>{
+   event.preventDefault();
+   const selected=id=>$(id).value;
+   const hubs=[selected('#ts-hub'),selected('#ts-hub-2')].filter(Boolean);
+   const modes=Array.from({length:hubs.length+1},(_,i)=>selected('#ts-mode-'+i));
+   return send({action:'create',sources:[selected('#ts-origin'),selected('#ts-origin-2')].filter(Boolean),hubs,
+    target:selected('#ts-target'),modes,purpose:selected('#ts-purpose'),
+    grain:clampNumberInput(grain,true),promise_turns:clampNumberInput(promise,true)});
+  };
+ }
+ dialog.querySelectorAll('[data-ts-send]').forEach(form=>{
+  const amount=form.querySelector('input');bindNumberInput(amount);
+  form.onsubmit=event=>{
+   event.preventDefault();
+   const [plan,index]=form.dataset.tsSend.split(':').map(Number);
+   const row=ledger.plans.find(candidate=>candidate.id===plan).offers[index];
+   return send({action:'dispatch',plan,stage:row.stage,source:row.source,officer:row.officer,
+    grain:clampNumberInput(amount,true)});
+  };
+ });
  dialog.querySelectorAll('[data-ts-cancel]').forEach(button=>{button.onclick=()=>send({action:'cancel',plan:Number(button.dataset.tsCancel)});});
 }
 
@@ -1183,7 +1191,6 @@ function openStrategicGranary(id,back){
  const orders=ledger.orders.filter(row=>row.source===id||row.target===id).toReversed();
  const relays=(ledger.relays||[]).filter(row=>[row.source,row.hub,row.target].includes(id));
  const options=Object.keys(ledger.cities).filter(key=>key!==id);
- const amountInput=(key,max,value,min=1)=>`<input id="${key}" type="number" min="${min}" max="${Math.max(min,max)}" value="${value}" required>`;
  const body=`<section data-strategic-granary>
   <h3>${cityLabel(id)}</h3>
   <dl class="resources">${facts.map(([zh,ja,value])=>`<div class="resource-pair"><dt>${t(zh,ja)}</dt><dd>${number(value)}</dd></div>`).join('')}</dl>
@@ -1457,6 +1464,9 @@ function selectionStatus(id,count,limit,reason=''){
 }
 // Number inputs expose limits as attributes and normalize pasted / typed values.
 // An empty field remains editable until blur or confirmation, then uses its minimum.
+function amountInput(key,max,value,min=1){
+ return `<input id="${key}" type="number" min="${min}" max="${Math.max(min,max)}" value="${value}" required>`;
+}
 function clampNumberInput(input,commit=false){
  if(input.value===''&&!commit)return null;
  const minimum=Number.isFinite(Number(input.min))?Number(input.min):0,maximum=input.max!==''&&Number.isFinite(Number(input.max))?Number(input.max):Number.MAX_SAFE_INTEGER;

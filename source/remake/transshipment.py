@@ -24,7 +24,7 @@ REASONS = {'planning', 'manual', 'ownership', 'covered', 'deadline', 'fulfilled'
 
 
 def enabled(state):
-    return POOL in state.extension
+    return state is not None and POOL in state.extension
 
 
 def initialize(state, version):
@@ -438,7 +438,8 @@ def view(game,state,owner):
                     offers.append(dict(stage=stage,source=source,**show))
         plans.append(dict(deepcopy(plan),offers=offers,final_received=_final_grain(plan)))
     unloads=[dict(row) for row in ledger['unloads'] if row['owner']==owner]
-    return dict(version=VERSION,cities=cities,plans=plans,unloads=unloads)
+    return dict(version=VERSION,cities=cities,plans=plans,unloads=unloads,
+                order_costs=dict(create=0,cancel=0,unload=0,dispatch=command_books.cost('dispatch_transport')))
 
 
 _PLAN_FIELDS = {'id','owner','sources','hubs','target','modes','grain','purpose','promise','original_deadline',

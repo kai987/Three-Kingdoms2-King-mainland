@@ -28,6 +28,9 @@
   if(kind==='strategic_granary_order'){
    const amount=view?.catalog?.strategic_granary?.order_costs?.[options.action];return integer(amount)?amount:null;
   }
+  if(kind==='transshipment_order'){
+   const amount=view?.catalog?.transshipment?.order_costs?.[options.action];return integer(amount)?amount:null;
+  }
   const value=data(view)?.costs?.[kind];if(!integer(value))return null;
   if(kind==='allocate'&&!allocationSupported(view))return null;
   const flow=kind==='allocate'?activeAllocation(view,options.city,options.owner):null;
