@@ -2,7 +2,7 @@
 from collections import Counter, defaultdict
 
 from . import city_economy, command_books, domestic, facilities, faction_economy
-from . import historical_campaigns, logistics, logistics_strategy, strategic_granary
+from . import historical_campaigns, logistics, logistics_strategy, strategic_granary, transport_capacity, winter_travel
 from .errors import GameError
 from .officers import ref_sort_key
 
@@ -10,7 +10,7 @@ from .officers import ref_sort_key
 def _donors(game, state, plan):
     owner = plan.owner
     pool = state.extension['logistics']
-    busy = {row['source'] for row in pool['convoys']}
+    active = transport_capacity.activity(state)
     absent = city_economy.absent_troops(game, state)
     posts = domestic.appointments(state, owner)
     reserved_officers = {posts.get('civil'), posts.get('military'), state.extension['leaders'].get(owner)}
@@ -20,11 +20,11 @@ def _donors(game, state, plan):
     groups, excluded = defaultdict(list), {}
     for key, budget in plan.budgets.items():
         city, ledger = state.cities[key], pool['cities'][key]
-        policy = ledger['policy']
+        policy=transport_capacity.ai_policy(state,owner,ledger['policy'],automatic=transport_capacity.automation(state,owner))
         minimum = max(policy['reserve_grain'], budget['minimum_export_floor'])
         if budget['threatened']:
             minimum = max(minimum, budget['safety_reserve'])
-        if key in busy or ledger['last_dispatch_turn'] == state.turn:
+        if transport_capacity.dispatch_blocker(state,city,active):
             excluded[key] = 'source_convoy_limit'
         elif (not policy['max_grain'] or not policy['max_officers']
               or historical_campaigns.hold_longyou_garrison(game, state, city)):
@@ -38,6 +38,10 @@ def _donors(game, state, plan):
                        and state.officers[ident].health > 0
                        and state.extension['officer_actions'].get(str(ident)) != state.turn
                        and pool['receipts'].get(str(ident), 0) <= state.turn]
+            if transport_capacity.enabled(state):
+                eligible=set(logistics._eligible(game,state,city,absent=absent))
+                escorts=[ident for ident in escorts if ident in eligible and logistics.escort_defence(
+                    game,state,city,[ident],threatened=budget['threatened'])]
             if len(present) <= policy['reserve_officers'] or not escorts:
                 excluded[key] = 'no_eligible_escort'
                 continue
@@ -87,9 +91,15 @@ def _options(game, state, plan, keys):
                     continue
                 # Actual unloaded convoys choose the fastest legal route
                 # home. Price that full route, not just its first checkpoint.
-                for mode, quote in outward if detailed else outward[:1]:
+                physical=transport_capacity.enabled(state,'physical_capacity')
+                for mode, quote in outward if detailed or physical else outward[:1]:
                     rations = logistics.escort_rations(game,state,[escort],quote,backward[0][1])
                     gross = min(policy['max_grain'], stock - minimum - rations)
+                    if physical:
+                        from . import staging_supply
+                        available=min(stock-minimum,staging_supply.available(state,city)-policy['reserve_grain'])
+                        gross=transport_capacity.loading(game,state,owner,policy,quote,rations,available,logistics.LIMIT,
+                            automatic=transport_capacity.automation(state,owner))['max_cargo']
                     if gross <= 0:
                         rejected[target]['insufficient_escort_rations'] += 1
                         continue
@@ -97,7 +107,9 @@ def _options(game, state, plan, keys):
                     if not net:
                         rejected[target]['no_net_delivery'] += 1
                         continue
-                    candidates[target].append((source, escort, mode, quote, rations, gross, net, minimum))
+                    back_days=winter_travel.quote_days(game,state,backward[0][1]) if transport_capacity.enabled(
+                        state,'throughput_ranking') else 0
+                    candidates[target].append((source, escort, mode, quote, rations, gross, net, minimum,back_days))
     return candidates, rejected
 
 
@@ -135,7 +147,7 @@ def dispatch(game, state, owner, *, plan=None):
         issue = dict(target=key, owner=owner, grain=shortage, deadline=forecast.zero_in,
                      candidates=[], allocations=[], failures=dict(rejected.get(key, ())),
                      reason=blocker)
-        for source, escort, mode, quote, rations, gross, net, minimum in queue:
+        for source, escort, mode, quote, rations, gross, net, minimum, _ in queue:
             issue['candidates'].append(dict(source=source, route_mode=mode, days=quote['days'],
                 arrival_turn=state.turn+quote['turns'], expected_capacity=net,
                 timely=quote['turns'] < forecast.zero_in))
@@ -155,7 +167,7 @@ def dispatch(game, state, owner, *, plan=None):
             gaps, balances, _ = faction_economy.balance(stock, forecast.timeline, past)
             priority = []
             for candidate in queue:
-                source, escort, mode, quote, rations, gross, net, minimum = candidate
+                source, escort, mode, quote, rations, gross, net, minimum, back_days = candidate
                 if source in used:
                     continue
                 arrival = quote['turns']
@@ -174,11 +186,16 @@ def dispatch(game, state, owner, *, plan=None):
                     continue
                 # A usable late load still ranks behind all timely rescue.
                 rank = (not timely, quote['days'], -amount, gross-net+rations, source, mode)
+                if transport_capacity.enabled(state,'throughput_ranking'):
+                    out=winter_travel.quote_days(game,state,quote)
+                    wait=(-out)%10+(-back_days)%10
+                    rank=(not timely,*transport_capacity.priority(amount,rations,out,back_days,wait,1,
+                        logistics.RULES['receipt_turns'],gross-net+rations),source,mode)
                 priority.append((rank, candidate, amount))
             if not priority:
                 break
             _, candidate, amount = min(priority, key=lambda row: row[0])
-            source, escort, mode, quote, rations, gross, _, minimum = candidate
+            source, escort, mode, quote, rations, gross, _, minimum, _ = candidate
             load = logistics.gross_shipment(game,quote,amount,gross)
             used.add(source)
             city = state.cities[source]

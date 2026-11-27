@@ -89,7 +89,7 @@ def _csv(stack, folder, name, fields):
     return writer
 
 
-def run(root, case, *, granary_options=None, progress=False):
+def run(root, case, *, granary_options=None, progress=False, capacity_options=None, economy_background=None):
     wave, group, seed, scene, policy, weather, months = case
     dest = case_dir(root, case)
     complete = dest/'run-v302.json'
@@ -106,6 +106,10 @@ def run(root, case, *, granary_options=None, progress=False):
             winter=bool(weather) and group in ('S3','S4'), relay=group=='S4')))
     if granary_options is not None:
         case_data['reserve_options'] = granary_options
+    if economy_background is not None:
+        case_data.update(transport_capacity_options=capacity_options,economy_background=economy_background)
+        if economy_background=='G0':
+            case_data['reserve_options']=None
     try:
         with TransportRecorder(raw) as transport, ExitStack() as stack:
             writers = {}
@@ -118,6 +122,11 @@ def run(root, case, *, granary_options=None, progress=False):
                 return JsonLines(stack.enter_context(gzip.open(raw/name, 'wt', compresslevel=2, encoding='utf-8')))
             writers['regional-orders.jsonl'] = jsonl('regional-orders.jsonl.gz')
             strategic_stream = jsonl('strategic-granary-events.jsonl.gz')
+            if economy_background is not None:
+                from remake import transport_capacity
+                capacity_stream=jsonl('transport-capacity-events.jsonl.gz')
+                stack.enter_context(transport_capacity.observing(
+                    lambda event,row: capacity_stream.writerow(dict(event=event,**row))))
             audit_stream = _csv(stack, raw, 'warehouse-postings.csv.gz',
                 'command turn year month day city owner resource balance_before balance_after delta category site'.split())
             audit = Audit(audit_stream)
@@ -126,6 +135,9 @@ def run(root, case, *, granary_options=None, progress=False):
             original = RecordedCampaign.command
             def capture(game, action, payload, revision):
                 with audit.command(game, action):
+                    if action=='new' and capacity_options is not None:
+                        payload=dict(payload,transport_capacity_rules_version=303,
+                                     transport_capacity_options=capacity_options)
                     result = recorder.attach(game, action, payload, revision)
                 if progress and game.state.turn % 30 == 0:
                     print(f'{wave} {group} {scene} {seed} p{policy} w{weather}: turn {game.state.turn}', flush=True)

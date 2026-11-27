@@ -4,7 +4,7 @@ from hashlib import sha256
 
 from . import (army_relief, command_books, domestic, economic_regions, facilities,
                grain_market, historical_campaigns, logistics, logistics_rules, march_supply,
-               market_pricing, staging_supply, winter_travel, winter_weather)
+               market_pricing, staging_supply, transport_capacity, winter_travel, winter_weather)
 
 BASE = 1_000
 COMMERCIAL_SHARE = 25
@@ -61,10 +61,10 @@ def _meal(game, state, quote, escort, *, offset=0):
     return days,budget.outbound+budget.wait
 
 
-def _entity(game, state, owner, source, busy, absent, decision, posts, *, automatic):
+def _entity(game, state, owner, source, active, absent, decision, posts, *, automatic):
     ledger = logistics._pool(state)['cities'][source.id]
-    policy = ledger['policy']
-    if source.id in busy or ledger['last_dispatch_turn']==state.turn:
+    policy=transport_capacity.ai_policy(state,owner,ledger['policy'],automatic=automatic)
+    if transport_capacity.dispatch_blocker(state,source,active):
         return None, 'source_transport_busy'
     if not policy['max_grain'] or not policy['max_officers']:
         return None, 'source_policy'
@@ -82,6 +82,9 @@ def _entity(game, state, owner, source, busy, absent, decision, posts, *, automa
     eligible=[i for i in officers if i not in locked and state.officers[i].health>0
               and logistics._pool(state)['receipts'].get(str(i),0)<=state.turn
               and state.extension.get('civil_staff',{}).get('people',{}).get(i,{}).get('working',True)]
+    if transport_capacity.enabled(state):
+        allowed=set(logistics._eligible(game,state,source,absent=absent,automatic=automatic))
+        eligible=[i for i in eligible if i in allowed and logistics.escort_defence(game,state,source,[i])]
     if not eligible:
         return None, 'no_escorts'
     escort=min(eligible,key=lambda i:(state.officers[i].troops,logistics._key(i)))
@@ -108,7 +111,7 @@ class Planner:
         self.game, self.state, self.owner = game,state,owner
         self.decision, self.automatic = decision,automatic
         self.holdings=[c for c in state.cities.values() if c.owner==owner]
-        self.busy={row['source'] for row in logistics._pool(state)['convoys']}
+        self.active=transport_capacity.activity(state)
         self.absent=game._march_ids(state) | facilities._battle_ids(state)
         self.posts=domestic.appointments(state,owner)
         self.routes={}
@@ -158,7 +161,7 @@ class Planner:
                 failures['source_stock' if data['stock']<=floor else
                          'source_gold' if city.gold*BASE<prices['buy'] else 'source_capacity']+=1
                 continue
-            entity,reason=_entity(game,state,owner,city,self.busy,self.absent,self.decision,self.posts,
+            entity,reason=_entity(game,state,owner,city,self.active,self.absent,self.decision,self.posts,
                                   automatic=self.automatic)
             if reason:
                 failures[reason]+=1
@@ -199,8 +202,13 @@ class Planner:
                     failures['source_rations']+=1
                     continue
                 cap=min(amount,policy['max_grain'],free_space)
+                loading=None
+                if transport_capacity.enabled(state,'physical_capacity'):
+                    loading=transport_capacity.loading(game,state,owner,policy,route,protect,amount+protect,free_space,
+                                                        automatic=self.automatic)
+                    cap=loading['max_cargo']
                 if cap<=0:
-                    failures['destination_capacity']+=1
+                    failures['route_capacity' if loading is not None and free_space>0 else 'destination_capacity']+=1
                     continue
                 parts=logistics_rules.plan(route,march_supply.travel_rules(game))
                 risks=game._march_risks(route,None)
@@ -259,8 +267,17 @@ class Planner:
                 row.update(source_stock=market['stock'],source_market_capacity=market['capacity'],
                     target_warehouse_room=free_space,transport_capacity=cap,return_route=backward[0][1]['path'],
                     return_route_types=sorted({leg['mode'] for leg in backward[0][1]['routes']}))
+                if loading is not None:
+                    row['capacity']=loading
                 results.append(row)
         self.work['evaluations']+=1
         role='commercial_purchase' if purpose=='trade' else 'agricultural_output'
+        if self.automatic and transport_capacity.enabled(state,'throughput_ranking'):
+            def rank(row):
+                wait=(-row['days'])%10+(-row['return_days'])%10
+                return (row['timely'] is False,*transport_capacity.priority(row['net'],row['escort_rations'],
+                    row['days'],row['return_days'],wait,1,logistics.RULES['receipt_turns'],row['landed_cents']),
+                    -roles.get(row['source'],{}).get(role,0),row['source'],row['route_mode'])
+            return sorted(results,key=rank),dict(failures)
         return sorted(results,key=lambda q:(q['timely'] is False,q['landed_cents'],-q['net'],q['days'],
             -roles.get(q['source'],{}).get(role,0),q['source'],q['route_mode'])),dict(failures)

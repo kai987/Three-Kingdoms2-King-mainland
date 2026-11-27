@@ -8,6 +8,7 @@ let campaignLifespan='historical';
 let campaignWinter=false,campaignEmergency=false,weatherLayerVisible=false;
 let campaignRegional=false,campaignRegionalTrade=false;
 let campaignGranary=false,campaignGranaryCandidate=false,campaignGranaryDispatch=false,campaignGranaryWinter=false,campaignGranaryRelay=false;
+let campaignTransportCapacity=false;
 const lifespanLabels={historical:['史實','史実'],none:['無','なし']};
 let allocationDialogContext=null,allocationCloseEpoch=0;
 let battleDestination=null,battleViewKey='';
@@ -500,6 +501,7 @@ function selectFaction(){
   <label class="setup-winter"><input id="regional-auto-trade-option" type="checkbox" ${campaignRegionalTrade?'checked':''} ${campaignRegional?'':'disabled'}> ${battleText('啟用 AI 自動商業貿易（實驗）','AIの自動商業取引を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="strategic-granary-option" type="checkbox" ${campaignGranary?'checked':''}> ${battleText('啟用戰略糧倉 V3.0.2（實驗）','戦略備蓄 V3.0.2 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="strategic-granary-candidate-option" type="checkbox" ${campaignGranaryCandidate?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('使用 V3.0.2.1 候選調糧規則','V3.0.2.1 の候補ルールを使用する')}</label>
+  <label class="setup-winter"><input id="transport-capacity-option" type="checkbox" ${campaignTransportCapacity?'checked':''}> ${battleText('啟用水陸運輸容量 V3.0.3（實驗）','水陸輸送容量 V3.0.3 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="strategic-dispatch-option" type="checkbox" ${campaignGranaryDispatch?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用 AI 主動調糧','AIの事前輸送を有効にする')}</label>
   <label class="setup-winter"><input id="strategic-winter-option" type="checkbox" ${campaignGranaryWinter?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用冬季戰略儲備','冬季備蓄を有効にする')}</label>
   <label class="setup-winter"><input id="strategic-relay-option" type="checkbox" ${campaignGranaryRelay?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用單站中轉（實驗）','1都市での積み替えを有効にする（実験）')}</label>
@@ -542,6 +544,7 @@ function selectFaction(){
    for(const id of ['#strategic-granary-candidate-option','#strategic-dispatch-option','#strategic-winter-option','#strategic-relay-option'])$(id).disabled=!campaignGranary;
   };
   $('#strategic-granary-candidate-option').onchange=event=>{campaignGranaryCandidate=event.target.checked;};
+  $('#transport-capacity-option').onchange=event=>{campaignTransportCapacity=event.target.checked;};
   $('#strategic-dispatch-option').onchange=event=>{campaignGranaryDispatch=event.target.checked;};
   $('#strategic-winter-option').onchange=event=>{campaignGranaryWinter=event.target.checked;};
   $('#strategic-relay-option').onchange=event=>{campaignGranaryRelay=event.target.checked;};
@@ -555,6 +558,7 @@ function selectFaction(){
        ...(campaignWinter?{weather_rules_version:221}:{}),
        ...(campaignEmergency?{transport_emergency_rules_version:222}:{}),
        ...(campaignRegional?{regional_market_rules_version:301}:{}),
+       ...(campaignTransportCapacity?{transport_capacity_rules_version:303}:{}),
        ...(campaignRegionalTrade?{regional_trade_automation:true}:{}),
        ...(campaignGranary?{strategic_granary_rules_version:campaignGranaryCandidate?3021:302,
          strategic_granary_options:{proactive:campaignGranaryDispatch,winter:campaignGranaryWinter,relay:campaignGranaryRelay,
@@ -563,6 +567,7 @@ function selectFaction(){
     campaignEmergency=false;
     campaignRegional=campaignRegionalTrade=false;
     campaignGranary=campaignGranaryCandidate=campaignGranaryDispatch=campaignGranaryWinter=campaignGranaryRelay=false;
+    campaignTransportCapacity=false;
     cityCommandGroups.clear();
     selectedCity=view.catalog.factions.find(x=>x.id===f)?.city||pending.focus;actor=target=null;mapMode='all';dialog.close();render();
     if(isObserver())setObserverPlaying(true);

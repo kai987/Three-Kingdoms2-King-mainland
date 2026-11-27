@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import NamedTuple
 
 from . import command_books, historical_campaigns, logistics, logistics_rules as rules, march_supply
-from . import winter_travel, winter_weather
+from . import transport_capacity, winter_travel, winter_weather
 from .grain_units import denominator
 
 WAIT_DAYS = 3
@@ -269,15 +269,14 @@ def _calendar_tick(state):
     return (state.turn-1)*10
 
 
-def source_blocker(game,state,source,policy,busy):
+def source_blocker(game,state,source,policy,active):
     if state.phase not in {'city','ai'}:
         return 'wrong_phase'
     if source.owner not in game.catalog.factions:
         return 'not_owned'
     if not command_books.can_spend(state,source.owner,'dispatch_transport'):
         return 'command_books'
-    if (source.id in busy
-            or logistics._pool(state)['cities'][source.id]['last_dispatch_turn']==state.turn):
+    if transport_capacity.dispatch_blocker(state,source,active):
         return 'in_transit'
     if not policy['max_officers'] or logistics._present_count(game,state,source)<=policy['reserve_officers']:
         return 'no_spare_officer'
@@ -297,7 +296,7 @@ class Planner:
         for row in logistics._pool(state)['convoys']:
             if row['owner']==owner and row['target_march'] is not None:
                 self.convoys[row['target_march']].append(row)
-        self.busy = {row['source'] for row in logistics._pool(state)['convoys']}
+        self.active = transport_capacity.activity(state)
         self.stats = dict(predictions=len(self.demands), route_pairs=0, meeting_quotes=0, return_cache_hits=0)
         self.return_quotes = {}
 
@@ -332,13 +331,16 @@ class Planner:
                 yield eta, grain
 
     def source_reason(self, source, policy):
-        return source_blocker(self.game,self.state,source,policy,self.busy)
+        return source_blocker(self.game,self.state,source,policy,self.active)
 
     def candidates(self, source, *, budget=None, selected=None, cargo=None, origin=None, live=None,
                    loads=None, urgent_only=False):
         game, state = self.game, self.state
         key = source.id
         policy = logistics._pool(state)['cities'][key]['policy'] if live is None else live['route_policy']
+        automatic=transport_capacity.automation(state,source.owner)
+        if live is None:
+            policy=transport_capacity.ai_policy(state,source.owner,policy,automatic=automatic)
         if live is None:
             reason = self.source_reason(source, policy)
             if reason:
@@ -359,6 +361,10 @@ class Planner:
         if budget:
             floor = max(floor,budget['minimum_export_floor'],budget['safety_reserve'])+budget['reserved_grain']
         available = source.grain-floor if live is None else live['journeys'][-1]['supply']['remaining']+live['cargo']['grain']
+        physical=transport_capacity.enabled(state,'physical_capacity')
+        if live is None and transport_capacity.enabled(state):
+            from . import staging_supply
+            available=min(available,staging_supply.available(state,source)-policy['reserve_grain'])
         home = key if live is None else live['source']
         now = _calendar_tick(state)
         remaining = {}
@@ -411,6 +417,7 @@ class Planner:
                         continue
                     self.stats['meeting_quotes'] += 1
                     maximum = policy['max_grain'] if live is None else live['cargo']['grain']
+                    capacity=transport_capacity.physical(game,state,route) if physical else None
                     # Return route is stable for these officers until climate,
                     # ownership or actual reception space changes.
                     return_tick = boundary(eta)
@@ -427,6 +434,9 @@ class Planner:
                             if budget['active']-troop_count < min(budget['active'],get_settings(state)['min_guard_troops']):
                                 blocked='defence'
                                 continue
+                        if live is None and not logistics.escort_defence(game,state,source,team,allocation=loads):
+                            blocked='defence'
+                            continue
                         observed_slot = sum(i not in state.cities[slot.city].roster.officer_ids for i in team)
                         # At normal dispatch with unaltered home ownership, all
                         # eligible officers already have a reserved home slot.
@@ -449,6 +459,14 @@ class Planner:
                         bag = ration_budget(troop_count+100*len(team),outward,wait*rules.RATION_SCALE,
                                             backward,credit=credit)
                         room=max(0,min(maximum,available-bag.total))
+                        if physical:
+                            if live is None:
+                                loading=transport_capacity.loading(game,state,source.owner,policy,route,bag.total,
+                                    available,logistics.LIMIT,automatic=automatic,profile=capacity)
+                                room=loading['max_cargo']
+                            elif not transport_capacity.fits(game,state,live,route,minimum=bag.total):
+                                blocked='route_capacity'
+                                continue
                         if cargo is not None:
                             room=cargo if cargo<=room else 0
                             net=net_cargo(game,route,room,parts=outward_parts,risks=risks,state=state)
@@ -474,17 +492,23 @@ class Planner:
                             estimated_net=min(needed,net), return_city=back[1]['path'][-1],return_days=back[1]['days'],
                             return_weight=backward, outbound=bag.outbound, wait=bag.wait, returning=bag.returning,
                             safety=bag.safety, efficiency=percent, escort_troops=troop_count)
+                        if physical and live is None:
+                            result['capacity']=loading
                         rank=(eta>demand.deadline, not demand.urgent, cap_time(eta,demand.deadline),
                               -min(net,needed), percent<EFFICIENCY_PREFERRED, room+bag.total,
                               escort_band(troop_count), troop_count, route['days'], slot.city, mode,
                               tuple(logistics._key(i) for i in team))
+                        if automatic and selected is None and transport_capacity.enabled(state,'throughput_ranking'):
+                            priority=transport_capacity.priority(min(net,needed),bag.total,days,back[1]['days'],wait,
+                                len(team),logistics.RULES['receipt_turns'],room+bag.total)
+                            rank=(*rank[:3],*priority,*rank[6:])
                         results.append((rank,result))
                         break
         return tuple(row for _,row in sorted(results,key=lambda item:item[0])), blocked
 
     def register(self, row):
         self.convoys[row['target_march']].append(row)
-        self.busy.add(row['source'])
+        self.active[transport_capacity.origin_key(self.state,row['source'],row['owner'])]+=1
 
 
 def cap_time(eta, deadline):
@@ -584,7 +608,8 @@ def return_home(game,state,row,here,reason):
     needed=_return_budget(game,state,row,quote)
     available=book['remaining']+row['cargo']['grain']
     local=state.cities[here]
-    if (needed>available and local.owner==row['owner']
+    if ((needed>available or not transport_capacity.fits(game,state,row,quote,minimum=needed))
+            and local.owner==row['owner']
             and logistics._receiving_blocker(game,state,row,local,returning=True) is None):
         quote=game._quote([here],[])
         needed=0

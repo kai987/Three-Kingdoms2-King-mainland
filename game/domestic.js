@@ -6,7 +6,7 @@
  const choose=(locale,tc,ja)=>locale==='ja'?ja:tc;
  const resources=[['gold','金錢','資金'],['grain','兵糧','兵糧'],['reserves','預備兵','予備兵'],['treasure','寶','宝']];
  const staffStatus={outbound:['運送中','輸送中'],returning:['押運返程中','護送隊の帰還中'],waiting:['等待補給／接收','補給・受け入れ待ち'],arrived:['已抵達','到着済み'],delivered:['已抵達','到着済み'],returned:['已返回','帰還済み'],lost:['運輸失敗','輸送失敗']};
- const reasons={disabled:['請先啟用並儲存支援方針，才會計算運輸預覽。','支援方針を有効にして保存すると、輸送予測を計算します。'],not_owned:['僅能操作本方城池。','自勢力の都市でのみ操作できます。'],wrong_phase:['請在戰略階段設定。','戦略段階で設定してください。'],command_books:['本勢力命令書不足。','この勢力の命令書が不足しています。'],no_target:['尚未指定前線城池。','前線の都市を指定してください。'],no_friendly_target:['目的城必須屬於本方。','目的都市は自勢力の都市を指定してください。'],no_route:['兩城沒有可用的已知道路。','両都市を結ぶ既知の経路がありません。'],dangerous_route:['目前路線超出允許的風險設定。','現在の経路は許可した危険度を超えています。'],no_spare_officer:['沒有可派出的閒置武將；保留委任官及守軍。','派遣できる武将がいません。担当官と守備隊を残します。'],target_full:['目的城人員容量已滿。','目的都市の人数が定員に達しています。'],no_surplus:['目前沒有超過保留量的物資或人員。','保持量を超える物資・人員がありません。'],insufficient_resources:['本城資源低於保留量。','出発都市の資源が保持量を下回っています。'],insufficient_grain:['兵糧不足以支付運輸消耗。','輸送に必要な兵糧が不足しています。'],in_transit:['已有運輸隊在途中。','すでに輸送隊が移動中です。'],already_dispatched:['本旬已派出運輸隊。','今旬はすでに輸送隊を派遣しました。']};
+ const reasons={disabled:['請先啟用並儲存支援方針，才會計算運輸預覽。','支援方針を有効にして保存すると、輸送予測を計算します。'],not_owned:['僅能操作本方城池。','自勢力の都市でのみ操作できます。'],wrong_phase:['請在戰略階段設定。','戦略段階で設定してください。'],command_books:['本勢力命令書不足。','この勢力の命令書が不足しています。'],no_target:['尚未指定前線城池。','前線の都市を指定してください。'],no_friendly_target:['目的城必須屬於本方。','目的都市は自勢力の都市を指定してください。'],no_route:['兩城沒有可用的已知道路。','両都市を結ぶ既知の経路がありません。'],dangerous_route:['目前路線超出允許的風險設定。','現在の経路は許可した危険度を超えています。'],no_spare_officer:['沒有可派出的閒置武將；保留委任官及守軍。','派遣できる武将がいません。担当官と守備隊を残します。'],target_full:['目的城人員容量已滿。','目的都市の人数が定員に達しています。'],no_surplus:['目前沒有超過保留量的物資或人員。','保持量を超える物資・人員がありません。'],insufficient_resources:['本城資源低於保留量。','出発都市の資源が保持量を下回っています。'],insufficient_grain:['兵糧不足以支付運輸消耗。','輸送に必要な兵糧が不足しています。'],route_capacity:['實際路線容量不足以裝下口糧與貨物。','経路の積載上限内に携行兵糧と貨物を収められません。'],policy_capacity:['此次貨物超過城市方針上限。','今回の貨物が都市の方針上限を超えています。'],in_transit:['已有運輸隊在途中。','すでに輸送隊が移動中です。'],already_dispatched:['本旬已派出運輸隊。','今旬はすでに輸送隊を派遣しました。']};
  const convoyBlock={
   target_changed:['目的地已易主','目的地の所属が変わりました'],
   route_blocked:['前方無法通行，確認其他路線','進行先を通行できず、別経路を確認中'],
@@ -338,25 +338,36 @@
    const state=row('logistics');if(!state)return;const p=active.draft.policy,view=getView(),cities=Object.values(view.game.cities).filter(c=>c.owner===view.game.player&&c.id!==active.city),preview=state.preview,reason=reasons[state.blocked_reason];
    const labels={reserve_gold:['本城保留金錢','この都市に残す資金'],reserve_grain:['本城保留兵糧','この都市に残す兵糧'],reserve_reserves:['本城保留預備兵','この都市に残す予備兵'],reserve_officers:['本城保留人數','この都市に残す人数'],target_gold:['目的城金錢目標','目的都市の資金目標'],target_grain:['目的城兵糧目標','目的都市の兵糧目標'],target_reserves:['目的城預備兵目標','目的都市の予備兵目標'],target_officers:['目的城常駐武將目標','目的都市の常駐武将目標'],max_gold:['單隊最多金錢','一隊の資金上限'],max_grain:['單隊最多兵糧','一隊の兵糧上限'],max_reserves:['單隊最多預備兵','一隊の予備兵上限'],max_officers:['單次押運武將上限','一隊の護送武将数上限']};
    const versioned=!!preview&&view.game.extension?.logistics_rules_version===2&&typeof options.routePreview==='function';
-   const modes=versioned?[...new Set([preview.route_mode,'fastest','minimum_grain'])]:[];
-   const modeNames={fastest:text('最快','最速'),minimum_grain:text('最低耗糧','兵糧消費最小')};
-   const routeControls=versioned?select('convoy-route-mode',text('運輸路線比較','輸送経路の比較'),
+   const canCompareModes=!!state.capacity;
+   const modes=versioned?[...new Set([preview.route_mode,'fastest','minimum_grain',
+    ...(canCompareModes?['land','river',...(state.policy.allow_sea?['sea']:[])]:[])])]:[];
+   const modeNames={fastest:text('最快','最速'),minimum_grain:text('最低耗糧','兵糧消費最小'),
+    ...(canCompareModes?{land:text('陸路','陸路'),river:text('河運','河川輸送'),sea:text('海運','海上輸送')}:{})};
+   const counts=state.capacity;
+   const capacitySummary=counts?'<p class="small" data-transport-capacity-summary>'+text(
+    '活動運輸隊 '+counts.active+' / '+counts.max_active+' · 本旬發運 '+counts.dispatched+' / '+counts.dispatch_limit+
+    ' · 尚可發運 '+counts.remaining_dispatches+' · 可用押運 '+counts.escorts+' 人 · 可調配糧 '+counts.available_grain+
+    ' · 方針貨糧上限 '+counts.policy_max_grain,
+    '活動中の輸送隊 '+counts.active+' / '+counts.max_active+'・今旬の派遣 '+counts.dispatched+' / '+counts.dispatch_limit+
+    '・残り '+counts.remaining_dispatches+'・護送可能 '+counts.escorts+' 人・利用可能な兵糧 '+counts.available_grain+
+    '・方針上限 '+counts.policy_max_grain)+'</p>':'';
+   const routeControls=capacitySummary+(versioned?select('convoy-route-mode',text('運輸路線比較','輸送経路の比較'),
     preview.route_mode,modes.map(mode=>[mode,modeNames[mode]||text('方針路線','方針の経路')]))+
-    '<p class="small" id="convoy-route-quote" role="status"></p>':'';
-   const previewBody=preview?`<p>${text('已儲存方針的本次預覽','保存済み方針による今回の予測')}：${escape(label(cityName(preview.target)))}</p><p>${escape(cargoText(preview.cargo))}</p><p>${text('押運武將','護送武将')}：${(preview.officers||[]).map(id=>escape(label(name(id)))).join('、')}</p><p>${preview.quote?.days??'—'}${text('日','日')} · ${text('首段預裝口糧','最初の補給地までの携行兵糧')} ${preview.cost_grain??0}</p><p class="small">${text('口糧與貨糧分開計帳，途中友城依庫存補給，等待也每日耗糧。押運人員不占目的城名額，卸貨後自動實際返原城；永久增員請使用調動。','携行兵糧と貨物は分け、途中の友軍都市で在庫から補給し、待機中も毎日消費します。護送武将は目的都市の定員に含めず、荷下ろし後に出発都市へ実際に帰還します。恒久的な増員は武将移動を使ってください。')}</p>`:`<p>${reason?reason[locale()==='ja'?1:0]:text('暫無可派出的運輸隊。','現在、派遣できる輸送隊はありません。')}</p>`;
+    '<p class="small" id="convoy-route-quote" role="status"></p>':'');
+   const previewBody=preview?`<p>${text('已儲存方針的本次預覽','保存済み方針による今回の予測')}：${escape(label(cityName(preview.target)))}</p><p>${escape(cargoText(preview.cargo))}</p><p>${text('押運武將','護送武将')}：${(preview.officers||[]).map(id=>escape(label(name(id)))).join('、')}</p><p>${preview.quote?.days??'—'}${text('日','日')} · ${view.game.extension?.transport_capacity?.features?.physical_capacity?text('獨立往返口糧','往復用の携行兵糧'):text('首段預裝口糧','最初の補給地までの携行兵糧')} ${preview.cost_grain??0}</p><p class="small">${text('口糧與貨糧分開計帳，途中友城依庫存補給，等待也每日耗糧。押運人員不占目的城名額，卸貨後自動實際返原城；永久增員請使用調動。','携行兵糧と貨物は分け、途中の友軍都市で在庫から補給し、待機中も毎日消費します。護送武将は目的都市の定員に含めず、荷下ろし後に出発都市へ実際に帰還します。恒久的な増員は武将移動を使ってください。')}</p>`:`<p>${reason?reason[locale()==='ja'?1:0]:text('暫無可派出的運輸隊。','現在、派遣できる輸送隊はありません。')}</p>`;
    const body=`<div data-domestic-dialog="logistics" data-l10n-native="${locale()}">${bookHint('dispatch_transport')}<p>${text('物資從出發城扣除後計入在途，抵達才入庫；人員與預備兵不會重複計算。保留委任官、守軍和必要支出，已在途的補給會扣除目的城需求。','物資は出発都市から差し引いて輸送中に計上し、到着時に入庫します。武将・予備兵は重複計上しません。担当官・守備隊・必要経費を残し、輸送中の補給は目的都市の不足分から控除します。')}</p>${rescueControls(state)}${treasureControls(state)}${check('logistics-enabled',text('啟用自動支援前線','前線への自動支援を有効にする'),p.enabled)}${select('logistics-target',text('前線目的城','前線の目的都市'),p.target_city,[[null,text('暫不指定','指定しない')],...cities.map(c=>[c.id,label(cityName(c.id))])])}<p class="small">${text('常駐武將不足時，自動支援可另派永久調任；貨物由押運隊運送，押運完成後返回原城。','常駐武将が不足する場合、自動支援では別途、恒久的な異動を行います。貨物は護送隊が運び、荷下ろし後に出発都市へ戻ります。')}</p><fieldset><legend>${text('本城保留量','出発都市の保持量')}</legend><div class="domestic-input-grid">${['reserve_gold','reserve_grain','reserve_reserves','reserve_officers'].map(key=>number('logistics-'+key,text(...labels[key]),p[key],personFields.includes(key)?99:100000000)).join('')}</div></fieldset><fieldset><legend>${text('目的城目標量','目的都市の目標量')}</legend><div class="domestic-input-grid">${['target_gold','target_grain','target_reserves','target_officers'].map(key=>number('logistics-'+key,text(...labels[key]),p[key],personFields.includes(key)?99:100000000)).join('')}</div></fieldset><fieldset><legend>${text('每隊運輸上限','一隊の輸送上限')}</legend><div class="domestic-input-grid">${['max_gold','max_grain','max_reserves','max_officers'].map(key=>number('logistics-'+key,text(...labels[key]),p[key],personFields.includes(key)?99:100000000,key==='max_officers'?1:0)).join('')}</div></fieldset>${check('logistics-sea',text('允許已知海路（可能有季風與嚴重減員）','既知の海路を許可（季節風・大規模な損耗の可能性）'),p.allow_sea)}${check('logistics-special',text('允許陰平道／子午谷等險道','陰平道・子午谷などの険路を許可'),p.allow_special)}<p class="small">${text('不自動探索未知航路。目的城易主、道路中斷或滿員時，依實際狀態等待或返程。','未知航路は自動探索しません。目的都市の所属変更・経路遮断・定員超過時は、実際の状況に応じて待機または帰還します。')}</p><div class="domestic-preview">${previewBody}${routeControls}${logisticsSummary(view,active.city)}<p class="small">${text('抵達途中：','到着予定：')}${escape(cargoText(state.inbound))} · ${state.inbound?.officers??0}${text('人','人')}</p></div>${feedback()}${convoyList(active.city)}${reports('logistics')}</div>`;
    if(openDialog(text(`前線支援 · ${label(cityName(active.city))}`,`前線支援・${label(cityName(active.city))}`),body,`<button data-cancel>${text('返回戰役','戦役へ戻る')}</button><button id="open-domestic">${text('勢力內政委任','勢力の内政担当')}</button><button id="dispatch-logistics" ${!canWrite()||!bookReady('dispatch_transport')||!state.can_dispatch||!preview?'disabled':''}>${text('依預覽派出','予測内容で派遣')}</button><button id="save-logistics" class="primary" ${!canWrite()?'disabled':''}>${text('儲存支援方針','支援方針を保存')}</button>`)===undefined)return;
    query('#open-domestic').onclick=()=>open(active.city,'domestic');query('#logistics-target').onchange=()=>{p.target_city=query('#logistics-target').value||null;};
    for(const [id,key]of [['logistics-enabled','enabled'],['logistics-sea','allow_sea'],['logistics-special','allow_special']])query('#'+id).onchange=()=>{p[key]=query('#'+id).checked;};
    for(const key of [...moneyFields,...personFields])bindNumber('logistics-'+key,value=>{p[key]=value;},personFields.includes(key)?99:100000000,key==='max_officers'?1:0);
    query('#save-logistics').onclick=()=>submit('set_logistics',{city:active.city,policy:clone(p)});
-   let chosen=preview?.route_mode,previewReady=!versioned;
+   let chosen=preview?.route_mode,previewReady=!versioned,chosenGrain=null;
    const routeSelect=query('#convoy-route-mode');
    if(versioned&&routeSelect){
     const display=query('#convoy-route-quote'),dispatchButton=query('#dispatch-logistics');
     const update=async()=>{
      const revision=getView().revision,token=active,mode=routeSelect.value;
-     chosen=mode;previewReady=false;dispatchButton.disabled=true;
+     chosen=mode;chosenGrain=null;previewReady=false;dispatchButton.disabled=true;
      display.textContent=text('正在計算後勤…','兵站を計算中…');
      let result=null;
      try{result=await options.routePreview({purpose:'convoy',source:token.city,target:preview.target,
@@ -367,6 +378,32 @@
      previewReady=!!details;
      if(!details){display.textContent=text('目前沒有可補給的運輸路線。','現在、補給可能な輸送経路がありません。');return;}
      const path=quote.path.map(city=>label(cityName(city))).join(' → ');
+     const capacity=quote.capacity;
+     if(capacity){
+      const modes={land:text('陸運','陸上輸送'),river:text('河運','河川輸送'),sea:text('海運','海上輸送'),
+       mixed:text('水陸混合','水陸混合'),stationary:text('同城','同じ都市')};
+      const stages={plain:text('平原','平地'),mountain:text('山地','山地'),desert:text('沙漠','砂漠'),
+       river_downstream:text('順流','下り'),river_still:text('靜水','静水'),
+       river_upstream:text('逆流','上り'),sea:text('海路','海路')};
+      const bottleneck=capacity.bottleneck;
+      const section=bottleneck?' · '+text('瓶頸 ','制約区間 ')+label(cityName(bottleneck.source))+' → '+
+       label(cityName(bottleneck.target))+' ('+(stages[bottleneck.mode]||bottleneck.mode)+')':'';
+      const ratio=capacity.turnover?.throughput_milli;
+      const warning=capacity.blocked_reason,translated=reasons[warning],reason=translated?.[locale()==='ja'?1:0];
+      chosenGrain=capacity.load_grain;
+      previewReady=!warning&&!!(chosenGrain||preview.cargo.gold||preview.cargo.reserves);
+      display.textContent=path+' · '+(modes[capacity.mode]||'—')+' · '+text(
+       '總糧容量 '+(capacity.physical_capacity??'—')+' · 方針上限 '+capacity.policy_max_grain+' · 獨立口糧 '+capacity.rations+
+       ' · 最大貨糧 '+capacity.max_cargo+' · 此次裝載 '+chosenGrain+' · 淨到糧 '+capacity.net_grain+
+       ' · 途耗 '+capacity.estimated_loss+' · 去程 '+capacity.outward_days+' 日 · 人員佔用 '+(capacity.turnover?.occupancy_days??'—')+' 日',
+       '総積載量 '+(capacity.physical_capacity??'—')+'・方針上限 '+capacity.policy_max_grain+'・携行兵糧 '+capacity.rations+
+       '・貨物上限 '+capacity.max_cargo+'・今回積載 '+chosenGrain+'・実着見込み '+capacity.net_grain+
+       '・荷損 '+capacity.estimated_loss+'・往路 '+capacity.outward_days+' 日・人員拘束 '+(capacity.turnover?.occupancy_days??'—')+' 日'
+      )+(ratio==null?'':' · '+text('每隊日淨到糧 ','隊日あたり到着量 ')+(ratio/1000).toFixed(1))+section+
+       (warning?' · '+(reason||text('本路線不符合本次發運條件。','この経路は今回の派遣条件を満たしていません。')):'');
+      dispatchButton.disabled=!previewReady||!canWrite()||!bookReady('dispatch_transport')||!state.can_dispatch;
+      return;
+     }
      const fastest=result.fastest,minimum=result.minimum;
      const weather=details.weather,days=route=>route.logistics.weather?.days??route.days;
      const comparison=[fastest&&text('最快 ','最速 ')+days(fastest)+' '+text('日／粮','日／兵糧')+fastest.logistics.total_grain,
@@ -383,7 +420,9 @@
    }
    query('#dispatch-logistics').onclick=()=>{const current=row('logistics');if(!canWrite()||!previewReady||!current?.can_dispatch||!current.preview)return;const q=current.preview;
     const route=chosen||q.route_mode;if(!['land','fastest','sea','special','river','minimum_grain'].includes(route))return;
-    return submit('dispatch_transport',{source:active.city,target:q.target,officers:q.officers,cargo:clone(q.cargo),route_mode:route});};
+    const cargo=clone(q.cargo);
+    if(chosenGrain!==null)cargo.grain=chosenGrain;
+    return submit('dispatch_transport',{source:active.city,target:q.target,officers:q.officers,cargo,route_mode:route});};
    bindRescue(state);
    bindTreasure(state);
    i18n?.apply?.();

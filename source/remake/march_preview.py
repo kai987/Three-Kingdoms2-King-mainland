@@ -257,7 +257,7 @@ def logistics_cost(game, state, ids, quote, *, cargo=0, reserves=0):
 
 
 def preview_logistics(game,state,source,target,ids,mode,purpose,cargo,reserves,revision):
-    from . import historical_campaigns, logistics
+    from . import historical_campaigns, logistics, transport_capacity
     from .transfer_supply import MINIMUM_GRAIN
 
     owner = state.cities[source].owner
@@ -280,13 +280,21 @@ def preview_logistics(game,state,source,target,ids,mode,purpose,cargo,reserves,r
     back = engine._travel_path(state,target,source,owner,'fastest')
     expected_return = None if back is None else logistics_cost(game,state,ids,back)['total_grain']
     data = game.catalog.data
+    capacity=purpose=='convoy' and transport_capacity.enabled(state)
+    if capacity:
+        returning=logistics.convoy_return(game,state,state.cities[source],state.cities[target],policy)
+        capacity_back=returning[1] if returning else None
 
     def decorate(quote):
         if quote is None:
             return None
-        return dict(quote,segments=_quote_segments(data,quote['routes']),
+        result=dict(quote,segments=_quote_segments(data,quote['routes']),
                     logistics=dict(logistics_cost(game,state,ids,quote,cargo=cargo,reserves=reserves),
                                    return_grain=expected_return))
+        if capacity:
+            result['capacity']=logistics.capacity_quote(game,state,state.cities[source],state.cities[target],
+                                                        ids,quote,cargo,reserves,capacity_back)
+        return result
 
     return dict(revision=revision,primary=decorate(primary),fastest=decorate(fastest),
                 minimum=decorate(minimum),blocked_reason=None if primary else

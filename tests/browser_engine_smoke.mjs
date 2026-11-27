@@ -15,6 +15,7 @@ const runtimeDirectory=path.join(root,'tools/web-runtime/node_modules/pyodide');
 const candidateSave=process.argv[3];
 const regionalSave=process.env.TK2_REGIONAL_BROWSER_FIXTURE;
 const granarySave=process.env.TK2_GRANARY_BROWSER_FIXTURE;
+const transportSave=process.env.TK2_TRANSPORT_CAPACITY_BROWSER_FIXTURE;
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const decode=bytes=>new TextDecoder('utf-8',{fatal:true}).decode(bytes);
 const jsonFile=name=>JSON.parse(fs.readFileSync(name,'utf8'));
@@ -41,7 +42,7 @@ assert(another,'a second scenario is required for the lazy switching check');
 const logisticsScenario='mainland217-07';
 const regionalScenario='mainland208-10';
 const catalogs=new Map();
-for(const identity of new Set([initial,another,logisticsScenario,...(regionalSave||granarySave?[regionalScenario]:[])])){
+for(const identity of new Set([initial,another,logisticsScenario,...(regionalSave||granarySave||transportSave?[regionalScenario]:[])])){
  const row=manifest.catalogs.find(row=>row.id===identity);
  assert.match(row.path,/^\/tk2\/game\/data\/campaigns\/[a-zA-Z0-9-]+\.json$/);
  const bytes=gunzipSync(artifact(row.url));
@@ -364,6 +365,47 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
   assert.equal(request('/api/save',{instance:seat}),raw);
  }
 
+ let transportConvoys=0;
+ if(transportSave){
+  const source='lujiang',target='danyang';
+  let field=load(fs.readFileSync(transportSave,'utf8'),state(seat).revision,seat);
+  assert.equal(field.game.extension.transport_capacity_rules_version,303);
+  const ship=mode=>{
+   const saved=request('/api/save',{instance:seat});
+   const officers=field.catalog.logistics.cities[source].preview.officers;
+   const plan={source,target,officers,route_mode:mode};
+   const quotation=JSON.parse(request('/api/logistics-preview',{method:'POST',instance:seat,
+    body:JSON.stringify({...plan,revision:field.revision,purpose:'convoy',cargo:47000,reserves:0})})).primary;
+   assert.equal(request('/api/save',{instance:seat}),saved);
+   const cap=quotation.capacity;
+   assert.ok(cap.physical_capacity>=cap.load_grain+cap.rations);
+   if(mode==='river')assert.equal(cap.mode,'mixed');
+   const n=field.game.extension.logistics.convoys.length;
+   field=command(field,'dispatch_transport',{...plan,cargo:{grain:cap.load_grain,gold:0,reserves:0}},seat);
+   assert.equal(field.game.extension.logistics.convoys.length,n+1);
+   assert.equal(field.game.extension.logistics.convoys.at(-1).journeys[0].capacity_load.limit,cap.physical_capacity);
+  };
+  ship('land');
+  const controls={city:'end_turn',ai:'ai',arrivals:'arrivals'};
+  const turn=field.game.turn;
+  for(let step=0;step<4&&(field.game.turn===turn||field.game.phase!=='city');step++){
+   const action=controls[field.game.phase];
+   assert(action,'known strategic campaign phase');
+   field=command(field,action,action==='ai'?{turn:field.game.turn}:{},seat);
+  }
+  assert.equal(field.game.turn,turn+1);
+  assert.equal(field.game.phase,'city');
+  ship('river');
+  const reported=field.game.extension.logistics.convoys.filter(row=>row.source===source);
+  assert.equal(reported.length,2);
+  const compact=request('/api/save?compact=1',{instance:seat});
+  field=load(compact,field.revision,seat);
+  assert.deepEqual(field.game.extension.logistics.convoys.filter(row=>row.source===source),reported);
+  assert.equal(field.game.extension.transport_capacity.dispatches[source][1],1);
+  request('/api/save',{instance:seat});
+  transportConvoys=reported.length;
+ }
+
  // Exercise the real optional wire path, not only the legacy bridge used by
  // CPU replay. Hydration must reconstruct the same complete current view.
  const {default:wireModule}=await import(pathToFileURL(path.join(root,'game/view-cache.js')).href);
@@ -409,7 +451,8 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  console.log(JSON.stringify({ok:true,pyodide:py.version,previews:previews.length,catalogs:catalogs.size,
   requests:trace.length,ai_turns:1,battle_settlements:battleSettlements,logistics_route_parity:true,
   save_sha256:sha(finalSave),rng,cpu_save_bytes_equal:true,v212_observer_turns:candidateTurns,
-  weather_observer_turns:winterTurns,weather_save_sha256:sha(winterSave),regional_market_roundtrip:regionalMarketOrder?.convoy??null,granary_convoy_roundtrip:granaryConvoy}));
+  weather_observer_turns:winterTurns,weather_save_sha256:sha(winterSave),regional_market_roundtrip:regionalMarketOrder?.convoy??null,
+  granary_convoy_roundtrip:granaryConvoy,transport_capacity_roundtrip:transportConvoys}));
 }finally{
  for(const bridge of bridges.values())bridge.destroy();
  responseSemantic?.destroy();
