@@ -5,7 +5,7 @@ import json
 
 from . import (city_economy, climate_regions, command_books, domestic, facilities, faction_economy,
                historical_campaigns, logistics, logistics_rules, logistics_strategy, strategic_granary as reserve,
-               winter_travel, winter_weather)
+               winter_agriculture, winter_climate, winter_travel, winter_weather)
 from .errors import GameError
 from . import granary_demand, transport_capacity
 
@@ -28,10 +28,18 @@ def profile(game, state, city, budget, forecast):
     winter, winter_due = 0, None
     if reserve.enabled(state,'winter') and winter_weather.stage(state)>=2:
         climate = game.catalog.climate.cities[city.id]['climate_region_id']
-        snow_months, chance, cold_levels, _ = climate_regions.REGIONS[climate]
-        normal = {month for month,level in zip(climate_regions.WINTER_MONTHS,cold_levels) if level >= 2}
-        hazardous = normal | (set(snow_months) if chance >= reserve.RULES['cold_reserve_min_chance'] else set())
-        starts = [offset for offset in range(3) if (state.month+offset-1)%12+1 in hazardous]
+        if winter_climate.enabled(state):
+            upcoming = [(state.month+offset-1)%12+1 for offset in range(3)]
+            chances = [winter_climate.snow_probability(state, climate, month) for month in upcoming]
+            starts = [offset for offset, month in enumerate(upcoming)
+                      if winter_climate.cold_normal(state, climate, month) >= 2
+                      or chances[offset] >= reserve.RULES['cold_reserve_min_chance']]
+            chance = max((chances[offset] for offset in starts), default=0)
+        else:
+            snow_months, chance, cold_levels, _ = climate_regions.REGIONS[climate]
+            normal = {month for month,level in zip(climate_regions.WINTER_MONTHS,cold_levels) if level >= 2}
+            hazardous = normal | (set(snow_months) if chance >= reserve.RULES['cold_reserve_min_chance'] else set())
+            starts = [offset for offset in range(3) if (state.month+offset-1)%12+1 in hazardous]
         if starts:
             winter = fixed * min(100, max(chance,25)*len(starts))//100
             winter = min(fixed*reserve.RULES['winter_max_months'],max(winter,budget.get('winter_reserve_extra',0)))
@@ -39,6 +47,8 @@ def profile(game, state, city, budget, forecast):
     history = logistics_strategy.pressure(state,'cities',city.id,True,write=False)
     recent = sum(gap for eta,gap in forecast.gaps if eta <= 3)
     target = max(forecast.reserve, fixed*months) + winter
+    if forecast.agricultural_risk:
+        target += forecast.agricultural_risk[1]
     if (recent and frontline) or history:
         target += min(fixed, recent if recent else fixed//2)
     row = reserve.reserve_row(state, city)
@@ -397,15 +407,22 @@ def dispatch(game,state,owner,plan):
         missing = min(spec['winter'], max(0,spec['target']-stock))
         if missing >= reserve.RULES['minimum_load']:
             winter_shortages[key] = (due,missing)
-    keys = list(dict.fromkeys([*keys,*sorted(winter_shortages,
-                key=lambda key:(winter_shortages[key][0],-winter_shortages[key][1],key))]))
+    readiness = {key: (due, missing, 'winter') for key, (due, missing) in winter_shortages.items()}
+    agriculture_needs = plan.agricultural_needs() if winter_agriculture.planning_enabled(state) else ()
+    for key, due, needed in agriculture_needs:
+        if needed < reserve.RULES['minimum_load']:
+            continue
+        previous_due, previous_need, _ = readiness.get(key, (due, 0, 'agriculture'))
+        readiness[key] = min(due, previous_due), max(needed, previous_need), 'agriculture'
+    keys = list(dict.fromkeys([*keys, *sorted(readiness,
+                key=lambda key:(readiness[key][0],-readiness[key][1],key))]))
     candidate = reserve.candidate(state)
     commitments = {row['target'] for row in reserve.commitments(state)}
     active = {row['target'] for row in reserve.pool(state)['orders'].values()
               if row['owner']==owner and row['delivered_turn'] is None and row['status'] != 'reserved'}
     active.update(row['target'] for row in granary_relay.entries(state).values() if row['owner']==owner)
     demands = {key: granary_demand.for_city(game, state, plan, key) for key in keys} if candidate else {}
-    targets = ([key for key in keys if demands[key].first is not None or key in winter_shortages]
+    targets = ([key for key in keys if demands[key].first is not None or key in readiness]
                if candidate else [key for key in keys if key not in commitments | active])
     urgent_targets = set()
     if candidate and reserve.enabled(state, 'coordination'):
@@ -421,12 +438,14 @@ def dispatch(game,state,owner,plan):
         forecast = plan.cities[key]
         demand = demands.get(key)
         first = forecast.zero_in if demand is None else demand.first
-        winter = first is None and key in winter_shortages
-        deadline = state.turn+(winter_shortages[key][0] if winter else first)
-        requested = winter_shortages[key][1] if winter else sum(gap for _,gap in (
+        preparing = first is None and key in readiness
+        reason = readiness[key][2] if preparing else 'consumption'
+        priority = 'winter' if reason == 'winter' else 'proactive'
+        deadline = state.turn+(readiness[key][0] if preparing else first)
+        requested = readiness[key][1] if preparing else sum(gap for _,gap in (
             forecast.gaps if demand is None else demand.remaining))
-        if candidate and winter:
-            due = winter_shortages[key][0]
+        if candidate and preparing:
+            due = readiness[key][0]
             requested = min(requested, max(0, network.profiles[key]['target']-demand.balance_at_end[due-1]))
         options = []
         rejections = network.rejected[key]
@@ -436,7 +455,7 @@ def dispatch(game,state,owner,plan):
                 continue
             eta = logistics_rules.ceil_div(route['days'],10)
             quote_deadline = deadline
-            if winter:
+            if preparing:
                 timely = route['days']+reserve.RULES['timely_buffer_days'] <= 10*(deadline-state.turn-1)
                 missing = requested if timely else 0
             elif demand is not None:
@@ -457,25 +476,28 @@ def dispatch(game,state,owner,plan):
         if candidate and reserve.observed():
             best = min(options, key=_rank) if options else None
             reserve.observe(state,'residual_demand', owner=owner,target=key, deadline=deadline,
-                demand_id=f'{owner}/{key}/{deadline}/{"winter" if winter else "consumption"}',
-                priority='winter' if winter else 'proactive', **granary_demand.describe(demand),
+                demand_id=f'{owner}/{key}/{deadline}/{reason}',
+                priority=priority, **granary_demand.describe(demand),
                 planned=None if best is None else best['net'], receipts=forecast.convoy_receipts,
                 pending_target=key in commitments, active_target=key in active)
         reserve.observe(state,'dispatch_requested',owner=owner,target=key,deadline=deadline,
-            grain=requested, priority='winter' if winter else 'proactive', candidates=len(options),
+            grain=requested, priority=priority, candidates=len(options),
             legal=bool(choices.get(key)), timely_net=max((q['net'] for q in options if q['timely']),default=0),
             delayed_receipts=sum(forecast.risky_receipts.values()), rejections=dict(rejections))
         if not options or not command_books.can_spend(state,owner,'dispatch_transport'):
-            if (not winter and first > 2 and (not candidate or key not in active | commitments)):
+            if (not preparing and first > 2 and (not candidate or key not in active | commitments)):
                 unfilled.append(key)
             continue
         quote = min(options,key=_rank)
-        order = reserve.reserve_order(state,owner,quote,'winter' if winter else 'proactive')
+        order = reserve.reserve_order(state,owner,quote,priority)
         try:
             reserve.launch(game,state,order,quote)
         except GameError as exc:
             reserve._finish(state,order,'cancelled',str(exc))
             continue
+        if reason == 'agriculture':
+            winter_weather.report('agricultural_preparation', turn=state.turn, year=state.year, month=state.month,
+                                  owner=owner, city=key, method='granary', grain=quote['net'], deadline=deadline)
         used.add(order['source'])
         orders.append(order)
     orders.extend(granary_relay.dispatch(game,state,owner,plan,network,unfilled,used))

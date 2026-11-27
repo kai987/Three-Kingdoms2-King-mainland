@@ -5,7 +5,7 @@ let cloudSave=null,cloudSaveUI=null;
 let civilStaffUI=null,domesticUI=null,treasuryUI=null,facilitiesUI=null,cityDevelopmentUI=null,diplomacyUI=null;
 let campaignDifficulty='normal';
 let campaignLifespan='historical';
-let campaignWinter=false,campaignEmergency=false,weatherLayerVisible=false;
+let campaignWinter=false,campaignClimate=false,campaignColdWave=false,campaignEmergency=false,weatherLayerVisible=false;
 let campaignRegional=false,campaignRegionalTrade=false;
 let campaignGranary=false,campaignGranaryCandidate=false,campaignGranaryDispatch=false,campaignGranaryWinter=false,campaignGranaryRelay=false;
 let campaignTransportCapacity=false;
@@ -497,6 +497,8 @@ function selectFaction(){
   <label class="field" for="lifespan">${battleText('武將壽命','武将の寿命')}<select id="lifespan" aria-describedby="lifespan-help">${lifespanOptions}</select></label></div>
   <p id="lifespan-help" class="small">${battleText('選「無」時，武將不會因年齡自然死亡。','「なし」では、武将は加齢による自然死を迎えません。')}</p>
   <label class="setup-winter"><input id="winter-weather-option" type="checkbox" ${campaignWinter?'checked':''}> ${battleText('啟用冬季天氣（實驗）','冬季天候を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="winter-climate-option" type="checkbox" ${campaignClimate?'checked':''}> ${battleText('啟用冬季氣候與農業 V2.3（實驗）','冬季気候・農業 V2.3 を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="winter-cold-wave-option" type="checkbox" ${campaignColdWave?'checked':''} ${campaignClimate?'':'disabled'}> ${battleText('啟用江南異常寒潮（實驗）','江南の異常寒波を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="transport-emergency-option" type="checkbox" ${campaignEmergency?'checked':''}> ${battleText('啟用運輸應急 V2.2.2（實驗）','輸送の緊急対応 V2.2.2 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="regional-market-option" type="checkbox" ${campaignRegional?'checked':''}> ${battleText('啟用區域市場 V3.0.1（實驗）','地域市場 V3.0.1 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="regional-auto-trade-option" type="checkbox" ${campaignRegionalTrade?'checked':''} ${campaignRegional?'':'disabled'}> ${battleText('啟用 AI 自動商業貿易（實驗）','AIの自動商業取引を有効にする（実験）')}</label>
@@ -533,7 +535,23 @@ function selectFaction(){
   $('#scenario').onchange=()=>draw($('#scenario').value);
   $('#difficulty').onchange=()=>{campaignDifficulty=$('#difficulty').value;};
   $('#lifespan').onchange=()=>{campaignLifespan=$('#lifespan').value;};
-  $('#winter-weather-option').onchange=event=>{campaignWinter=event.target.checked;};
+  const winterOption=$('#winter-weather-option'),climateOption=$('#winter-climate-option'),waveOption=$('#winter-cold-wave-option');
+  const refreshWeatherOptions=()=>{
+   winterOption.checked=campaignWinter;climateOption.checked=campaignClimate;
+   waveOption.disabled=!campaignClimate;
+   if(!campaignClimate)waveOption.checked=campaignColdWave=false;
+  };
+  winterOption.onchange=event=>{
+   campaignWinter=event.target.checked;
+   if(campaignWinter)campaignClimate=false;
+   refreshWeatherOptions();
+  };
+  climateOption.onchange=event=>{
+   campaignClimate=event.target.checked;
+   if(campaignClimate)campaignWinter=false;
+   refreshWeatherOptions();
+  };
+  waveOption.onchange=event=>{campaignColdWave=event.target.checked;};
   $('#transport-emergency-option').onchange=event=>{campaignEmergency=event.target.checked;};
   $('#regional-market-option').onchange=event=>{
    campaignRegional=event.target.checked;
@@ -558,7 +576,8 @@ function selectFaction(){
    const pending=setupPreview;setupPreview=null;
    weatherLayerVisible=false;
    if(await command('new',{faction:f,seed,scenario,difficulty:campaignDifficulty,lifespan:campaignLifespan,
-       ...(campaignWinter?{weather_rules_version:221}:{}),
+       ...(campaignClimate?{weather_rules_version:23,weather_options:{exceptional_cold_wave:campaignColdWave}}:
+          campaignWinter?{weather_rules_version:221}:{}),
        ...(campaignEmergency?{transport_emergency_rules_version:222}:{}),
        ...(campaignRegional?{regional_market_rules_version:301}:{}),
        ...(campaignTransportCapacity?{transport_capacity_rules_version:303}:{}),
@@ -567,7 +586,7 @@ function selectFaction(){
        ...(campaignGranary?{strategic_granary_rules_version:campaignGranaryCandidate?3021:302,
          strategic_granary_options:{proactive:campaignGranaryDispatch,winter:campaignGranaryWinter,relay:campaignGranaryRelay,
           ...(campaignGranaryCandidate?{coordination:true,return_safety:true}:{})}}:{})})){
-    campaignWinter=false;
+    campaignWinter=campaignClimate=campaignColdWave=false;
     campaignEmergency=false;
     campaignRegional=campaignRegionalTrade=false;
     campaignGranary=campaignGranaryCandidate=campaignGranaryDispatch=campaignGranaryWinter=campaignGranaryRelay=false;
@@ -872,7 +891,16 @@ function cityWeatherHtml(id){
  const weather=view.catalog.weather,region=weather?.cities[id]?.climate_region_id,row=weather?.regions[region];
  if(!row)return '';
  const [tc,ja]=WINTER_REGION_NAMES[region],names=WINTER_SNOW_NAMES[row.severity],date=weather.as_of;
- const grouped=new Map(),seasonal=weather.seasonal?.[id];
+ const grouped=new Map(),seasonal=weather.seasonal?.[id],limit=row.depth_limit??30;
+ const snowCover=row.snow_cover_run;
+ const cropRegion=weather.cities[id].agriculture_region_id??region;
+ const agriculture=weather.regions[cropRegion]?.agriculture,production=view.catalog.city_development?.cities[id]?.climate_production;
+ const climateLabels={
+  observing:['觀察中','観測中'],insufficient:['觀測期不足','観測期間不足'],disabled:['僅觀測','観測のみ'],
+  normal:['正常','平年並み'],moisture:['瑞雪有利','適度な積雪の恩恵'],mild:['輕度春耕延遲','軽度の春耕遅れ'],
+  moderate:['中度低溫影響','中程度の低温影響'],severe:['嚴重春耕延遲','深刻な春耕遅れ']
+ };
+ const observed=value=>battleText(value?'完成':'未完成',value?'完了':'未完了');
  for(const route of view.catalog.river_routes||[]){
   if(route.from!==id&&route.to!==id)continue;
   for(const part of route.draw||[]){
@@ -881,10 +909,23 @@ function cityWeatherHtml(id){
   }
  }
  return `<div class="small city-weather" data-city-weather><p>${battleText(
-  `${tc} · ${names[0]} · 積雪 ${row.depth}/30 · 寒冷 ${row.cold}/3・${date[1]}月${date[2]}日觀測`,
-  `${ja}・${names[1]}・積雪 ${row.depth}/30・寒さ ${row.cold}/3・${date[1]}月${date[2]}日観測`)}</p>
-  <p>${battleText(`道路 ${WINTER_SNOW_NAMES[['clear','light_snow','heavy_snow','blizzard'].indexOf(row.road)][0]} · 本季每旬降雪機率 ${row.season_chance}%`,
-   `道路 ${WINTER_SNOW_NAMES[['clear','light_snow','heavy_snow','blizzard'].indexOf(row.road)][1]}・季節の降雪確率は1旬あたり ${row.season_chance}%`)}</p>
+  `${tc} · ${names[0]} · 積雪指數 ${row.depth}/${limit} · 寒冷 ${row.cold}/3・${date[1]}月${date[2]}日觀測`,
+  `${ja}・${names[1]}・積雪指数 ${row.depth}/${limit}・寒さ ${row.cold}/3・${date[1]}月${date[2]}日観測`)}</p>
+  <p>${battleText(`道路 ${WINTER_SNOW_NAMES[['clear','light_snow','heavy_snow','blizzard'].indexOf(row.road)][0]} · 本月每旬降雪機率 ${row.season_chance}%`,
+   `道路 ${WINTER_SNOW_NAMES[['clear','light_snow','heavy_snow','blizzard'].indexOf(row.road)][1]}・今月の降雪確率は1旬あたり ${row.season_chance}%`)}</p>
+  ${snowCover!==undefined?`<p>${battleText(`連續積雪 ${snowCover} 日`,`積雪継続 ${snowCover} 日`)}</p>`:''}
+  ${agriculture&&production?`<details data-agricultural-climate><summary>${battleText(
+   `${agriculture.year} 年農業氣候`,`${agriculture.year} 年の農業気候`)}</summary>
+   ${cropRegion!==region?`<p>${battleText('農業氣候區','農業気候区')} ${battleText(...WINTER_REGION_NAMES[cropRegion])}</p>`:''}
+   <p>${battleText('冬季觀測','冬季観測')} ${observed(agriculture.winter_observed)} ·
+   ${battleText('春季觀測','春季観測')} ${observed(agriculture.spring_observed)} ·
+   ${battleText(...climateLabels[agriculture.status])}</p>
+   ${agriculture.finalized&&agriculture.spring_observed&&agriculture.status!=='disabled'?`<p>${battleText(
+    `年度產糧倍率 ${agriculture.multiplier}% · 適用 6～9 月`,
+    `年間の生産補正 ${agriculture.multiplier}%・適用期間 6～9月`)}</p>`:''}
+   <p>${battleText(`常規月產糧 ${production.regular.toLocaleString()} · 氣候調整後 ${production.adjusted.toLocaleString()}`,
+    `通常の月間生産 ${production.regular.toLocaleString()}・気候補正後 ${production.adjusted.toLocaleString()}`)}</p>
+  </details>`:''}
   ${[...grouped].map(([reach,ice])=>`<p data-city-river-ice="${escapeHtml(reach)}">${battleText(
    `${WINTER_ICE_NAMES[ice.state][0]} · 河段航速 ${ice.speed_percent}%`,
    `${WINTER_ICE_NAMES[ice.state][1]}・区間の航速 ${ice.speed_percent}%`)}</p>`).join('')}

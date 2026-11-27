@@ -20,7 +20,7 @@ from . import civil_staff, domestic, logistics, presentation, treasures, facilit
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, logistics_strategy, payroll, transport_capacity
-from . import granary_planning, market_pricing, regional_market, strategic_granary, transport_emergency, winter_weather
+from . import granary_planning, market_pricing, regional_market, strategic_granary, transport_emergency, winter_agriculture, winter_climate, winter_weather
 from . import transshipment
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
@@ -496,13 +496,21 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                         raise GameError('操作参数无效。')
                     candidate = self._new(payload.get('faction'), payload.get('seed'),
                                           payload.get('difficulty', 'normal'), payload.get('lifespan', 'historical'))
-                    if winter_weather.FIELD in payload:
-                        requested = payload[winter_weather.FIELD]
-                        if type(requested) is not int or requested not in (0, winter_weather.VERSION, winter_weather.CORRECTED):
+                    if winter_weather.FIELD in payload or winter_climate.OPTIONS in payload:
+                        requested = payload.get(winter_weather.FIELD, 0)
+                        weather_versions = (0, winter_weather.VERSION, winter_weather.CORRECTED, winter_climate.VERSION)
+                        if type(requested) is not int or requested not in weather_versions:
                             raise GameError('天气规则版本无效。')
                         if requested and logistics_rules.version(candidate) != logistics_rules.CURRENT:
                             raise GameError('冬季天气需要当前后勤规则。')
-                        winter_weather.initialize(self, candidate, requested)
+                        options = payload.get(winter_climate.OPTIONS)
+                        if winter_climate.OPTIONS in payload and (requested != winter_climate.VERSION or
+                                                                  not isinstance(options, dict)):
+                            raise GameError('氣候實驗選項需要 V2.3。')
+                        try:
+                            winter_weather.initialize(self, candidate, requested, options=options)
+                        except ValueError as exc:
+                            raise GameError('氣候實驗選項無效。') from exc
                     if transport_emergency.FIELD in payload:
                         requested = payload[transport_emergency.FIELD]
                         if type(requested) is not int or requested not in (0, transport_emergency.VERSION):
@@ -839,9 +847,16 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             state.calendar_cursor = state.year
             self._note(state, f'新年更新人物库，记录{count}项年代事件；未自动招募或复活人物。')
         regular_incomes = {}
+        new_climate = winter_climate.enabled(state)
+        trace_production = new_climate and winter_weather.observing()
         for city in state.cities.values():
             if city.owner != 'neutral':
-                income = city_economy.monthly_income(self, city.id, state)
+                if trace_production:
+                    income, production = city_economy.climate_production(self, city.id, state)
+                    winter_weather.report('agricultural_income', year=state.year, month=state.month, turn=state.turn,
+                                          city=city.id, owner=city.owner, **production)
+                else:
+                    income = city_economy.monthly_income(self, city.id, state)
                 regular_incomes[city.id] = income
                 city.gold += income['gold']
                 city.grain += income['grain']
@@ -854,6 +869,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             if ident in existing and officer.alive:
                 officer.health = min(officer.profile.health_max, officer.health + r['monthly_heal'])
         domestic.month_rollover(self, state, regular_incomes=regular_incomes)
+        if new_climate:
+            winter_agriculture.mark_income(state)
         if harvest:
             facilities.settle_harvest(self, state, harvest)
         city_economy.settle_turn_grain(self, state)

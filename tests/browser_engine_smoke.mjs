@@ -314,6 +314,21 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
  assert.equal(request('/api/save',{instance:seat}),revisedSave);
  assert.equal(revised.catalog.weather.tick,30);
 
+ // A real opt-in V2.3 session uses the same observer turn, archive and CPU trace.
+ let climate=command(state(seat),'new',{scenario:logisticsScenario,faction:'observer',seed:2026,
+  weather_rules_version:23,weather_options:{exceptional_cold_wave:false}},seat);
+ assert.equal(climate.game.extension.winter_weather.options.exceptional_cold_wave,false);
+ assert.equal(climate.catalog.weather.regions.liaodong.depth_limit,50);
+ const openingClimate=climate.game.turn;
+ climate=command(climate,'observe_turn',{},seat);
+ assert.equal(climate.game.turn,openingClimate+1);
+ assert.equal(climate.game.extension.winter_weather.tick,10);
+ const climateSave=request('/api/save?compact=1',{instance:seat});
+ climate=load(climateSave,climate.revision,seat);
+ assert.equal(climate.game.extension.weather_rules_version,23);
+ assert.equal(request('/api/save?compact=1',{instance:seat}),climateSave);
+ revised=climate;
+
  // The separate regional fixture was constructed using the published catalog
  // and comes through the same file import and authoritative worker commands.
  let regionalMarketOrder=null;

@@ -11,8 +11,8 @@ from hashlib import sha256
 from . import capital_openings, command_books, commandery_population, grain_units, large_city_population
 from . import ordinary_population_north, ordinary_population_southeast
 from . import ordinary_population_southwest, ordinary_population_west
-from . import economy_rules
-from .city_economy import monthly_income, opening_development, tier_at, town_level
+from . import economy_rules, winter_climate
+from .city_economy import climate_production, monthly_income, opening_development, tier_at, town_level
 from .errors import GameError
 from .officers import ref_sort_key
 
@@ -646,12 +646,17 @@ def view(game, state):
         quotes = {str(actor): {kind: _quote(game, state, city, actor, kind, state.player, governor_bonus_percent)
                               for kind in ACTIONS} for actor in actors}
         best = min(actors, key=lambda ident: (-_profile(game, state, ident).intellect, ref_sort_key(ident))) if actors else None
+        if winter_climate.enabled(state):
+            income, climate_income = climate_production(game, key, state)
+            production = dict(income=income, climate_production=climate_income)
+        else:
+            production = dict(income=monthly_income(game, key, state))
         result['cities'][key] = dict(owner=city.owner, **{field: row[field] for field in LIMITS},
             garrison_spirit=row.get('garrison_spirit', 100),
             baseline=deepcopy(row['baseline']), cooldown=row['cooldown'], tax_rate=tax_rate(row['governance']),
             eligible_actors=actors, actor_quotes=quotes,
             actions=deepcopy(quotes[str(best)]) if best is not None else {},
-            income=monthly_income(game, key, state))
+            **production)
     return result
 
 
