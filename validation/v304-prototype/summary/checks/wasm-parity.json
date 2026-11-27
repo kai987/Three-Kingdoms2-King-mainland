@@ -1,0 +1,13 @@
+{
+  "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+  "command": [
+    "node",
+    "tests/march_wasm_parity.cjs"
+  ],
+  "environment": {},
+  "exit_code": 0,
+  "seconds": 64.989,
+  "log": "logs/wasm-parity.log",
+  "log_sha256": "ad2afd96a612118e8df3c588253c1544b280d9621e3ff7ff9539163d55e8f67b",
+  "log_bytes": 244
+}

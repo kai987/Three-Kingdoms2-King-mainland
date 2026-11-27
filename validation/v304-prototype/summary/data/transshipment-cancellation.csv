@@ -1,0 +1,3 @@
+case,turn,stock_before,stock_after,reserved_before,reserved_after,live_convoys_after,cargo_unchanged
+manual,5,196374,196374,37223,0,1,true
+batches_exhausted,10,null,null,null,0,0,null

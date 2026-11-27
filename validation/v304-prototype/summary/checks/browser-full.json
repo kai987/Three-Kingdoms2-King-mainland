@@ -1,0 +1,22 @@
+{
+  "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+  "command": [
+    "node",
+    "tools/browser-tests/node_modules/@playwright/test/cli.js",
+    "test",
+    "--config",
+    "build/transshipment-v304/playwright-final.config.mjs",
+    "--workers",
+    "2",
+    "--reporter",
+    "list"
+  ],
+  "environment": {
+    "MARCH_CORE_BACKEND": "rust"
+  },
+  "exit_code": 1,
+  "seconds": 3361.649,
+  "log": "logs/browser-full.log",
+  "log_sha256": "a1145ebc0d2c3e87456f089b752112c7c6c1b119217725b9cc81eb3f17438307",
+  "log_bytes": 46413
+}

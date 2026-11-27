@@ -1,0 +1,8 @@
+group,case,mode,convoys,gross,loaded_rations,net,final_net
+E0,pearl_real_routes_controlled,mixed,2,97034,2966,88175,88175
+E1,pearl_real_routes_controlled,land,4,188488,2200,177606,86102
+E1,pearl_real_routes_controlled,river,1,91081,423,90688,0
+E0,pearl_ends_at_river_controlled,land,1,49362,638,46682,46682
+E0,pearl_ends_at_river_controlled,mixed,1,48549,1451,43239,43239
+E1,pearl_ends_at_river_controlled,land,2,98384,1616,91504,0
+E1,pearl_ends_at_river_controlled,river,1,91081,423,90688,90688

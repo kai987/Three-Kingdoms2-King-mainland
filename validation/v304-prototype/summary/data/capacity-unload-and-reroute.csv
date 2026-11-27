@@ -1,0 +1,2 @@
+convoy,turn,city,target,owner,grain,capacity,required_rations,controlled_waiting,wrong_remote_city_rejected,before_physical_load,after_physical_load,real_stock_delta,path,command_cost
+3,5,yulin,cangwu,wu,41504,50000,327,true,true,91504,50000,41504,"[""yulin"",""cangwu""]",0

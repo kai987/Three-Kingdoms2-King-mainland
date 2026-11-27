@@ -1,0 +1,20 @@
+{
+  "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "crates/march-core/Cargo.toml",
+    "--locked",
+    "--target-dir",
+    "build/march-core-target"
+  ],
+  "environment": {
+    "RUSTUP_TOOLCHAIN": "1.93.0"
+  },
+  "exit_code": 0,
+  "seconds": 1.4,
+  "log": "logs/rust-crate.log",
+  "log_sha256": "559371c6169d7a3700ecd3edd23a5a5955d11c3c40515da28e1ee8415c87ea8c",
+  "log_bytes": 2478
+}

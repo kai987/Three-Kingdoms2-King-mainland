@@ -1,0 +1,456 @@
+{
+  "frozen_runtime": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+  "corrected_test_source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+  "changed_files_between_runs": [
+    "tests/browser_transshipment_smoke.mjs"
+  ],
+  "historical_attempts": [
+    {
+      "name": "browser-transshipment",
+      "manifest": {
+        "file": "browser-transshipment.json",
+        "original_sha256": "4e3ddf27eb9b44689b69cd27ebf2442ebd657c136e4db59903515365a9292141",
+        "portable_sha256": "4e3ddf27eb9b44689b69cd27ebf2442ebd657c136e4db59903515365a9292141",
+        "host_paths_redacted": false
+      }
+    },
+    {
+      "name": "node",
+      "manifest": {
+        "file": "node.json",
+        "original_sha256": "1c54a94ac7b88c8f63d6dbb04b0216c3b2b5144ac19a4e5040ccd23f3b7dd532",
+        "portable_sha256": "1c54a94ac7b88c8f63d6dbb04b0216c3b2b5144ac19a4e5040ccd23f3b7dd532",
+        "host_paths_redacted": false
+      }
+    }
+  ],
+  "gates": {
+    "native": {
+      "status": "passed",
+      "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+      "metrics": {
+        "wasm_bytes": 415110,
+        "sha256": "b2fc9be871e2512f3861a32aec4a05c988caafb31b71e5b7fa0484b41ff62f75"
+      },
+      "record": {
+        "file": "native.json",
+        "original_sha256": "cfd721f50e703dc78b06a9338cceab3550a0ea7d5b1e2bbaf9498dd892c57480",
+        "portable_sha256": "cfd721f50e703dc78b06a9338cceab3550a0ea7d5b1e2bbaf9498dd892c57480",
+        "host_paths_redacted": false
+      }
+    },
+    "build": {
+      "status": "passed",
+      "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+      "metrics": {
+        "files": 5132,
+        "bytes": 648562233,
+        "commit": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "content_sha256": "b20fb1efcc469f965b9a6039fe86d62ffe70dea83e61217d38e36869795e4c7d"
+      },
+      "record": {
+        "file": "build.json",
+        "original_sha256": "6ea633c6aea030e96897f11a41576f2da1ed56e8b4b8b1aaae6fba578681cd79",
+        "portable_sha256": "6ea633c6aea030e96897f11a41576f2da1ed56e8b4b8b1aaae6fba578681cd79",
+        "host_paths_redacted": false
+      }
+    },
+    "node": {
+      "status": "passed",
+      "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+      "metrics": {
+        "tests": 66,
+        "passed": 66
+      },
+      "record": {
+        "file": "node.json",
+        "original_sha256": "a1b295810e080d4d7035419f98938022b81f6201b1f32b848b56b5f96fce0145",
+        "portable_sha256": "a1b295810e080d4d7035419f98938022b81f6201b1f32b848b56b5f96fce0145",
+        "host_paths_redacted": false
+      }
+    },
+    "rust-crate": {
+      "status": "passed",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "metrics": {
+        "tests": 16
+      },
+      "record": {
+        "file": "rust-crate.json",
+        "original_sha256": "5035f30da3369a2c49697c22b92cf25a9ca100168050868eb2487a80eeb6bfab",
+        "portable_sha256": "5035f30da3369a2c49697c22b92cf25a9ca100168050868eb2487a80eeb6bfab",
+        "host_paths_redacted": false
+      }
+    },
+    "wasm-parity": {
+      "status": "passed",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "metrics": {
+        "resolved_cases": 24689
+      },
+      "record": {
+        "file": "wasm-parity.json",
+        "original_sha256": "f42c74392fe6bf97fd4f4ac079b814c5e217fa03d3c2b3e45a21f66cb83acccc",
+        "portable_sha256": "f42c74392fe6bf97fd4f4ac079b814c5e217fa03d3c2b3e45a21f66cb83acccc",
+        "host_paths_redacted": false
+      }
+    },
+    "wasm-rebuilt-parity": {
+      "status": "passed",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "metrics": {
+        "resolved_cases": 24689
+      },
+      "record": {
+        "file": "wasm-rebuilt-parity.json",
+        "original_sha256": "de263678b6c0b72e125a0c654b338a405521839e67d70bf03dd56277ff16a036",
+        "portable_sha256": "de263678b6c0b72e125a0c654b338a405521839e67d70bf03dd56277ff16a036",
+        "host_paths_redacted": false
+      }
+    },
+    "pyodide-cpu": {
+      "status": "passed",
+      "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+      "metrics": {
+        "results": [
+          {
+            "ok": true,
+            "pyodide": "314.0.7",
+            "previews": 29,
+            "catalogs": 5,
+            "requests": 85,
+            "ai_turns": 1,
+            "battle_settlements": 0,
+            "logistics_route_parity": true,
+            "save_sha256": "9348378e4d592521a01d9f8e362d9e5da341d1867769bd679f27b28668de37dd",
+            "rng": {
+              "state": 1487971761,
+              "draws": 34
+            },
+            "cpu_save_bytes_equal": true,
+            "v212_observer_turns": 0,
+            "weather_observer_turns": 3,
+            "weather_save_sha256": "7c4dc799b89b57b26594c894b9bad7af22b0938500efd5b9a81ed7ec9d511535",
+            "regional_market_roundtrip": null,
+            "granary_convoy_roundtrip": null,
+            "transport_capacity_roundtrip": 2,
+            "transshipment_batch_roundtrip": 3
+          }
+        ]
+      },
+      "record": {
+        "file": "pyodide-cpu.json",
+        "original_sha256": "988324e72cdedecf5237865d9af91efa2536bf99db7cd4d9b11ea883f8a9e924",
+        "portable_sha256": "29a4eb52182ecb6e521c98c196d38b2c5b6a2c92f97610b6d788db70dc1040de",
+        "host_paths_redacted": true
+      }
+    },
+    "browser-transshipment-retry": {
+      "status": "passed",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "metrics": {
+        "results": [
+          {
+            "locale": "zh-Hant",
+            "url": "http://127.0.0.1:18939/Three-Kingdoms2-King-mainland/",
+            "title": "三國·大陸戰役",
+            "viewport": {
+              "width": 1280,
+              "height": 800
+            },
+            "feederReceipts": [
+              47864,
+              43640
+            ],
+            "waterCargo": 91081,
+            "waterRations": 423,
+            "actualRouteCapacity": 100000,
+            "saveRoundtrip": true,
+            "consoleErrors": []
+          },
+          {
+            "locale": "ja",
+            "url": "http://127.0.0.1:18939/Three-Kingdoms2-King-mainland/",
+            "title": "三国志・大陸戦役",
+            "viewport": {
+              "width": 390,
+              "height": 664
+            },
+            "feederReceipts": [
+              47864,
+              43640
+            ],
+            "waterCargo": 91081,
+            "waterRations": 423,
+            "actualRouteCapacity": 100000,
+            "saveRoundtrip": true,
+            "consoleErrors": []
+          }
+        ]
+      },
+      "record": {
+        "file": "browser-transshipment-retry.json",
+        "original_sha256": "9801aa2ee1c85a8fdd038b68cd4b567b5a48f3275185169a4f722c82e0f6bc7c",
+        "portable_sha256": "9801aa2ee1c85a8fdd038b68cd4b567b5a48f3275185169a4f722c82e0f6bc7c",
+        "host_paths_redacted": false
+      }
+    },
+    "browser-full": {
+      "status": "passed",
+      "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+      "metrics": {
+        "expected": 110,
+        "observed": 110,
+        "passed": 110,
+        "initial_failures": 6,
+        "unresolved": [],
+        "reruns": [
+          {
+            "file": "browser-original-regressions-retry.json",
+            "original_sha256": "02900eb0c085a19cd489cd957dc6eb2c9293db57c291a698251de4f26fba4694",
+            "portable_sha256": "02900eb0c085a19cd489cd957dc6eb2c9293db57c291a698251de4f26fba4694",
+            "host_paths_redacted": false,
+            "cases": 12,
+            "passed": 12
+          }
+        ]
+      },
+      "record": {
+        "file": "browser-full.json",
+        "original_sha256": "368859f5acfae6a4940c572b2a6ca7fbab8ab638bfc95caf41b26e487e0d5635",
+        "portable_sha256": "368859f5acfae6a4940c572b2a6ca7fbab8ab638bfc95caf41b26e487e0d5635",
+        "host_paths_redacted": false
+      }
+    },
+    "disabled-source-parity": {
+      "status": "passed",
+      "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+      "metrics": {
+        "compared": 20,
+        "matching": 20,
+        "groups": [
+          "C0",
+          "C4"
+        ]
+      },
+      "record": {
+        "file": "disabled-source-parity.json",
+        "original_sha256": "7ffc1bd083b24f630d165b6d6177a65b04d04277c663530616ad189216228114",
+        "portable_sha256": "7ffc1bd083b24f630d165b6d6177a65b04d04277c663530616ad189216228114",
+        "host_paths_redacted": false
+      }
+    },
+    "disabled-source-parity-rerun": {
+      "status": "passed",
+      "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+      "metrics": {
+        "compared": 20,
+        "matching": 20,
+        "groups": [
+          "C0",
+          "C4"
+        ]
+      },
+      "record": {
+        "file": "disabled-source-parity-rerun.json",
+        "original_sha256": "1d3fba9080efaaf36438175d68dc974a3ffecfe2f888d7c8f5f43379f18d153d",
+        "portable_sha256": "14de832bc625eb16f4ba57a9bc6075b220ae60cfecedbac6f3219f8c88362e28",
+        "host_paths_redacted": true
+      }
+    },
+    "controlled-route-warehouse-samples": {
+      "status": "passed",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "metrics": {
+        "records": [
+          {
+            "controls": {
+              "controlled": true,
+              "uses_natural_pure_sea": false,
+              "cargo": 149031,
+              "rations": 969,
+              "actual_dispatched_total": 150000,
+              "capacity": 150000
+            },
+            "comparison": [
+              {
+                "group": "E0",
+                "final_grain": 88175,
+                "last_final_day": 40,
+                "commands": 2,
+                "ration_consumed": 2965,
+                "transport_losses": 9448
+              },
+              {
+                "group": "E1",
+                "final_grain": 86102,
+                "last_final_day": 90,
+                "commands": 5,
+                "ration_consumed": 2621,
+                "transport_losses": 11519
+              }
+            ]
+          }
+        ]
+      },
+      "record": {
+        "file": "controlled-route-warehouse-samples.json",
+        "original_sha256": "04f56ddf6a0f6e08e82dfc40557c783005d2a21b6f5aca11663ae122e6142b32",
+        "portable_sha256": "04f56ddf6a0f6e08e82dfc40557c783005d2a21b6f5aca11663ae122e6142b32",
+        "host_paths_redacted": false
+      }
+    },
+    "controlled-short-comparison": {
+      "status": "passed",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "metrics": {
+        "results": [
+          {
+            "group": "E0",
+            "actual_grain": 89921,
+            "commands": 2
+          },
+          {
+            "group": "E1",
+            "actual_grain": 90688,
+            "commands": 3
+          }
+        ]
+      },
+      "record": {
+        "file": "controlled-short-comparison.json",
+        "original_sha256": "30c05d8cedbdc19d71574210e3dcb0bb7ca73b118274c9182510db6240619c7e",
+        "portable_sha256": "30c05d8cedbdc19d71574210e3dcb0bb7ca73b118274c9182510db6240619c7e",
+        "host_paths_redacted": false
+      }
+    },
+    "control-observations-verified": {
+      "status": "passed",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "metrics": {
+        "records": [
+          {
+            "grain_balance": {
+              "origin_cargo": 98384,
+              "origin_rations": 1616,
+              "external_ration_draw": 361,
+              "travel_and_wait_rations": 2621,
+              "route_loss": 11175,
+              "weather_loss": 344,
+              "returned_grain": 119,
+              "abandoned_grain": 0,
+              "unloaded_grain": 0,
+              "tag_left_at_hub": 0,
+              "final_received": 86102,
+              "residual": 0
+            },
+            "partial": {
+              "turn": 3,
+              "received": {
+                "turn": 2,
+                "grain": 19311
+              },
+              "in_transit": 2,
+              "visible_stock": 19311,
+              "eligible_to_load": 18845
+            },
+            "frozen": {
+              "turn": 5,
+              "reach": "pearl:yulin:cangwu",
+              "ice_state": 3,
+              "blocked": "route",
+              "hub_stock": 196374
+            },
+            "unload": {
+              "convoy": 3,
+              "turn": 5,
+              "city": "yulin",
+              "target": "cangwu",
+              "owner": "wu",
+              "grain": 41504,
+              "capacity": 50000,
+              "required_rations": 327,
+              "controlled_waiting": true,
+              "wrong_remote_city_rejected": true,
+              "before_physical_load": 91504,
+              "after_physical_load": 50000,
+              "real_stock_delta": 41504,
+              "path": [
+                "yulin",
+                "cangwu"
+              ],
+              "command_cost": 0
+            },
+            "source_capture": {
+              "case": "source_change",
+              "turn": 2,
+              "source": "jiaozhi",
+              "new_owner": "wei",
+              "plan_reason": "ownership",
+              "present_hub_stock": 178700,
+              "live_convoys": 1,
+              "tag_released": 19290
+            }
+          }
+        ]
+      },
+      "record": {
+        "file": "control-observations-verified.json",
+        "original_sha256": "443a35e045e957feb077e2dbd363f3a134f1f81501c56b5c4140f33e74e41962",
+        "portable_sha256": "443a35e045e957feb077e2dbd363f3a134f1f81501c56b5c4140f33e74e41962",
+        "host_paths_redacted": false
+      }
+    },
+    "topology-detail": {
+      "status": "passed",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "metrics": {
+        "results": [
+          {
+            "current_city_ids": 158,
+            "river_geometry_points": 64,
+            "river_port_approaches": 57,
+            "sea_port_approaches": 20,
+            "independently_legal_noncity_nodes": 0,
+            "city_hubs_with_pure_water_access": [
+              "cangwu",
+              "yulin"
+            ],
+            "city_hub_scenario_pairs": 58,
+            "water_directions": {
+              "land": 16517,
+              "mixed": 3833,
+              "river": 58
+            }
+          }
+        ]
+      },
+      "record": {
+        "file": "topology-detail.json",
+        "original_sha256": "fcf269e96276768e5cca5043b00dfce8603b66fe03256398baa7e4084767c21b",
+        "portable_sha256": "fcf269e96276768e5cca5043b00dfce8603b66fe03256398baa7e4084767c21b",
+        "host_paths_redacted": false
+      }
+    },
+    "campaign-python": {
+      "status": "passed",
+      "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+      "metrics": {
+        "files": 179,
+        "tests": 1962,
+        "skips": 1,
+        "full_inventory": true
+      }
+    },
+    "campaign-rust": {
+      "status": "passed",
+      "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+      "metrics": {
+        "files": 179,
+        "tests": 1962,
+        "skips": 0,
+        "full_inventory": true
+      }
+    }
+  }
+}

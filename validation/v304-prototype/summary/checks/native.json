@@ -1,0 +1,17 @@
+{
+  "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+  "command": [
+    "python3",
+    "-Bu",
+    "game/build_march_core.py",
+    "--check"
+  ],
+  "environment": {
+    "RUSTUP_TOOLCHAIN": "1.93.0"
+  },
+  "exit_code": 0,
+  "seconds": 0.63,
+  "log": "logs/native.log",
+  "log_sha256": "5c0152e6342f5a29926e8bc4886d298bd8cccda606f2f329fb96f9b6df235389",
+  "log_bytes": 556
+}

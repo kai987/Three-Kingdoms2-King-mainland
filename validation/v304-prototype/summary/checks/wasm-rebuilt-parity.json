@@ -1,0 +1,15 @@
+{
+  "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+  "command": [
+    "node",
+    "tests/march_wasm_parity.cjs"
+  ],
+  "environment": {
+    "MARCH_WASM_PATH": "build/march-core-target/wasm32-unknown-unknown/release/march_core.wasm"
+  },
+  "exit_code": 0,
+  "seconds": 71.147,
+  "log": "logs/wasm-rebuilt-parity.log",
+  "log_sha256": "3bd73ab3deaaa7f3ffa47b77cc0896d5cce0f4efa8933cbd75ee19dad5d4153d",
+  "log_bytes": 335
+}

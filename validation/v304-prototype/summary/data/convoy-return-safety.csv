@@ -1,0 +1,13 @@
+group,case,convoy,origin,target,outcome,return_city,terminal_tick,reusable_turn
+E0,pearl_real_routes_controlled,1,hepu,nanhai,returned_home,hepu,40,8
+E0,pearl_real_routes_controlled,2,jiaozhi,nanhai,returned_home,jiaozhi,80,12
+E1,pearl_real_routes_controlled,1,hepu,yulin,returned_home,hepu,20,6
+E1,pearl_real_routes_controlled,2,jiaozhi,yulin,returned_home,jiaozhi,50,9
+E1,pearl_real_routes_controlled,3,yulin,cangwu,returned_home,yulin,60,10
+E1,pearl_real_routes_controlled,4,cangwu,nanhai,returned_home,cangwu,80,12
+E1,pearl_real_routes_controlled,5,cangwu,nanhai,returned_home,cangwu,100,14
+E0,pearl_ends_at_river_controlled,1,hepu,cangwu,returned_home,hepu,40,8
+E0,pearl_ends_at_river_controlled,2,jiaozhi,cangwu,returned_home,jiaozhi,60,10
+E1,pearl_ends_at_river_controlled,1,hepu,yulin,returned_home,hepu,20,6
+E1,pearl_ends_at_river_controlled,2,jiaozhi,yulin,returned_home,jiaozhi,50,9
+E1,pearl_ends_at_river_controlled,3,yulin,cangwu,returned_home,yulin,60,10

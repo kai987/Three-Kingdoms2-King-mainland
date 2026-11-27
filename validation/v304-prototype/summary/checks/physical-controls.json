@@ -1,0 +1,109 @@
+{
+  "pearl": {
+    "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+    "checks": [
+      {
+        "scenario": "209-06",
+        "seed": 2026,
+        "source": "yulin",
+        "target": "cangwu",
+        "policy": 50000,
+        "quote": {
+          "mode": "river",
+          "physical_capacity": 100000,
+          "bottleneck": {
+            "route": "yulin:cangwu:river",
+            "source": "yulin",
+            "target": "cangwu",
+            "mode": "river_downstream",
+            "stage": "pearl:yulin:cangwu",
+            "percent": 200
+          },
+          "policy_max_grain": 50000,
+          "available_grain": 130000,
+          "rations": 190,
+          "max_cargo": 50000,
+          "net_grain": 49801,
+          "estimated_loss": 199,
+          "load_grain": 50000,
+          "blocked_reason": null,
+          "outward_days": 5,
+          "return_days": 10,
+          "turnover": {
+            "outward_days": 5,
+            "return_days": 10,
+            "wait_days": 5,
+            "cycle_days": 20,
+            "occupancy_days": 50,
+            "escort_count": 1,
+            "throughput_milli": 2490050,
+            "officer_efficiency_milli": 996020,
+            "net_grain_gain": 49611,
+            "ration_per_thousand": 3
+          }
+        },
+        "departure_load": {
+          "total": 50190,
+          "limit": 100000,
+          "policy_grain": 50000
+        },
+        "excess_rejected": true
+      },
+      {
+        "scenario": "209-06",
+        "seed": 2026,
+        "source": "yulin",
+        "target": "cangwu",
+        "policy": 100000,
+        "quote": {
+          "mode": "river",
+          "physical_capacity": 100000,
+          "bottleneck": {
+            "route": "yulin:cangwu:river",
+            "source": "yulin",
+            "target": "cangwu",
+            "mode": "river_downstream",
+            "stage": "pearl:yulin:cangwu",
+            "percent": 200
+          },
+          "policy_max_grain": 100000,
+          "available_grain": 130000,
+          "rations": 190,
+          "max_cargo": 99810,
+          "net_grain": 99412,
+          "estimated_loss": 398,
+          "load_grain": 99810,
+          "blocked_reason": null,
+          "outward_days": 5,
+          "return_days": 10,
+          "turnover": {
+            "outward_days": 5,
+            "return_days": 10,
+            "wait_days": 5,
+            "cycle_days": 20,
+            "occupancy_days": 50,
+            "escort_count": 1,
+            "throughput_milli": 4970600,
+            "officer_efficiency_milli": 1988240,
+            "net_grain_gain": 99222,
+            "ration_per_thousand": 1
+          }
+        },
+        "departure_load": {
+          "total": 100000,
+          "limit": 100000,
+          "policy_grain": 100000
+        },
+        "excess_rejected": true
+      }
+    ]
+  },
+  "sea": {
+    "controlled": true,
+    "uses_natural_pure_sea": false,
+    "cargo": 149031,
+    "rations": 969,
+    "actual_dispatched_total": 150000,
+    "capacity": 150000
+  }
+}

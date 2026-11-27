@@ -1,0 +1,14 @@
+{
+  "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+  "command": [
+    "bash",
+    "-c",
+    "TK2_STATIC_TEST_PORT=18939 node tests/browser_static_server.mjs build/web & p=$!; trap \"kill $p 2>/dev/null || true\" EXIT; sleep 1; TK2_STATIC_TEST_PORT=18939 node tests/browser_transshipment_smoke.mjs build/transshipment-v304/browser-fixture.json build/transshipment-v304/verified/browser"
+  ],
+  "environment": {},
+  "exit_code": 0,
+  "seconds": 43.544,
+  "log": "logs/browser-transshipment-retry.log",
+  "log_sha256": "d8e38c7744e7d60c112d3b56f9ee8042729a0007bc24e89b35b6b6c46aaf9844",
+  "log_bytes": 1069
+}

@@ -1,0 +1,74 @@
+{
+  "sequence": [
+    "E0",
+    "E1",
+    "E2",
+    "E3"
+  ],
+  "transport_flags": {
+    "concurrency": false,
+    "physical_capacity": true,
+    "mode_aware_ai_policy": false,
+    "throughput_ranking": false,
+    "double_dispatch": false
+  },
+  "initial_state_sha256": "075d0e85ce5d0b2ea98337bf17c1afc378f8dff50ce3340730b204d97d7a6f4b",
+  "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+  "catalog_sha256": "f74801b000dba443e84a965af69979899f7e53497872b661996eaddbac75f1e8",
+  "games": [
+    {
+      "group": "E0",
+      "case": "pearl_real_routes_controlled",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "scenario": "227-02",
+      "seed": 2026,
+      "kind": "controlled",
+      "natural_run": false,
+      "opening_sha256": "075d0e85ce5d0b2ea98337bf17c1afc378f8dff50ce3340730b204d97d7a6f4b",
+      "transshipment_rules_version": 0
+    },
+    {
+      "group": "E1",
+      "case": "pearl_real_routes_controlled",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "scenario": "227-02",
+      "seed": 2026,
+      "kind": "controlled",
+      "natural_run": false,
+      "opening_sha256": "075d0e85ce5d0b2ea98337bf17c1afc378f8dff50ce3340730b204d97d7a6f4b",
+      "transshipment_rules_version": 304
+    },
+    {
+      "group": "E0",
+      "case": "pearl_ends_at_river_controlled",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "scenario": "227-02",
+      "seed": 2026,
+      "kind": "controlled",
+      "natural_run": false,
+      "opening_sha256": "075d0e85ce5d0b2ea98337bf17c1afc378f8dff50ce3340730b204d97d7a6f4b",
+      "transshipment_rules_version": 0
+    },
+    {
+      "group": "E1",
+      "case": "pearl_ends_at_river_controlled",
+      "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+      "scenario": "227-02",
+      "seed": 2026,
+      "kind": "controlled",
+      "natural_run": false,
+      "opening_sha256": "075d0e85ce5d0b2ea98337bf17c1afc378f8dff50ce3340730b204d97d7a6f4b",
+      "transshipment_rules_version": 304
+    }
+  ],
+  "blocked": [
+    {
+      "group": "E2",
+      "reason": "no_actor_or_stock_custody_at_noncity_nodes"
+    },
+    {
+      "group": "E3",
+      "reason": "prior_technical_gate_E2_unmet"
+    }
+  ]
+}

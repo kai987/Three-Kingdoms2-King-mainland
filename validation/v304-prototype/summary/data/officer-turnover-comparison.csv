@@ -1,0 +1,5 @@
+group,case,officer_days_including_cooldown,actual_delivered,command_books,clerk_days,grain_per_officer_day,grain_per_book
+E0,pearl_real_routes_controlled,180,88175,2,0,489.8611111111111,44087.5
+E1,pearl_real_routes_controlled,280,86102,5,0,307.50714285714287,17220.4
+E0,pearl_ends_at_river_controlled,160,89921,2,0,562.00625,44960.5
+E1,pearl_ends_at_river_controlled,180,90688,3,0,503.8222222222222,30229.333333333332

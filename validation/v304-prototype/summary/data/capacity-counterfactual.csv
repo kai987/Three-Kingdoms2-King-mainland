@@ -1,0 +1,13 @@
+group,case,convoy,origin,target,mode,physical_capacity,actual_load,bottleneck,legal
+E0,pearl_real_routes_controlled,1,hepu,nanhai,mixed,50000,50000,"{""mode"":""plain"",""percent"":100,""route"":""gaoliang:hepu:land@1-2"",""source"":""hepu"",""stage"":""road"",""target"":""cangwu""}",true
+E0,pearl_real_routes_controlled,2,jiaozhi,nanhai,mixed,50000,50000,"{""mode"":""plain"",""percent"":100,""route"":""jiaozhi:yulin:land"",""source"":""jiaozhi"",""stage"":""road"",""target"":""yulin""}",true
+E1,pearl_real_routes_controlled,1,hepu,yulin,land,50000,50000,"{""mode"":""plain"",""percent"":100,""route"":""hepu:yulin:land"",""source"":""hepu"",""stage"":""road"",""target"":""yulin""}",true
+E1,pearl_real_routes_controlled,2,jiaozhi,yulin,land,50000,50000,"{""mode"":""plain"",""percent"":100,""route"":""jiaozhi:yulin:land"",""source"":""jiaozhi"",""stage"":""road"",""target"":""yulin""}",true
+E1,pearl_real_routes_controlled,3,yulin,cangwu,river,100000,91504,"{""mode"":""river_downstream"",""percent"":200,""route"":""yulin:cangwu:river"",""source"":""yulin"",""stage"":""pearl:yulin:cangwu"",""target"":""cangwu""}",true
+E1,pearl_real_routes_controlled,4,cangwu,nanhai,land,50000,50000,"{""mode"":""plain"",""percent"":100,""route"":""cangwu:nanhai:land"",""source"":""cangwu"",""stage"":""road"",""target"":""nanhai""}",true
+E1,pearl_real_routes_controlled,5,cangwu,nanhai,land,50000,40688,"{""mode"":""plain"",""percent"":100,""route"":""cangwu:nanhai:land"",""source"":""cangwu"",""stage"":""road"",""target"":""nanhai""}",true
+E0,pearl_ends_at_river_controlled,1,hepu,cangwu,land,50000,50000,"{""mode"":""plain"",""percent"":100,""route"":""gaoliang:hepu:land@1-2"",""source"":""hepu"",""stage"":""road"",""target"":""cangwu""}",true
+E0,pearl_ends_at_river_controlled,2,jiaozhi,cangwu,mixed,50000,50000,"{""mode"":""plain"",""percent"":100,""route"":""jiaozhi:yulin:land"",""source"":""jiaozhi"",""stage"":""road"",""target"":""yulin""}",true
+E1,pearl_ends_at_river_controlled,1,hepu,yulin,land,50000,50000,"{""mode"":""plain"",""percent"":100,""route"":""hepu:yulin:land"",""source"":""hepu"",""stage"":""road"",""target"":""yulin""}",true
+E1,pearl_ends_at_river_controlled,2,jiaozhi,yulin,land,50000,50000,"{""mode"":""plain"",""percent"":100,""route"":""jiaozhi:yulin:land"",""source"":""jiaozhi"",""stage"":""road"",""target"":""yulin""}",true
+E1,pearl_ends_at_river_controlled,3,yulin,cangwu,river,100000,91504,"{""mode"":""river_downstream"",""percent"":200,""route"":""yulin:cangwu:river"",""source"":""yulin"",""stage"":""pearl:yulin:cangwu"",""target"":""cangwu""}",true

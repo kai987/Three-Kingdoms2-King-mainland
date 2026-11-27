@@ -1,0 +1,26 @@
+{
+  "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+  "command": [
+    "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+    "-Bu",
+    "tools/ci/run_campaign_tests.py",
+    "--shard",
+    "5",
+    "--shards",
+    "6",
+    "--timings",
+    "build/transshipment-v304/verified/checks/python-shard-5-inventory.json"
+  ],
+  "environment": {
+    "MARCH_CORE_BACKEND": "python"
+  },
+  "exit_code": 0,
+  "seconds": 666.546,
+  "log": "logs/python-shard-5.log",
+  "log_sha256": "5e8a19be367279180d54c5ea1d09947b37d5486a77c84b3a7157c15633fc4ba4",
+  "log_bytes": 58340,
+  "tests": 312,
+  "skips": 0,
+  "inventory": "checks/python-shard-5-inventory.json",
+  "failures": []
+}

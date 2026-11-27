@@ -1,0 +1,13 @@
+group,case,convoy,origin,target,turn,active_after,dispatches_after
+E0,pearl_real_routes_controlled,1,hepu,nanhai,1,1,1
+E0,pearl_real_routes_controlled,2,jiaozhi,nanhai,1,1,1
+E1,pearl_real_routes_controlled,1,hepu,yulin,1,1,1
+E1,pearl_real_routes_controlled,2,jiaozhi,yulin,1,1,1
+E1,pearl_real_routes_controlled,3,yulin,cangwu,5,1,1
+E1,pearl_real_routes_controlled,4,cangwu,nanhai,7,1,1
+E1,pearl_real_routes_controlled,5,cangwu,nanhai,9,1,1
+E0,pearl_ends_at_river_controlled,1,hepu,cangwu,1,1,1
+E0,pearl_ends_at_river_controlled,2,jiaozhi,cangwu,1,1,1
+E1,pearl_ends_at_river_controlled,1,hepu,yulin,1,1,1
+E1,pearl_ends_at_river_controlled,2,jiaozhi,yulin,1,1,1
+E1,pearl_ends_at_river_controlled,3,yulin,cangwu,5,1,1

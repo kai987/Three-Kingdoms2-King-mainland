@@ -1,0 +1,3 @@
+group,case,destination,final_grain,last_final_day,commands,ration_consumed,transport_losses,officer_days_including_cooldown,final_net_per_officer_day,final_net_per_command
+E0,pearl_ends_at_river_controlled,cangwu,89921,30,2,2088,8279,160,562.00625,44960.5
+E1,pearl_ends_at_river_controlled,cangwu,90688,50,3,2038,7545,180,503.8222222222222,30229.333333333332

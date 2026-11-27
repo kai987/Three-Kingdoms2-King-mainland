@@ -1,0 +1,5 @@
+group,case,actual_origin_grain,gross_stage_receipts,actual_final_reception,full_opening_target,coverage
+E0,pearl_real_routes_controlled,100000,88175,88175,130000,0.6782692307692307
+E1,pearl_real_routes_controlled,100000,268294,86102,130000,0.6623230769230769
+E0,pearl_ends_at_river_controlled,100000,89921,89921,130000,0.6917
+E1,pearl_ends_at_river_controlled,100000,182192,90688,130000,0.6976

@@ -1,0 +1,13 @@
+group,case,convoy,origin,target,departed_turn,received_turn,controlled_promise,first_uncovered_deadline,net_received,final_receipt
+E0,pearl_real_routes_controlled,1,hepu,nanhai,1,3,31,null,45782,true
+E0,pearl_real_routes_controlled,2,jiaozhi,nanhai,1,5,31,null,42393,true
+E1,pearl_real_routes_controlled,1,hepu,yulin,1,2,31,null,47864,false
+E1,pearl_real_routes_controlled,2,jiaozhi,yulin,1,4,31,null,43640,false
+E1,pearl_real_routes_controlled,3,yulin,cangwu,5,6,31,null,90688,false
+E1,pearl_real_routes_controlled,4,cangwu,nanhai,7,8,31,null,47254,true
+E1,pearl_real_routes_controlled,5,cangwu,nanhai,9,10,31,null,38848,true
+E0,pearl_ends_at_river_controlled,1,hepu,cangwu,1,3,31,null,46682,true
+E0,pearl_ends_at_river_controlled,2,jiaozhi,cangwu,1,4,31,null,43239,true
+E1,pearl_ends_at_river_controlled,1,hepu,yulin,1,2,31,null,47864,false
+E1,pearl_ends_at_river_controlled,2,jiaozhi,yulin,1,4,31,null,43640,false
+E1,pearl_ends_at_river_controlled,3,yulin,cangwu,5,6,31,null,90688,true

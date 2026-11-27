@@ -1,0 +1,17 @@
+case,baseline,candidate,metric,before,after,change,relative_percent,pilot_target_missed
+pearl_real_routes_controlled,E0,E1,commands,2,5,3,150.0,false
+pearl_real_routes_controlled,E0,E1,last_final_day,40,90,50,125.0,false
+pearl_real_routes_controlled,E0,E1,ration_consumed,2965,2621,-344,-11.602023608768972,false
+pearl_real_routes_controlled,E0,E1,transport_losses,9448,11519,2071,21.919983065198984,false
+pearl_real_routes_controlled,E0,E1,officer_days_including_cooldown,180,280,100,55.55555555555556,false
+pearl_real_routes_controlled,E0,E1,final_net_per_officer_day,489.8611111111111,307.50714285714287,-182.35396825396822,-37.22564704929321,true
+pearl_real_routes_controlled,E0,E1,final_net_per_command,44087.5,17220.4,-26867.1,-60.940402608449105,true
+pearl_real_routes_controlled,E0,E1,turn_boundary_tagged_grain_days,0,3592960,3592960,null,false
+pearl_ends_at_river_controlled,E0,E1,commands,2,3,1,50.0,false
+pearl_ends_at_river_controlled,E0,E1,last_final_day,30,50,20,66.66666666666667,false
+pearl_ends_at_river_controlled,E0,E1,ration_consumed,2088,2038,-50,-2.3946360153256707,false
+pearl_ends_at_river_controlled,E0,E1,transport_losses,8279,7545,-734,-8.865805048918952,false
+pearl_ends_at_river_controlled,E0,E1,officer_days_including_cooldown,160,180,20,12.5,false
+pearl_ends_at_river_controlled,E0,E1,final_net_per_officer_day,562.00625,503.8222222222222,-58.18402777777783,-10.352914718969375,true
+pearl_ends_at_river_controlled,E0,E1,final_net_per_command,44960.5,30229.333333333332,-14731.166666666668,-32.76468603922703,true
+pearl_ends_at_river_controlled,E0,E1,turn_boundary_tagged_grain_days,0,1872320,1872320,null,false

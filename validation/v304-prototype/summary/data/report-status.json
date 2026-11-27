@@ -1,0 +1,31 @@
+{
+  "city_transshipment": "本地技术验证通过",
+  "real_city_control_completed": true,
+  "independent_terminal": "blocked",
+  "ai_observation": "not_started",
+  "formal_economy_ready": false,
+  "disabled_by_default": true,
+  "unfavorable_pilot_metrics": [
+    {
+      "case": "pearl_real_routes_controlled",
+      "metric": "final_grain"
+    },
+    {
+      "case": "pearl_real_routes_controlled",
+      "metric": "final_net_per_officer_day"
+    },
+    {
+      "case": "pearl_real_routes_controlled",
+      "metric": "final_net_per_command"
+    },
+    {
+      "case": "pearl_ends_at_river_controlled",
+      "metric": "final_net_per_officer_day"
+    },
+    {
+      "case": "pearl_ends_at_river_controlled",
+      "metric": "final_net_per_command"
+    }
+  ],
+  "technical_gates_passed": true
+}

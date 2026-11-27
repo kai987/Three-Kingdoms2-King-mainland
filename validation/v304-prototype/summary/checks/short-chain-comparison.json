@@ -1,0 +1,976 @@
+[
+  {
+    "group": "E0",
+    "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+    "case": "pearl_ends_at_river_controlled",
+    "destination": "cangwu",
+    "opening_sha256": "075d0e85ce5d0b2ea98337bf17c1afc378f8dff50ce3340730b204d97d7a6f4b",
+    "seed": 2026,
+    "catalog_sha256": "f74801b000dba443e84a965af69979899f7e53497872b661996eaddbac75f1e8",
+    "candidate_303": {
+      "concurrency": false,
+      "physical_capacity": true,
+      "mode_aware_ai_policy": false,
+      "throughput_ranking": false,
+      "double_dispatch": false
+    },
+    "commands": 2,
+    "final_grain": 89921,
+    "transport_handling": 89921,
+    "first_final_day": 20,
+    "last_final_day": 30,
+    "ration_consumed": 2088,
+    "transport_losses": 8279,
+    "officer_days_including_cooldown": 160,
+    "final_net_per_officer_day": 562.00625,
+    "final_net_per_command": 44960.5,
+    "stage_quotes": 20,
+    "cpu_seconds": 0.559904,
+    "process_peak_rss": 210731008,
+    "peak_tagged_warehouse_grain": 0,
+    "turn_boundary_tagged_grain_days": 0,
+    "observed_transit": [
+      {
+        "event": "departure",
+        "turn": 1,
+        "year": 227,
+        "month": 2,
+        "day": 1,
+        "id": 1,
+        "source": "hepu",
+        "target": "cangwu",
+        "owner": "wu",
+        "officers": [
+          422
+        ],
+        "escort_troops": 1059,
+        "cargo": {
+          "grain": 49362,
+          "gold": 0,
+          "reserves": 0,
+          "treasure": 0
+        },
+        "rations": 638,
+        "profile": {
+          "mode": "land",
+          "physical_capacity": 50000,
+          "bottleneck": {
+            "route": "gaoliang:hepu:land@1-2",
+            "source": "hepu",
+            "target": "cangwu",
+            "mode": "plain",
+            "stage": "road",
+            "percent": 100
+          }
+        },
+        "policy_grain": 100000,
+        "active": 1,
+        "dispatch_count": 1,
+        "route_mode": "fastest",
+        "path": [
+          "hepu",
+          "cangwu"
+        ],
+        "route_ids": [
+          "gaoliang:hepu:land@1-2"
+        ],
+        "legs": [
+          {
+            "id": "gaoliang:hepu:land@1-2",
+            "from": "hepu",
+            "to": "cangwu",
+            "mode": "land",
+            "terrain": "plain",
+            "days": 11
+          }
+        ],
+        "outbound_days": 11,
+        "estimated_net": 46714,
+        "command_books": 1,
+        "purpose": "ordinary"
+      },
+      {
+        "event": "departure",
+        "turn": 1,
+        "year": 227,
+        "month": 2,
+        "day": 1,
+        "id": 2,
+        "source": "jiaozhi",
+        "target": "cangwu",
+        "owner": "wu",
+        "officers": [
+          563
+        ],
+        "escort_troops": 1068,
+        "cargo": {
+          "grain": 48549,
+          "gold": 0,
+          "reserves": 0,
+          "treasure": 0
+        },
+        "rations": 1451,
+        "profile": {
+          "mode": "mixed",
+          "physical_capacity": 50000,
+          "bottleneck": {
+            "route": "jiaozhi:yulin:land",
+            "source": "jiaozhi",
+            "target": "yulin",
+            "mode": "plain",
+            "stage": "road",
+            "percent": 100
+          }
+        },
+        "policy_grain": 100000,
+        "active": 1,
+        "dispatch_count": 1,
+        "route_mode": "fastest",
+        "path": [
+          "jiaozhi",
+          "yulin",
+          "cangwu"
+        ],
+        "route_ids": [
+          "jiaozhi:yulin:land",
+          "yulin:cangwu:river"
+        ],
+        "legs": [
+          {
+            "id": "jiaozhi:yulin:land",
+            "from": "jiaozhi",
+            "to": "yulin",
+            "mode": "land",
+            "terrain": "plain",
+            "days": 22
+          },
+          {
+            "id": "yulin:cangwu:river",
+            "from": "yulin",
+            "to": "cangwu",
+            "mode": "river",
+            "terrain": "river",
+            "days": 5
+          }
+        ],
+        "outbound_days": 27,
+        "estimated_net": 43307,
+        "command_books": 1,
+        "purpose": "ordinary"
+      },
+      {
+        "event": "delivery",
+        "turn": 3,
+        "year": 227,
+        "month": 2,
+        "day": 21,
+        "id": 1,
+        "owner": "wu",
+        "source": "hepu",
+        "target": "cangwu",
+        "cargo": {
+          "grain": 46682,
+          "gold": 0,
+          "reserves": 0,
+          "treasure": 0
+        }
+      },
+      {
+        "event": "delivery",
+        "turn": 4,
+        "year": 227,
+        "month": 3,
+        "day": 1,
+        "id": 2,
+        "owner": "wu",
+        "source": "jiaozhi",
+        "target": "cangwu",
+        "cargo": {
+          "grain": 43239,
+          "gold": 0,
+          "reserves": 0,
+          "treasure": 0
+        }
+      },
+      {
+        "event": "terminal",
+        "turn": 5,
+        "year": 227,
+        "month": 3,
+        "day": 11,
+        "id": 1,
+        "outcome": "returned_home",
+        "owner": "wu",
+        "source": "hepu",
+        "target": "cangwu",
+        "city": "hepu",
+        "end_tick": 40,
+        "reusable_turn": 8,
+        "original_officers": [
+          422
+        ],
+        "received_officers": [
+          422
+        ],
+        "delivered": {
+          "gold": 0,
+          "grain": 46682,
+          "reserves": 0,
+          "treasure": 0
+        },
+        "cargo_receipt": {
+          "cargo_dispatched": 49362,
+          "cargo_received": 351,
+          "cargo_rations": 351,
+          "cargo_route_loss": 2649,
+          "cargo_weather_loss": 0,
+          "cargo_delivered": 46682,
+          "cargo_returned": 31,
+          "cargo_abandoned": 0,
+          "cargo_remaining": 0,
+          "cargo_loss_remainder": 8100000,
+          "escort_base_grain": 514,
+          "escort_extra_grain": 124
+        },
+        "waiting_days": 0,
+        "ration_spent": 638,
+        "hunger_losses": 0,
+        "rations": {
+          "loaded": 638,
+          "received": 351,
+          "consumed": 638,
+          "to_cargo": 351,
+          "remaining": 0
+        },
+        "troops_received": 1059
+      },
+      {
+        "event": "terminal",
+        "turn": 7,
+        "year": 227,
+        "month": 4,
+        "day": 1,
+        "id": 2,
+        "outcome": "returned_home",
+        "owner": "wu",
+        "source": "jiaozhi",
+        "target": "cangwu",
+        "city": "jiaozhi",
+        "end_tick": 60,
+        "reusable_turn": 10,
+        "original_officers": [
+          563
+        ],
+        "received_officers": [
+          563
+        ],
+        "delivered": {
+          "gold": 0,
+          "grain": 43239,
+          "reserves": 0,
+          "treasure": 0
+        },
+        "cargo_receipt": {
+          "cargo_dispatched": 48549,
+          "cargo_received": 752,
+          "cargo_rations": 390,
+          "cargo_route_loss": 5284,
+          "cargo_weather_loss": 346,
+          "cargo_delivered": 43239,
+          "cargo_returned": 42,
+          "cargo_abandoned": 0,
+          "cargo_remaining": 0,
+          "cargo_loss_remainder": 2287360,
+          "escort_base_grain": 1189,
+          "escort_extra_grain": 261
+        },
+        "waiting_days": 0,
+        "ration_spent": 1450,
+        "hunger_losses": 0,
+        "rations": {
+          "loaded": 1451,
+          "received": 751,
+          "consumed": 1450,
+          "to_cargo": 752,
+          "remaining": 0
+        },
+        "troops_received": 117
+      }
+    ],
+    "plan": null,
+    "save_roundtrips": [],
+    "warehouse_samples": []
+  },
+  {
+    "group": "E1",
+    "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+    "case": "pearl_ends_at_river_controlled",
+    "destination": "cangwu",
+    "opening_sha256": "075d0e85ce5d0b2ea98337bf17c1afc378f8dff50ce3340730b204d97d7a6f4b",
+    "seed": 2026,
+    "catalog_sha256": "f74801b000dba443e84a965af69979899f7e53497872b661996eaddbac75f1e8",
+    "candidate_303": {
+      "concurrency": false,
+      "physical_capacity": true,
+      "mode_aware_ai_policy": false,
+      "throughput_ranking": false,
+      "double_dispatch": false
+    },
+    "commands": 3,
+    "final_grain": 90688,
+    "transport_handling": 182192,
+    "first_final_day": 50,
+    "last_final_day": 50,
+    "ration_consumed": 2038,
+    "transport_losses": 7545,
+    "officer_days_including_cooldown": 180,
+    "final_net_per_officer_day": 503.8222222222222,
+    "final_net_per_command": 30229.333333333332,
+    "stage_quotes": 41,
+    "cpu_seconds": 1.029819,
+    "process_peak_rss": 437174272,
+    "peak_tagged_warehouse_grain": 91504,
+    "turn_boundary_tagged_grain_days": 1872320,
+    "observed_transit": [
+      {
+        "event": "departure",
+        "turn": 1,
+        "year": 227,
+        "month": 2,
+        "day": 1,
+        "id": 1,
+        "source": "hepu",
+        "target": "yulin",
+        "owner": "wu",
+        "officers": [
+          422
+        ],
+        "escort_troops": 1059,
+        "cargo": {
+          "gold": 0,
+          "grain": 49594,
+          "reserves": 0,
+          "treasure": 0
+        },
+        "rations": 406,
+        "profile": {
+          "mode": "land",
+          "physical_capacity": 50000,
+          "bottleneck": {
+            "route": "hepu:yulin:land",
+            "source": "hepu",
+            "target": "yulin",
+            "mode": "plain",
+            "stage": "road",
+            "percent": 100
+          }
+        },
+        "policy_grain": 100000,
+        "active": 1,
+        "dispatch_count": 1,
+        "route_mode": "land",
+        "path": [
+          "hepu",
+          "yulin"
+        ],
+        "route_ids": [
+          "hepu:yulin:land"
+        ],
+        "legs": [
+          {
+            "id": "hepu:yulin:land",
+            "from": "hepu",
+            "to": "yulin",
+            "mode": "land",
+            "terrain": "plain",
+            "days": 7
+          }
+        ],
+        "outbound_days": 7,
+        "estimated_net": 47885,
+        "command_books": 1,
+        "purpose": "transshipment"
+      },
+      {
+        "event": "departure",
+        "turn": 1,
+        "year": 227,
+        "month": 2,
+        "day": 1,
+        "id": 2,
+        "source": "jiaozhi",
+        "target": "yulin",
+        "owner": "wu",
+        "officers": [
+          563
+        ],
+        "escort_troops": 1068,
+        "cargo": {
+          "gold": 0,
+          "grain": 48790,
+          "reserves": 0,
+          "treasure": 0
+        },
+        "rations": 1210,
+        "profile": {
+          "mode": "land",
+          "physical_capacity": 50000,
+          "bottleneck": {
+            "route": "jiaozhi:yulin:land",
+            "source": "jiaozhi",
+            "target": "yulin",
+            "mode": "plain",
+            "stage": "road",
+            "percent": 100
+          }
+        },
+        "policy_grain": 100000,
+        "active": 1,
+        "dispatch_count": 1,
+        "route_mode": "land",
+        "path": [
+          "jiaozhi",
+          "yulin"
+        ],
+        "route_ids": [
+          "jiaozhi:yulin:land"
+        ],
+        "legs": [
+          {
+            "id": "jiaozhi:yulin:land",
+            "from": "jiaozhi",
+            "to": "yulin",
+            "mode": "land",
+            "terrain": "plain",
+            "days": 22
+          }
+        ],
+        "outbound_days": 22,
+        "estimated_net": 43696,
+        "command_books": 1,
+        "purpose": "transshipment"
+      },
+      {
+        "event": "delivery",
+        "turn": 2,
+        "year": 227,
+        "month": 2,
+        "day": 11,
+        "id": 1,
+        "owner": "wu",
+        "source": "hepu",
+        "target": "yulin",
+        "cargo": {
+          "gold": 0,
+          "grain": 47864,
+          "reserves": 0,
+          "treasure": 0
+        }
+      },
+      {
+        "event": "terminal",
+        "turn": 3,
+        "year": 227,
+        "month": 2,
+        "day": 21,
+        "id": 1,
+        "outcome": "returned_home",
+        "owner": "wu",
+        "source": "hepu",
+        "target": "yulin",
+        "city": "hepu",
+        "end_tick": 20,
+        "reusable_turn": 6,
+        "original_officers": [
+          422
+        ],
+        "received_officers": [
+          422
+        ],
+        "delivered": {
+          "gold": 0,
+          "grain": 47864,
+          "reserves": 0,
+          "treasure": 0
+        },
+        "cargo_receipt": {
+          "cargo_dispatched": 49594,
+          "cargo_received": 224,
+          "cargo_rations": 224,
+          "cargo_route_loss": 1710,
+          "cargo_weather_loss": 0,
+          "cargo_delivered": 47864,
+          "cargo_returned": 20,
+          "cargo_abandoned": 0,
+          "cargo_remaining": 0,
+          "cargo_loss_remainder": 6900000,
+          "escort_base_grain": 330,
+          "escort_extra_grain": 76
+        },
+        "waiting_days": 0,
+        "ration_spent": 406,
+        "hunger_losses": 0,
+        "rations": {
+          "loaded": 406,
+          "received": 224,
+          "consumed": 406,
+          "to_cargo": 224,
+          "remaining": 0
+        },
+        "troops_received": 1059
+      },
+      {
+        "event": "delivery",
+        "turn": 4,
+        "year": 227,
+        "month": 3,
+        "day": 1,
+        "id": 2,
+        "owner": "wu",
+        "source": "jiaozhi",
+        "target": "yulin",
+        "cargo": {
+          "gold": 0,
+          "grain": 43640,
+          "reserves": 0,
+          "treasure": 0
+        }
+      },
+      {
+        "event": "departure",
+        "turn": 5,
+        "year": 227,
+        "month": 3,
+        "day": 11,
+        "id": 3,
+        "source": "yulin",
+        "target": "cangwu",
+        "owner": "wu",
+        "officers": [
+          966
+        ],
+        "escort_troops": 1088,
+        "cargo": {
+          "gold": 0,
+          "grain": 91081,
+          "reserves": 0,
+          "treasure": 0
+        },
+        "rations": 423,
+        "profile": {
+          "mode": "river",
+          "physical_capacity": 100000,
+          "bottleneck": {
+            "route": "yulin:cangwu:river",
+            "source": "yulin",
+            "target": "cangwu",
+            "mode": "river_downstream",
+            "stage": "pearl:yulin:cangwu",
+            "percent": 200
+          }
+        },
+        "policy_grain": 100000,
+        "active": 1,
+        "dispatch_count": 1,
+        "route_mode": "river",
+        "path": [
+          "yulin",
+          "cangwu"
+        ],
+        "route_ids": [
+          "yulin:cangwu:river"
+        ],
+        "legs": [
+          {
+            "id": "yulin:cangwu:river",
+            "from": "yulin",
+            "to": "cangwu",
+            "mode": "river",
+            "terrain": "river",
+            "days": 5
+          }
+        ],
+        "outbound_days": 5,
+        "estimated_net": 90718,
+        "command_books": 1,
+        "purpose": "transshipment"
+      },
+      {
+        "event": "terminal",
+        "turn": 6,
+        "year": 227,
+        "month": 3,
+        "day": 21,
+        "id": 2,
+        "outcome": "returned_home",
+        "owner": "wu",
+        "source": "jiaozhi",
+        "target": "yulin",
+        "city": "jiaozhi",
+        "end_tick": 50,
+        "reusable_turn": 9,
+        "original_officers": [
+          563
+        ],
+        "received_officers": [
+          563
+        ],
+        "delivered": {
+          "gold": 0,
+          "grain": 43640,
+          "reserves": 0,
+          "treasure": 0
+        },
+        "cargo_receipt": {
+          "cargo_dispatched": 48790,
+          "cargo_received": 623,
+          "cargo_rations": 261,
+          "cargo_route_loss": 5126,
+          "cargo_weather_loss": 344,
+          "cargo_delivered": 43640,
+          "cargo_returned": 42,
+          "cargo_abandoned": 0,
+          "cargo_remaining": 0,
+          "cargo_loss_remainder": 9607360,
+          "escort_base_grain": 983,
+          "escort_extra_grain": 226
+        },
+        "waiting_days": 0,
+        "ration_spent": 1209,
+        "hunger_losses": 0,
+        "rations": {
+          "loaded": 1210,
+          "received": 622,
+          "consumed": 1209,
+          "to_cargo": 623,
+          "remaining": 0
+        },
+        "troops_received": 117
+      },
+      {
+        "event": "delivery",
+        "turn": 6,
+        "year": 227,
+        "month": 3,
+        "day": 21,
+        "id": 3,
+        "owner": "wu",
+        "source": "yulin",
+        "target": "cangwu",
+        "cargo": {
+          "gold": 0,
+          "grain": 90688,
+          "reserves": 0,
+          "treasure": 0
+        }
+      },
+      {
+        "event": "terminal",
+        "turn": 7,
+        "year": 227,
+        "month": 4,
+        "day": 1,
+        "id": 3,
+        "outcome": "returned_home",
+        "owner": "wu",
+        "source": "yulin",
+        "target": "cangwu",
+        "city": "yulin",
+        "end_tick": 60,
+        "reusable_turn": 10,
+        "original_officers": [
+          966
+        ],
+        "received_officers": [
+          966
+        ],
+        "delivered": {
+          "gold": 0,
+          "grain": 90688,
+          "reserves": 0,
+          "treasure": 0
+        },
+        "cargo_receipt": {
+          "cargo_dispatched": 91081,
+          "cargo_received": 327,
+          "cargo_rations": 327,
+          "cargo_route_loss": 365,
+          "cargo_weather_loss": 0,
+          "cargo_delivered": 90688,
+          "cargo_returned": 28,
+          "cargo_abandoned": 0,
+          "cargo_remaining": 0,
+          "cargo_loss_remainder": 2340000,
+          "escort_base_grain": 354,
+          "escort_extra_grain": 69
+        },
+        "waiting_days": 0,
+        "ration_spent": 423,
+        "hunger_losses": 0,
+        "rations": {
+          "loaded": 423,
+          "received": 327,
+          "consumed": 423,
+          "to_cargo": 327,
+          "remaining": 0
+        },
+        "troops_received": 1088
+      }
+    ],
+    "plan": {
+      "id": 1,
+      "owner": "wu",
+      "sources": [
+        "hepu",
+        "jiaozhi"
+      ],
+      "hubs": [
+        "yulin"
+      ],
+      "target": "cangwu",
+      "modes": [
+        "land",
+        "river"
+      ],
+      "grain": 130000,
+      "purpose": "reserve",
+      "promise": 31,
+      "original_deadline": 31,
+      "stock_goal": 290000,
+      "created": 1,
+      "status": "cancelled",
+      "reason": "manual",
+      "closed": 7,
+      "batches": [
+        {
+          "convoy": 1,
+          "stage": 0,
+          "source": "hepu",
+          "target": "yulin",
+          "grain": 49594,
+          "rations": 406,
+          "capacity": 50000,
+          "books": 1,
+          "officer": 422,
+          "parents": [],
+          "turn": 1,
+          "eta": 2,
+          "estimated": 47885,
+          "receipt": {
+            "turn": 2,
+            "grain": 47864
+          },
+          "terminal": {
+            "tick": 20,
+            "city": "hepu",
+            "outcome": "returned_home",
+            "cargo": {
+              "cargo_dispatched": 49594,
+              "cargo_received": 224,
+              "cargo_rations": 224,
+              "cargo_route_loss": 1710,
+              "cargo_weather_loss": 0,
+              "cargo_delivered": 47864,
+              "cargo_returned": 20,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 6900000,
+              "escort_base_grain": 330,
+              "escort_extra_grain": 76
+            },
+            "external_rations": 0,
+            "spent_rations": 406,
+            "returned_rations": 0
+          },
+          "available": 0,
+          "released": {
+            "closed": 0,
+            "priority": 0
+          },
+          "path": [
+            "hepu",
+            "yulin"
+          ],
+          "route_ids": [
+            "hepu:yulin:land"
+          ]
+        },
+        {
+          "convoy": 2,
+          "stage": 0,
+          "source": "jiaozhi",
+          "target": "yulin",
+          "grain": 48790,
+          "rations": 1210,
+          "capacity": 50000,
+          "books": 1,
+          "officer": 563,
+          "parents": [],
+          "turn": 1,
+          "eta": 4,
+          "estimated": 43696,
+          "receipt": {
+            "turn": 4,
+            "grain": 43640
+          },
+          "terminal": {
+            "tick": 50,
+            "city": "jiaozhi",
+            "outcome": "returned_home",
+            "cargo": {
+              "cargo_dispatched": 48790,
+              "cargo_received": 623,
+              "cargo_rations": 261,
+              "cargo_route_loss": 5126,
+              "cargo_weather_loss": 344,
+              "cargo_delivered": 43640,
+              "cargo_returned": 42,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 9607360,
+              "escort_base_grain": 983,
+              "escort_extra_grain": 226
+            },
+            "external_rations": 361,
+            "spent_rations": 1209,
+            "returned_rations": 0
+          },
+          "available": 0,
+          "released": {
+            "closed": 0,
+            "priority": 0
+          },
+          "path": [
+            "jiaozhi",
+            "yulin"
+          ],
+          "route_ids": [
+            "jiaozhi:yulin:land"
+          ]
+        },
+        {
+          "convoy": 3,
+          "stage": 1,
+          "source": "yulin",
+          "target": "cangwu",
+          "grain": 91081,
+          "rations": 423,
+          "capacity": 100000,
+          "books": 1,
+          "officer": 966,
+          "parents": [
+            [
+              1,
+              47864
+            ],
+            [
+              2,
+              43640
+            ]
+          ],
+          "turn": 5,
+          "eta": 6,
+          "estimated": 90718,
+          "receipt": {
+            "turn": 6,
+            "grain": 90688
+          },
+          "terminal": {
+            "tick": 60,
+            "city": "yulin",
+            "outcome": "returned_home",
+            "cargo": {
+              "cargo_dispatched": 91081,
+              "cargo_received": 327,
+              "cargo_rations": 327,
+              "cargo_route_loss": 365,
+              "cargo_weather_loss": 0,
+              "cargo_delivered": 90688,
+              "cargo_returned": 28,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 2340000,
+              "escort_base_grain": 354,
+              "escort_extra_grain": 69
+            },
+            "external_rations": 0,
+            "spent_rations": 423,
+            "returned_rations": 0
+          },
+          "available": 0,
+          "released": {
+            "closed": 0,
+            "priority": 0
+          },
+          "path": [
+            "yulin",
+            "cangwu"
+          ],
+          "route_ids": [
+            "yulin:cangwu:river"
+          ]
+        }
+      ]
+    },
+    "save_roundtrips": [
+      {
+        "compact": false,
+        "checksum": "a16c8bff0f201217940b19fe58af543369aadd92855f3a7813f1e96cbe1392de"
+      },
+      {
+        "compact": true,
+        "checksum": "fff6a1f9c17fe4ebebf26d6b677685aba64bd7157b28a68ed5b7c90b6cf2f529"
+      }
+    ],
+    "warehouse_samples": [
+      {
+        "turn": 1,
+        "city": "yulin",
+        "actual_stock": 160000,
+        "tagged_stock": 0,
+        "physical_capacity": 100000000,
+        "free_room": 99840000
+      },
+      {
+        "turn": 2,
+        "city": "yulin",
+        "actual_stock": 207274,
+        "tagged_stock": 47864,
+        "physical_capacity": 100000000,
+        "free_room": 99792726
+      },
+      {
+        "turn": 3,
+        "city": "yulin",
+        "actual_stock": 206684,
+        "tagged_stock": 47864,
+        "physical_capacity": 100000000,
+        "free_room": 99793316
+      },
+      {
+        "turn": 4,
+        "city": "yulin",
+        "actual_stock": 251246,
+        "tagged_stock": 91504,
+        "physical_capacity": 100000000,
+        "free_room": 99748754
+      },
+      {
+        "turn": 5,
+        "city": "yulin",
+        "actual_stock": 159151,
+        "tagged_stock": 0,
+        "physical_capacity": 100000000,
+        "free_room": 99840849
+      },
+      {
+        "turn": 6,
+        "city": "yulin",
+        "actual_stock": 158625,
+        "tagged_stock": 0,
+        "physical_capacity": 100000000,
+        "free_room": 99841375
+      }
+    ]
+  }
+]

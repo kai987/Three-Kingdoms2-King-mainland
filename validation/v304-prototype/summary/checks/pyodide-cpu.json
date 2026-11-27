@@ -1,0 +1,17 @@
+{
+  "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+  "command": [
+    "node",
+    "tests/browser_engine_smoke.mjs",
+    "build/web"
+  ],
+  "environment": {
+    "TK2_TRANSSHIPMENT_BROWSER_FIXTURE": "build/transshipment-v304/browser-fixture.json",
+    "TK2_TRANSPORT_CAPACITY_BROWSER_FIXTURE": "<HOME>/.codex/worktrees/transport-capacity-v303/Three-Kingdoms2-King-mainland/build/transport-capacity-v303/browser/quiet-chibi-303.json"
+  },
+  "exit_code": 0,
+  "seconds": 329.448,
+  "log": "logs/pyodide-cpu.log",
+  "log_sha256": "df12bf78eda41011ded1fd5693ac53db750d6253b0f581b9f1ff3a4fbf7d1ae1",
+  "log_bytes": 1291
+}

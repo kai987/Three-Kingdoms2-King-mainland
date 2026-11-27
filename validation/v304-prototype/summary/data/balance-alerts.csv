@@ -1,0 +1,6 @@
+case,baseline,candidate,metric,before,after,change,relative_percent,pilot_target_missed
+pearl_real_routes_controlled,E0,E1,final_grain,88175,86102,-2073,-2.351006521122767,true
+pearl_real_routes_controlled,E0,E1,final_net_per_officer_day,489.8611111111111,307.50714285714287,-182.35396825396822,-37.22564704929321,true
+pearl_real_routes_controlled,E0,E1,final_net_per_command,44087.5,17220.4,-26867.1,-60.940402608449105,true
+pearl_ends_at_river_controlled,E0,E1,final_net_per_officer_day,562.00625,503.8222222222222,-58.18402777777783,-10.352914718969375,true
+pearl_ends_at_river_controlled,E0,E1,final_net_per_command,44960.5,30229.333333333332,-14731.166666666668,-32.76468603922703,true

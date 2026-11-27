@@ -1,0 +1,6 @@
+convoy,stage,source,target,route_mode,gross_cargo,ration_loaded,physical_capacity,actual_received,route_loss,weather_loss,ration_consumed,final_destination,capacity_utilization
+1,0,hepu,yulin,land,49594,406,50000,47864,1710,0,406,false,1.0
+2,0,jiaozhi,yulin,land,48790,1210,50000,43640,5126,344,1209,false,1.0
+3,1,yulin,cangwu,river,91081,423,100000,90688,365,0,423,false,0.91504
+4,2,cangwu,nanhai,land,49462,538,50000,47254,2182,0,538,true,1.0
+5,2,cangwu,nanhai,land,40642,46,50000,38848,1792,0,45,true,0.81376

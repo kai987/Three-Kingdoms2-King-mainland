@@ -1,0 +1,332 @@
+{
+  "python": {
+    "shards": [
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "1",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/python-shard-1-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "python"
+        },
+        "exit_code": 0,
+        "seconds": 487.694,
+        "log": "logs/python-shard-1.log",
+        "log_sha256": "06529dde5484813ee1cb306dbfd2d8403389007969b47c7dd8f7c42f411f4340",
+        "log_bytes": 47726,
+        "tests": 238,
+        "skips": 0,
+        "inventory": "checks/python-shard-1-inventory.json",
+        "failures": []
+      },
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "2",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/python-shard-2-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "python"
+        },
+        "exit_code": 0,
+        "seconds": 1076.745,
+        "log": "logs/python-shard-2.log",
+        "log_sha256": "49967561a8ae52b428bad7683cc53cbb18582723197ccefa184bae1311b70bc0",
+        "log_bytes": 70676,
+        "tests": 361,
+        "skips": 0,
+        "inventory": "checks/python-shard-2-inventory.json",
+        "failures": []
+      },
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "3",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/python-shard-3-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "python"
+        },
+        "exit_code": 0,
+        "seconds": 776.324,
+        "log": "logs/python-shard-3.log",
+        "log_sha256": "d4f667d1c5ee8c1539a2717a88bea29f005b4638cc16e521e2f3f3be03664ef2",
+        "log_bytes": 66372,
+        "tests": 338,
+        "skips": 0,
+        "inventory": "checks/python-shard-3-inventory.json",
+        "failures": []
+      },
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "4",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/python-shard-4-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "python"
+        },
+        "exit_code": 0,
+        "seconds": 914.739,
+        "log": "logs/python-shard-4.log",
+        "log_sha256": "31d54b59bae0cc271fcc59448bbfb725c02221b8b0b69903845fc463950cc4bc",
+        "log_bytes": 78735,
+        "tests": 404,
+        "skips": 1,
+        "inventory": "checks/python-shard-4-inventory.json",
+        "failures": []
+      },
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "5",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/python-shard-5-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "python"
+        },
+        "exit_code": 0,
+        "seconds": 666.546,
+        "log": "logs/python-shard-5.log",
+        "log_sha256": "5e8a19be367279180d54c5ea1d09947b37d5486a77c84b3a7157c15633fc4ba4",
+        "log_bytes": 58340,
+        "tests": 312,
+        "skips": 0,
+        "inventory": "checks/python-shard-5-inventory.json",
+        "failures": []
+      },
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "6",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/python-shard-6-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "python"
+        },
+        "exit_code": 0,
+        "seconds": 474.688,
+        "log": "logs/python-shard-6.log",
+        "log_sha256": "1046c8553493d7832cdfcf654f369dc7cae7213dc18b844e9654151e993f6709",
+        "log_bytes": 60659,
+        "tests": 309,
+        "skips": 0,
+        "inventory": "checks/python-shard-6-inventory.json",
+        "failures": []
+      }
+    ],
+    "files": 179,
+    "full_inventory": true,
+    "tests": 1962,
+    "skips": 1,
+    "pass_": true
+  },
+  "rust": {
+    "shards": [
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "1",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/rust-shard-1-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "rust"
+        },
+        "exit_code": 0,
+        "seconds": 364.617,
+        "log": "logs/rust-shard-1.log",
+        "log_sha256": "186c7426f705518bc6290d361a3f46568b91f1aede3c6a374073f9611e8b296f",
+        "log_bytes": 3586,
+        "tests": 4,
+        "skips": 0,
+        "inventory": "checks/rust-shard-1-inventory.json",
+        "failures": []
+      },
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "2",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/rust-shard-2-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "rust"
+        },
+        "exit_code": 0,
+        "seconds": 1048.84,
+        "log": "logs/rust-shard-2.log",
+        "log_sha256": "47181471f35ed89b0f7e2ed689205c1ec063a948b7cfbbc2e677a92116fb9c4d",
+        "log_bytes": 77976,
+        "tests": 394,
+        "skips": 0,
+        "inventory": "checks/rust-shard-2-inventory.json",
+        "failures": []
+      },
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "3",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/rust-shard-3-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "rust"
+        },
+        "exit_code": 0,
+        "seconds": 1726.14,
+        "log": "logs/rust-shard-3.log",
+        "log_sha256": "c2d8d9225addee2dbbe694178ec038a0ffdce45631a41e548380a0daee2fb2b8",
+        "log_bytes": 90164,
+        "tests": 473,
+        "skips": 0,
+        "inventory": "checks/rust-shard-3-inventory.json",
+        "failures": []
+      },
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "4",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/rust-shard-4-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "rust"
+        },
+        "exit_code": 0,
+        "seconds": 1009.821,
+        "log": "logs/rust-shard-4.log",
+        "log_sha256": "b22cb36e86a31a079417f9b9aac6e08cbf49085f4148771df7156b3aac9f79ae",
+        "log_bytes": 63655,
+        "tests": 323,
+        "skips": 0,
+        "inventory": "checks/rust-shard-4-inventory.json",
+        "failures": []
+      },
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "5",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/rust-shard-5-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "rust"
+        },
+        "exit_code": 0,
+        "seconds": 1013.114,
+        "log": "logs/rust-shard-5.log",
+        "log_sha256": "7435a1cd5c1575d574f1c635d43b4d2d73f993b7f1967e23a625337b4aeb88f7",
+        "log_bytes": 73919,
+        "tests": 381,
+        "skips": 0,
+        "inventory": "checks/rust-shard-5-inventory.json",
+        "failures": []
+      },
+      {
+        "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+          "-Bu",
+          "tools/ci/run_campaign_tests.py",
+          "--shard",
+          "6",
+          "--shards",
+          "6",
+          "--timings",
+          "build/transshipment-v304/verified/checks/rust-shard-6-inventory.json"
+        ],
+        "environment": {
+          "MARCH_CORE_BACKEND": "rust"
+        },
+        "exit_code": 0,
+        "seconds": 827.93,
+        "log": "logs/rust-shard-6.log",
+        "log_sha256": "8b5776b97ced483e3cf8e616ed7340b52527bd594ae310be2f8daaa355481e59",
+        "log_bytes": 73098,
+        "tests": 387,
+        "skips": 0,
+        "inventory": "checks/rust-shard-6-inventory.json",
+        "failures": []
+      }
+    ],
+    "files": 179,
+    "full_inventory": true,
+    "tests": 1962,
+    "skips": 0,
+    "pass_": true
+  }
+}

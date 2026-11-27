@@ -1,0 +1,6 @@
+convoy,owner,parent_city,dispatch_turn,active_after_dispatch,dispatches_after,release_tick,officers,escort_troops
+1,wu,hepu,1,1,1,20,[422],1059
+2,wu,jiaozhi,1,1,1,50,[563],1068
+3,wu,yulin,5,1,1,60,[966],1088
+4,wu,cangwu,7,1,1,80,[622],1094
+5,wu,cangwu,9,1,1,100,[3],0

@@ -1,0 +1,14 @@
+{
+  "origin_cargo": 98384,
+  "origin_rations": 1616,
+  "external_ration_draw": 361,
+  "travel_and_wait_rations": 2621,
+  "route_loss": 11175,
+  "weather_loss": 344,
+  "returned_grain": 119,
+  "abandoned_grain": 0,
+  "unloaded_grain": 0,
+  "tag_left_at_hub": 0,
+  "final_received": 86102,
+  "residual": 0
+}

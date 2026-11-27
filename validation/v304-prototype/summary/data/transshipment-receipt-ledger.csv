@@ -1,0 +1,6 @@
+convoy,source,target,received,turn,parents
+1,hepu,yulin,47864,2,[]
+2,jiaozhi,yulin,43640,4,[]
+3,yulin,cangwu,90688,6,"[[1,47864],[2,43640]]"
+4,cangwu,nanhai,47254,8,"[[3,50000]]"
+5,cangwu,nanhai,38848,10,"[[3,40688]]"

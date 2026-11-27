@@ -1,0 +1,7 @@
+case,baseline,candidate,metric,before,after,change,relative_percent,pilot_target_missed
+pearl_real_routes_controlled,E0,E1,stage_quotes,20,76,56,280.0,false
+pearl_real_routes_controlled,E0,E1,cpu_seconds,0.739606,2.441747,1.702141,230.14158890003597,false
+pearl_real_routes_controlled,E0,E1,process_peak_rss,198410240,323272704,124862464,62.93146160198183,false
+pearl_ends_at_river_controlled,E0,E1,stage_quotes,20,41,21,105.0,false
+pearl_ends_at_river_controlled,E0,E1,cpu_seconds,0.559904,1.029819,0.4699150000000001,83.92778047665317,false
+pearl_ends_at_river_controlled,E0,E1,process_peak_rss,210731008,437174272,226443264,107.45607215052091,false

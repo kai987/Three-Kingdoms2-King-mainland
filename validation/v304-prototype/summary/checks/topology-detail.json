@@ -1,0 +1,17 @@
+{
+  "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+  "command": [
+    "python3",
+    "-Bu",
+    "tools/economy-balance/v304_topology.py",
+    "build/transshipment-v304/verified/topology"
+  ],
+  "environment": {
+    "MARCH_CORE_BACKEND": "python"
+  },
+  "exit_code": 0,
+  "seconds": 4.641,
+  "log": "logs/topology-detail.log",
+  "log_sha256": "6c3e9661284e233822dd6e90716728f0c3a6d4281486371ddc216ec0b60df46a",
+  "log_bytes": 544
+}

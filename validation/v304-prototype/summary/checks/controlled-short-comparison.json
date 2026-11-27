@@ -1,0 +1,18 @@
+{
+  "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+  "command": [
+    "python3",
+    "-Bu",
+    "tools/economy-balance/v304_scenarios.py",
+    "build/transshipment-v304/verified/controlled-samples",
+    "--short"
+  ],
+  "environment": {
+    "MARCH_CORE_BACKEND": "rust"
+  },
+  "exit_code": 0,
+  "seconds": 3.091,
+  "log": "logs/controlled-short-comparison.log",
+  "log_sha256": "c6ed9cb77aba80459db1a396fcad49ef74007819cd0bf037ff7a7d1f8690299a",
+  "log_bytes": 896
+}

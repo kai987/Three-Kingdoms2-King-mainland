@@ -1,0 +1,26 @@
+{
+  "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+  "command": [
+    "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+    "-Bu",
+    "tools/ci/run_campaign_tests.py",
+    "--shard",
+    "2",
+    "--shards",
+    "6",
+    "--timings",
+    "build/transshipment-v304/verified/checks/rust-shard-2-inventory.json"
+  ],
+  "environment": {
+    "MARCH_CORE_BACKEND": "rust"
+  },
+  "exit_code": 0,
+  "seconds": 1048.84,
+  "log": "logs/rust-shard-2.log",
+  "log_sha256": "47181471f35ed89b0f7e2ed689205c1ec063a948b7cfbbc2e677a92116fb9c4d",
+  "log_bytes": 77976,
+  "tests": 394,
+  "skips": 0,
+  "inventory": "checks/rust-shard-2-inventory.json",
+  "failures": []
+}

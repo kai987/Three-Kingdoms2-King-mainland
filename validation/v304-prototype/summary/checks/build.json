@@ -1,0 +1,16 @@
+{
+  "source": "b10344d713e46b5318d0ad6edaf95b382eaa64f5",
+  "command": [
+    "python3",
+    "-Bu",
+    "game/build_web.py",
+    "--output",
+    "build/web"
+  ],
+  "environment": {},
+  "exit_code": 0,
+  "seconds": 33.632,
+  "log": "logs/build.log",
+  "log_sha256": "40611841de43aee90667eee48997fe3b616b9e43fa7ce7c2f7b01d01bc0ca48a",
+  "log_bytes": 459
+}

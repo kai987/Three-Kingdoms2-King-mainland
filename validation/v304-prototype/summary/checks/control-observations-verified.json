@@ -1,0 +1,18 @@
+{
+  "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+  "command": [
+    "python3",
+    "-Bu",
+    "tools/economy-balance/v304_observations.py",
+    "build/transshipment-v304/verified/controlled-samples/controlled-route-results.json",
+    "build/transshipment-v304/verified/observed-metrics"
+  ],
+  "environment": {
+    "MARCH_CORE_BACKEND": "rust"
+  },
+  "exit_code": 0,
+  "seconds": 7.418,
+  "log": "logs/control-observations-verified.log",
+  "log_sha256": "29f12a7ae088f28675bc02e6132e6d0ba9f8f11ff5a01d8cbf92df1f18bb05a9",
+  "log_bytes": 1423
+}

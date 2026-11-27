@@ -1,0 +1,69 @@
+{
+  "partial": {
+    "turn": 3,
+    "received": {
+      "turn": 2,
+      "grain": 19311
+    },
+    "in_transit": 2,
+    "visible_stock": 19311,
+    "eligible_to_load": 18845
+  },
+  "frozen": {
+    "turn": 5,
+    "reach": "pearl:yulin:cangwu",
+    "ice_state": 3,
+    "blocked": "route",
+    "hub_stock": 196374
+  },
+  "unload": {
+    "convoy": 3,
+    "turn": 5,
+    "city": "yulin",
+    "target": "cangwu",
+    "owner": "wu",
+    "grain": 41504,
+    "capacity": 50000,
+    "required_rations": 327,
+    "controlled_waiting": true,
+    "wrong_remote_city_rejected": true,
+    "before_physical_load": 91504,
+    "after_physical_load": 50000,
+    "real_stock_delta": 41504,
+    "path": [
+      "yulin",
+      "cangwu"
+    ],
+    "command_cost": 0
+  },
+  "source_capture": {
+    "case": "source_change",
+    "turn": 2,
+    "source": "jiaozhi",
+    "new_owner": "wei",
+    "plan_reason": "ownership",
+    "present_hub_stock": 178700,
+    "live_convoys": 1,
+    "tag_released": 19290
+  },
+  "manual_cancellation": {
+    "case": "manual",
+    "turn": 5,
+    "stock_before": 196374,
+    "stock_after": 196374,
+    "reserved_before": 37223,
+    "reserved_after": 0,
+    "live_convoys_after": 1,
+    "cargo_unchanged": true
+  },
+  "saves": [
+    {
+      "compact": false,
+      "checksum": "4dd8f72e8c59eef3a69090ae265c420a818238c5c8a5ffbecddfa1d632e26c45"
+    },
+    {
+      "compact": true,
+      "checksum": "0e2ec0ad8b65719f5fff0b502f169f546ce12e5521add6308209a0a43952ec17"
+    }
+  ]
+}

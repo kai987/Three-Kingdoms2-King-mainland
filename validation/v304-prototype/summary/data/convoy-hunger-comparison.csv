@@ -1,0 +1,13 @@
+group,case,convoy,origin,target,soldiers_at_departure,hunger_losses
+E0,pearl_real_routes_controlled,1,hepu,nanhai,1059,0
+E0,pearl_real_routes_controlled,2,jiaozhi,nanhai,1068,0
+E1,pearl_real_routes_controlled,1,hepu,yulin,1059,0
+E1,pearl_real_routes_controlled,2,jiaozhi,yulin,1068,0
+E1,pearl_real_routes_controlled,3,yulin,cangwu,1088,0
+E1,pearl_real_routes_controlled,4,cangwu,nanhai,1094,0
+E1,pearl_real_routes_controlled,5,cangwu,nanhai,0,0
+E0,pearl_ends_at_river_controlled,1,hepu,cangwu,1059,0
+E0,pearl_ends_at_river_controlled,2,jiaozhi,cangwu,1068,0
+E1,pearl_ends_at_river_controlled,1,hepu,yulin,1059,0
+E1,pearl_ends_at_river_controlled,2,jiaozhi,yulin,1068,0
+E1,pearl_ends_at_river_controlled,3,yulin,cangwu,1088,0
