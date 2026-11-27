@@ -82,6 +82,7 @@ try{
   assert.equal(water.receipt,null);
   assert.equal(await page.locator('#dialog').evaluate(el=>el.scrollWidth <= el.clientWidth+3),true);
   await page.locator('#dialog').screenshot({path:path.join(output,locale+'-river-dispatched.png')});
+  await page.locator('#dialog [data-ts-back]').click();
   await page.locator('#dialog button[data-cancel]').click();
   const download=page.waitForEvent('download',{timeout:90000});
   await page.locator('#save').click();
