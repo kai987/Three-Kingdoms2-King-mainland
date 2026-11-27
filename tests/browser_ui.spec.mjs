@@ -102,6 +102,14 @@ async function clickCityCommand(page,id){
  if(group){const tab=page.locator('#city-command-tab-'+group);if(await tab.getAttribute('aria-selected')!=='true')await tab.click();await expect(page.locator('#city-command-panel-'+group)).toBeVisible();}
  await page.locator('#'+id).click();
 }
+async function vacateDomesticOffices(page){
+ await clickCityCommand(page,'city-domestic');
+ await page.locator('#office-civil').selectOption('');
+ await page.locator('#office-military').selectOption('');
+ await page.locator('#save-domestic').click();
+ await expect(page.locator('.domestic-saved')).toBeVisible();
+ await closeDialog(page);
+}
 async function openAllocation(page){await clickCityCommand(page,'allocate');await expect(page.locator('#allocation-troops')).toBeVisible();}
 async function waitIdle(page){await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);}
 async function setTroops(page,value){
@@ -1083,6 +1091,8 @@ test('daily marching grain loads once and consumes actual days through visible t
  };
  await dismissEvents();
  await page.locator('#city-jump').selectOption('shujun');
+ // Isolate the column and garrison bills from delegated logistics and recruiting.
+ await vacateDomesticOffices(page);
  const initial=await exported(),source='shujun',target='bajun';
  expect(initial.state.extension.domestic.factions.shu.civil).toBeNull();
  expect(initial.state.extension.domestic.factions.shu.military).toBeNull();
@@ -3334,6 +3344,8 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
  await page.locator('#begin').click();
  await waitIdle(page);
  await dismissHistoryOpening(page);
+ // Isolate the relocation settlement from delegated spending and transports.
+ await vacateDomesticOffices(page);
 
  const kind='historical_dong_zhuo_relocation';
  const receipts=save=>save.state.extension.events.items.filter(event=>event.kind===kind);
@@ -3391,8 +3403,8 @@ test('Dong Zhuo relocation opens in February 190 with its own bilingual historic
   return {payroll:data.payroll,staff:data.civil_staff?.rules};
  });
  const paid=(city,field)=>field==='reserves'?0:saved.state.cities[city].roster.officer_ids.reduce((total,id)=>{
-  const o=saved.state.officers[id];
-  if(!o.alive||o.faction_id!==saved.state.cities[city].owner)return total;
+  const o=saved.state.officers[id],owner=saved.state.cities[city].owner;
+  if(!o.alive||o.faction_id!==owner||id===saved.state.extension.leaders[owner])return total;
   const due=String(id).startsWith('clerk-')?
    (field==='gold'?wages.staff?.monthly_salary??5:wages.staff?.monthly_salary_grain??10):
    wages.payroll.officer_wages[Math.floor(o.experience/wages.payroll.experience_per_band)][field];
