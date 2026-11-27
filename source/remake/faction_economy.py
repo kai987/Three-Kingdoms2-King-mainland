@@ -30,6 +30,8 @@ class Commitment:
             return 'granary'
         if self.plan_id.startswith('relay:'):
             return 'relay'
+        if self.plan_id.startswith('transshipment:'):
+            return 'transshipment'
         return 'military'
 
 
@@ -64,7 +66,7 @@ class Commitments:
         return dict(amounts)
 
 
-def pending(state, owner, *, granary=False, except_id=None):
+def pending(state, owner, *, granary=False, except_id=None, transshipment_tags=True):
     book = Commitments()
     from . import staging_supply, strategic_granary
     coordinate = granary and strategic_granary.enabled(state, 'coordination')
@@ -111,6 +113,13 @@ def pending(state, owner, *, granary=False, except_id=None):
                 item = Commitment(f"relay:{row['id']}",owner,row['hub'],row['target'],row['received'],
                                   4,row['received_turn'],row['deadline'])
                 hold(item, state.cities[row['hub']])
+    if transshipment_tags and 'transshipment' in state.extension:
+        from . import transshipment
+        for plan, batch in transshipment.tagged(state, owner):
+            city = state.cities[batch['target']]
+            item = Commitment(f"transshipment:{batch['convoy']}",owner,city.id,plan['target'],
+                              batch['available'],1,batch['receipt']['turn'],plan['original_deadline'])
+            hold(item, city)
     return book
 
 

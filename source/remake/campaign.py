@@ -21,6 +21,7 @@ from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from . import battle_reinforcements, city_economy, economy_rules, grain_market, logistics_rules, logistics_strategy, payroll, transport_capacity
 from . import granary_planning, market_pricing, regional_market, strategic_granary, transport_emergency, winter_weather
+from . import transshipment
 from .city_economy import frontier_maintenance
 from .starting_garrisons import resolve as resolve_opening_garrisons
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -455,6 +456,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'facilities':facilities.view(self,state),
                                 **({'strategic_granary':granary_planning.view(self,state)}
                                    if strategic_granary.enabled(state) and state.player != observer.SEAT else {}),
+                                **({'transshipment':transshipment.view(self,state,state.player)}
+                                   if transshipment.enabled(state) and state.player != observer.SEAT else {}),
                                 **({'regional_market':regional_market.view(self,state)}
                                    if state and market_pricing.stage(state) else {}),
                                 'city_development':city_development.view(self,state),
@@ -524,6 +527,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     if transport_capacity.FIELD in payload or transport_capacity.OPTIONS in payload:
                         transport_capacity.initialize(candidate,payload.get(transport_capacity.FIELD,0),
                                                       payload.get(transport_capacity.OPTIONS))
+                    if transshipment.FIELD in payload:
+                        transshipment.initialize(candidate,payload[transshipment.FIELD])
                     if campaign_id is not None:
                         candidate.extension['campaign_id'] = campaign_id
                 else:
@@ -553,6 +558,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'set_domestic':self._set_domestic,'set_logistics':self._set_logistics,
                                'dispatch_transport':self._dispatch_transport,
                                strategic_granary.COMMAND:lambda state,payload:strategic_granary.execute(self,state,payload,state.player),
+                               transshipment.COMMAND:lambda state,payload:transshipment.execute(self,state,payload,state.player),
                                regional_market.COMMAND:lambda state,payload:regional_market.execute(self,state,payload,state.player),
                                **{action: self._treasury_command(action) for action in
                                   ('search_treasure','reward_officer','sell_treasure','set_governor','set_treasury_policy')},
@@ -599,6 +605,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 from . import occupation_budget, staging_supply
                 staging_supply.synchronize(candidate)
                 strategic_granary.synchronize(candidate)
+                transshipment.synchronize(self,candidate,settle_demand=kind != 'new' and candidate.turn != self.state.turn)
                 occupation_budget.prune(candidate)
                 self.validate(candidate)
                 if candidate.phase == 'result':
@@ -1019,6 +1026,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         battle_reinforcements.validate_returns(self, state)
         domestic.validate(self,state)
         transport_capacity.validate(state)
+        transshipment.validate(self,state)
         logistics.validate(self,state)
         regional_market.validate(self,state)
         strategic_granary.validate(state)

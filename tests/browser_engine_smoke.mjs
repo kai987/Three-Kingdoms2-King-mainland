@@ -16,6 +16,7 @@ const candidateSave=process.argv[3];
 const regionalSave=process.env.TK2_REGIONAL_BROWSER_FIXTURE;
 const granarySave=process.env.TK2_GRANARY_BROWSER_FIXTURE;
 const transportSave=process.env.TK2_TRANSPORT_CAPACITY_BROWSER_FIXTURE;
+const transshipmentSave=process.env.TK2_TRANSSHIPMENT_BROWSER_FIXTURE;
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const decode=bytes=>new TextDecoder('utf-8',{fatal:true}).decode(bytes);
 const jsonFile=name=>JSON.parse(fs.readFileSync(name,'utf8'));
@@ -42,7 +43,8 @@ assert(another,'a second scenario is required for the lazy switching check');
 const logisticsScenario='mainland217-07';
 const regionalScenario='mainland208-10';
 const catalogs=new Map();
-for(const identity of new Set([initial,another,logisticsScenario,...(regionalSave||granarySave||transportSave?[regionalScenario]:[])])){
+for(const identity of new Set([initial,another,logisticsScenario,...(regionalSave||granarySave||transportSave?[regionalScenario]:[]),
+ ...(transshipmentSave?['mainland227-02']:[])])){
  const row=manifest.catalogs.find(row=>row.id===identity);
  assert.match(row.path,/^\/tk2\/game\/data\/campaigns\/[a-zA-Z0-9-]+\.json$/);
  const bytes=gunzipSync(artifact(row.url));
@@ -406,6 +408,29 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
   transportConvoys=reported.length;
  }
 
+ let transshipmentBatch=null;
+ if(transshipmentSave){
+  let field=load(fs.readFileSync(transshipmentSave,'utf8'),state(seat).revision,seat);
+  const before=field.game.extension.transshipment.plans['1'];
+  assert.equal(field.game.extension.transshipment_rules_version,304);
+  assert.equal(before.batches.length,2);
+  assert.ok(before.batches.every(batch=>batch.receipt.grain>0));
+  const quote=field.catalog.transshipment.plans[0].offers.find(row=>row.source==='yulin'&&row.stage===1);
+  assert.equal(quote.capacity,100000);
+  assert.ok(quote.max_cargo>50000&&!quote.blocked);
+  field=command(field,'transshipment_order',{action:'dispatch',plan:1,stage:1,source:'yulin',
+   officer:quote.officer,grain:quote.max_cargo},seat);
+  const after=field.game.extension.transshipment.plans['1'];
+  const batch=after.batches.at(-1);
+  assert.equal(batch.parents.length,2);
+  assert.equal(batch.parents.reduce((sum,pair)=>sum+pair[1],0),batch.grain+batch.rations);
+  const compact=request('/api/save?compact=1',{instance:seat});
+  field=load(compact,field.revision,seat);
+  assert.deepEqual(field.game.extension.transshipment.plans['1'],after);
+  request('/api/save',{instance:seat});
+  transshipmentBatch=batch.convoy;
+ }
+
  // Exercise the real optional wire path, not only the legacy bridge used by
  // CPU replay. Hydration must reconstruct the same complete current view.
  const {default:wireModule}=await import(pathToFileURL(path.join(root,'game/view-cache.js')).href);
@@ -452,7 +477,8 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
   requests:trace.length,ai_turns:1,battle_settlements:battleSettlements,logistics_route_parity:true,
   save_sha256:sha(finalSave),rng,cpu_save_bytes_equal:true,v212_observer_turns:candidateTurns,
   weather_observer_turns:winterTurns,weather_save_sha256:sha(winterSave),regional_market_roundtrip:regionalMarketOrder?.convoy??null,
-  granary_convoy_roundtrip:granaryConvoy,transport_capacity_roundtrip:transportConvoys}));
+  granary_convoy_roundtrip:granaryConvoy,transport_capacity_roundtrip:transportConvoys,
+  transshipment_batch_roundtrip:transshipmentBatch}));
 }finally{
  for(const bridge of bridges.values())bridge.destroy();
  responseSemantic?.destroy();

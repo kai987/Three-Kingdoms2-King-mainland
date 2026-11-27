@@ -197,14 +197,21 @@ def loading(game, state, owner, policy, quote, rations, available, other_limit, 
 
 
 def current_grain(state, city, *, except_order=None):
-    from . import staging_supply, strategic_granary
+    from . import staging_supply, strategic_granary, transshipment
     return min(staging_supply.available(state, city),
                strategic_granary.available(state, city, except_id=except_order)
-               if strategic_granary.enabled(state) else city.grain)
+               if strategic_granary.enabled(state) else max(0,city.grain-transshipment.credit(state,city.id)))
+
+
+def enforced(state, row):
+    if enabled(state,'physical_capacity'):
+        return True
+    from . import transshipment
+    return transshipment.enabled(state) and transshipment.is_batch(state,row['id'])
 
 
 def fits(game, state, row, quote, *, minimum=0):
-    if not enabled(state, 'physical_capacity'):
+    if not enforced(state,row):
         return True
     cap = physical(game, state, quote)['physical_capacity']
     carry = row['cargo']['grain'] + row['journeys'][-1]['supply']['remaining']
@@ -212,7 +219,7 @@ def fits(game, state, row, quote, *, minimum=0):
 
 
 def refill_room(game, state, row, city, *, route=None, cargo_grain=None):
-    if not enabled(state,'physical_capacity'):
+    if not enforced(state,row):
         return 100_000_000
     journey=row['journeys'][-1]
     if route is None:
