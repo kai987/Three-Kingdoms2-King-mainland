@@ -248,7 +248,7 @@ def fixed_replay(spec):
         fixture_sha256=check_hash,forecast_state_sha256=before,checks=replay)
 
 
-def fixed(args):
+def fixed(args, *, replay=fixed_replay):
     origins=read_csv(args.prior/'source-task-blockers.csv')
     cases=read_csv(args.prior/'spatial-grain-capability-funnel.csv')
     samples=[]
@@ -274,7 +274,7 @@ def fixed(args):
     if selected!={row['checkpoint_sha256'] for row in cases}:
         raise ValueError('One or more archived fixed checkpoints are missing')
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        reports=list(pool.map(fixed_replay,tasks))
+        reports=list(pool.map(replay,tasks))
     targets=[row for block,_,_ in reports for row in block]
     by_source=[row for _,block,_ in reports for row in block]
     to_csv(args.output/'transport-capability-funnel.csv',targets)
