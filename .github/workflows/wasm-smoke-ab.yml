@@ -1,0 +1,50 @@
+name: WASM smoke same-runner A/B
+on:
+  push:
+    branches: [codex/ci-wasm-smoke-ab-6d709026]
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      MARCH_CORE_BACKEND: python
+      PYTHONDONTWRITEBYTECODE: '1'
+      INPUT_COMMIT: 6d7090264274c9867fc3e0daca0b22bfde050cb4
+      CANDIDATE_COMMIT: 3bf5e694355fe5caa154cae167bd5ebf28a2127c
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 3
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tools/web-runtime/package-lock.json
+      - name: Pin the input and build one Web candidate
+        run: |
+          test "$(git diff --name-only "$INPUT_COMMIT" "$CANDIDATE_COMMIT")" = tests/browser_engine_smoke.mjs
+          git diff --exit-code "$INPUT_COMMIT" HEAD -- game source crates tools/web-runtime
+          git diff --exit-code "$CANDIDATE_COMMIT" HEAD -- tests/browser_engine_smoke.mjs
+          mkdir -p evidence
+          lscpu > evidence/runner.txt
+          node --version >> evidence/runner.txt
+          python --version >> evidence/runner.txt
+          git rev-parse "$INPUT_COMMIT" "$CANDIDATE_COMMIT" HEAD >> evidence/runner.txt
+          npm ci --prefix tools/web-runtime --ignore-scripts
+          GITHUB_SHA="$INPUT_COMMIT" python -B game/build_web.py --output build/web
+          python -B tools/ci/gate.py artifact --root build/web --head "$INPUT_COMMIT" > evidence/candidate-sha256.txt
+      - name: Alternate baseline and optimized smoke twice
+        run: python -B tools/ci-experiments/compare_wasm_smoke.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: wasm-smoke-same-runner-ab
+          path: evidence
+          if-no-files-found: error
+          retention-days: 30
