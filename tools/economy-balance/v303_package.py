@@ -25,7 +25,7 @@ def index_archive(path,kind):
                 sha256=file_sha(path),file_manifest=external.name,manifest_sha256=file_sha(external))
 
 
-def partition(output,group,rows,start=1):
+def partition(output,group,rows,start=1,*,prefix='v303'):
     if not rows:
         return []
     bundles=[]
@@ -52,7 +52,7 @@ def partition(output,group,rows,start=1):
             bundles.append(pending)
         result=[]
         for i,bundle in enumerate(bundles,start):
-            name=f'v303-{group}'+('' if len(bundles)==1 and i==1 else f'-{i:02}')+'.zip'
+            name=f'{prefix}-{group}'+('' if len(bundles)==1 and i==1 else f'-{i:02}')+'.zip'
             write_zip(draft,bundle)
             dest=output/name
             draft.replace(dest)
