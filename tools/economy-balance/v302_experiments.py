@@ -89,7 +89,8 @@ def _csv(stack, folder, name, fields):
     return writer
 
 
-def run(root, case, *, granary_options=None, progress=False, capacity_options=None, economy_background=None):
+def run(root, case, *, granary_options=None, progress=False, capacity_options=None,
+        economy_background=None, instrument=None):
     wave, group, seed, scene, policy, weather, months = case
     dest = case_dir(root, case)
     complete = dest/'run-v302.json'
@@ -157,6 +158,8 @@ def run(root, case, *, granary_options=None, progress=False, capacity_options=No
                 stack.enter_context(strategic_granary.experiment(**options))
                 stack.enter_context(strategic_granary.observing(
                     lambda event,row: strategic_stream.writerow(dict(event=event,**row))))
+            if instrument is not None:
+                instrument(stack, raw)
             result = run_scenario(scene, seed, months, raw.parent, STRATEGY[policy], config(SETTINGS))
         if result['outcome'] in ('complete','natural_end'):
             result['transport_survival'] = transport.summary(result['terminal']['convoy_loads'],
