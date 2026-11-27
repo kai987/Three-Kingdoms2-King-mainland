@@ -23,6 +23,8 @@ def instrument(source, raw_body):
 const responseHashes=[];
 let transferMs=0;
 ''')
+    # A fixed seed also makes the field order of non-canonical JSON comparable.
+    insert('indexURL:runtimeDirectory+path.sep', 'env:{PYTHONHASHSEED:process.env.PYTHONHASHSEED},')
     insert(' let response;\n', ' const transferStarted=performance.now();\n')
     insert(' trace.push(operation);\n', f''' transferMs+=performance.now()-transferStarted;
  responseHashes.push(sha({raw_body}));
@@ -84,7 +86,15 @@ def main():
                 (EVIDENCE / 'parity.json').write_text(json.dumps(parity, indent=2) + '\n')
                 (EVIDENCE / 'smoke-summary.json').write_text(json.dumps(summary, indent=2) + '\n')
             if (parity, summary) != expected:
-                raise ValueError(f'{variant} smoke evidence differs from baseline in trial {trial}')
+                reference_parity, reference_summary = expected
+                changed_fields = [field for field in parity if parity[field] != reference_parity[field]]
+                changed_responses = [
+                    [index, actual['path'], [field for field in actual if actual[field] != previous[field]]]
+                    for index, (actual, previous) in enumerate(zip(parity['responses'], reference_parity['responses']), 1)
+                    if actual != previous
+                ]
+                raise ValueError(f'{variant} trial {trial} differs in {changed_fields}, responses {changed_responses}, '
+                                 f'summary changed: {summary != reference_summary}')
             subprocess.check_call([
                 sys.executable, '-B', 'tools/ci/gate.py', 'artifact', '--root', 'build/web',
                 '--head', INPUT_COMMIT, '--content-sha256', candidate_hash,
