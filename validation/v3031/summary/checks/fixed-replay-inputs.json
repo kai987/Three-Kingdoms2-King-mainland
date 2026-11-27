@@ -1,0 +1,9 @@
+{
+  "source": "b1db8e059ed973cb64b7d5115fe53234e9b0ab89",
+  "targets": 89,
+  "returning_samples": 23,
+  "archived_csv": {
+    "source-task-blockers.csv": "ad5bd62d87be4e7fe59c64841a606dacaa4e9fdc4b70eec144085c342789942e",
+    "spatial-grain-capability-funnel.csv": "58cf3574addebc812700ac6fa167452c8337002beb88b54662b344c78a4875cf"
+  }
+}

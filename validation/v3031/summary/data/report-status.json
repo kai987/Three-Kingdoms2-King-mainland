@@ -1,0 +1,76 @@
+{
+  "current_runs": 26,
+  "planned_current": 26,
+  "missing": [],
+  "reused_controls": 22,
+  "fixed": {
+    "D1": {
+      "returning": 23,
+      "qualified": 0,
+      "timely": 0,
+      "actual_source": 16,
+      "targets": 89,
+      "positive": 35,
+      "full": 33,
+      "actual": 126600,
+      "strategic": 36452
+    },
+    "D2": {
+      "returning": 23,
+      "qualified": 23,
+      "timely": 11,
+      "actual_source": 17,
+      "targets": 89,
+      "positive": 46,
+      "full": 41,
+      "actual": 184387,
+      "strategic": 57581
+    },
+    "D0": {
+      "returning": 23,
+      "qualified": 0,
+      "timely": 0,
+      "actual_source": 16,
+      "targets": 89,
+      "positive": 35,
+      "full": 33,
+      "actual": 127600,
+      "strategic": 36452
+    },
+    "D3": {
+      "returning": 23,
+      "qualified": 23,
+      "timely": 11,
+      "actual_source": 16,
+      "targets": 89,
+      "positive": 46,
+      "full": 42,
+      "actual": 181423,
+      "strategic": 58821
+    }
+  },
+  "reused_economic_references": 11,
+  "prior_c4_second_dispatch_purposes": {
+    "ordinary": 2942,
+    "regional": 1731,
+    "strategic": 4215,
+    "army": 42
+  },
+  "actual_urgent_slot_screens": 968318,
+  "actual_unsatisfied_requests_with_low_priority_slot": 915502,
+  "ledger_issues": 0,
+  "warehouse_issues": 0,
+  "holdout_approved": true,
+  "default_change_approved": false,
+  "second_dispatch_purposes": {
+    "military_city": 273,
+    "strategic": 4235,
+    "ordinary": 2979,
+    "army": 40,
+    "regional": 1234
+  },
+  "dangerous_stalls": {
+    "D1": 4,
+    "D2": 3
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "source": "b1db8e059ed973cb64b7d5115fe53234e9b0ab89",
+  "previous_source": "ebfe7152",
+  "previous_archive": "80b97c10",
+  "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+  "flags": {
+    "D0": null,
+    "D1": {
+      "concurrency": false,
+      "physical_capacity": false,
+      "mode_aware_ai_policy": false,
+      "throughput_ranking": false,
+      "double_dispatch": false
+    },
+    "D2": {
+      "concurrency": true,
+      "physical_capacity": false,
+      "mode_aware_ai_policy": false,
+      "throughput_ranking": false,
+      "double_dispatch": false
+    },
+    "D3": {
+      "concurrency": true,
+      "physical_capacity": true,
+      "mode_aware_ai_policy": true,
+      "throughput_ranking": true,
+      "double_dispatch": false
+    }
+  },
+  "tools": {
+    "v3031_experiments.py": "2410acc618afaf21ff90e3293acd7e199c0155dd9fb085edd05d4376a6a0c768",
+    "v3031_replays.py": "967ed5c7088b3c4006f34905c8f16da8c1ac827a8c45ce97a8caa8f70565d29a",
+    "v3031_report.py": "2645645a6c3092460ab84e184308e3eca9571285a0c12591772cbbe2b31a0a75",
+    "v3031_delivery.py": "ef4d7bafa7abf6ef1794769281cf3a2a1c2ded6df5b23b34d9cfdacfdedea2fe",
+    "v304_recalculate.py": "154f4c288e9aeb7b659ef5ec135dff1a0b0dfc7651ac8b32f966b5fb1f35449d"
+  }
+}

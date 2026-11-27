@@ -1,0 +1,327 @@
+{
+  "source": "bcce0bbce0e2e25fed538aaaa047a08e93477e89",
+  "verified_snapshots": 4,
+  "rows": [
+    {
+      "owner": "liu_zhang",
+      "source": "wudu",
+      "target": "xincheng",
+      "node": "xincheng",
+      "status": "returning",
+      "reason": "escort_return",
+      "delivered": 3052,
+      "initial_grain": 3598,
+      "original_bag": 19877,
+      "bag": 12948,
+      "cargo": 0,
+      "tick": 7100,
+      "path": [
+        "xincheng",
+        "hanzhong",
+        "wudu"
+      ],
+      "original_ids": [
+        "clerk-000085"
+      ],
+      "troops": 10000,
+      "hunger": 0,
+      "occupants": [
+        "clerk-000085"
+      ],
+      "reserved_until_turn": 715,
+      "turn": 711,
+      "city_owner": "liu_zhang",
+      "city_stock": 8917,
+      "local_grain_legal": 3917,
+      "source_owner": "liu_zhang",
+      "receives_here": true,
+      "relief_eligible": false,
+      "legal_relief_meeting": null,
+      "relief_grain_required": null,
+      "best_receiving_options": [
+        {
+          "city": "xincheng",
+          "needed": 0,
+          "days": 0,
+          "path": [
+            "xincheng"
+          ],
+          "stock": 8917
+        },
+        {
+          "city": "shangyong",
+          "needed": 2000,
+          "days": 6,
+          "path": [
+            "xincheng",
+            "shangyong"
+          ],
+          "stock": 7640
+        },
+        {
+          "city": "badong",
+          "needed": 5667,
+          "days": 17,
+          "path": [
+            "xincheng",
+            "badong"
+          ],
+          "stock": 248
+        },
+        {
+          "city": "xicheng",
+          "needed": 5144,
+          "days": 18,
+          "path": [
+            "xincheng",
+            "shangyong",
+            "xicheng"
+          ],
+          "stock": 222244
+        },
+        {
+          "city": "hanzhong",
+          "needed": 6144,
+          "days": 24,
+          "path": [
+            "xincheng",
+            "hanzhong"
+          ],
+          "stock": 28551
+        }
+      ],
+      "fixture_sha256": "90bb976774a85656ba6f25d35eb6b02de5c8c387f34f52e573456571589589fd",
+      "loaded_state_sha256": "8c08c5cf0ff99c84ab7202f3d7b8743514783ca112b7cef94920a8bebbe5b0b3"
+    },
+    {
+      "owner": "liu_zhang",
+      "source": "wudu",
+      "target": "xincheng",
+      "node": null,
+      "status": "returning",
+      "reason": "escort_return",
+      "delivered": 3052,
+      "initial_grain": 3598,
+      "original_bag": 19877,
+      "bag": 10625,
+      "cargo": 0,
+      "tick": 7110,
+      "path": [
+        "xincheng",
+        "hanzhong",
+        "wudu"
+      ],
+      "original_ids": [
+        "clerk-000085"
+      ],
+      "troops": 10000,
+      "hunger": 0,
+      "occupants": [
+        "clerk-000085"
+      ],
+      "reserved_until_turn": 715,
+      "turn": 712,
+      "city_owner": null,
+      "city_stock": null,
+      "local_grain_legal": null,
+      "source_owner": "liu_zhang",
+      "receives_here": false,
+      "relief_eligible": false,
+      "legal_relief_meeting": null,
+      "relief_grain_required": null,
+      "best_receiving_options": [],
+      "fixture_sha256": "a433db79889e5a6da69aaca1c8fc3ae2761a9090ce3c8e668849a68fe6be6463",
+      "loaded_state_sha256": "beb30fb4dbaa2ed098f1c95228beaeb12197de7a2da37bff65496856943e4bae"
+    },
+    {
+      "owner": "liu_zhang",
+      "source": "wudu",
+      "target": "xincheng",
+      "node": "wudu",
+      "status": "waiting",
+      "reason": "unsafe_return",
+      "delivered": 3052,
+      "initial_grain": 3598,
+      "original_bag": 19877,
+      "bag": 2818,
+      "cargo": 0,
+      "tick": 7140,
+      "path": [
+        "xincheng",
+        "hanzhong",
+        "wudu"
+      ],
+      "original_ids": [
+        "clerk-000085"
+      ],
+      "troops": 10000,
+      "hunger": 0,
+      "occupants": [
+        "clerk-000085"
+      ],
+      "reserved_until_turn": 715,
+      "turn": 715,
+      "city_owner": "ma_teng",
+      "city_stock": 144338,
+      "local_grain_legal": null,
+      "source_owner": "ma_teng",
+      "receives_here": false,
+      "relief_eligible": false,
+      "legal_relief_meeting": null,
+      "relief_grain_required": null,
+      "best_receiving_options": [
+        {
+          "city": "hanzhong",
+          "needed": 5000,
+          "days": 15,
+          "path": [
+            "wudu",
+            "hanzhong"
+          ],
+          "stock": 38036
+        },
+        {
+          "city": "yinping",
+          "needed": 5000,
+          "days": 15,
+          "path": [
+            "wudu",
+            "yinping"
+          ],
+          "stock": 101648
+        },
+        {
+          "city": "xicheng",
+          "needed": 6455,
+          "days": 21,
+          "path": [
+            "wudu",
+            "hanzhong",
+            "xicheng"
+          ],
+          "stock": 231429
+        },
+        {
+          "city": "xincheng",
+          "needed": 7622,
+          "days": 26,
+          "path": [
+            "wudu",
+            "hanzhong",
+            "xincheng"
+          ],
+          "stock": 8228
+        },
+        {
+          "city": "shangyong",
+          "needed": 8511,
+          "days": 29,
+          "path": [
+            "wudu",
+            "hanzhong",
+            "xicheng",
+            "shangyong"
+          ],
+          "stock": 10275
+        }
+      ],
+      "fixture_sha256": "5c1e013cb72725c79e8dd9bf526af2f40345450dc521673511ce5224675b26a3",
+      "loaded_state_sha256": "3c1ca5442100b4a0b96e6ab9c820fbda3dc63df7534d31597f5a2d4c8d94af99"
+    },
+    {
+      "owner": "liu_zhang",
+      "source": "wudu",
+      "target": "xincheng",
+      "node": "wudu",
+      "status": "waiting",
+      "reason": "unsafe_return",
+      "delivered": 3052,
+      "initial_grain": 3598,
+      "original_bag": 19877,
+      "bag": 0,
+      "cargo": 0,
+      "tick": 7200,
+      "path": [
+        "xincheng",
+        "hanzhong",
+        "wudu"
+      ],
+      "original_ids": [
+        "clerk-000085"
+      ],
+      "troops": 6214,
+      "hunger": 3786,
+      "occupants": [
+        "clerk-000085"
+      ],
+      "reserved_until_turn": 721,
+      "turn": 721,
+      "city_owner": "ma_teng",
+      "city_stock": 105157,
+      "local_grain_legal": null,
+      "source_owner": "ma_teng",
+      "receives_here": false,
+      "relief_eligible": false,
+      "legal_relief_meeting": null,
+      "relief_grain_required": null,
+      "best_receiving_options": [
+        {
+          "city": "hanzhong",
+          "needed": 3127,
+          "days": 15,
+          "path": [
+            "wudu",
+            "hanzhong"
+          ],
+          "stock": 41163
+        },
+        {
+          "city": "yinping",
+          "needed": 3127,
+          "days": 15,
+          "path": [
+            "wudu",
+            "yinping"
+          ],
+          "stock": 75889
+        },
+        {
+          "city": "xicheng",
+          "needed": 4036,
+          "days": 21,
+          "path": [
+            "wudu",
+            "hanzhong",
+            "xicheng"
+          ],
+          "stock": 239982
+        },
+        {
+          "city": "xincheng",
+          "needed": 4766,
+          "days": 26,
+          "path": [
+            "wudu",
+            "hanzhong",
+            "xincheng"
+          ],
+          "stock": 3092
+        },
+        {
+          "city": "shangyong",
+          "needed": 5321,
+          "days": 29,
+          "path": [
+            "wudu",
+            "hanzhong",
+            "xicheng",
+            "shangyong"
+          ],
+          "stock": 12510
+        }
+      ],
+      "fixture_sha256": "71b9259a06c554a8c004570288e0001fe4b5280644e54d32227295c4bb34686f",
+      "loaded_state_sha256": "196da96f70d3afabf0185fe4665f845b0078145e8bc7cc2011b7bb0fbce5a6a1"
+    }
+  ]
+}

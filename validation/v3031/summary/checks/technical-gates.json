@@ -1,0 +1,74 @@
+{
+  "observations": {
+    "capture-3634": {
+      "exit_code": 0,
+      "log": "logs/capture-3634.log",
+      "log_bytes": 1800,
+      "log_sha256": "3f94eb5d1c045059c7efd91ac9da270e76e4db24f89263661be188683214e5c8",
+      "source": "b1db8e059ed973cb64b7d5115fe53234e9b0ab89"
+    },
+    "five-holdout": {
+      "exit_code": 0,
+      "log": "logs/five-holdout.log",
+      "log_bytes": 11774,
+      "log_sha256": "3a635fc8010d0fe67a00bbd2ab7176f025842c89cd2509352ed66cf750d51fca",
+      "source": "b1db8e059ed973cb64b7d5115fe53234e9b0ab89"
+    },
+    "fixed": {
+      "exit_code": 0,
+      "log": "logs/fixed.log",
+      "log_bytes": 446,
+      "log_sha256": "6ab97d31e4924c5e8c2414db006e08556c969bb34f8e1a06eb28e6fb0eea36d5",
+      "source": "b1db8e059ed973cb64b7d5115fe53234e9b0ab89"
+    },
+    "g4": {
+      "exit_code": 0,
+      "log": "logs/g4.log",
+      "log_bytes": 1302,
+      "log_sha256": "a2c457c9ab44dbad9565451a303ee3515a626c51d75c8915f0cb65bf49f8bff1",
+      "source": "b1db8e059ed973cb64b7d5115fe53234e9b0ab89"
+    },
+    "long": {
+      "exit_code": 0,
+      "log": "logs/long.log",
+      "log_bytes": 8705,
+      "log_sha256": "5bf1ebf664444c5f2366391f49d258e7cbba67c208261bdef30b858cce7ec596",
+      "source": "b1db8e059ed973cb64b7d5115fe53234e9b0ab89"
+    },
+    "review-1860": {
+      "exit_code": 0,
+      "log": "logs/review-1860.log",
+      "log_bytes": 1667,
+      "log_sha256": "dbc44dc1f04935cc6c1ba3a708c6ab7bf6376bff8a194ff299bf1c8923a21cfd",
+      "source": "b1db8e059ed973cb64b7d5115fe53234e9b0ab89"
+    },
+    "smoke": {
+      "exit_code": 0,
+      "log": "logs/smoke.log",
+      "log_bytes": 1192,
+      "log_sha256": "6d4852948c33529e465bee47061f9d3746aff590a485614c394074d1d86dfedb",
+      "source": "b1db8e059ed973cb64b7d5115fe53234e9b0ab89"
+    }
+  },
+  "parity": {
+    "inherited_source": "ebfe7152",
+    "frozen_source": "b1db8e059ed973cb64b7d5115fe53234e9b0ab89",
+    "unchanged_game_paths": true
+  },
+  "completed_runs": 26,
+  "warehouse_issues": 0,
+  "convoy_receipt_issues": 0,
+  "fixed_matched": {
+    "targets": 89,
+    "origins": 23
+  },
+  "actual_departures": {
+    "orders": 28763,
+    "over_activity_limit": 0,
+    "over_turn_limit": 0
+  },
+  "stalled_counts": {
+    "D1": 4,
+    "D2": 3
+  }
+}

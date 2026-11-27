@@ -1,0 +1,15 @@
+member,source_path,size,sha256
+checks/technical/log-provenance.csv,checks/technical/log-provenance.csv,2041,bd23fd114d5a37a3e53b8a8c4728a7400bccc2ed9272f0d1830352c7a494ee0c
+checks/technical/logs/capture-3634.log,checks/technical/logs/capture-3634.log,1800,3f94eb5d1c045059c7efd91ac9da270e76e4db24f89263661be188683214e5c8
+checks/technical/logs/final-report.log,checks/technical/logs/final-report.log,3145,da7f95db4a89a8d09eda50d7a363ee4b8b5badb9912b68ca9acdda982fb9f150
+checks/technical/logs/five-holdout.log,checks/technical/logs/five-holdout.log,11774,3a635fc8010d0fe67a00bbd2ab7176f025842c89cd2509352ed66cf750d51fca
+checks/technical/logs/fixed.log,checks/technical/logs/fixed.log,446,6ab97d31e4924c5e8c2414db006e08556c969bb34f8e1a06eb28e6fb0eea36d5
+checks/technical/logs/g4.log,checks/technical/logs/g4.log,1302,a2c457c9ab44dbad9565451a303ee3515a626c51d75c8915f0cb65bf49f8bff1
+checks/technical/logs/long.log,checks/technical/logs/long.log,8705,5bf1ebf664444c5f2366391f49d258e7cbba67c208261bdef30b858cce7ec596
+checks/technical/logs/readable-delivery.log,checks/technical/logs/readable-delivery.log,123,f7fc8d10635c485f25e2c2b43dbf686cf531ca852b3bc8b04a7f33c68c50c329
+checks/technical/logs/report-crew-proof.log,checks/technical/logs/report-crew-proof.log,3145,da7f95db4a89a8d09eda50d7a363ee4b8b5badb9912b68ca9acdda982fb9f150
+checks/technical/logs/report-preview.log,checks/technical/logs/report-preview.log,3442,c59bedb1d172b110679cae7496289fbc28877f5e8820f57a844b8450bbc408fe
+checks/technical/logs/review-1860-relief.log,checks/technical/logs/review-1860-relief.log,1841,da1fd5e3061e13375512e8413f17e882343cefe906fdfd1a9166f7121fa7916a
+checks/technical/logs/review-1860.log,checks/technical/logs/review-1860.log,1667,dbc44dc1f04935cc6c1ba3a708c6ab7bf6376bff8a194ff299bf1c8923a21cfd
+checks/technical/logs/review-3634-checkpoints.log,checks/technical/logs/review-3634-checkpoints.log,351,10a43cf6b09091f09e44be7cb5b0608a610418a6b7a70a762004a0ac4f0c7c22
+checks/technical/logs/smoke.log,checks/technical/logs/smoke.log,1192,6d4852948c33529e465bee47061f9d3746aff590a485614c394074d1d86dfedb
