@@ -1,0 +1,59 @@
+name: Battlefield services view transfer A/B
+on:
+  push:
+    branches: [codex/ci-battlefield-services-ab-v23]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 27
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [desktop-chromium, touch-chromium]
+    env:
+      BASE_COMMIT: e845f974521051dc6aa2a8ea7e65c9036124a760
+      OPTIMIZED_COMMIT: c1b4c2867487d03469dd255cbbe5b222993af7d7
+      RELEASE_RUN: 45991792967
+      CONTENT_SHA: 9dd589545f4867ea35128789fdb07e600c6fcb03f246d07f74a89010fc9cf08a
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          github-token: ${{ github.token }}
+          name: verified-candidate-${{ env.BASE_COMMIT }}-attempt-1
+          run-id: ${{ env.RELEASE_RUN }}
+          path: build/release-record
+      - name: Prepare the verified V2.3 Pages candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(git diff --name-only "$BASE_COMMIT" "$OPTIMIZED_COMMIT")" = tests/browser_soldier_ui.spec.mjs
+          git diff --exit-code "$BASE_COMMIT" HEAD -- game source crates tools/browser-tests .github/actions/browser-tools .github/workflows/web-checks.yml
+          git diff --exit-code "$OPTIMIZED_COMMIT" HEAD -- tests/browser_soldier_ui.spec.mjs
+          mkdir -p evidence
+          lscpu > evidence/runner.txt
+          git rev-parse "$BASE_COMMIT" "$OPTIMIZED_COMMIT" HEAD >> evidence/runner.txt
+          python -B tools/ci/verified_web.py prepare --root build/web --record build/release-record/verified-candidate.json \
+            --head "$BASE_COMMIT" --run-id "$RELEASE_RUN" --attempt 1 | tee evidence/verified-artifact.txt
+      - name: Compare the three facility views in reversed order
+        env:
+          BROWSER_PROJECT: ${{ matrix.project }}
+        run: python -B tools/ci-experiments/compare_facility_view.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: battlefield-services-${{ matrix.project }}
+          path: evidence
+          if-no-files-found: error
+          retention-days: 30
