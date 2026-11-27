@@ -55,7 +55,6 @@ try{
   await page.locator('#begin').click();
   await page.waitForFunction(()=>view.game?.extension?.weather_rules_version===23,null,{timeout:120_000});
   await idle(page);
-  await dismiss(page);
   let panel=await cityWeather(page,locale);
   assert.match(await panel.innerText(),touch?/積雪指数 \d+\/50/:/積雪指數 \d+\/50/);
   assert.match(await panel.innerText(),touch?/今月の降雪確率は1旬あたり/:/本月每旬降雪機率/);

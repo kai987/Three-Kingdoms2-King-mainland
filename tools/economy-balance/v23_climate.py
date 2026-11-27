@@ -9,7 +9,7 @@ from pathlib import Path
 from statistics import fmean, median
 from types import SimpleNamespace
 
-from common import Catalog, ROOT, TOOL_ROOT, to_csv, to_json
+from common import Catalog, ROOT, TOOL_ROOT, git, sha256, to_csv, to_json
 from remake import winter_agriculture as agriculture
 from remake import winter_climate as climate
 from remake import winter_weather as weather
@@ -62,6 +62,7 @@ def simulate(group, seed):
     for key, row in regions.items():
         snow.append({**dict(group=group, seed=seed, version=version, weather_seed=weather_seed,
                             region=key, events=event_count[key], **row),
+                     'mean_snow_depth': row['depth_sum']/(30*len(agriculture.OBSERVATION_MONTHS)),
                      'spring_risk_score': agriculture.risk_score(row), 'melt_last_day': melt_tail[key],
                      'remaining_snow_june30': state.extension[weather.POOL]['regions'][key]['depth']})
     return snow, [dict(group=group, seed=seed, reach=key, **{name: counts[name] for name in ICE_NAMES})
@@ -188,7 +189,7 @@ def main():
         ('winter-event-frequency', ('events','winter_snow_days')),
         ('winter-snow-days', ('winter_snow_days',)),
         ('snowfall-severity-distribution', ('light_snow_days','heavy_snow_days','blizzard_days')),
-        ('regional-snow-depth-statistics', ('max_snow_depth','depth_sum')),
+        ('regional-snow-depth-statistics', ('max_snow_depth','mean_snow_depth','depth_sum')),
         ('snow-cover-duration', ('winter_snow_cover_days','snow_cover_days','deep_snow_days')),
         ('spring-melt-dates', ('melt_last_day','remaining_snow_june30')),
         ('spring-cold-exposure', ('spring_cold_days','cold_days','spring_risk_score','late_snow_days')),
@@ -210,8 +211,11 @@ def main():
                 f'NORMALS = {{\n{rows}}}\n', encoding='utf-8')
     else:
         to_csv(args.output/'agricultural-climate-holdout.csv', agriculture_metrics(snow))
-    to_json(args.output/f'{args.phase}-config.json', dict(start_seed=start,samples_per_group=args.count,groups=groups,
-                                                        start_date=[184,11,1],days=240))
+    to_json(args.output/f'{args.phase}-config.json', dict(
+        source=git('rev-parse','HEAD').decode().strip(), runner_sha256=sha256(Path(__file__).read_bytes()),
+        catalog_sha256=Catalog(ROOT/'game/data/campaigns/200-01.json').sha256,
+        map_sha256=sha256((ROOT/'game/assets/map-campaign.png').read_bytes()),
+        start_seed=start,samples_per_group=args.count,groups=groups, start_date=[184,11,1],days=240))
     city_audit(args.output)
     return 0
 

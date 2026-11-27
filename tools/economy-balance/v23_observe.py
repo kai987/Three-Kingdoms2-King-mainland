@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 from common import ROOT, TOOL_ROOT, git, sha256, to_csv, to_json
 from observe import RecordedCampaign, run_scenario
-from remake import market_pricing, strategic_granary, winter_climate, winter_weather
+from remake import grain_units, market_pricing, strategic_granary, winter_climate, winter_weather
 from v222_experiments import STRATEGY
 from v23_climate import FEATURES
 from v302_audit import Audit
@@ -21,6 +21,7 @@ FIVE = (*QUICK, (2026, '184-02', 212), (2026, '208-10', 211))
 LONG = ((2026, '184-02', 211), (2026, '208-10', 211), (2026, '208-10', 212))
 HOLDOUT = ((2041, '184-02', 211), (2042, '208-10', 212))
 GROUPS = ('dry', 'W0', *FEATURES)
+RUNNER_SHA256 = sha256(Path(__file__).read_bytes())
 
 
 class Record:
@@ -31,11 +32,20 @@ class Record:
         self.transport = {}
         self.markets = Counter()
         self.weather_events = Counter()
+        self.last_disaster_event = 0
 
     def write(self, kind, row):
         self.counts[kind] += 1
         self.stream.write(json.dumps(dict(kind=kind, **row), ensure_ascii=False,
                                      separators=(',', ':')) + '\n')
+
+    def record_disasters(self, pool):
+        for event in pool['items']:
+            if event['id'] <= self.last_disaster_event or event['kind'] != 'city_disaster':
+                continue
+            self.last_disaster_event = event['id']
+            self.write('city_disaster', dict(id=event['id'], year=event['year'], month=event['month'],
+                day=event['day'], city=event['city_ids'][0], **event['details']))
 
     def writerow(self, row):
         if row['resource'] == 'grain' and row['category'] in (
@@ -120,6 +130,14 @@ def run_case(output, case):
             with audit.command(game, kind):
                 result = real_command(game, kind, payload, revision)
             current[0] = game
+            state = game.state
+            if state.day == 1:
+                record.record_disasters(state.extension['events'])
+                with grain_units.using(state):
+                    for key, city in state.cities.items():
+                        quote = market_pricing.snapshot(game, state, key)
+                        record.write('market_price', dict(city=key, owner=city.owner, year=state.year, month=state.month,
+                                                          turn=state.turn, buy=quote['buy'], sell=quote['sell']))
             if game.state.turn % 36 == 1 and game.state.turn > 1:
                 print(f'{wave} {group} {scenario} {seed}/{strategy} turn {game.state.turn}', flush=True)
             return result
@@ -156,7 +174,7 @@ def run_case(output, case):
                   market_stage=2, granary='302 G1', transport='D0', transshipment=False, emergency=222,
                   catalog_sha256=game.catalog.sha256, map_sha256=sha256((ROOT/'game/assets/map-campaign.png').read_bytes()),
                   measurements=record.finish(), warehouse_audit=audit.metrics(),
-                  output=str(target.relative_to(output)))
+                  output=str(target.relative_to(output)), runner_sha256=RUNNER_SHA256)
     to_json(result_path, result)
     return result
 
@@ -178,6 +196,10 @@ def cases(wave, source):
         tasks.extend((group, 2026, '208-10', 212, 60) for group in ('dry','W2','W3'))
     elif wave == 'long':
         tasks = [(group, seed, scenario, strategy, 240) for seed,scenario,strategy in LONG for group in ('W0','W4')]
+    elif wave == 'exceptional':
+        tasks = [(group, 2037, '207-09', 211, 24) for group in ('W0','W2e')]
+    elif wave == 'locality':
+        tasks = [(group, 2031, '190-01', 211, 24) for group in ('W0','W4')]
     else:
         tasks = [(group, seed, scenario, strategy, 60) for seed,scenario,strategy in HOLDOUT for group in ('W0','W4')]
     return [(wave, group, scenario, seed, strategy, months, source) for group,seed,scenario,strategy,months in tasks]
@@ -185,7 +207,7 @@ def cases(wave, source):
 
 def main():
     parser = ArgumentParser(description=__doc__)
-    parser.add_argument('waves', nargs='+', choices=('smoke','quick','five','long','holdout'))
+    parser.add_argument('waves', nargs='+', choices=('smoke','quick','five','long','holdout','exceptional','locality'))
     parser.add_argument('--workers', type=int, default=4)
     parser.add_argument('--output', type=Path, default=TOOL_ROOT/'build/winter-agriculture-v23')
     args = parser.parse_args()
