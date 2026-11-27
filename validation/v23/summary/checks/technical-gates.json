@@ -1,0 +1,273 @@
+{
+  "browser-full": {
+    "command": [
+      "node",
+      "tools/browser-tests/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "/private/tmp/tk2-v23-visuals.1795771242413/full-playwright.config.mjs",
+      "--workers",
+      "2"
+    ],
+    "environment": {},
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "exit_code": 0,
+    "seconds": 3286.376466,
+    "log": "logs/browser-full.log",
+    "log_bytes": 22892,
+    "log_sha256": "5d14a49fb929f332bf6e29c80ee025749b0d2ec2caea8913b5c2ca635bf72fde",
+    "tests": 110
+  },
+  "browser-resupply": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "node",
+      "tools/browser-tests/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "/private/tmp/tk2-v23-visuals.1795771242413/resupply-playwright.config.mjs"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 56.363,
+    "log": "logs/browser-resupply.log",
+    "log_sha256": "eae67e053ed385236f9ff6df758adecf0f2105776ca80a1a3dfd6f85338f71f3",
+    "log_bytes": 1602
+  },
+  "browser-v23-recheck": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "node",
+      "tests/browser_winter_agriculture_smoke.mjs",
+      "/private/tmp/tk2-v23-visuals.1795771242413"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 16.449,
+    "log": "logs/browser-v23-recheck.log",
+    "log_sha256": "05677d50a1e072aa22a0d8d449a66d853a80cdadc603532c17f61e6a12bd6875",
+    "log_bytes": 676
+  },
+  "browser-v23": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "node",
+      "tests/browser_winter_agriculture_smoke.mjs",
+      "/private/tmp/tk2-v23-visuals.1795771242413"
+    ],
+    "environment": {},
+    "exit_code": 1,
+    "seconds": 38.559,
+    "log": "logs/browser-v23.log",
+    "log_sha256": "aca67164312bf0c13ed25dd43ba271885c2b9d1e19b6e595ea479e9af4494e2e",
+    "log_bytes": 1212,
+    "original_log_sha256": "cf9dc06d7e41771eedaab04cbc8a292cd07bc3ae52edaf666e135512522f87f1"
+  },
+  "native-build": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-B",
+      "game/build_march_core.py",
+      "--check"
+    ],
+    "environment": {
+      "RUSTUP_TOOLCHAIN": "1.93.0"
+    },
+    "exit_code": 0,
+    "seconds": 0.632,
+    "log": "logs/native-build.log",
+    "log_sha256": "2614de7036852d25c0b141cd8879cee00c69fa9115555185695002062a7d73ff",
+    "log_bytes": 529,
+    "original_log_sha256": "928d167e2b4e9257a422ad33a6e20b49191a48fba9a02d4fab4de97ece6c0d0b"
+  },
+  "node-tests": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "zsh",
+      "-c",
+      "node --test tests/test_remake_*.cjs"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 28.354,
+    "log": "logs/node-tests.log",
+    "log_sha256": "76144e2888cef056696e81dfc6651cf5d71bd69df466de9a2fce7fe1f74753a7",
+    "log_bytes": 16536
+  },
+  "pyodide-final": {
+    "source": "5c294c92b3057a7e2073549f4b56fa7a2b1f85bb",
+    "command": [
+      "node",
+      "tests/browser_engine_smoke.mjs",
+      "build/web"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 56.586,
+    "log": "logs/pyodide-final.log",
+    "log_sha256": "72ca0eb20cded3a90d2b6f9133e9e4dcd6515225c909cd17a9b72fceefa576e2",
+    "log_bytes": 1017
+  },
+  "pyodide": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "node",
+      "tests/browser_engine_smoke.mjs",
+      "build/web"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 180.11,
+    "log": "logs/pyodide.log",
+    "log_sha256": "bf7aee2e72588442ad39bf630f1e6fa1e5ab5c80c3cb68c56ed83985fe5875c6",
+    "log_bytes": 1010
+  },
+  "python-campaign": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_remake_*.py"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "python"
+    },
+    "exit_code": 0,
+    "seconds": 3215.747,
+    "log": "logs/python-campaign.log",
+    "log_sha256": "86cfbe54ad7526f49ec484b0bb0eeae599c38d83d8096543e4065b70f92993dd",
+    "log_bytes": 4523
+  },
+  "rust-campaign": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_remake_*.py"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "rust"
+    },
+    "exit_code": 0,
+    "seconds": 4051.908,
+    "log": "logs/rust-campaign.log",
+    "log_sha256": "a9ae0287e44846959b324a2afb59801dc4c6fd169254be15177b77ee1dd97528",
+    "log_bytes": 4507
+  },
+  "rust-crate": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "--manifest-path",
+      "crates/march-core/Cargo.toml",
+      "--target-dir",
+      "build/march-core-target"
+    ],
+    "environment": {
+      "RUSTUP_TOOLCHAIN": "1.93.0"
+    },
+    "exit_code": 0,
+    "seconds": 10.755,
+    "log": "logs/rust-crate.log",
+    "log_sha256": "1f037e5ab4d1dae80655715eeec2b6a41202710ff7fe5ed2e0f050f48b7ad394",
+    "log_bytes": 2868,
+    "original_log_sha256": "e4ad1071fa27c537d46404d186baab101c1989f3008374dae5d9aae24f61dc88"
+  },
+  "rust-fmt": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "cargo",
+      "fmt",
+      "--manifest-path",
+      "crates/march-core/Cargo.toml",
+      "--check"
+    ],
+    "environment": {
+      "RUSTUP_TOOLCHAIN": "1.93.0"
+    },
+    "exit_code": 0,
+    "seconds": 0.286,
+    "log": "logs/rust-fmt.log",
+    "log_sha256": "c023e0c06e6bda77658591e8092e14b20f19d8215f600cf3cef807a36cc98b2a",
+    "log_bytes": 210
+  },
+  "wasm-parity": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "node",
+      "tests/march_wasm_parity.cjs"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 38.145,
+    "log": "logs/wasm-parity.log",
+    "log_sha256": "4e0dd398a3a8ba369373b17bddb9278e2a9e0e8d6385af40717538cdc1bd0d8a",
+    "log_bytes": 244
+  },
+  "weather-cross-save": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-Bu",
+      "tools/economy-balance/v23_compat.py",
+      "check-cross-save",
+      "build/winter-agriculture-v23/compatibility"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.063,
+    "log": "logs/weather-cross-save.log",
+    "log_sha256": "27d74f8d5fb8352e61062373d97b208cc8c2089b34f677899a794bfd2144193e",
+    "log_bytes": 1145
+  },
+  "weather-save-compatibility": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-Bu",
+      "tools/economy-balance/v23_compat.py",
+      "check-proofs",
+      "build/winter-agriculture-v23/compatibility"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.35,
+    "log": "logs/weather-save-compatibility.log",
+    "log_sha256": "107db9094013c2098dbab7934908b80889d04c2222d5c944d4d63f90234b2481",
+    "log_bytes": 15973
+  },
+  "web-build": {
+    "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-B",
+      "game/build_web.py",
+      "--output",
+      "build/web"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "python"
+    },
+    "exit_code": 0,
+    "seconds": 21.856,
+    "log": "logs/web-build.log",
+    "log_sha256": "c000aac9bef8955ebd33ca8feaa17a40b94536b24e64a310809124071587ea23",
+    "log_bytes": 462,
+    "original_log_sha256": "2a707df1d2807ba3da952e3f5858775cb41bbcfb637317b0e8ff130363a61e58"
+  }
+}

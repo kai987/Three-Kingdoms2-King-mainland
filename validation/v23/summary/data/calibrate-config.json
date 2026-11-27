@@ -1,0 +1,17 @@
+{
+  "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+  "runner_sha256": "10058de83a12d28c7ed627d4dd365e510c3a966a2cbf211889fad49c150a8a90",
+  "catalog_sha256": "6c6ba7f2dafb4b6dec0922383456b33231baf8bdbeb8f9ffeded1beed428ea60",
+  "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+  "start_seed": 100000,
+  "samples_per_group": 1000,
+  "groups": [
+    "W2"
+  ],
+  "start_date": [
+    184,
+    11,
+    1
+  ],
+  "days": 240
+}

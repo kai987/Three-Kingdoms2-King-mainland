@@ -1,0 +1,15 @@
+wave,group,scenario,seed,strategy,turn,year,month,owner,city,method,grain,deadline
+five,W4,208-10,2026,211,58,210,5,wei,xincheng,market,312,67
+holdout,W4,208-10,2042,212,57,210,4,wei,xihe,market,122,66
+holdout,W4,208-10,2042,212,58,210,5,wei,xihe,market,131,67
+holdout,W4,208-10,2042,212,95,211,5,wei,xihe,market,183,104
+holdout,W4,208-10,2042,212,125,212,3,wei,yiyang,market,68,134
+long,W4,184-02,2026,211,330,193,3,wu,danyang,market,21,339
+long,W4,184-02,2026,211,331,193,4,wu,danyang,market,42,340
+long,W4,184-02,2026,211,333,193,4,yellow_turban,nanyang,market,1004,342
+long,W4,184-02,2026,211,334,193,5,wu,danyang,market,54,343
+long,W4,184-02,2026,211,335,193,5,wu,danyang,market,12,344
+long,W4,184-02,2026,211,336,193,5,wu,danyang,market,45,345
+long,W4,184-02,2026,211,336,193,5,yellow_turban,nanyang,market,1477,345
+long,W4,208-10,2026,211,58,210,5,wei,xincheng,market,312,67
+long,W4,208-10,2026,212,199,214,4,liu_zhang,jiameng,granary,365,208

@@ -1,0 +1,12 @@
+group,region,metric,samples,mean,median,p10,p90,p95,maximum,zero_fraction
+W2,central_plains,exceptional_cold_days,1000,0.0,0.0,0,0,0,0,1.0
+W2,huai_north_jing,exceptional_cold_days,1000,0.0,0.0,0,0,0,0,1.0
+W2,liaodong,exceptional_cold_days,1000,0.0,0.0,0,0,0,0,1.0
+W2,lingnan,exceptional_cold_days,1000,0.0,0.0,0,0,0,0,1.0
+W2,north_china,exceptional_cold_days,1000,0.0,0.0,0,0,0,0,1.0
+W2,northern_frontier,exceptional_cold_days,1000,0.0,0.0,0,0,0,0,1.0
+W2,northwest,exceptional_cold_days,1000,0.0,0.0,0,0,0,0,1.0
+W2,qinling_highlands,exceptional_cold_days,1000,0.0,0.0,0,0,0,0,1.0
+W2,southern_basins,exceptional_cold_days,1000,0.0,0.0,0,0,0,0,1.0
+W2,southern_highlands,exceptional_cold_days,1000,0.0,0.0,0,0,0,0,1.0
+W2,tropical_islands,exceptional_cold_days,1000,0.0,0.0,0,0,0,0,1.0

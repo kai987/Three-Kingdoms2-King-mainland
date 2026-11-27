@@ -1,0 +1,26 @@
+{
+  "decision": "繼續保留為實驗候選",
+  "long_term_alerts": 14,
+  "campaigns": 57,
+  "wave_counts": {
+    "exceptional": 2,
+    "five": 17,
+    "holdout": 4,
+    "locality": 2,
+    "long": 6,
+    "quick": 26
+  },
+  "technical_passed": true,
+  "expected_runs_present": true,
+  "missing_historical_replays": [
+    126,
+    1685,
+    1706,
+    1723,
+    1902,
+    2095
+  ],
+  "source": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+  "validation_tools_source": "5c294c92b3057a7e2073549f4b56fa7a2b1f85bb",
+  "technical_gates": 16
+}

@@ -1,0 +1,390 @@
+{
+  "decision": "繼續保留為實驗候選",
+  "long_term_alerts": 14,
+  "campaigns": 57,
+  "wave_counts": {
+    "exceptional": 2,
+    "five": 17,
+    "holdout": 4,
+    "locality": 2,
+    "long": 6,
+    "quick": 26
+  },
+  "technical_passed": true,
+  "expected_runs_present": true,
+  "missing_historical_replays": [
+    126,
+    1685,
+    1706,
+    1723,
+    1902,
+    2095
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1030,
+      "sha256": "c22840b8208fbfec59b4af2d9e30fa0e69ee9854d7a3d927634688f36d7cf131"
+    },
+    {
+      "path": "checks/compatibility.json",
+      "bytes": 15694,
+      "sha256": "408f7475c765fe6b6f3f63ad7598b51155fb3f8f8b8177f51d62901702945414"
+    },
+    {
+      "path": "checks/technical-gates.json",
+      "bytes": 8020,
+      "sha256": "bb3e3b24dd8a5cba383059d252588eaf78d0842756e42411d5b0b62eac335604"
+    },
+    {
+      "path": "data/agricultural-climate-calibration.csv",
+      "bytes": 367,
+      "sha256": "3ed0adc438c44923668e42315d737824ed3130fd8cebe271b10b7b3a374a952a"
+    },
+    {
+      "path": "data/agricultural-climate-calibration.json",
+      "bytes": 940,
+      "sha256": "2a916c97f0d82149801de161f02a8911e592d5915b953f8ab01a62848d12bb0c"
+    },
+    {
+      "path": "data/agricultural-climate-holdout.csv",
+      "bytes": 881,
+      "sha256": "9b5a4f2f5fdc1171618cf0b01b797f4f9e7771c26571ed12681a94311399d478"
+    },
+    {
+      "path": "data/agricultural-grain-account.csv",
+      "bytes": 125074,
+      "sha256": "b038a2f90d2ce5b710c13cd63c105b07ca30f0d15a437c2b472c861ee37e5312"
+    },
+    {
+      "path": "data/agricultural-production-comparison.csv",
+      "bytes": 3041804,
+      "sha256": "fe2c781dd15b783377aa23e6ec37b076dc02e10bb5cb6d9ff6c72c2a46e9bb1a"
+    },
+    {
+      "path": "data/agricultural-repeated-risk.csv",
+      "bytes": 19442,
+      "sha256": "ed35adf7157d8bc543fa93757cb188be613533cb2d3abc4f34e9e1fba6ba15ff"
+    },
+    {
+      "path": "data/agricultural-year-summary.csv",
+      "bytes": 192574,
+      "sha256": "a099a72316715a75e2e09a395ca4f1b31b810b92abb45401e3653369937b87b3"
+    },
+    {
+      "path": "data/agriculture-forecast-comparison.csv",
+      "bytes": 950,
+      "sha256": "9520fba5e55a4e6a8d5ca38652a00140b33ea8e0a839253d919a0f91321ef8e3"
+    },
+    {
+      "path": "data/balance-alerts.csv",
+      "bytes": 18290,
+      "sha256": "705399e7fa32b1851dda4b4a64dbee4c05386ebde63089c09a00781e63ecc9f1"
+    },
+    {
+      "path": "data/calibrate-config.json",
+      "bytes": 460,
+      "sha256": "fe7773ca0024ac9ad088ea0203a2fa96964e0eb401a68ebeb025b68292ba73eb"
+    },
+    {
+      "path": "data/calibrate-exceptional-cold-wave-events.csv",
+      "bytes": 782,
+      "sha256": "d0c8f7f4564e1a96ff29ede59574430f157f6d0584a72328ec999d6ad8a20d19"
+    },
+    {
+      "path": "data/calibrate-regional-snow-depth-statistics.csv",
+      "bytes": 2861,
+      "sha256": "54c587594771d1580c7f78fcb5cbf6be632e98eca54fee3531019449fcf7380c"
+    },
+    {
+      "path": "data/calibrate-river-ice-duration-comparison.csv",
+      "bytes": 4056,
+      "sha256": "94aadabff7c92a4d61d4a97d669a6c44fbae9dfccc286472e138a045a24af8dc"
+    },
+    {
+      "path": "data/calibrate-snow-cover-duration.csv",
+      "bytes": 2273,
+      "sha256": "dcfd22bcf10cb1cc127e0cdfc308648bc773e9a5b779673a484446a7f0fcbaf5"
+    },
+    {
+      "path": "data/calibrate-snowfall-severity-distribution.csv",
+      "bytes": 2115,
+      "sha256": "3516680b02cff873c9e92d610b9261d33596897c188b3c7ef6366e1eddaa945f"
+    },
+    {
+      "path": "data/calibrate-spring-cold-exposure.csv",
+      "bytes": 2770,
+      "sha256": "1c70aa5ce81dc6097c07586f8bc392dcd1a515a71dfaaa26d63177efcda8f8a3"
+    },
+    {
+      "path": "data/calibrate-spring-melt-dates.csv",
+      "bytes": 1511,
+      "sha256": "8a263d6eb4ad11f1b94db08e0ddf5be08e41185a804b64e134fc81b456cf8429"
+    },
+    {
+      "path": "data/calibrate-winter-event-frequency.csv",
+      "bytes": 1361,
+      "sha256": "4f758d019c5c214ba749c5df42bdded551e8f1a555373b47e5aa853896995a81"
+    },
+    {
+      "path": "data/calibrate-winter-snow-days.csv",
+      "bytes": 782,
+      "sha256": "35becddab543e84483d4e68450f967fb63351ec93d7360dfc1fa69e11477ac30"
+    },
+    {
+      "path": "data/campaign-weather-exposure.csv",
+      "bytes": 3161,
+      "sha256": "6386c67e3b3480d2b73890abc2d6a19c72e7f61f8235e4d6d3c13a0996d99942"
+    },
+    {
+      "path": "data/city-climate-audit.csv",
+      "bytes": 10360,
+      "sha256": "0d9590c8d87c62287121fdbe27fa11c12200b22676cace9a8ebd8afbb4613f65"
+    },
+    {
+      "path": "data/city-disaster-grain.csv",
+      "bytes": 41469,
+      "sha256": "eea5cd3e32944581c7ff274dcbeea2582b8dd297cfb6afda58d1c1cd34a17eea"
+    },
+    {
+      "path": "data/climate-market-overflow-comparison.csv",
+      "bytes": 3091489,
+      "sha256": "998732a9502a8bd280e67dc00699e4cad226c870c3f16499527c5c90510aa4e6"
+    },
+    {
+      "path": "data/climate-market-supply-comparison.csv",
+      "bytes": 4158773,
+      "sha256": "9e1d1ecd8580ef847a7f2bcb28e3522ff17c7c4028e8dad73238b86b6d92dc9d"
+    },
+    {
+      "path": "data/climate-region-monthly-probability.csv",
+      "bytes": 22874,
+      "sha256": "3ec1b0b85efb53ab87362f335e912dfac5f81d34051794d55917cb1777501fa9"
+    },
+    {
+      "path": "data/climate-transport-safety.csv",
+      "bytes": 2180,
+      "sha256": "809485f1235198d8310838fe98d6aabcdd2121661591316974122878c6b00c55"
+    },
+    {
+      "path": "data/convoy-hunger-comparison.csv",
+      "bytes": 1372,
+      "sha256": "4ac2c94a28799cb88b02157ec1f309f834a3a733f20d3a139f1fd67e772a3234"
+    },
+    {
+      "path": "data/convoy-return-safety.csv",
+      "bytes": 2053,
+      "sha256": "03d836efabe1e0149e1d5f05c384405ba8de70f6e32d6de3ce115d8672168483"
+    },
+    {
+      "path": "data/harvest-bonus-comparison.csv",
+      "bytes": 2534980,
+      "sha256": "31c51fe03867ddb72f9a64881c7b708f39142023907e058372900d4d06e87df1"
+    },
+    {
+      "path": "data/holdout-config.json",
+      "bytes": 491,
+      "sha256": "2a01b57d1b3038fdb5f06d23858b9503fe07941bad844b58871d0f7549294d93"
+    },
+    {
+      "path": "data/holdout-exceptional-cold-wave-events.csv",
+      "bytes": 2929,
+      "sha256": "a0c12fb6f0f87d31a8f48ab0764ae0be6a38ad7282dffa8869a18c6b9689ab77"
+    },
+    {
+      "path": "data/holdout-regional-snow-depth-statistics.csv",
+      "bytes": 11241,
+      "sha256": "f00335285b99e0d6a66c5d57cb73954eac7969f4aad4f9175e008df9ea4b56f0"
+    },
+    {
+      "path": "data/holdout-river-ice-duration-comparison.csv",
+      "bytes": 16065,
+      "sha256": "6370af617fed7a45572683d43af0a3d0ab659f8c3104104638b4e22a1eb1e636"
+    },
+    {
+      "path": "data/holdout-snow-cover-duration.csv",
+      "bytes": 8876,
+      "sha256": "d6f594a5fde7e56bd99726ddef0ce8d822a024ff4f36b9df16b5664e6cca01ef"
+    },
+    {
+      "path": "data/holdout-snowfall-severity-distribution.csv",
+      "bytes": 8253,
+      "sha256": "03ef55fd687d81515c062039fb57decf55cb13b75ad9b24d36190aa041d89b34"
+    },
+    {
+      "path": "data/holdout-spring-cold-exposure.csv",
+      "bytes": 10756,
+      "sha256": "cfd42319d7b2771e25025b82b4c1b17c715ce05b135550aa73f249468966e312"
+    },
+    {
+      "path": "data/holdout-spring-melt-dates.csv",
+      "bytes": 5844,
+      "sha256": "e5efb0faf4396cfa7e63d0edeb5495c8c95087d6c2b2970da70b138d10616ff6"
+    },
+    {
+      "path": "data/holdout-winter-event-frequency.csv",
+      "bytes": 5256,
+      "sha256": "d3ccb4000035315695683463eb702c0822050b64d16ef880a60c204f60d4c75c"
+    },
+    {
+      "path": "data/holdout-winter-snow-days.csv",
+      "bytes": 2922,
+      "sha256": "deb5b53c220c8110e0716a5aab3ff7eb84dee247564b685487b73a8cdfceaae4"
+    },
+    {
+      "path": "data/long-term-economy-comparison.csv",
+      "bytes": 2342,
+      "sha256": "8fe1bf6415b2281c560ba66a5079d9029a523d371a0f14ded0a7cb24f44fbca4"
+    },
+    {
+      "path": "data/market-price-comparison.csv",
+      "bytes": 18573,
+      "sha256": "8149814661c4f452853ac4abca077f49621bc6f9e90723e49c0220e9d0dfb3c7"
+    },
+    {
+      "path": "data/pairwise.csv",
+      "bytes": 11682,
+      "sha256": "7f5df39acfa4481a92d464db613fdd65e4625c0b3762694398b62387c589f594"
+    },
+    {
+      "path": "data/performance-comparison.csv",
+      "bytes": 1829,
+      "sha256": "cf0a4f38df17a75729d4342921bca36f187fb47e63f731f132050a866bdb68ad"
+    },
+    {
+      "path": "data/regional-agriculture-overview.csv",
+      "bytes": 36926,
+      "sha256": "2cc4ce26eac15d28766fdbfd1babafa699ab6b613d1f69b1a2f1d5fadb11df93"
+    },
+    {
+      "path": "data/regional-climate-economic-balance.csv",
+      "bytes": 46131,
+      "sha256": "85294e5b475bceb17638acbe59efa96555a100a34892b77ea53654ee09c9b9be"
+    },
+    {
+      "path": "data/report-status.json",
+      "bytes": 535,
+      "sha256": "9f85495b00dd23845000b15c649885300216dcb17cfc47a3ddd61e32d9d8ec77"
+    },
+    {
+      "path": "data/scenario-scores.csv",
+      "bytes": 9367,
+      "sha256": "21a559e1810822cb75917dffa3bf7dd2926700dd69f4dc12218d24a1b0946e1a"
+    },
+    {
+      "path": "data/simulation-manifest.json",
+      "bytes": 59014,
+      "sha256": "c461fcbd7cf37b16d4a5ae69b037aedc91f33ccc48c51ddb5eb3e486b454e6d9"
+    },
+    {
+      "path": "data/winter-army-supply-comparison.csv",
+      "bytes": 6140,
+      "sha256": "b406f780ea08fe20126c63d495f22acf0dee7589e59de1da01c9016e8deba569"
+    },
+    {
+      "path": "docs/README.md",
+      "bytes": 1572,
+      "sha256": "ab73d7ae25570e48883edfc4802f66668e4f2e5efe11fde9516bef8f29d0cc1d"
+    },
+    {
+      "path": "docs/acceptance.md",
+      "bytes": 3534,
+      "sha256": "989851aef2478630b2b998037ebaa89693f68d31a6ae32ec3fa039d1571efb19"
+    },
+    {
+      "path": "docs/agricultural-climate-rules.md",
+      "bytes": 2495,
+      "sha256": "f69c3590a31f266c3fc3896554fdb557a837f9da3958571e2abced8e818b1ade"
+    },
+    {
+      "path": "docs/ai-climate-forecast.md",
+      "bytes": 1109,
+      "sha256": "ff0ff0751581334a6a6525ce23b67a7beb70d4ecddb0618ba3200bca5bcdcffe"
+    },
+    {
+      "path": "docs/climate-region-profiles.md",
+      "bytes": 2160,
+      "sha256": "51ca9b51c8ffad4f4dd13d2004ec2bcc7072104b5b8bc5b4e922a1e23e3a3c9f"
+    },
+    {
+      "path": "docs/data-dictionary.md",
+      "bytes": 3056,
+      "sha256": "5837dd2d0db1fdf87212a1720da183ca8ccb9ebe30a68443180f920f32cbbba5"
+    },
+    {
+      "path": "docs/historical-climate-basis.md",
+      "bytes": 1425,
+      "sha256": "4b62ed41da3769f7f86525a83bb65188d19556685ff42bebdfdef0311a958046"
+    },
+    {
+      "path": "docs/holdout-results.md",
+      "bytes": 606,
+      "sha256": "fa51b049980463da0760941979c5b8db8f7ddb97e369cc720cb0f48b46c1b381"
+    },
+    {
+      "path": "docs/known-issues.md",
+      "bytes": 1082,
+      "sha256": "ed1d3ff5fb554207a0f3a1a9100897f004e5807b97fb294e5414ac48c314c4c2"
+    },
+    {
+      "path": "docs/long-term-balance-results.md",
+      "bytes": 2900,
+      "sha256": "448a752030b9cb6c5814d0e21c2a93b956f63df2e6c0450919f75e26c5efb4c7"
+    },
+    {
+      "path": "docs/save-compatibility.md",
+      "bytes": 1044,
+      "sha256": "1cdfb8ae68cac375761867ef44e99da393c48ac68422eeb06c40b6420977c4a4"
+    },
+    {
+      "path": "docs/validation-results.md",
+      "bytes": 1025,
+      "sha256": "e20218ebd088ee7a7500982da0da6bb41118b6c35d978f44ff3ea19357ba0090"
+    },
+    {
+      "path": "sources/v23_climate.py",
+      "bytes": 11097,
+      "sha256": "10058de83a12d28c7ed627d4dd365e510c3a966a2cbf211889fad49c150a8a90"
+    },
+    {
+      "path": "sources/v23_compat.py",
+      "bytes": 11610,
+      "sha256": "bf4c95e98eec4610dc32c0f796a1ccc4aa6e7f18ee397515debd7ffbaf1387de"
+    },
+    {
+      "path": "sources/v23_observe.py",
+      "bytes": 12777,
+      "sha256": "4a97237fbae3808b02f8f52993cb99215a3a4c0a7a228d549c2c30603660362a"
+    },
+    {
+      "path": "sources/v23_observe_five_long.py",
+      "bytes": 11976,
+      "sha256": "8211b50cbf5b280978868c37de71d9a534360c0370ec7cf453d43ea224144b3f"
+    },
+    {
+      "path": "sources/v23_observe_quick.py",
+      "bytes": 11434,
+      "sha256": "1fa23a8afb563531413018978b5e5e67a4b1b00b95ef3217bf11356aaeb97afa"
+    },
+    {
+      "path": "sources/v23_package.py",
+      "bytes": 5308,
+      "sha256": "4e621189f8b59ecf5bcdb4ff3e2b97868131edbbb73ba8592c487a45cde3eb0c"
+    },
+    {
+      "path": "sources/v23_report.py",
+      "bytes": 34696,
+      "sha256": "5af252e2e92063cd9ccecb762818e878d7f8905408ad7e59a70cc4fe9b4b8660"
+    },
+    {
+      "path": "sources/winter_agriculture_normals.py",
+      "bytes": 544,
+      "sha256": "98eb0caca98d079826df4325c06d96313754f3fc0d1496bc876b3819339e5dd4"
+    },
+    {
+      "path": "sources/winter_climate.py",
+      "bytes": 7015,
+      "sha256": "3a68a56b233c5f8ffa5a1dc3cf6d9602c02ec08c5199caf4cca375c0c87a0778"
+    }
+  ]
+}
