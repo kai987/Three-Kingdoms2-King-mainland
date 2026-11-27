@@ -45,8 +45,14 @@ def technical(build,checks):
         body=log.read_text(encoding='utf-8')
         metrics={}
         if name=='node':
-            metrics['tests']=numbers(body,r'# tests (\d+)')
-            metrics['passed']=numbers(body,r'# pass (\d+)')
+            tests=numbers(body,r'(?:#|ℹ) tests (\d+)')
+            passed=numbers(body,r'(?:#|ℹ) pass (\d+)')
+            success=success and bool(tests) and tests==passed and tests[-1]>0
+            metrics=dict(tests=tests[-1] if tests else None,passed=passed[-1] if passed else None)
+        elif name in ('native','build'):
+            keys=('wasm_bytes','sha256') if name=='native' else ('files','bytes','commit','content_sha256')
+            artifact=next(row for row in json_lines(body) if all(key in row for key in keys))
+            metrics={key:artifact[key] for key in keys}
         elif name=='rust-crate':
             metrics['tests']=sum(numbers(body,r'(\d+) passed; \d+ failed') or [])
         elif name=='browser-full':
@@ -72,7 +78,9 @@ def technical(build,checks):
             metrics['results']=[row for row in json_lines(body) if
                 any(key in row for key in ('locale','cpu_save_bytes_equal','river_port_approaches'))]
         elif name.startswith('wasm-'):
-            metrics['resolved_cases']=numbers(body,r'parity:\s*([0-9,]+)\s*Python')
+            evidence=numbers(body,r'parity:\s*([0-9,]+)\s*Python')
+            success=success and bool(evidence) and evidence[-1]>0
+            metrics['resolved_cases']=evidence[-1] if evidence else None
         elif name.startswith('disabled-source-parity'):
             metrics=dict(compared=data['compared'],matching=data['matching'],groups=data['groups'])
             for key,result in data.get('runs',{}).items():
@@ -80,6 +88,13 @@ def technical(build,checks):
                 raw=build/sub['log']
                 if file_sha(raw)!=sub['log_sha256'] or not sub['log_bytes'] or sub['exit_code']:
                     raise ValueError(f'Invalid parity execution evidence: {key}')
+        elif name=='controlled-short-comparison':
+            metrics['results']=[dict(group=row['group'],actual_grain=row['final_grain'],commands=row['commands'])
+                                for row in read(checks/'short-chain-comparison.json')]
+        elif name=='controlled-route-warehouse-samples':
+            metrics['records']=[row for row in json_lines(body) if 'comparison' in row]
+        elif name=='control-observations-verified':
+            metrics['records']=[row for row in json_lines(body) if 'grain_balance' in row]
         if not metrics:
             metrics['structured_evidence']=f'{name}.json'
         gates[name]=dict(status='passed' if success else 'failed',source=data.get('source',runtime),
