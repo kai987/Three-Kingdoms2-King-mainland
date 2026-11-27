@@ -1,0 +1,24 @@
+{
+  "prior": {
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-Bu",
+      "-c",
+      "import sys,json;sys.path.insert(0,'tests');from browser_chain_fixture import fixtures;print(json.dumps(fixtures(),ensure_ascii=False,separators=(',',':')))"
+    ],
+    "seconds": 86.689,
+    "bytes": 1712858,
+    "sha256": "85bffaabdf40f57fc101b80eda3959081976239ab70b7673c1abbd23a93176ac"
+  },
+  "headless": {
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-Bu",
+      "tests/browser_chain_fixture.py"
+    ],
+    "seconds": 14.148,
+    "bytes": 1712858,
+    "sha256": "85bffaabdf40f57fc101b80eda3959081976239ab70b7673c1abbd23a93176ac"
+  },
+  "identical": true
+}

@@ -1,0 +1,6 @@
+{
+  "checkpoint_pairs": 25,
+  "same_domain_and_rng": true,
+  "matched_targets": 445,
+  "observation": "prior fixed replay compared with additional ration and transport accounting"
+}

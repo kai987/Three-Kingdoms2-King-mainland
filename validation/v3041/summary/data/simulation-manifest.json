@@ -1,0 +1,2623 @@
+[
+  {
+    "wave": "five",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/five/F4/184-02-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 350375,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "4729b9ac6a96fb609b2e0a6eff243f20f27e1446176d889c54be584aaf7540e3",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "4afbdfacbc5e41938f1c08b622d871fcbda18e999414fc8e18f2936c46e23485",
+      "factions": "08e1009fe240496d7627294ca8efa32b6e60e62ad81bfd860d810904b22ee68b",
+      "cities": "28e122fed5cb3229a6230f5ae9da311e96cf61ac08cf0c9060ceb63cb9c29289"
+    },
+    "rng": {
+      "state": 608377515,
+      "draws": 11444
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T0",
+    "output": "T0/campaigns/five/F4/184-02-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 2213024,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "e0b07856d59acd252dddb5c5ff5f42da11eea4509b900e5570a919c2ec4ec958",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "4e2c004fe7d6d3af1eb811e3dcecf45fadc414cd1e180a6599a456942a8ae13e",
+      "factions": "9c9ff1f9173bb36bf57fa86b7199d48f3c79699538773f30a9e6405574a46450",
+      "cities": "a17cba4655f0601e9072e33da70c1fd66bb44136b5ba43563b1f3cdef5c54011"
+    },
+    "rng": {
+      "state": 1105946006,
+      "draws": 11081
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "190-01",
+    "seed": 2031,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/five/F4/190-01-2031-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "5b79c8dcca15cb542b823eeae2a4b4c2699068b6d41a5c261477ee0389bb5610",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 2878261,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "1447c1874036a40db3fb6a77448a85c4f5444ea77e483afcc781f4c16ed98dbf",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "40126ca37ce6e590e39ef1737146127a3dfee3f264c77e7ac72661baa5c38061",
+      "factions": "2020775f9fdda83ef21432e64ab1d3693e1ad1facbb89a39162d06f12d1e372a",
+      "cities": "36cc505141e5d88de411037dc8559fe47007c74e9b4ccb27fbd3f7e66203cebc"
+    },
+    "rng": {
+      "state": 339489766,
+      "draws": 15464
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "207-09",
+    "seed": 2034,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/five/F4/207-09-2034-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "d1fbce9fa0a630bccf91f0a7808e19f1ec1f8e214195ad6af42d57bb5ce0605e",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 441082,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "76ef88fb9ba61528bedcf9837b7c02498d409551e349db1c1460d0504f9db223",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "145a36987dbf33bcf1bded74fe9121b460339fbcc09dedd4c6a2c7e4473f6abd",
+      "factions": "fe162f138c206769766df4913f265175003c1151501d970d7f6b39be9032637f",
+      "cities": "0496bb3eefa40ca1f4753709dc28d60260b01308ce372c41ebf945b7e18c27b4"
+    },
+    "rng": {
+      "state": 1711015075,
+      "draws": 15132
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/five/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 854101,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "5a06839b22e0bd9a7666e15516a3845461a108a32f33e23a262771683dc11bc9",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "9d61d662fbc619aa50ed303bb00181fb09cb2237bdd124b3d873bbafcaaee729",
+      "factions": "9cd24b8651be33e8d0b41e6f8dc5264341f749df7d79be7e95e6f1b15032d93d",
+      "cities": "90b7eb8cf547f79555edc36fc123a1df5c9e210c0aee69f403ac20f0e07bb128"
+    },
+    "rng": {
+      "state": 1444293701,
+      "draws": 14638
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T0",
+    "output": "T0/campaigns/five/F4/208-10-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 1754682,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "d50920c43d3c51c38b17745fcabb2e2be0e38fa31ee4f8b5edbba91066ac1ffc",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "2a6cc3bb77c85a3dedf85a6abbdbf266bccae4985842b8592aa0b6f91f279aac",
+      "factions": "7acc03b6cd4d1eedf730bb491167d54d829f757f0dc4538ec09f0566213de8d1",
+      "cities": "1ecca57de84c4eeb1ea76b3b645fd0a636dbc0d9d1a3e1f6ddfe8409c92e8e53"
+    },
+    "rng": {
+      "state": 783454890,
+      "draws": 18106
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "263-05",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/five/F4/263-05-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 1953375,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "f4e8559320eebe008f9974d24119fb873461231a77b34bda9346f54167ce5da0",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "d8ebb40e70454223a33a9c84642b4eed406775c47bb7fce42528b283e491a815",
+      "factions": "b96c53d9ed342e0e85930eacbe7bd74c60c25a91da5ec570ca98f0c31c98554f",
+      "cities": "63add78139fdaf8e906fbe56821fdd7f7e887ae4a39fb7efe9555f6dc3f6da1a"
+    },
+    "rng": {
+      "state": 1051778355,
+      "draws": 12873
+    }
+  },
+  {
+    "wave": "holdout",
+    "scenario": "184-02",
+    "seed": 2045,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/holdout/F4/184-02-2045-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 311702,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "7bd1430b559ced0d858faccc5d97244755ba8578f3aeb7aa50e67e0930195e9a",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "92dd6b3e75987d398f4769df94d35a2e54de27f47464e90204bbab47d25c2b0c",
+      "factions": "5e140725907e8391022fc2f1857fda4207fa998d68710c5b14d2a99fea807b77",
+      "cities": "7230500e24390f63b97f4c9386c197f50c5e071954e0ee9be1f84a20de973c0f"
+    },
+    "rng": {
+      "state": 2038800398,
+      "draws": 10707
+    }
+  },
+  {
+    "wave": "holdout",
+    "scenario": "208-10",
+    "seed": 2046,
+    "strategy": 212,
+    "variant": "T0",
+    "output": "T0/campaigns/holdout/F4/208-10-2046-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 967164,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "ad05f0f3108d65fd77d16438798d2e46129853e68871f81801499acf6ed14b5e",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "352b147f51f2fa7df798310a9841e740530a421a6dd0bb800416ea4586b6a014",
+      "factions": "a54ff02d1739d7378ce2335da26f71dc2b54f8b9b5132cbb6a533831958bee17",
+      "cities": "292cfebbe1a64740f50a3eccdece48586afc4a92c8ba35b30b21d9b83d0b44c0"
+    },
+    "rng": {
+      "state": 1713104016,
+      "draws": 17364
+    }
+  },
+  {
+    "wave": "long",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/long/F4/184-02-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "12dcd032b3ab225ba7a862ee9338f0ddf29227afbfe67d3825ed25422700e40f",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 3677873,
+      "contexts": 128
+    },
+    "completed_turns": 720,
+    "full_months": 240,
+    "requested_months": 240,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "14681c8cc8c912f76b63bb4cc7156ee72613964efc82b69c89036ef1a096f1fd",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "aa406ab48027641fb10080831a1c2423374bf633c1dc89503cdf97b454dbf7ee",
+      "factions": "fdfe3fad2f8a29cc029fdaa389bc4c99f07f4d32c25d0c038532302578b7cc64",
+      "cities": "b0de44b388bc08dfebf51dc813ef80fe00c0aae901682a6546a65d974f7a9039"
+    },
+    "rng": {
+      "state": 1785249765,
+      "draws": 84683
+    }
+  },
+  {
+    "wave": "long",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/long/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "12dcd032b3ab225ba7a862ee9338f0ddf29227afbfe67d3825ed25422700e40f",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 4696215,
+      "contexts": 128
+    },
+    "completed_turns": 720,
+    "full_months": 240,
+    "requested_months": 240,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "992f90e7be8853a1ebf16262d3113e222289fca3c8f36601dc65b49ee0fc1fe2",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "cb4f62bb28c7df4628f7282b2b2b6b0bd6b2c029a7d8d972cde18a9ca53beeb1",
+      "factions": "05413c6f413bd3f1af1783f5f5333b7d79b604fcc41e5afda7f371219895db3e",
+      "cities": "19c959d51e3f34a07fd3767d60258319bff1368331f1497b70249b0eb38220e9"
+    },
+    "rng": {
+      "state": 1954642347,
+      "draws": 82504
+    }
+  },
+  {
+    "wave": "long",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T0",
+    "output": "T0/campaigns/long/F4/208-10-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "12dcd032b3ab225ba7a862ee9338f0ddf29227afbfe67d3825ed25422700e40f",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 11154846,
+      "contexts": 128
+    },
+    "completed_turns": 720,
+    "full_months": 240,
+    "requested_months": 240,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "5f0a50d108814e34d35e7f9cec1aea4b04140f909b1d0c9021f0e3229bcf2d4c",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "452759d443856e24a17618dfd57f2f4d2cddc1e2ddd3fb0f11818330955c66b9",
+      "factions": "8954472173ec19539dcc21d72313cbefa57ebbe4d31a836c61637409d6a92011",
+      "cities": "4542c35cf56b0e7cbb68ee11d45acdd068b9fb9dac422e4318d36cc2e470b50e"
+    },
+    "rng": {
+      "state": 34217390,
+      "draws": 89567
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/quick/F4/184-02-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 53641,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "23483531d93801d4e7008813e1e934f88752c2d1a46687c20a1dae9bd91dd407",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "d4cba3416945343557a839201273d7e24a7ab9829d0dfc1e5ecb8a89f6e50523",
+      "factions": "719da1cdffe81479383bad0f52857dbccc9c7ffcc3706591ff5935bbb4e4346a",
+      "cities": "bc8a28e1a06e5b341a686456fe8264891bc2d49fefe19aa4e3a82277ae4bd8a1"
+    },
+    "rng": {
+      "state": 404766955,
+      "draws": 3199
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "207-09",
+    "seed": 2034,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/quick/F4/207-09-2034-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "d1fbce9fa0a630bccf91f0a7808e19f1ec1f8e214195ad6af42d57bb5ce0605e",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 72558,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "3a8fd89df680a7bb50b6e1dc7f24ba43397195c7e233e264fcb1f097c574167f",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "7c09942760a36e155633cfcf2a1389c8568dff5745423d4122f184adf78d49b3",
+      "factions": "840a69312e609d1960bc51c7fc0cd25b01e456b9328aeb7e0f296aa03371a8e0",
+      "cities": "16d57ad679fa3d29d1d8ab581b8eb796eefa0a3c1234f6f002b30ba6493465cc"
+    },
+    "rng": {
+      "state": 1745478289,
+      "draws": 3934
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/quick/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 195473,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "3ff4cbe91ec474a3080993ac51ff8636c851f3019ed66a255a84a51086dbe349",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "ba15a866a2515a20210b22a59320c127995478d5b825cff2eb6168deeb7c24b8",
+      "factions": "55a9cff085bf5b559e06215564f994e8d3713afff9f360576ceea7acc7c41ebc",
+      "cities": "df2a84ad5433d363196694f76a0d59338e3dc0481940bff6f52c9d3b6440291e"
+    },
+    "rng": {
+      "state": 20850803,
+      "draws": 4082
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T0",
+    "output": "T0/campaigns/quick/F4/208-10-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 376392,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "3b56e7f4667bcd464ad532e7738f6087c7cfa12be125e90bd4ac47d5571af4e3",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "943ac0254cfe27d8ee432d15007fc0b41b0668a97f358dfb423ac3b2a5de5aa7",
+      "factions": "81a66fd37129fe14ebabfcca1a3f4a3a9cb2afae509b943f06fdad2676223656",
+      "cities": "a2be71c455e23753209f2f7e177d2306732d4b4290606d724b281f54da58f85f"
+    },
+    "rng": {
+      "state": 1912821692,
+      "draws": 4502
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "263-05",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/quick/F4/263-05-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 610420,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "28eb40d78ec781ceeab9ba9e7cf7896106394e5ab23bd061df2d71aa12d4be6b",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "0f42fc8be050655d94d11da2555c07fac2c2f6d74217812abed1043c5e96bc8c",
+      "factions": "ed01eb8263c1db3323708410d13427e019c5f2be8a552c9b3ea5ca8856704b67",
+      "cities": "c686a7c5ad681b87cce8ad0988d45a9627c586ab104e4b50208f37ea0a267160"
+    },
+    "rng": {
+      "state": 532040934,
+      "draws": 4320
+    }
+  },
+  {
+    "wave": "smoke",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T0",
+    "output": "T0/campaigns/smoke/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 7440,
+      "contexts": 14
+    },
+    "completed_turns": 6,
+    "full_months": 2,
+    "requested_months": 2,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": true,
+    "terminal_checksum": "3dc1e2fd276a3a2674ef386d78eefc96a163fa2a494a0c939462c51c9f347f4d",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "f86a5f480cc724954377eb968bfc8c927f602126f73b2596ebb92f991a1e9332",
+      "factions": "7e4302262ada0eb150ef437c9b7889f4f9da5be438e4d312fb9562b8d1bb9611",
+      "cities": "542e8139fc791b8475ffed4c76e5d40b52727a9222182a289b5bb65a991fea90"
+    },
+    "rng": {
+      "state": 1568446612,
+      "draws": 274
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T1",
+    "output": "T1/campaigns/quick/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "12dcd032b3ab225ba7a862ee9338f0ddf29227afbfe67d3825ed25422700e40f",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 184814,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "3ff4cbe91ec474a3080993ac51ff8636c851f3019ed66a255a84a51086dbe349",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "ba15a866a2515a20210b22a59320c127995478d5b825cff2eb6168deeb7c24b8",
+      "factions": "55a9cff085bf5b559e06215564f994e8d3713afff9f360576ceea7acc7c41ebc",
+      "cities": "df2a84ad5433d363196694f76a0d59338e3dc0481940bff6f52c9d3b6440291e"
+    },
+    "rng": {
+      "state": 20850803,
+      "draws": 4082
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T2",
+    "output": "T2/campaigns/quick/F4/184-02-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 241195,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "41938083b47cf7c523e97c8f90a19b3b293a9a067461fa3ee57787fdb5c15a66",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "141f8bd8b6824701aa929676a8ce4d853d6459965f1e981e69424abf147a787c",
+      "factions": "6b313da8c77abda0960cafbd4710f896a6f1f586dd96823aa4ff29525cc402a5",
+      "cities": "a6e86881898f7265153043896efdbc54d651d159c0638406050a06047889c30f"
+    },
+    "rng": {
+      "state": 1844563101,
+      "draws": 1807
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "207-09",
+    "seed": 2034,
+    "strategy": 211,
+    "variant": "T2",
+    "output": "T2/campaigns/quick/F4/207-09-2034-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "d1fbce9fa0a630bccf91f0a7808e19f1ec1f8e214195ad6af42d57bb5ce0605e",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 257067,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "1f15417db940aa00734660c011670635a0dd25b4e8997a3be2b662742632e678",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "3880a9a26a171890b069197e3ba96ba47a07f4b403ee79a518e57a59232c3b57",
+      "factions": "6157e64b0e195db11cc719efa37c697f3ff0d6e212bc2de5f7b437e4cdcfa833",
+      "cities": "c9e1478a879f50e7359138925e61a503c19f49165c0d9282a43f6f43f3cfdb3c"
+    },
+    "rng": {
+      "state": 944072746,
+      "draws": 3395
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T2",
+    "output": "T2/campaigns/quick/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 466172,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "5b923b3598f663c3ce4a017f490b3d1bb583553ff6c80cd2b184e7b594f244d7",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "7d2fd96cab4d09daabd8eb3f4eef665fa0268bc1568b203bc3d3549667242a4e",
+      "factions": "4caafa033014530d2a3f2d1b3a681259af3419b38c8a88b53c26cc9e73bd7652",
+      "cities": "ac6cfbc514307b1ae09a0837bea8f6d4743b04744c7e999a69179afd8218adfc"
+    },
+    "rng": {
+      "state": 1686638551,
+      "draws": 4473
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T2",
+    "output": "T2/campaigns/quick/F4/208-10-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 435594,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "6fdcf81d8918e8b5e04ec6bde4d561af4893e7d43edc57ce881ee4a7efc47aa0",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "90aee581a7abc2db4f0ee0c9f7d279d52cc51cf37a3c905828628b68a2f76f0b",
+      "factions": "42f35d0792b7edbca23adc8bb4731c7a58ed5a5033050363f9ef949e13fd50da",
+      "cities": "041a01d877592b46b2aec7d54d7f4e23137e7268b977f2cd74a3efd3d7ed0e35"
+    },
+    "rng": {
+      "state": 355474663,
+      "draws": 3963
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "263-05",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T2",
+    "output": "T2/campaigns/quick/F4/263-05-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 584075,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "2fdc0d6369d2b5fa3059cdfd0d514df5a41bd86e4becee016555770fa88fcc38",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "97d3f5980f0b86999956617ee585652be62c606432d326dc255b5013c2cac56d",
+      "factions": "87475a09e4e5a8b344a20958967dc0dbdb044c287dc244e053d199461c389036",
+      "cities": "eabf937181eb40a50bf9d326b0ca693f3ae34e7050743aed7086acc4fa92d57c"
+    },
+    "rng": {
+      "state": 2991560344,
+      "draws": 3767
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/five/F4/184-02-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 569259,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "7389f1c675e07b2bc0bd7e9c817a8dad4c6fc4f8ff91ab559fbd51de6d3a435f",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "787185f486f8108dd2810c021a7aa52f2f59b82224d7f4921881b4d77c92a485",
+      "factions": "b11850a30a7b8a9304947a9e65311e5d6557a855ea743f375460f02abec58ccf",
+      "cities": "e13ec2d12bee85c8771c4dfa9ccfb1acd45e880bc70f8db127733d72692b1736"
+    },
+    "rng": {
+      "state": 4109758876,
+      "draws": 8958
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T3",
+    "output": "T3/campaigns/five/F4/184-02-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 2796774,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "e52dc8aaa1ab51a9fa3bdaabcaebd0cfa3dd2bbde413438cdfc5d2c40dcf54d6",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "66e9ce2e59cca0e28fa86863ea841681be7dbf30ba178bb65e9b115fbe847586",
+      "factions": "8b386fa6a8999564961217eb5ffb301337dc5e2bade47be52c36cfb2d4801e3d",
+      "cities": "f7e4761e69cd1251e222aa1aadb8f6a38038b4415cbe54d3504ea00620b9cd5a"
+    },
+    "rng": {
+      "state": 3133155892,
+      "draws": 9845
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "190-01",
+    "seed": 2031,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/five/F4/190-01-2031-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "5b79c8dcca15cb542b823eeae2a4b4c2699068b6d41a5c261477ee0389bb5610",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 2811967,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "500d82491fc59cccac3182981dbed4d70d766d5300022f1b634ce3ce28b15904",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "9a5cd15c1570e523bab92d069812b3fae8809e8976dad3590e17f379686c4807",
+      "factions": "faf54fbe96986c404014d8ddf089ec1ea1fd29ad281ab90bb5c7c448d0c6a9b9",
+      "cities": "bd29df7b51142da94c8840d911d2dc4a4475acad148ad7972d679afff64bcc0c"
+    },
+    "rng": {
+      "state": 1999547478,
+      "draws": 11243
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "207-09",
+    "seed": 2034,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/five/F4/207-09-2034-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "d1fbce9fa0a630bccf91f0a7808e19f1ec1f8e214195ad6af42d57bb5ce0605e",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 1034433,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "3604f9210f2f16ee1b57227f59186ba85f903db09639ae2afc7de546d53085a4",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "b9db58c55702281a08543831173756c904572675937cd037ac09e7562dc4b177",
+      "factions": "7e497bc918c944a28bb5a5006bf20603a416a2c862327f439f9812d400eec4a3",
+      "cities": "82c62d0c4bf9f3c7ea8cd0586f166f6a2951894811241b710139f3c0f3aa7a66"
+    },
+    "rng": {
+      "state": 2274439894,
+      "draws": 12824
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/five/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 1316258,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "fbcee95c39fd04facc450eda9baec2cabcd305583a722bef9a3ec83f7fd87168",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "188deba83fe28b0111642a06887d63ce5e1faa5478c7be31a97a663c098eaa17",
+      "factions": "b5b2a82252198424332a7ccd9a98daf483f84ebf1e0fae9abe20a8dffebb6643",
+      "cities": "c1d9724a41e8b83eed984e60be75c3e6d951c0e03ca69a0117cee4040ca6a951"
+    },
+    "rng": {
+      "state": 3631338463,
+      "draws": 12729
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T3",
+    "output": "T3/campaigns/five/F4/208-10-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 1735587,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "fd057f6dd268946a99e1807248d021c8153cc5053706e17ab4bb6f442cc1803c",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "775b6ec56e619ed1618d433411aab968e62c14255d821ce35115580c048d173f",
+      "factions": "1441001e880d63ed1c8ae1bf93b6b0b234b77f6fc2cb66ce940a2a40fb150d71",
+      "cities": "fa0ee01049a13c6cce1c4e8ec3660927beb319822069de3a9296df11ca611707"
+    },
+    "rng": {
+      "state": 3532394253,
+      "draws": 15009
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "263-05",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/five/F4/263-05-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 2587690,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "955aee8918a6bcc9b7eb725a7a962f01705bfb9fd5a84bc18b347aa22c1b5052",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "331bdc8f21c3f118498a2185329aaea6bcbc95b284c631e65f9e0f7458e47ff5",
+      "factions": "d5c370b8a7d1dfd9fdcbc0ed6935a0260c4357c2e03fa7aff52a81f6a1b1f17d",
+      "cities": "61fdec3e70819ecf5de825a799edba89471cccb176e34bfacf0f0202606bc0ef"
+    },
+    "rng": {
+      "state": 2538466265,
+      "draws": 12802
+    }
+  },
+  {
+    "wave": "holdout",
+    "scenario": "184-02",
+    "seed": 2045,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/holdout/F4/184-02-2045-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 421814,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "9d517eab6f2ddab82d22b4360744d8bc218bb2c0c5b67a39350cf507174259d2",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "a90e3106d690e984f78daf50c591b002bd7b8165138fed1b0df24b992e27ccb9",
+      "factions": "a23769dda37bbcaafbc9ab0d714b7ef38e3009d2c9cb2f78af61a28840bac366",
+      "cities": "8560c11dc8e6a7edd787fec2341e625962ff19c10062d7fbe703afd439401d3c"
+    },
+    "rng": {
+      "state": 2710028658,
+      "draws": 10186
+    }
+  },
+  {
+    "wave": "holdout",
+    "scenario": "208-10",
+    "seed": 2046,
+    "strategy": 212,
+    "variant": "T3",
+    "output": "T3/campaigns/holdout/F4/208-10-2046-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 1254963,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "2b0441cbaba5aff6e91e0886703a4362764f77ddaa3abdf27dcf3acb78aa7260",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "c3a31d47bba2069bc576c6e73b80ed1b908207f5865eb86a44a037111386b9c4",
+      "factions": "f5519daadc76bbab24316e0d1794ee0e46c901a7f20c4adb21fc4102b32c1936",
+      "cities": "1e3cba02e5e070a62fe89255ccbdb55418871777236d0d1c6967481afb495b25"
+    },
+    "rng": {
+      "state": 4010769385,
+      "draws": 12432
+    }
+  },
+  {
+    "wave": "long",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/long/F4/184-02-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "12dcd032b3ab225ba7a862ee9338f0ddf29227afbfe67d3825ed25422700e40f",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 6415376,
+      "contexts": 128
+    },
+    "completed_turns": 720,
+    "full_months": 240,
+    "requested_months": 240,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "eb429aed49005f514dee06cfcae7e995124350d3c2b4ffed1e49489864cd8b83",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "3b17183e2f10ea02ef6a5d85ecdfce2c37f4fcc62edab4209a2d13bb18336d64",
+      "factions": "b7d43a7abc2341b306cf81354555d8e1290e848b3ed3cf09385aa2ecd71287f7",
+      "cities": "5da8d92236fa9372af2efddc5313e7a7d56f9b4f15235cc43f338363b980e8b3"
+    },
+    "rng": {
+      "state": 2659223469,
+      "draws": 63016
+    }
+  },
+  {
+    "wave": "long",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/long/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "12dcd032b3ab225ba7a862ee9338f0ddf29227afbfe67d3825ed25422700e40f",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 9285067,
+      "contexts": 128
+    },
+    "completed_turns": 720,
+    "full_months": 240,
+    "requested_months": 240,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "acdcad0b910c032352355c9d88703b7dc53e688d9fea524b40f5b59940800a60",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "954b3326f4bf44f00110dcd59058fd9292ffc046b2014c451a6612ec9bf7f3cb",
+      "factions": "6010ebee27dcd7e9b3a5974e7491c1ac4c3e0c9ef6a515c009ed1e1e824cb2d0",
+      "cities": "b1946337d5f7a0572a20b1579d07ffdb02a2fe7b598c151f67cc9dc80bd6b3e8"
+    },
+    "rng": {
+      "state": 3843032489,
+      "draws": 81099
+    }
+  },
+  {
+    "wave": "long",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T3",
+    "output": "T3/campaigns/long/F4/208-10-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "12dcd032b3ab225ba7a862ee9338f0ddf29227afbfe67d3825ed25422700e40f",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 16295321,
+      "contexts": 128
+    },
+    "completed_turns": 720,
+    "full_months": 240,
+    "requested_months": 240,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "6bf4c897c7ce901d4bcaaefc2c9c55aa817bc0eac375e7fe1b9e4e2324fdbea4",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "3848097d62a21cf1d30a7500e610d83bbac77a6dc8cf38d2c77005a69b8a404f",
+      "factions": "c3f9889f7331888c172d5ad154c7eaf3a4492eb681497264a33d7a947bd03eba",
+      "cities": "e9b964091809357500fa16d7f5621f212eaa726a7eceec5e3671b026b4410e44"
+    },
+    "rng": {
+      "state": 1395050794,
+      "draws": 64565
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/quick/F4/184-02-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 106003,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "cc045548ac3c70b64cd467cb26b52e448b597960659252cb9d13f2fd16a6ffd7",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "d21c5f68382f2395b9a05e23d95dc396728850bebfbf751e97ccc9eb1465ca67",
+      "factions": "5e0596507d82848f6dd71fd76666d69598d16ae691c294fba7452f237cc4531f",
+      "cities": "fbf0b6dba96fa0a3e1a6e9b45fe9acfff2947af4664154ba68a8f167f98c77c8"
+    },
+    "rng": {
+      "state": 2432345396,
+      "draws": 2027
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "207-09",
+    "seed": 2034,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/quick/F4/207-09-2034-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "d1fbce9fa0a630bccf91f0a7808e19f1ec1f8e214195ad6af42d57bb5ce0605e",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 233125,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "2e2ecb068d2d96c97d1d1e7d6cc0e6dbccdacbc0bc6fd70df6b7fc1943947328",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "24ca4447d7c02f1615672c9354e72ec41b2825c92019132ee22c801190c1e573",
+      "factions": "9701fc7632310039f08772b5ba6feccf5d80bf0dda1f8cccfb813c8ffe00f53d",
+      "cities": "65c4d6759805cdd466984c96c12fda38d121fbc088dfa59fe5af1f0f8ed3d0dc"
+    },
+    "rng": {
+      "state": 496134725,
+      "draws": 3480
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/quick/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 386085,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "e988f3ff132af38915046e3737b56bbbcdca2b0e79e6ad69036bd8b3c252b340",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "4ef2dd4497c9b75d11db53d206378044f5a64da109444d523c81f21194d1437d",
+      "factions": "32eb6b489a21cb056605e442b5032fbcf6b297292d7011185bbbb8ba6443e6b9",
+      "cities": "90539c866ca09602419356c9befdea322b78d3c08cbfbfa489458f27e7a0dd53"
+    },
+    "rng": {
+      "state": 1642451764,
+      "draws": 4216
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T3",
+    "output": "T3/campaigns/quick/F4/208-10-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 566145,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "265c8ab75445a86d6b1eb3da7f91df40fb8069f37d0f304e93561c3322f0e0b2",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "13e4bd08978a6d28b3f5c0cb57c80bd1cb6b9022505afa54f54f57707289882c",
+      "factions": "af697271e13c98538b151c6b323e54488f99770b60834632a4f84528a1730279",
+      "cities": "9b994aee41c42c84de3221f7fafb9de39ac4a3804e9215bb38b492f5ec07dac5"
+    },
+    "rng": {
+      "state": 2123378290,
+      "draws": 4424
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "263-05",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/quick/F4/263-05-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 615547,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "599cbdfaca88835b58d4c47283573b2ad89f149023a4bceb34f41cb10adf8be2",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "1e2c91ca3b3c28ac0539449688854ab7f769ceebb493f6893d26433fad062953",
+      "factions": "63ee57be3599b3a3b18df1895c750520ee05da545eca017f1eaa1c4ee8018e72",
+      "cities": "fea64c5a32f77e481709e1f6d5f5ce0546d5d6cefaf333e0d4d76fa4fb49664c"
+    },
+    "rng": {
+      "state": 3675334446,
+      "draws": 4149
+    }
+  },
+  {
+    "wave": "smoke",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T3",
+    "output": "T3/campaigns/smoke/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 17150,
+      "contexts": 65
+    },
+    "completed_turns": 6,
+    "full_months": 2,
+    "requested_months": 2,
+    "outcome": "complete",
+    "options": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": true,
+    "terminal_checksum": "1e40436d53819c1a2b257e4a9481847f42eb4bef743c62edcbfcd59f3b37beef",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "9cc2ffe6a4ae296ca42584150e3f5195052c8808ab3e23eb4557dd8de42dfa02",
+      "factions": "e0219403fb0db65b3d23addb6045356e3991fde6d9134c7d7d4a98aed1a87c26",
+      "cities": "1baeb74e08e4195ef73438f0521b6d1fb86034edbfaab96b3d13b7ac69d4b083"
+    },
+    "rng": {
+      "state": 2742707524,
+      "draws": 300
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T4",
+    "output": "T4/campaigns/five/F4/184-02-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 397964,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "87d586febbada1d7438b7b7b43be7f8ccdec7fdc3f9ba3521068e3c43daa8f06",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "786f09c47c07d645a7e64b745a673f05505fd163fba58d7052dabcbef06fb0fc",
+      "factions": "0cf113df1db2546f84955dec1a7caad81d57c9ae3dfd8e5033d15846435c4905",
+      "cities": "74a34004c928b17e16916d38db03f0dc15284ffb7aac2fb9c717ed75f3b58e57"
+    },
+    "rng": {
+      "state": 2536672978,
+      "draws": 12375
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T4",
+    "output": "T4/campaigns/five/F4/184-02-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 3137888,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "6e856bb7843ed9ef8af2df0cb687ca1e75ad6af76affffc37ba7ad9c3d0491e6",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "b40fad4d7bcd17ef033ac693aeeabd1400a0de16b997aa03afe3de7fcec7bc8c",
+      "factions": "b2a8cb8fd843d645e0cd9119ffad9d470883c824263cc7f8e10100bdb84fa9e9",
+      "cities": "49e77f86d6289a6c9475b58824efd2e6e23ce136cda4137f4c1a0fdc37f96e5b"
+    },
+    "rng": {
+      "state": 2835172082,
+      "draws": 11431
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T4",
+    "output": "T4/campaigns/five/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 1092024,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "2a0dc582eda84f32429ece131428899249e6f17d075b08cadbe39b7868ec360b",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "8f87a31355eee5ce4d2e29d5a691a27ce2e48844b50b57c88402c4ee34d0af0f",
+      "factions": "95e324bfba988484edd15505701aeb6e68afad609f84da0bcaa59fcf1a6dfabd",
+      "cities": "0c2f4cd14b4da28ef2a3b9ef1acdd1ec397fdb9d671693a05c4dd1f53bf07d72"
+    },
+    "rng": {
+      "state": 786835515,
+      "draws": 14372
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T4",
+    "output": "T4/campaigns/five/F4/208-10-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 1628748,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "f498275d4dae8b38b7195c5d59ae49ef14d3e3885de9c6a96f1b2c9b5185b6c1",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "680a24b18e8995f7b17a4eedc89673545dd58ee051514c52df85659acd293342",
+      "factions": "fc7e09c4ba9b293df5d1423aa350cd25898f3c95f50078cb19a81e23fc40e989",
+      "cities": "0ad7d99d237837ee6d26f57e8987be1be91c4db547b696dd774cb446ddf10072"
+    },
+    "rng": {
+      "state": 3325983214,
+      "draws": 15033
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "263-05",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T4",
+    "output": "T4/campaigns/five/F4/263-05-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 2333424,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "a83c84e7418ada16cb8b3571868d6b0eb1098db588b528525ac3ac0fec2deba9",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "f023ea65023ed9506d12ae7f8fae29109afc51a143b3a2ab07184a5a0acb6465",
+      "factions": "04061a94dd7949c57a981d437c3af8da91b44b058895c9d3ef40211b1f65963b",
+      "cities": "b4b5370a4d0416984d7ef305632512f181d1cf0a787774151f998508fd6973d9"
+    },
+    "rng": {
+      "state": 108955451,
+      "draws": 13192
+    }
+  },
+  {
+    "wave": "long",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T4",
+    "output": "T4/campaigns/long/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 6878119,
+      "contexts": 128
+    },
+    "completed_turns": 720,
+    "full_months": 240,
+    "requested_months": 240,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "791d79777843978328b7d69e07d282ebfbcdce28e26ed58c311c125f69d20e18",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "034e0c8350df7df81468ec72cc8f93ede83e61e612f317c5da3c6cac33f549e4",
+      "factions": "e73c9204498c595df47d678b6c38cb1d3b57092f712a02eff64b73ccdc75514f",
+      "cities": "bfaee2a30f853b2d850848f666c87bd5f06a4a802b8d8e986a1a4b7e9ee66821"
+    },
+    "rng": {
+      "state": 613871847,
+      "draws": 76137
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T4",
+    "output": "T4/campaigns/quick/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "12dcd032b3ab225ba7a862ee9338f0ddf29227afbfe67d3825ed25422700e40f",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 82679,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "d63502142f6d887d24c972b8401078150f3981c7356e9ed5bf41e3c095a5c8ae",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "914baedadc92f4375d8792fce4c0f79dea5b10c05d6e2c8adcffbf6351fe7426",
+      "factions": "fff2ca004430cf1a708bab3bcaaaff0b82a2783dea3b21bda851876e50dffa65",
+      "cities": "ed626c08515b3baf8ca3212bd0f56d080a0a5da9daf094ca50ee16ae06dc0798"
+    },
+    "rng": {
+      "state": 714533617,
+      "draws": 3921
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T5",
+    "output": "T5/campaigns/five/F4/184-02-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 564424,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "186e54868076bb09e2a258996ab439039a50c034ff9a0de7805f4388c9d29f9f",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "3430eedd1771e97fae74e14d515b1da6a809715265e7f016886319ea8c485f4d",
+      "factions": "85d810fa3d4e33f984bb06b520801be8e340b041fb6cd9db09f83bc2901a657c",
+      "cities": "8ed2dadb4650778cbd155cb7ddddf0efd1ba8b9bad5ad403e006dbdd7500fa3f"
+    },
+    "rng": {
+      "state": 2920062218,
+      "draws": 11256
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T5",
+    "output": "T5/campaigns/five/F4/184-02-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 4196524,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "1e72841f747b87c25e41981995c36588a1074a58aa4f1e79d55ffcbbe49ca669",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "7cfd9018e573e46d5455878669deb7e539047d941a6acf0e85b4fb9348968681",
+      "factions": "d6fed3ba37f76d0961f99816d3f11e259f9c424a6d297d625eb5fdcd84020f2c",
+      "cities": "0c2cd22f5e003cac2965794f359bc79729f1ccf8c8a15bb3da57eb3e61d5bebb"
+    },
+    "rng": {
+      "state": 721334794,
+      "draws": 9290
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T5",
+    "output": "T5/campaigns/five/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 1791228,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "025fb5993c23fb1917119835573af11833df1cb0d5034196928d3e4c40f68172",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "64cd299c756c4fda686772ec1f590dc0af0dc9dfe0ab0072e16319acb52377ee",
+      "factions": "79e9f3d6c3bfa3654c6c877bb445467b74ee7112b57b2e6d9c43d03509ce0b29",
+      "cities": "846ed43ece7ae746154f543bf75d9c335905f82ec5d448cb7dbcd81f3a00407c"
+    },
+    "rng": {
+      "state": 2832294823,
+      "draws": 13863
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "T5",
+    "output": "T5/campaigns/five/F4/208-10-2026-212",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 2773565,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "ec94c841ff424d003bc62609388d52912c25a8561aa70634d66bbd4f3fd8b2fd",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "3c0d4c64d527d6bf02987a2c48a64f088b0a87f87d15197d654f164b29f35adc",
+      "factions": "bb6c49e60a6a3894d09d0eedb40cfa6fb869fbe2dc03cd30fa923b4970213812",
+      "cities": "e6e1431f5e5ea951e81eb00c614d976456e14c939798462a340f84a36e1c1434"
+    },
+    "rng": {
+      "state": 2925772462,
+      "draws": 15970
+    }
+  },
+  {
+    "wave": "five",
+    "scenario": "263-05",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T5",
+    "output": "T5/campaigns/five/F4/263-05-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 3346416,
+      "contexts": 128
+    },
+    "completed_turns": 180,
+    "full_months": 60,
+    "requested_months": 60,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "9143169d345717f4a0bc25113cc283afe3bff8bce334cc18e22b3387f85060fe",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "658e845214c700e97c799394cef51e72343b35a36d00b5237964f5ddabf0618d",
+      "factions": "dc740ae3e6db9c4aac5b31baf7a446e0733845e687c1cd61bdc74248825bf7f4",
+      "cities": "c3c4b74761a1b817f05d1782a37089b2e2fdf50081e4c086b9886caa8d550eb0"
+    },
+    "rng": {
+      "state": 1069560920,
+      "draws": 13024
+    }
+  },
+  {
+    "wave": "long",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T5",
+    "output": "T5/campaigns/long/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "7e8cc085fc4ab8e30feb85a3c7a5249fedbfec5ffd7c237a252430d41dbc8c41",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 10022356,
+      "contexts": 128
+    },
+    "completed_turns": 720,
+    "full_months": 240,
+    "requested_months": 240,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "731f65b82a93d9b3dd4329d95ff21ba15dec335e4182a4266b442556e520d634",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "fc5e26cf5a67c63c13d5853519dac9f62b078967a9e7fed524b178ff602a66ae",
+      "factions": "1968db7b9ca8e7285d8cb8f264607568bd757050a9138971856b9807b958e131",
+      "cities": "802968df0005683d464fb601068deee1ef6a356085dd9f5aad9cf5bd68a5529c"
+    },
+    "rng": {
+      "state": 597835157,
+      "draws": 74166
+    }
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "T5",
+    "output": "T5/campaigns/quick/F4/208-10-2026-211",
+    "source": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+    "source_diff_sha256": "12dcd032b3ab225ba7a862ee9338f0ddf29227afbfe67d3825ed25422700e40f",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 346838,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "713e5fb23c9d7a8d7073f17f720475e47b780ed73699a7e5500f17304d70f1d1",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "5b02e7f7478fc3944a4be9692268412b27b644337d2bcf3a1786a4741c5e417b",
+      "factions": "1347ea2d90e2571ebdad9da57ad67e5f4ff4fe5179ec4da7256dddbb63beee8c",
+      "cities": "a8841ec85d538a5b86803ddfc5b45cdf9d41fcb0adc5358c058159a43b90d47f"
+    },
+    "rng": {
+      "state": 2322473404,
+      "draws": 3804
+    }
+  }
+]

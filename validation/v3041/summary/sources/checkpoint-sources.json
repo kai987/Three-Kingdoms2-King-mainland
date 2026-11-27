@@ -1,0 +1,42 @@
+{
+  "0047-jiangxia.json.gz": {
+    "package": "v231-root-cause.zip",
+    "path": "campaigns/root/F2/208-10-2026-211/checkpoints/0047-jiangxia.json.gz",
+    "sha256": "cd31213212ceeef5b0034bd40057bf84f509a580776c6813788c2af4d74c45ba"
+  },
+  "0071-luling.json.gz": {
+    "package": "v231-root-cause.zip",
+    "path": "campaigns/root/F2/208-10-2026-211/checkpoints/0071-luling.json.gz",
+    "sha256": "698f8ae5827b11fb793563f2bf40db38acf9d8e8a4b0c45df331309a83709f6a"
+  },
+  "0158-badong.json.gz": {
+    "package": "v231-root-cause.zip",
+    "path": "campaigns/root/F2/208-10-2026-211/checkpoints/0158-badong.json.gz",
+    "sha256": "9cd2f5f7c5f3bf64472a51bb5b36c9f64476b65b572272f8f4b1139adaee3e06"
+  },
+  "0191-yidu.json.gz": {
+    "package": "v231-root-cause.zip",
+    "path": "campaigns/root/F2/208-10-2026-211/checkpoints/0191-yidu.json.gz",
+    "sha256": "0956a5d318bf3196d58bd592952badf98081a62e2dd18ecfb64c89f76f3c42d9"
+  },
+  "0257-jianan.json.gz": {
+    "package": "v231-root-cause.zip",
+    "path": "campaigns/root/F2/208-10-2026-211/checkpoints/0257-jianan.json.gz",
+    "sha256": "dba590f2b7576ba64b0a01806c9fc3e602f3005a38b3aa93b2130d6a28701ffd"
+  },
+  "0266-changsha.json.gz": {
+    "package": "v231-root-cause.zip",
+    "path": "campaigns/root/F2/208-10-2026-211/checkpoints/0266-changsha.json.gz",
+    "sha256": "2ea2dda69dbcb9a481960bea1653f86902255ced6b7b20269d1a2aa4f89f11f7"
+  },
+  "0268-baxi.json.gz": {
+    "package": "v231-root-cause.zip",
+    "path": "campaigns/root/F2/208-10-2026-211/checkpoints/0268-baxi.json.gz",
+    "sha256": "eb3ed64eb8e367540e23b4763cecfc08fb65a38332756c0aa2fa2ee333dce225"
+  },
+  "0269-wuling.json.gz": {
+    "package": "v231-root-cause.zip",
+    "path": "campaigns/root/F2/208-10-2026-211/checkpoints/0269-wuling.json.gz",
+    "sha256": "305feb2cc84a689906a0e190be830c62d348bc28d4ceca0454aa42e2323b0f70"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "cases": 56,
+  "scored": 56,
+  "failed": [],
+  "balance_alerts": 98,
+  "shadow_identity": [
+    {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "terminal_checksum": true,
+      "rng": true,
+      "table_sha256": true
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "scenario-scores.csv": {
+    "path": "validation/v231/summary/data/scenario-scores.csv",
+    "commit": "015a21f178a338b9758e341211f669be15499225",
+    "sha256": "22c923d8d0a3181f1954e4fe22813b340b23a3a7c562950f044a0260257b3797"
+  },
+  "winter-grain-timely-comparison.csv": {
+    "path": "validation/v231/summary/data/winter-grain-timely-comparison.csv",
+    "commit": "015a21f178a338b9758e341211f669be15499225",
+    "sha256": "8f9e5a20732c019d59f32a8f9ee636c448cb459a81d7b605e82ddc9429e41631"
+  },
+  "historical-transport-replay-index.csv": {
+    "path": "validation/v231/summary/data/historical-transport-replay-index.csv",
+    "commit": "015a21f178a338b9758e341211f669be15499225",
+    "sha256": "ac7cdcbd608d156123f06cb0c3ad2ada26e6490f2c075378809f2013336fd351"
+  },
+  "historical-convoy-2.json": {
+    "path": "validation/v231/summary/checks/historical-convoy-2.json",
+    "commit": "015a21f178a338b9758e341211f669be15499225",
+    "sha256": "ec82c8fa839ec35fb44e88886c241e9eb9c212599ad01c0d8f3a2d844814000a"
+  }
+}

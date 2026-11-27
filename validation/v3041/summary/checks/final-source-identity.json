@@ -1,0 +1,14 @@
+{
+  "observed_game_commit": "d096f47a6ac212fb64a9d715889f5d60434d8111",
+  "final_code_commit": "e6d24513b7181310b36794f6a0d66f2b2109945d",
+  "main_integrated": "e8c8004d7a08c73df0d9b757858c488e70195f5a",
+  "game_python_tree": "9f58184081b16285eac207b6ebe8598f5374c5e5",
+  "native_tree": "776389ecb9fbe69acfb83dbfb494c1505932b6a9",
+  "campaign_tree": "4fb5964aea351ce35317bfeafc22a532cca89c36",
+  "only_game_diff": [
+    "game/build_message_locales.py",
+    "game/locales/messages-ja.json"
+  ],
+  "game_rule_tree_differences": [],
+  "japanese_catalog_sha256": "3cc3e663a0df39804b14ea2c63f32abdbdde33fddc422f8cf3a6225694b666d4"
+}

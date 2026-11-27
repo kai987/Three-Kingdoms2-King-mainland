@@ -1,0 +1,71 @@
+{
+  "prior_archive_commit": "015a21f178a338b9758e341211f669be15499225",
+  "cases": [
+    {
+      "case": "184-02-2026-211",
+      "archive": "v231-twenty-year-01.zip",
+      "member": "campaigns/long/F4/184-02-2026-211/terminal-save.json.gz",
+      "prior": {
+        "gzip_sha256": "d47168e01cba4ad71e9bdd4769f2d9c52f2a3e8fbace6cedf540c0178985baa3",
+        "domain_sha256": "080853c0964b0559db03207c98693ebb2b81b49675c881736fd4ae9810edc317",
+        "rng": {
+          "state": 1785249765,
+          "draws": 84683
+        }
+      },
+      "current": {
+        "gzip_sha256": "3e7091d528d6d295328569fed67f7553c746a409e76f03d96a9ec8bacc357e53",
+        "domain_sha256": "080853c0964b0559db03207c98693ebb2b81b49675c881736fd4ae9810edc317",
+        "rng": {
+          "state": 1785249765,
+          "draws": 84683
+        }
+      },
+      "same_domain_and_rng": true
+    },
+    {
+      "case": "208-10-2026-211",
+      "archive": "v231-twenty-year-01.zip",
+      "member": "campaigns/long/F4/208-10-2026-211/terminal-save.json.gz",
+      "prior": {
+        "gzip_sha256": "e4512c6d59b4c927cf65f4183cfe6f1e31b6cf3ebdc928fb5ddcfb747eb3f264",
+        "domain_sha256": "1b30d8868b9131f289014d93da8556a64240df27feef59535d9b7aa611c9f2f0",
+        "rng": {
+          "state": 1954642347,
+          "draws": 82504
+        }
+      },
+      "current": {
+        "gzip_sha256": "2d0a9dd6f5b3b914e543d85b8717a128ed03e7ad9bb10d87ce48867f60dc7893",
+        "domain_sha256": "1b30d8868b9131f289014d93da8556a64240df27feef59535d9b7aa611c9f2f0",
+        "rng": {
+          "state": 1954642347,
+          "draws": 82504
+        }
+      },
+      "same_domain_and_rng": true
+    },
+    {
+      "case": "208-10-2026-212",
+      "archive": "v231-twenty-year-01.zip",
+      "member": "campaigns/long/F4/208-10-2026-212/terminal-save.json.gz",
+      "prior": {
+        "gzip_sha256": "3eda488a441f79be3ab2c71bed922bd6f984e30e02c818a6168cb1d80fab19e3",
+        "domain_sha256": "1f2be93468803f43e84c24ee02337ccfb1f501da1de43d82c876336d999c5229",
+        "rng": {
+          "state": 34217390,
+          "draws": 89567
+        }
+      },
+      "current": {
+        "gzip_sha256": "e8710c88d2fc898c0e8dfa2d894939286bf011b085c7bc6eb0697401e3c8a898",
+        "domain_sha256": "1f2be93468803f43e84c24ee02337ccfb1f501da1de43d82c876336d999c5229",
+        "rng": {
+          "state": 34217390,
+          "draws": 89567
+        }
+      },
+      "same_domain_and_rng": true
+    }
+  ]
+}

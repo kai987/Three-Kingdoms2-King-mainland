@@ -1,0 +1,813 @@
+{
+  "original_sha256": "8140a2448baa2890588412e70d47ab73eeb859244606d638e0123026e20de8dc",
+  "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+  "case": "208-10",
+  "terminal_domain_sha": "27fcf8e43df23ac9ffa3a20cabc294b462234a414e3432bd6b1187cbf1042cc7",
+  "series": [
+    {
+      "turn": 5,
+      "day": [
+        208,
+        11,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 6352,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 1521,
+      "status": "returning",
+      "reason": "target_changed",
+      "closure_tick": null
+    },
+    {
+      "turn": 6,
+      "day": [
+        208,
+        11,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 6352,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 1240,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 7,
+      "day": [
+        208,
+        12,
+        1
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 6352,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 958,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 8,
+      "day": [
+        208,
+        12,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 6352,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 673,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 9,
+      "day": [
+        208,
+        12,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 6352,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 391,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 10,
+      "day": [
+        209,
+        1,
+        1
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 6352,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 110,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 11,
+      "day": [
+        209,
+        1,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 6181,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 12,
+      "day": [
+        209,
+        1,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 5899,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 13,
+      "day": [
+        209,
+        2,
+        1
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 5618,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 14,
+      "day": [
+        209,
+        2,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 5336,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 15,
+      "day": [
+        209,
+        2,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 5055,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 16,
+      "day": [
+        209,
+        3,
+        1
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 4774,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 17,
+      "day": [
+        209,
+        3,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 4492,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 18,
+      "day": [
+        209,
+        3,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 4211,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 19,
+      "day": [
+        209,
+        4,
+        1
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 3929,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 20,
+      "day": [
+        209,
+        4,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 3648,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 21,
+      "day": [
+        209,
+        4,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 3367,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 22,
+      "day": [
+        209,
+        5,
+        1
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 3085,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 23,
+      "day": [
+        209,
+        5,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 2804,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 24,
+      "day": [
+        209,
+        5,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 2522,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 25,
+      "day": [
+        209,
+        6,
+        1
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 2241,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 26,
+      "day": [
+        209,
+        6,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 1960,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 27,
+      "day": [
+        209,
+        6,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 1678,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 28,
+      "day": [
+        209,
+        7,
+        1
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 1397,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 29,
+      "day": [
+        209,
+        7,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 1115,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 30,
+      "day": [
+        209,
+        7,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 834,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 31,
+      "day": [
+        209,
+        8,
+        1
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 553,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 32,
+      "day": [
+        209,
+        8,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1307,
+      "cargo": {
+        "gold": 930,
+        "grain": 271,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 33,
+      "day": [
+        209,
+        8,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1293,
+      "cargo": {
+        "gold": 930,
+        "grain": 0,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 34,
+      "day": [
+        209,
+        9,
+        1
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1165,
+      "cargo": {
+        "gold": 930,
+        "grain": 0,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 35,
+      "day": [
+        209,
+        9,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 1049,
+      "cargo": {
+        "gold": 930,
+        "grain": 0,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 36,
+      "day": [
+        209,
+        9,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 944,
+      "cargo": {
+        "gold": 930,
+        "grain": 0,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 37,
+      "day": [
+        209,
+        10,
+        1
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 849,
+      "cargo": {
+        "gold": 930,
+        "grain": 0,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 38,
+      "day": [
+        209,
+        10,
+        11
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 763,
+      "cargo": {
+        "gold": 930,
+        "grain": 0,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    },
+    {
+      "turn": 39,
+      "day": [
+        209,
+        10,
+        21
+      ],
+      "present": true,
+      "officers": [
+        769
+      ],
+      "escort_troops": 685,
+      "cargo": {
+        "gold": 930,
+        "grain": 0,
+        "reserves": 0,
+        "treasure": 0
+      },
+      "bag": 0,
+      "status": "waiting",
+      "reason": "no_return_route",
+      "closure_tick": null
+    }
+  ]
+}

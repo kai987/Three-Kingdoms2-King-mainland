@@ -1,0 +1,18 @@
+{
+  "expected": {
+    "quick": 18,
+    "five": 24,
+    "long": 8,
+    "holdout": 4
+  },
+  "scored": {
+    "five": 24,
+    "holdout": 4,
+    "long": 8,
+    "quick": 18,
+    "smoke": 2
+  },
+  "complete": true,
+  "warning_count": 98,
+  "failures": []
+}
