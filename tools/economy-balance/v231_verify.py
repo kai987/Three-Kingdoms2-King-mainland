@@ -89,7 +89,7 @@ def archives(folder):
         assert sha256(path)==entry['sha256']
         with ZipFile(path) as source:
             assert source.testzip() is None and len(source.namelist())==entry['files']
-            manifest=next(name for name in source.namelist() if name.endswith('/SHA256SUMS.txt'))
+            manifest=f'package-index/{path.stem}/SHA256SUMS.txt'
             for line in source.read(manifest).decode().splitlines():
                 checksum,member=line.split('  ',1)
                 with source.open(member) as stream:
