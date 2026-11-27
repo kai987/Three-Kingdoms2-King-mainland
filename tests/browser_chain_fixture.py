@@ -109,4 +109,9 @@ def fixtures():
     assert conditions.remaining(other.state.battle,target['id'])==0
     return[cast,restricted,expiry]
 
-if __name__=='__main__':print(json.dumps(fixtures(),ensure_ascii=False,separators=(',',':')))
+if __name__=='__main__':
+    # The browser builds the full view from each validated save. Preparation
+    # uses command state and the explicit tactical board check above.
+    with patch.object(Campaign, 'view', return_value={}):
+        prepared = fixtures()
+    print(json.dumps(prepared, ensure_ascii=False, separators=(',', ':')))

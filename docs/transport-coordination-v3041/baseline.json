@@ -1,6 +1,7 @@
 {
-  "main": "e8c8004d7a08c73df0d9b757858c488e70195f5a",
-  "development_base": "e8c8004d7a08c73df0d9b757858c488e70195f5a",
+  "main_at_branch_creation": "ad044ec895ec45fdc8de8dbecb869a99e42f7ec8",
+  "development_base": "ad044ec895ec45fdc8de8dbecb869a99e42f7ec8",
+  "main_at_observation_start": "e8c8004d7a08c73df0d9b757858c488e70195f5a",
   "previous_winter_validation": "a8c854ac05d7691bb460fab9591f362ffee63637",
   "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
   "scenario_sha256": {

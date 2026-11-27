@@ -616,7 +616,7 @@ test('transport coordination is opt-in and its observer ledger follows the selec
  await page.locator('#observer-toggle').click();
  await expect(page.locator('#observer-status')).toHaveAttribute('data-observer-state','paused');
  const ledger=page.locator('#inspector [data-transport-coordination]');
- await expect(ledger.locator('summary')).toHaveText('輸送統籌');
+ await expect(ledger.locator('summary')).toHaveText('輸送統籌',{useInnerText:true});
  if(!await ledger.locator('tbody tr').count()){
   await page.locator('#observer-step').click();
   await tacticalDismiss(page);
@@ -624,11 +624,21 @@ test('transport coordination is opt-in and its observer ledger follows the selec
  await expect(ledger.locator('tbody tr')).not.toHaveCount(0,{timeout:120_000});
  if(await ledger.getAttribute('open')===null)await ledger.locator('summary').click();
  await expect(ledger.getByRole('columnheader',{name:'未覆蓋糧'})).toBeVisible();
+ await ledger.screenshot({path:test.info().outputPath('coordination-zh-Hant.png')});
  await page.locator('#utility-menu summary').click();
  await page.locator('#language').selectOption('ja');
- await expect(ledger.locator('summary')).toHaveText('輸送調整');
+ await expect(ledger.locator('summary')).toHaveText('輸送調整',{useInnerText:true});
  if(await ledger.getAttribute('open')===null)await ledger.locator('summary').click();
- await expect(ledger.getByRole('columnheader',{name:'未充足兵糧'})).toBeVisible();
+ await expect(ledger.getByRole('columnheader',{name:'未充足糧'})).toBeVisible();
+ await ledger.screenshot({path:test.info().outputPath('coordination-ja.png')});
+ const rightmostVisible=await ledger.locator('.faction-ledger-scroll').evaluate(scroller=>{
+  scroller.scrollLeft=scroller.scrollWidth;
+  const tableEdge=scroller.querySelector('thead th:last-child').getBoundingClientRect().right;
+  return tableEdge<=scroller.getBoundingClientRect().right+2;
+ });
+ expect(rightmostVisible).toBe(true);
+ await expect(ledger.getByRole('columnheader',{name:'主な制約'})).toBeVisible();
+ await ledger.screenshot({path:test.info().outputPath('coordination-ja-last-columns.png')});
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2)).toBe(true);
  expect(errors.get(page)).toEqual([]);
 });

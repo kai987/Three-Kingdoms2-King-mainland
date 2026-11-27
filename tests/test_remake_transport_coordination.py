@@ -31,12 +31,12 @@ def offer(demand, source='a', officer=1, *, channel='ordinary', books=1, net=500
 
 
 class CoordinationTests(TestCase):
-    def game(self, *, enabled=True, capacity=False, faction='observer'):
+    def game(self, *, enabled=True, capacity=False, faction='observer', **rules):
         engine = Headless(Catalog(ROOT/'game/data/campaigns/208-10.json'), record_journal=False)
         kwargs = {coordination.FIELD: 3041} if enabled else {}
         if capacity:
             kwargs.update(transport_capacity_rules_version=303)
-        engine.command('new', dict(faction=faction, seed=2026, lifespan='none', **kwargs), 0)
+        engine.command('new', dict(faction=faction, seed=2026, lifespan='none', **kwargs, **rules), 0)
         return engine
 
     def test_shadow_matches_old_rules_through_actual_turns(self):
@@ -110,6 +110,57 @@ class CoordinationTests(TestCase):
         forecast.gaps = faction_economy.balance(0, forecast.timeline)[0]
         covered = city_shortage(None, state, plan, city.id)
         self.assertEqual((covered.reliable, covered.remaining), (100, 0))
+
+    def test_real_convoy_uses_one_book_actual_escort_and_safe_source_stock(self):
+        import test_remake_logistics as fixtures
+
+        game = Headless(fixtures.transport_catalog(rear=True), record_journal=False)
+        game.command('new', dict(faction='wei', seed=2026, **{coordination.FIELD: 3041}), 0)
+        fixtures.LogisticsTests().fill(game, 'xiangyang', 6)
+        game.command('end_turn', {}, game.revision)
+        state = game.state
+        source, target = (state.cities[k] for k in ('xiangyang', 'nanjun'))
+        source.grain, target.grain, target.gold = 150_000, 0, 0
+        with grain_units.using(state):
+            domestic.prepare_ai(game, state, source.owner)
+            start = command_books.remaining(state, source.owner)
+            quote_calls = []
+            recorded = []
+            real = logistics._supply_routes
+
+            def supply_routes(game, state, owner, pairs, policy):
+                quote_calls.append(tuple(pairs))
+                return real(game, state, owner, pairs, policy)
+
+            with coordination.observing(lambda event, row: recorded.append((event, row))), patch.object(
+                    logistics, '_supply_routes', supply_routes):
+                self.assertTrue(coordination.run(game, state, source.owner, 'urgent'))
+            departures = [row for row in logistics._pool(state)['convoys'] if row['owner'] == source.owner]
+            self.assertEqual(len(departures), 1)
+            row, = departures
+            self.assertEqual((row['source'], row['target']), (source.id, target.id))
+            self.assertEqual(command_books.remaining(state, source.owner), start - 1)
+            self.assertEqual(source.grain, 150_000 - row['cargo']['grain'] - row['journeys'][0]['supply']['loaded'])
+            self.assertEqual(state.extension['officer_actions'][str(row['officers'][0])], state.turn)
+            self.assertTrue(quote_calls)
+            self.assertFalse(coordination.run(game, state, source.owner, 'urgent'))
+        game.validate(state)
+
+    def test_granary_capacity_weather_and_transshipment_can_coexist(self):
+        game = self.game(capacity=True, strategic_granary_rules_version=302,
+                         regional_market_rules_version=301, weather_rules_version=23,
+                         weather_forecast_version=231, transshipment_rules_version=304,
+                         transport_emergency_rules_version=222)
+        for _ in range(2):
+            game.command('observe_turn', {}, game.revision)
+        expected = {
+            key: game.state.extension[key] for key in (
+                'strategic_granary_rules_version', 'regional_market_rules_version', 'weather_rules_version',
+                'weather_forecast_version', 'transport_emergency_rules_version',
+                'transshipment_rules_version', 'transport_capacity_rules_version', coordination.FIELD)
+        }
+        self.assertEqual(list(expected.values()), [302, 301, 23, 231, 222, 304, 303, 3041])
+        self.assertEqual(game.state.extension['transshipment']['plans'], {})
 
     def test_one_receipt_may_credit_only_one_episode_and_excludes_returns(self):
         game = self.game()

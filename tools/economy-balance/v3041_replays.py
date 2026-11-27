@@ -1,6 +1,6 @@
 """Replay archived checkpoints without changing their weather, ownership or RNG."""
 from argparse import ArgumentParser, Namespace
-from collections import Counter
+from collections import Counter, defaultdict
 from concurrent.futures import ProcessPoolExecutor
 from contextlib import ExitStack
 import gzip
@@ -13,11 +13,12 @@ from time import process_time
 from unittest.mock import patch
 
 from common import git, sha256, to_csv, to_json
-from remake import logistics, transport_capacity, transport_coordination
-from remake.campaign import digest
+from remake import city_economy, grain_units, logistics, transport_capacity, transport_coordination
+from remake.campaign import digest, verified_save_content
 from v3031_experiments import options as capacity_options
 import v303_capacity_audit as capacity_replay
 import v231_replay as winter_replay
+from v231_observe import CampaignObservation
 from v3041_campaigns import settings
 
 GROUPS = ('T0', 'T2', 'T3', 'T5')
@@ -25,7 +26,7 @@ GROUPS = ('T0', 'T2', 'T3', 'T5')
 
 def enable(stack, game, name, observe):
     flags = settings(name)
-    if name == 'T5':
+    if name in ('T4', 'T5'):
         stack.enter_context(transport_capacity.fixed_replay(game.state, capacity_options('D2')))
     if name in ('T2', 'T3', 'T5'):
         transport_coordination.initialize(game.state, flags[transport_coordination.FIELD],
@@ -48,10 +49,80 @@ def fixed_case(task):
         return capacity_replay.fixed_replay(task)
 
 
+def fixed_accounted_case(task):
+    target_keys = {(row['owner'], row['target']) for row in task[2]}
+    capacity, coordination, provisions = [], [], defaultdict(dict)
+    observe = transport_capacity.observing
+    settle_grain = city_economy.settle_turn_grain
+
+    def monitored(record):
+        def collect(kind, row):
+            if kind in ('departure', 'terminal'):
+                capacity.append(dict(event=kind, **row))
+            record(kind, row)
+        return observe(collect)
+
+    class SourceRations(CampaignObservation):
+        def write(self, kind, row):
+            provisions[row['owner'], row['city']][row['turn']] = row['missing']
+
+    rations = SourceRations(None, flows=True)
+
+    def settle(game, state):
+        rations.city_meal(game, state)
+        return settle_grain(game, state)
+
+    def record(kind, row):
+        if kind == 'dispatch':
+            coordination.append(row)
+
+    with (patch.object(transport_capacity, 'observing', monitored),
+          patch.object(city_economy, 'settle_turn_grain', settle),
+          transport_coordination.observing(record)):
+        data, sources, trace = fixed_case(task)
+
+    launches = {row['id']: row for row in capacity if row['event'] == 'departure'}
+    endings = {row['id']: row for row in capacity if row['event'] == 'terminal'}
+    actual = {row['convoy']: row for row in coordination if row['convoy']}
+    account = {}
+    for ident, depart in launches.items():
+        if ((depart['owner'], depart['target']) not in target_keys
+                or depart['purpose'] not in ('ordinary', 'strategic', 'regional') or not depart['cargo']['grain']):
+            continue
+        end = endings.get(ident)
+        claimed = actual.get(ident)
+        start = (depart['turn']-1)*10
+        days = max(0, end['end_tick']-start) if end else None
+        free = (end['reusable_turn']-1)*10-end['end_tick'] if end and end['reusable_turn'] else 0
+        after = provisions[depart['owner'], depart['source']]
+        days_observed = [value for turn, value in after.items() if turn >= depart['turn']]
+        books = claimed['books_used'] if claimed else depart['command_books']+(depart['purpose'] == 'regional')
+        account[ident] = dict(convoy=ident, books=books, escorts=depart['officers'], terminal=end,
+            issued_stock_grain=depart['cargo']['grain'], start_turn=depart['turn'],
+            source=depart['source'], target=depart['target'], owner=depart['owner'],
+            officer_days=(days*sum(type(key) is int for key in depart['officers']) +
+                max(0, free)*sum(type(key) is int for key in end['received_officers'])) if end else None,
+            clerk_days=(days*sum(type(key) is str for key in depart['officers']) +
+                max(0, free)*sum(type(key) is str for key in end['received_officers'])) if end else None,
+            source_shortage_turns=sum(value > 0 for value in days_observed),
+            source_grain_shortage=sum(days_observed), source_turns_observed=len(days_observed))
+    for row in data:
+        qualified = [record for record in account.values() if record['owner'] == row['owner']
+                     and record['target'] == row['target'] and record['start_turn'] < row['deadline_turn']]
+        row.update(fixed_dispatches=len(qualified), books_spent=sum(record['books'] for record in qualified),
+            measured_officer_days=sum(record['officer_days'] or 0 for record in qualified),
+            measured_clerk_days=sum(record['clerk_days'] or 0 for record in qualified),
+            staff_period_incomplete=sum(record['officer_days'] is None for record in qualified),
+            sources_with_post_departure_shortage=sorted({record['source'] for record in qualified
+                                                        if record['source_shortage_turns']}))
+    trace['related_dispatch_accounts'] = list(account.values())
+    return data, sources, trace
+
+
 def fixed(args):
     spec = Namespace(prior=args.reference, output=args.output, checkpoints=args.checkpoints,
                      groups=args.group, workers=args.workers)
-    capacity_replay.fixed(spec, replay=fixed_case)
+    capacity_replay.fixed(spec, replay=fixed_accounted_case if args.account else fixed_case)
 
 
 def inspect_checkpoint(path, scenario, strategy, group, turns, *, observation, city=None, events_path=None):
@@ -105,7 +176,7 @@ def south(args):
     paths = [args.checkpoints[0]/key for key in sorted(original)]
     for path in paths:
         assert sha256(path.read_bytes()) == original[path.name]['source'], path
-    tasks = [(p, name, args.turns, args.output/'events') for p in paths for name in GROUPS]
+    tasks = [(p, name, args.turns, args.output/'events') for p in paths for name in args.group]
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         results = list(pool.map(south_case, tasks))
     to_json(args.output/'southern-basin-replay.json', dict(source=git('rev-parse', 'HEAD').decode().strip(),
@@ -136,7 +207,8 @@ def performance_case(task):
         totals.update(row['scheduler'])
     return dict(label=label, scenario=scene, strategy=strategy, checkpoint=path.name,
         sha256=sample['checkpoint_sha256'], group=group, observation=observation, repeats=len(series),
-        turns=len(timings), full_turn_cpu_p50=median(timings), full_turn_cpu_p95=timings[-1],
+        turns=len(timings), full_turn_cpu_p50=median(timings),
+        full_turn_cpu_p95=timings[(95*len(timings)-1)//100],
         route_queries=sum(row['route_search_calls'] for row in series),
         peak_memory=max(row['peak_memory_bytes'] for row in series), **dict(totals),
         final=sample['final'], measurements=series)
@@ -159,21 +231,87 @@ def performance(args):
     to_csv(args.output/'scheduler-performance-profile.csv', ({key: row.get(key) for key in fields} for row in rows))
 
 
+def historical(args):
+    from v3021_checkpoints import campaign, configure
+    from v3031_replays import convoy_snapshot
+
+    results = []
+    for sample in args.samples:
+        raw_id, raw_path = sample.split(',', 1)
+        ident, path = int(raw_id), Path(raw_path)
+        fixture = capacity_replay.checkpoint(path)
+        if 'save' not in fixture:
+            frame = verified_save_content(fixture)
+            state = frame['state']
+            fixture = dict(save=fixture, scenario=frame['scenario'].removeprefix('mainland'), seed=state['seed'],
+                           strategy=state['extension'].get('ai_logistics_strategy_version', 211),
+                           weather=state['extension'].get('weather_rules_version', 0))
+        for group in args.group:
+            game = campaign(fixture['scenario'])
+            receipts, snapshots = [], []
+            transport_event = logistics._event
+
+            def account(kind, row):
+                if row.get('id') == ident:
+                    receipts.append(dict(event=kind, row=row))
+
+            def assets(engine, state, event, convoy, **values):
+                result = transport_event(engine, state, event, convoy, **values)
+                if event == 'transport_returned' and convoy['id'] == ident:
+                    receipts.append(dict(event='returned_assets', row=dict(
+                        turn=state.turn, city=convoy['target'], owner=convoy['owner'], cargo=dict(convoy['cargo']))))
+                return result
+
+            with ExitStack() as stack:
+                configure(stack, fixture['strategy'], fixture['weather'], detailed=True)
+                game.load_save(fixture['save'], 0)
+                initial = digest(game.to_dict())
+                enable(stack, game, group, None)
+                stack.enter_context(transport_capacity.observing(account))
+                stack.enter_context(patch.object(logistics, '_event', assets))
+                for _ in range(args.turns + 1):
+                    with grain_units.using(game.state):
+                        state = convoy_snapshot(game, ident)
+                        if state is not None:
+                            convoy = next(row for row in logistics._pool(game.state)['convoys'] if row['id'] == ident)
+                            state['aboard_resources'] = dict(convoy['cargo'])
+                    snapshots.append(dict(turn=game.state.turn, convoy=state))
+                    if len(snapshots) > args.turns or game.state.phase == 'finished':
+                        break
+                    game.command('observe_turn', {}, game.revision)
+                if snapshots[0]['convoy'] is None:
+                    raise ValueError(f'Convoy {ident} missing at its historical opening')
+            results.append(dict(group=group, checkpoint=path.name, scenario=fixture['scenario'],
+                seed=fixture['seed'], strategy=fixture['strategy'], winter=fixture['weather'], convoy=ident,
+                checkpoint_sha256=sha256(path.read_bytes()), initial_state_sha256=initial,
+                snapshots=snapshots, receipts=receipts, final_state_sha256=digest(game.to_dict())))
+            print(ident, group, 'turns', len(snapshots)-1, 'still_active', snapshots[-1]['convoy'] is not None,
+                  flush=True)
+    to_json(args.output/'historical-convoy-safety.json',
+            dict(source=git('rev-parse', 'HEAD').decode().strip(), results=results))
+
+
 def main():
     parser = ArgumentParser(description=__doc__)
     phases = parser.add_subparsers(dest='mode', required=True)
-    for name, fn in (('fixed', fixed), ('south', south), ('performance', performance)):
+    for name, fn in (('fixed', fixed), ('south', south), ('performance', performance), ('historical', historical)):
         phase = phases.add_parser(name)
         phase.set_defaults(execute=fn)
         phase.add_argument('output', type=Path)
-        phase.add_argument('--workers', type=int, default=3)
-        if name != 'performance':
+        if name != 'historical':
+            phase.add_argument('--workers', type=int, default=3)
+        if name in ('fixed', 'south'):
             phase.add_argument('reference', type=Path)
             phase.add_argument('checkpoints', nargs='+', type=Path)
         else:
             phase.add_argument('samples', nargs='+')
-        phase.add_argument('--group', nargs='+', choices=GROUPS, default=list(GROUPS) if name == 'fixed' else ['T0', 'T3'])
-        phase.add_argument('--turns', type=int, default=9 if name == 'south' else 3)
+        if name != 'performance':
+            phase.add_argument('--group', nargs='+', choices=(*GROUPS, 'T4'),
+                               default=['T0', 'T3'] if name == 'historical' else list(GROUPS))
+        if name != 'fixed':
+            phase.add_argument('--turns', type=int, default=9 if name == 'south' else 3)
+        if name == 'fixed':
+            phase.add_argument('--account', action='store_true')
     args = parser.parse_args()
     args.execute(args)
 
