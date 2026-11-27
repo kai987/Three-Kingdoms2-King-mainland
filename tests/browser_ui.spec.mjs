@@ -3,6 +3,8 @@
  */
 import {test,expect} from '../tools/browser-tests/node_modules/@playwright/test/index.mjs';
 import {readFile,mkdir,writeFile} from 'node:fs/promises';
+import {mkdtempSync,rmSync,writeFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {execFileSync} from 'node:child_process';
 import assert from 'node:assert/strict';
@@ -17,13 +19,22 @@ function expandedDownload(raw){
  if(envelope.version!==3)return envelope;
  // Compare downloads to the diagnostic API using the engine's canonical number encoding.
  const script=`import json,sys
+from pathlib import Path
 sys.path.insert(0, 'source')
 from remake.campaign import verified_save_content, digest
-value=verified_save_content(json.load(sys.stdin))
+value=verified_save_content(json.loads(Path(sys.argv[1]).read_text(encoding='utf-8')))
 print(json.dumps(dict(value,checksum=digest(value)),ensure_ascii=False))`;
- return JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B','-c',script],{
-  cwd:new URL('../',import.meta.url),input:raw,encoding:'utf8',maxBuffer:32*1024*1024,
- }));
+ const directory=mkdtempSync(join(tmpdir(),'tk2-download-'));
+ try{
+  // Large downloads can leave a synchronous child waiting for EOF on macOS.
+  const input=join(directory,'download.json');
+  writeFileSync(input,raw);
+  return JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B','-c',script,input],{
+   cwd:new URL('../',import.meta.url),encoding:'utf8',maxBuffer:32*1024*1024,timeout:30_000,
+  }));
+ }finally{
+  rmSync(directory,{recursive:true,force:true});
+ }
 }
 
 const errors=new WeakMap();

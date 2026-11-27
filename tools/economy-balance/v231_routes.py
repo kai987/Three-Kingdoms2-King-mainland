@@ -15,6 +15,10 @@ from remake.travel import TravelCampaign
 
 DATE_CASES=((3,21,'liaodong'),(11,21,'northern_frontier'),(12,20,'liaodong'),
             (11,11,'freeze'),(3,11,'freeze'),(12,21,'qinling_highlands'))
+ADVERSE_CASES=((12,21,'northern-river-freeze'),(1,11,'northern-river-freeze'),
+               (1,21,'northern-river-freeze'),(2,11,'northern-river-freeze'),
+               (2,21,'northern-river-freeze'),(3,1,'northern-river-freeze'),
+               (3,21,'liaodong'),(4,1,'liaodong'))
 
 
 def graph(catalog,month):
@@ -34,6 +38,11 @@ def route_for(game,region,mapping,seed):
     directions,nodes=mapping
     rows=sorted(directions.values(),key=lambda row:(row['id'],row['from'],row['to']))
     frozen=game.catalog.climate.frozen_reaches
+    if region=='northern-river-freeze':
+        reach='yellow:jincheng:shuofang'
+        leg=next(row for row in rows if row['mode']=='river' and
+                 any(part.reach==reach for part in travel._parts_for_leg(game,row)))
+        return TravelCampaign._quote([leg['from'],leg['to']],[leg]),None
     if region=='freeze':
         candidates=[r for r in rows if any(p.reach in frozen for p in travel._parts_for_leg(game,r))
                     and (r['id'],r['to'],r['from']) in directions]
@@ -111,8 +120,8 @@ def classic(game,state,quote,back=None,*,old=False):
     return dict(days=delay,food=food+estimate['extra_weight'],net=net,back=returning)
 
 
-def trial(catalog,mappings,seed,index):
-    month,day,region=DATE_CASES[index%len(DATE_CASES)]
+def trial(catalog,mappings,seed,index,date_cases=DATE_CASES):
+    month,day,region=date_cases[index%len(date_cases)]
     year=200+(month<11)
     game=SimpleNamespace(catalog=SimpleNamespace(climate=catalog.climate,
         data=dict(catalog.data,start_month=11,start_year=200)))
@@ -170,14 +179,15 @@ def summary(rows):
 
 def main():
     parser=ArgumentParser(description=__doc__)
-    parser.add_argument('phase',choices=('calibrate','holdout'))
+    parser.add_argument('phase',choices=('calibrate','holdout','adverse'))
     parser.add_argument('output',type=Path)
     parser.add_argument('--count',type=int,default=120)
     args=parser.parse_args()
     catalog=Catalog(ROOT/'game/data/campaigns/200-01.json')
-    mappings={month:graph(catalog,month) for month,_,_ in DATE_CASES}
-    start=300_000 if args.phase=='calibrate' else 400_000
-    results=[trial(catalog,mappings,start+index,index) for index in range(args.count)]
+    dates=ADVERSE_CASES if args.phase=='adverse' else DATE_CASES
+    mappings={month:graph(catalog,month) for month,_,_ in dates}
+    start={'calibrate':300_000,'holdout':400_000,'adverse':500_000}[args.phase]
+    results=[trial(catalog,mappings,start+index,index,dates) for index in range(args.count)]
     args.output.mkdir(parents=True,exist_ok=True)
     to_csv(args.output/'cross-month-route-prediction.csv',results)
     to_csv(args.output/'route-forecast-errors.csv',summary(results))
