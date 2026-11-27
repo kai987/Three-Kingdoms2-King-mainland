@@ -131,7 +131,8 @@ def render_stage(output, prior, runs):
     if consumption_file.exists():
         by_group = defaultdict(Counter)
         recovered = []
-        for r in rows(consumption_file):
+        consumption = rows(consumption_file)
+        for r in consumption:
             group = r['group']
             if r['due_meal_observed'] != 'true':
                 by_group[group]['not_observed'] += 1
@@ -147,6 +148,32 @@ def render_stage(output, prior, runs):
         write(data/'fixed-local-market-consumed-and-meal-paid.csv',recovered,
               headers=('group','checkpoint','owner','city','deadline','actual_missing',
                        'physical_receipts','local_grain_bought','local_grain_consumed_minimum'))
+        by_target = {(r['group'],r['checkpoint'],r['owner'],r['city']):r for r in consumption}
+        paired = []
+        for control,candidate in (('U0','U6'),('U1','U6'),('V0','V2'),('V1','V2')):
+            for before in consumption:
+                if before['group']!=control:
+                    continue
+                after = by_target[candidate,before['checkpoint'],before['owner'],before['city']]
+                seen = before['due_meal_observed']==after['due_meal_observed']=='true'
+                paired.append(dict(control=control,candidate=candidate,checkpoint=before['checkpoint'],
+                    owner=before['owner'],city=before['city'],deadline=before['deadline'],both_observed=seen,
+                    control_missing=before['actual_missing'],candidate_missing=after['actual_missing'],
+                    change=int(after['actual_missing'])-int(before['actual_missing']) if seen else None))
+        write(data/'fixed-first-meal-paired-effect.csv',paired)
+        measures = defaultdict(Counter)
+        for r in paired:
+            if r['both_observed']:
+                old,new = int(r['control_missing']),int(r['candidate_missing'])
+                measures[r['control']].update(observed=1,before=old,after=new,improved=int(new<old),
+                                               worse=int(new>old),new_shortage=int(new>0==old))
+        stage['fixed_actual_paired_meals'] = {group:dict(counts) for group,counts in measures.items()}
+    else:
+        measures = {}
+    paid_local = stage.get('fixed_actual_first_meals', {})
+    proven_local = '、'.join(
+        f"{group} {paid_local.get(group,{}).get('local_only_proven_consumed_and_first_meal_paid',0)} 个"
+        for group in ('U6','V2')) if paid_local else '未完成统计'
     perf_path = data/'scheduler-performance-profile.csv'
     perf = {}
     if perf_path.exists():
@@ -173,6 +200,8 @@ def render_stage(output, prior, runs):
                           for row in groups)
 
     header = '| 组 | 及时到货 | 首次足额 | 首次折顶覆盖 | 期限前实收 | 返程样本再到货 |\n|---|---:|---:|---:|---:|---:|'
+    paired_table = '\n'.join(f"| {group} | {counts['observed']} | {counts['before']:,} | "
+        f"{counts['after']:,} | {counts['worse']} | {counts['new_shortage']} |" for group,counts in measures.items())
     markdown(docs/'fixed-state-acceptance.md',f"""
 # 89 个固定目标及 23 个返程来源
 
@@ -184,6 +213,14 @@ def render_stage(output, prior, runs):
 原历史 T3 相对 T0 丢失 21 个原有及时目标。T5 相对 T4 丢失 24 个。共 {stage['actual_historical_losses']} 条逐目标原始发运、到货和新规划证据保存在 [逐目标归因](../data/fixed-demand-regression-attribution.csv)。历史同档旧引擎复跑与原表逐项一致 {stage['prior_identical']}/{stage['exact_prior_pairs']}。不同的集成版值单列。
 
 原表的 T0 35／33／23,147，T3 19／15／9,783，T4 46／41／27,398，T5 26／22／13,648。返程覆盖历史 T0 为 16，T3 为 4，T4 为 17，T5 为 9。重放的来源名册、报价和实际再到货见 [23 个返程样本](../data/returning-slot-coverage-recovery.csv)。
+
+## 首次到期的实际消费
+
+| 对照 → 候选 | 可配对目标 | 对照缺口 | 候选缺口 | 恶化目标 | 新出现缺口 |
+|---|---:|---:|---:|---:|---:|
+{paired_table}
+
+每组只比较同城、同势力和同一次实际扣粮都有记录的目标。U0／U1 分别比 U6，V0／V1 分别比 V2。没有实体到货而经核实用采购粮参与消费、首期足额的目标为 {proven_local}。两种覆盖口径分别保存在 [配对消费缺口](../data/fixed-first-meal-paired-effect.csv) 和 [购粮实际消耗证据](../data/fixed-local-market-consumed-and-meal-paid.csv)。
 """)
     counts = Counter()
     for row in rows(data/'alternative-source-comparison.csv'):
@@ -286,7 +323,8 @@ def acceptance_answers(output, stage, shipments):
                      f"{-flow[g]['march_supply.advance_unit']:,}" for g in ('U0','U1','U5t','U6','V2'))
     reversals = data/'repeated-grain-transfer-audit.csv'
     reverse_count = len(rows(reversals)) if reversals.exists() else 0
-    p3 = Counter(row['group'] for row in rows(data/'p3-resource-occupation.csv') if row['event']=='dispatch')
+    p3 = Counter(row['group'] for row in rows(data/'p3-resource-occupation.csv')
+                 if row['event']=='dispatch' and row['convoy']!='null')
     small = Counter(row['group'] for row in rows(data/'small-load-by-priority.csv'))
     funded = defaultdict(Counter)
     economy = data/'effective-demand-per-command-book.csv'
