@@ -6,7 +6,6 @@ import gzip
 from hashlib import sha256
 import json
 from pathlib import Path
-import subprocess
 
 from common import to_csv, to_json
 from v30411_replays import settings
@@ -120,6 +119,7 @@ def attr(history, discovered, integrated, current):
                 indicators.append('shipment_without_on_time_receipt')
             if not indicators:
                 indicators.append('no_usable_deadline_quote_observed')
+            chosen = [event for event in events if event['event'] in ('dispatch', 'dispatch_failed')]
             previous = json.loads(row['l5_actual_receipts'])
             yield dict(comparison=f'{before}-{after}', checkpoint=target[0], scenario=row['scenario'],
                 turn=row['turn'], owner=target[1], target=target[2], deadline_turn=due,
@@ -129,7 +129,21 @@ def attr(history, discovered, integrated, current):
                 aligned_candidate_reception=new[candidate,target]['l5_actual_reception'],
                 demand_events=len(demands), deadline_candidates=len(valid), actual_launches=len(sent),
                 local_purchased_grain=purchased, statuses=dict(statuses), observed_offer_blockers=dict(issues),
-                dispatch_failures=dict(failed), indicators=indicators)
+                dispatch_failures=dict(failed), indicators=indicators,
+                l0_original_need=int(row['first_uncovered_grain']),
+                l1_demands_found=len(demands),
+                l2_sources_with_proven_deadline_offer=sorted({event['source'] for event in valid}),
+                l3_escorts_proven_by_offer=sorted({str(escort) for event in valid for escort in event['escorts']}),
+                l4_deadline_compatible_offers=len(valid),
+                l5_position_and_books_proven_by_commit=len(sent),
+                l6_retained_offers_for_original_sources=sorted({event['source'] for event in valid}
+                    & {receipt['source'] for receipt in previous}),
+                l7_commit_attempts=len(chosen),
+                l8_accepted_transactions=sum(event['event']=='dispatch' for event in chosen),
+                l9_launched_convoys=[event['convoy'] for event in sent],
+                l10_physical_receipts_before_due=int(aligned[observed,target]['l5_actual_reception']),
+                l11_attributable_physical_coverage=min(int(row['first_uncovered_grain']),
+                    int(aligned[observed,target]['l5_actual_reception'])))
 
 
 def pairs(fixed, comparisons):
@@ -151,11 +165,14 @@ def pairs(fixed, comparisons):
                        source_candidate=json.loads(after['l5_actual_receipts']))
 
 
-def write(path, data):
+def write(path, data, *, headers=()):
     data = list(data)
     if data:
         fields = dict.fromkeys(key for row in data for key in row)
         to_csv(path, ({field: row.get(field) for field in fields} for row in data))
+    elif headers:
+        with path.open('w',encoding='utf-8',newline='') as stream:
+            csv.writer(stream,lineterminator='\n').writerow(headers)
 
 
 def package(args):
@@ -174,13 +191,22 @@ def package(args):
             if row['group'] in ('T0','T4'):
                 table.append(dict(row, group=GROUPS[row['group']]))
     historical_replay = rows(exact/'transport-capability-funnel.csv')
-    archive_by_id = {(GROUPS[row['group']], key(row)): row['l5_actual_reception'] for row in historical}
+    archive_by_id = {(GROUPS[row['group']], key(row)): row for row in historical}
     matches = [dict(group=row['group'], checkpoint=key(row)[0], owner=row['owner'], target=row['target'],
-                    original=archive_by_id[row['group'],key(row)], replay=row['l5_actual_reception'])
+                    original=archive_by_id[row['group'],key(row)]['l5_actual_reception'],
+                    replay=row['l5_actual_reception'],
+                    matches_receipts=archive_by_id[row['group'],key(row)]['l5_actual_receipts']==row['l5_actual_receipts'],
+                    matches_first_gap=archive_by_id[row['group'],key(row)]['first_uncovered_grain']==row['first_uncovered_grain'])
                for row in historical_replay]
     for row in matches:
         row['identical'] = row['original']==row['replay']
     write(data/'historical-fixed-baseline-verification.csv', matches)
+    trial = args.runs/'rolling-deadline'
+    if (trial/'transport-capability-funnel.csv').is_file():
+        shifted = rows(trial/'transport-capability-funnel.csv')
+        shifted_sources = rows(trial/'capacity-counterfactual.csv')
+        write(data/'rolling-deadline-trial-summary.csv', summarize(shifted, shifted_sources))
+        write(data/'rolling-deadline-trial-by-target.csv', pairs(fixed+shifted, (('U6','U6r'),('V2','V2r'))))
     fixed_totals, history_totals = summarize(fixed, returning), summarize(historical, historical_returns)
     write(data/'fixed-demand-coverage-recovery.csv', fixed_totals)
     write(data/'historical-fixed-demand-baseline.csv', history_totals)
@@ -198,21 +224,30 @@ def package(args):
     write(data/'candidate-pagination-audit.csv', (dict(group=group, priority=priority, outcome=outcome, records=count)
         for (group, priority, outcome), count in sorted(outcomes.items(), key=lambda row: str(row[0]))))
     write(data/'candidate-pruning-loss.csv', pairs(fixed, (('U2','U3a'), ('U3a','U3'), ('U2','U3b'))))
-    write(data/'forecast-requote-results.csv', (row for row in schedule if row.get('granary_requotes')))
-    write(data/'military-preparation-demand-ledger.csv', prep)
-    write(data/'military-preparation-expiry.csv', expiry)
-    write(data/'transit-grain-commitment-ledger.csv', transit)
+    write(data/'forecast-requote-results.csv', (row for row in schedule if row.get('granary_requotes')),
+          headers=('checkpoint','group','turn','owner','phase','granary_requotes'))
+    write(data/'military-preparation-demand-ledger.csv', prep,
+          headers=('checkpoint','group','turn','owner','city','plan','purpose','target','requested','deadline'))
+    write(data/'military-preparation-expiry.csv', expiry,
+          headers=('checkpoint','group','turn','owner','city','plan','purpose','deadline','reason'))
+    write(data/'transit-grain-commitment-ledger.csv', transit,
+          headers=('checkpoint','group','turn','owner','city','army','requested','allowed'))
     write(data/'candidate-observed-dispatches.csv', dispatches)
     write(data/'candidate-observed-receipts.csv', receipts)
     positions = Counter((row['group'], row['priority'], row['target_kind'], row['channel'])
         for row in dispatches if row['event']=='dispatch')
     write(data/'strategic-transport-purpose-audit.csv', (dict(group=k[0], priority=k[1], purpose=k[2],
         channel=k[3], dispatches=v) for k,v in sorted(positions.items())))
-    write(data/'p3-resource-occupation.csv', (row for row in dispatches if row['priority']==3))
+    write(data/'p3-resource-occupation.csv', (row for row in dispatches if row['priority']==3),
+          headers=('checkpoint','group','turn','owner','source','target','priority','channel','convoy','load','books_used'))
     write(data/'small-load-by-priority.csv', (row for row in dispatches
-        if row.get('convoy') is not None and 0<row['load']<1000 and row['outward_days']>=20))
+        if row.get('convoy') is not None and 0<row['load']<1000 and row['outward_days']>=20),
+        headers=('checkpoint','group','turn','owner','priority','convoy','channel','load','outward_days'))
     for phase, filename in (('south','south-results.json'), ('performance','performance-results.json')):
         path = args.runs/phase/filename
+        isolated = args.runs/'performance-isolated'/filename
+        if phase=='performance' and isolated.exists():
+            path = isolated
         if not path.exists():
             continue
         samples = json.loads(path.read_bytes())['results']
@@ -228,6 +263,14 @@ def package(args):
         else:
             write(data/'scheduler-performance-profile.csv', (dict({k: value for k,value in sample.items()
                 if k not in ('final','measurements')}) for r in samples for sample in r['samples']))
+    baxi_path = args.runs/'baxi-timeline/south-results.json'
+    if baxi_path.is_file():
+        cases = json.loads(baxi_path.read_bytes())['results']
+        write(data/'baxi-actual-meals.csv', (dict(group=r['group'], **bill)
+              for r in cases for bill in r['city_ration_settlements']))
+        to_json(checks/'baxi-opening-transit-bookings.json',
+                [dict(group=r['group'],initial=r['initial'],final=r['final'],actual_missing=r['missing'])
+                 for r in cases])
     totals = {r['group']: r for r in fixed_totals}
     passes = {}
     for candidate, reference in (('U6','U0'),('V2','V0')):
@@ -239,6 +282,8 @@ def package(args):
     to_json(checks/'fixed-stage-status.json', dict(controls=history_totals, integrated=fixed_totals,
         target_order=['timely_targets','full_targets','first_gap_grain','returning_sources'],
         candidates=passes, exact_prior_pairs=len(matches), prior_identical=sum(row['identical'] for row in matches),
+        prior_matching_receipts=sum(row['matches_receipts'] for row in matches),
+        prior_matching_first_gaps=sum(row['matches_first_gap'] for row in matches),
         settings={group: settings(group) for group in sorted(totals)}, actual_historical_losses=len(attribution)))
 
 

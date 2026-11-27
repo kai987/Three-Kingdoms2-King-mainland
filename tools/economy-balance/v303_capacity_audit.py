@@ -176,13 +176,13 @@ def returning_offers(game,fixed,tracked):
     return result
 
 
-def fixed_replay(spec):
+def fixed_replay(spec, *, include_deadline_settlement=False):
     path,group,fixed,tracked=spec
     fixture=checkpoint(path)
     check_hash=sha256(path.read_bytes()).hexdigest()
     start=fixture['turn']
     deadline={(row['owner'],row['target']):start+int(row['first_uncovered_in']) for row in fixed}
-    stop=max(deadline.values())-1
+    stop=max(deadline.values())-int(not include_deadline_settlement)
     delivered,departures=defaultdict(list),{}
     replay=[]
 

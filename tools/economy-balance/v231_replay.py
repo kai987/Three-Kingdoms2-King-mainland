@@ -14,7 +14,7 @@ from time import monotonic, process_time
 from unittest.mock import patch
 
 from common import Catalog, HeadlessCampaign, ROOT, git, sha256, to_csv, to_json
-from remake import faction_economy, grain_units, granary_planning, logistics, winter_forecast
+from remake import faction_economy, grain_units, granary_planning, logistics, staging_supply, winter_forecast
 from remake.campaign import digest, verified_save_content
 from v231_observe import CampaignObservation
 from v3021_checkpoints import configure
@@ -100,6 +100,9 @@ def play(path,scene,strategy,group,turns,*,city=None,observe=True):
                  'rng':original['rng'],'domain_sha256':digest(original)}
         if city:
             initial['legal']=minimum_quotes(game,game.state,city)
+            initial['warehouse_grain']=game.state.cities[city].grain
+            initial['confirmed_transit_bookings']=[row.copy() for row in staging_supply.active(game.state)
+                                                   if row['city']==city]
         stack.enter_context(patch.object(logistics,'_supply_routes',search))
         if not city:
             for cached in (winter_forecast._route,winter_forecast._normal_rates,winter_forecast._conditional_rates):
@@ -142,6 +145,7 @@ def play(path,scene,strategy,group,turns,*,city=None,observe=True):
         bills=[row for row in ledger if row.get('kind')=='city_rations' and row['city']==city]
         result.update(city=city,stock=game.state.cities[city].grain,
             shortages=sum(r['missing']>0 for r in bills),missing=sum(r['missing'] for r in bills),
+            city_ration_settlements=bills,
             observed_postings=[row for row in ledger if row.get('kind')=='warehouse_posting' and row['city']==city])
     return result
 

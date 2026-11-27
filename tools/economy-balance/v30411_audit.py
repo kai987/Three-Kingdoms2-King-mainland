@@ -4,7 +4,6 @@ from collections import Counter, defaultdict
 from concurrent.futures import ProcessPoolExecutor
 from contextlib import ExitStack, contextmanager
 from functools import partial
-import gzip
 import json
 from pathlib import Path
 from unittest.mock import patch
@@ -19,14 +18,58 @@ from v30411_replays import checked_inputs, enable, fixed_with_trace
 import v3041_replays as legacy
 
 
-class Sink:
-    def writerow(self, _row):
-        pass
+class TargetPostings:
+    def __init__(self, targets):
+        self.targets = {row['target'] for row in targets}
+        self.rows = defaultdict(list)
+
+    def writerow(self, row):
+        if row['city'] in self.targets and row['resource'] in ('grain', 'ownership'):
+            self.rows[row['city']].append(row)
+
+
+def fixed_consumption(targets, postings, meals):
+    """Report observed meals and a conservative lower bound on local buy usage."""
+    for target in targets:
+        owner, city = target['owner'], target['target']
+        due = int(target['deadline_turn'])
+        observations = meals.get((owner, city), {})
+        meal = observations.get(due)
+        local_stock = bought = forced_use = 0
+        for event in postings.rows[city]:
+            if event['turn'] >= due:
+                break
+            if event['resource'] == 'ownership' or event['owner'] != owner:
+                local_stock = 0
+                continue
+            delta = event['delta']
+            if delta is None:
+                continue
+            if delta > 0 and event['site'] == 'facilities._settle_grain_trade':
+                local_stock += delta
+                bought += delta
+            elif delta < 0:
+                if event['category'] == 'city_consumption':
+                    use = max(0, -delta - max(0, event['balance_before'] - local_stock))
+                    forced_use += use
+                    local_stock -= use
+                else:
+                    # Other expenditures may have spent the purchased grain first.
+                    local_stock = max(0, local_stock + delta)
+        yield dict(group=target['group'], checkpoint=target['checkpoint_sha256'],
+            owner=owner, city=city, deadline=due, first_gap=target['first_uncovered_grain'],
+            due_meal_observed=meal is not None, required=meal['required'] if meal else None,
+            paid=meal['paid'] if meal else None, actual_missing=meal['missing'] if meal else None,
+            physical_receipts=target['l5_actual_reception'], local_grain_bought=bought,
+            local_grain_consumed_minimum=forced_use,
+            rations_through_deadline=[row for when,row in sorted(observations.items()) if when<=due])
 
 
 def safety_case(task, *, output):
-    audit = Audit(Sink())
+    postings = TargetPostings(task[2])
+    audit = Audit(postings)
     capacity, dispatches, deliveries = [], [], []
+    meals = defaultdict(dict)
     market_checks = Counter()
     command = legacy.winter_replay.HeadlessCampaign.command
     market_transfer, restock = grain_market.transfer, grain_market.restock
@@ -102,16 +145,22 @@ def safety_case(task, *, output):
         with coord_observer(track, shadow=shadow):
             yield
 
+    def record_meal(row):
+        settlement = row['turn'] + 1
+        meals[row['owner'], row['city']][settlement] = dict(row, settlement_turn=settlement)
+
     with (audit.install(), patch.object(grain_market, 'transfer', transfer),
           patch.object(grain_market, 'restock', replenish),
           patch.object(command_books, 'spend', spend),
           patch.object(legacy.winter_replay.HeadlessCampaign, 'command', observed_command),
           patch.object(transport_capacity, 'observing', observe_capacity),
           patch.object(coordination, 'observing', observe_coord)):
-        targets, _, result = fixed_with_trace(task, output=output)
+        targets, _, result = fixed_with_trace(task, output=output,
+            record_meal=record_meal, include_deadline_settlement=True)
 
     departures = [row for row in capacity if row['event']=='departure']
-    summary['transport_position_overruns'] = sum(row['active'] > (2 if task[1]=='V2' else 1) for row in departures)
+    limit = 2 if task[1] in ('V0','V1','V2') else 1
+    summary['transport_position_overruns'] = sum(row['active'] > limit for row in departures)
     summary['repeated_origin_dispatches'] = sum(row['dispatch_count'] > 1 for row in departures)
     escrows = Counter((row['owner'], row['turn'], ident) for row in departures for ident in row['officers'])
     summary['simultaneous_escort_overlaps'] = sum(n-1 for n in escrows.values())
@@ -158,7 +207,9 @@ def safety_case(task, *, output):
         prior[key].append(row)
     return dict(group=task[1], fixture=result['fixture'], sha256=result['fixture_sha256'],
                 grain_account=audit.metrics(), market=dict(market_checks), safety=dict(summary),
-                reversals=reversals, departures=departures, books=books, effective=effective)
+                reversals=reversals, departures=departures, books=books, effective=effective,
+                checks=result['checks'],
+                consumption=list(fixed_consumption(targets, postings, meals)))
 
 
 def fixed_tasks(root, index, groups):
@@ -245,18 +296,21 @@ def main():
     parser.add_argument('inputs',type=Path)
     parser.add_argument('output',type=Path)
     parser.add_argument('--workers',type=int,default=3)
+    parser.add_argument('--group',nargs='+',choices=('U0','U1','U6','V0','V1','V2'),default=('U6','V2'))
     args=parser.parse_args()
     args.output.mkdir(parents=True,exist_ok=True)
     index=checked_inputs(args.inputs)
     to_csv(args.output/'donor-reserve-component-audit.csv',reserves(args.inputs,index))
     with ProcessPoolExecutor(args.workers) as pool:
-        audits=list(pool.map(partial(safety_case,output=args.output),fixed_tasks(args.inputs,index,('U6','V2'))))
+        audits=list(pool.map(partial(safety_case,output=args.output),fixed_tasks(args.inputs,index,args.group)))
         checks=list(pool.map(compare,((args.inputs,item) for item in index if item['group']=='fixed')))
     to_json(args.output/'resource-safety.json',audits)
     fields = ('group','checkpoint','market_books','transport_books','direct_resupply_books','city_market_grain',
               'regional_purchased_grain','actual_net_delivered','fixed_first_gap_covered')
     to_csv(args.output/'effective-demand-per-command-book.csv', (
         {field:row['effective'].get(field,0) for field in fields} for row in audits))
+    to_csv(args.output/'fixed-first-deadline-consumption.csv',
+           (item for row in audits for item in row['consumption']))
     to_csv(args.output/'incremental-plan-equivalence.csv',checks)
     if any(row['reversals'] for row in audits):
         to_csv(args.output/'repeated-grain-transfer-audit.csv',(item for row in audits for item in row['reversals']))

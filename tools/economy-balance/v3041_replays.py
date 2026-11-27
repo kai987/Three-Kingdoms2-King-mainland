@@ -35,7 +35,7 @@ def enable(stack, game, name, observe):
         stack.enter_context(transport_coordination.observing(observe, shadow=name == 'T1'))
 
 
-def fixed_case(task):
+def fixed_case(task, *, include_deadline_settlement=False):
     from v3021_checkpoints import campaign, configure
 
     def context(stack, fixture, group):
@@ -46,10 +46,10 @@ def fixed_case(task):
         return game
 
     with patch.object(capacity_replay, 'replay_context', context):
-        return capacity_replay.fixed_replay(task)
+        return capacity_replay.fixed_replay(task, include_deadline_settlement=include_deadline_settlement)
 
 
-def fixed_accounted_case(task):
+def fixed_accounted_case(task, *, record_meal=None, include_deadline_settlement=False):
     target_keys = {(row['owner'], row['target']) for row in task[2]}
     capacity, coordination, provisions = [], [], defaultdict(dict)
     observe = transport_capacity.observing
@@ -64,7 +64,10 @@ def fixed_accounted_case(task):
 
     class SourceRations(CampaignObservation):
         def write(self, kind, row):
-            provisions[row['owner'], row['city']][row['turn']] = row['missing']
+            key = row['owner'], row['city']
+            provisions[key][row['turn']] = row['missing']
+            if record_meal is not None and key in target_keys:
+                record_meal(row)
 
     rations = SourceRations(None, flows=True)
 
@@ -79,7 +82,7 @@ def fixed_accounted_case(task):
     with (patch.object(transport_capacity, 'observing', monitored),
           patch.object(city_economy, 'settle_turn_grain', settle),
           transport_coordination.observing(record)):
-        data, sources, trace = fixed_case(task)
+        data, sources, trace = fixed_case(task, include_deadline_settlement=include_deadline_settlement)
 
     launches = {row['id']: row for row in capacity if row['event'] == 'departure'}
     endings = {row['id']: row for row in capacity if row['event'] == 'terminal'}
