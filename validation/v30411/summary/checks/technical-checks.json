@@ -1,0 +1,90 @@
+{
+  "python_campaign": {
+    "log": "python-full-first.log",
+    "status": "passed",
+    "tests": 2002,
+    "seconds": 3226.801
+  },
+  "rust_campaign": {
+    "log": "rust-full-first.log",
+    "status": "passed",
+    "tests": 2002,
+    "seconds": 3939.523
+  },
+  "node": {
+    "log": "node-tests.log",
+    "status": "passed",
+    "tests": 66
+  },
+  "rust_crate": {
+    "log": "rust-crate.log",
+    "status": "passed",
+    "tests": 16
+  },
+  "pyodide": {
+    "log": "pyodide-wasm-local.log",
+    "status": "passed",
+    "result": {
+      "ok": true,
+      "pyodide": "314.0.7",
+      "previews": 29,
+      "catalogs": 3,
+      "requests": 69,
+      "ai_turns": 1,
+      "battle_settlements": 0,
+      "logistics_route_parity": true,
+      "save_sha256": "a069bc55d8a6edbc6f81220a27f79a16e48c1ee17142c6a4606f79c393e4531e",
+      "rng": {
+        "state": 1161157403,
+        "draws": 69
+      },
+      "cpu_save_bytes_equal": true,
+      "v212_observer_turns": 0,
+      "weather_observer_turns": 3,
+      "weather_save_sha256": "3fba830537eed22f5ac7ba3107b93d80d669908c2cc7e39f57b8fede2e4764cf",
+      "regional_market_roundtrip": null,
+      "granary_convoy_roundtrip": null,
+      "transport_capacity_roundtrip": 0,
+      "transshipment_batch_roundtrip": null
+    }
+  },
+  "wasm_build": {
+    "log": "wasm-build-check.log",
+    "status": "passed",
+    "result": 0
+  },
+  "rust_format": {
+    "log": "rust-format.log",
+    "status": "passed",
+    "result": 0
+  },
+  "native_wasm_parity": {
+    "log": "native-wasm-parity.log",
+    "status": "passed",
+    "result": 0
+  },
+  "browser_full": {
+    "log": "browser-first-full.log",
+    "status": "failed",
+    "result": null,
+    "passed": 113,
+    "failed": 1,
+    "skipped": 0
+  },
+  "browser_resupply": {
+    "log": "browser-resupply.log",
+    "status": "passed",
+    "result": null,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 2
+  },
+  "browser_supply_v211": {
+    "log": "browser-resupply-v211.log",
+    "status": "passed",
+    "result": null,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 2
+  }
+}

@@ -1,0 +1,447 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 1066,
+    "sha256": "6d6a9c090e9441503370d4de0f0c0ec0b2cf18f1c1d22b3b5141692cd120105f"
+  },
+  {
+    "path": "checks/baxi-opening-transit-bookings.json",
+    "bytes": 7045,
+    "sha256": "0272aab260d92727e1226deb76df101fe00ac56384577f6fa08e76073b859c9a"
+  },
+  {
+    "path": "checks/browser-coverage.json",
+    "bytes": 441,
+    "sha256": "1c131e6f1fdac971c4bcbed7fa3b8915d75acdf589816e254c8714b84aa9a583"
+  },
+  {
+    "path": "checks/browser-initial-qimen-timeout.md",
+    "bytes": 10793,
+    "sha256": "9f9fd58688a473d1442a352b327dc3ffb91fcaeb0384bb8e1920d96953512ea6"
+  },
+  {
+    "path": "checks/experiment-manifest.json",
+    "bytes": 5843,
+    "sha256": "76b6606b577c92e146f79d6baf6bd9a29f6d08cfd11735b9fd80eebc307bcf4c"
+  },
+  {
+    "path": "checks/fixed-capacity-replay-traces.json",
+    "bytes": 1818856,
+    "sha256": "1d4bcb5d4459e8155d346a38afb28be4128e4560b55be05fec72215f9c5dca1e"
+  },
+  {
+    "path": "checks/fixed-replay-inputs.json",
+    "bytes": 338,
+    "sha256": "e89543f3b84031c8260cc3deadeb3fdab216eddaf8b592cfa061a892739bf441"
+  },
+  {
+    "path": "checks/fixed-stage-status.json",
+    "bytes": 11935,
+    "sha256": "6bc67d4b4410b3040fa13f835786a53266f91609ac7c5a05fd1f70f04af56a02"
+  },
+  {
+    "path": "checks/historical-convoy-1228.json",
+    "bytes": 20340,
+    "sha256": "84ab9d04bf5999276e6f3c70b40fdb9aff5e8ee18616c99ef234e7f6d48ea04b"
+  },
+  {
+    "path": "checks/historical-convoy-1860.json",
+    "bytes": 104605,
+    "sha256": "0393553bce8a0054af4e9312b0491282131101908d46ddb9965e224e0d296d44"
+  },
+  {
+    "path": "checks/historical-convoy-2.json",
+    "bytes": 81563,
+    "sha256": "682660e3be99db9759f0ac770bde0592be6e1596a857720fefd82650f2759014"
+  },
+  {
+    "path": "checks/historical-convoy-2170.json",
+    "bytes": 20712,
+    "sha256": "155d471f118b68882814fb95a6a6d1c6aa70c9032b22c2e5d8d64ed4ffa5f4e3"
+  },
+  {
+    "path": "checks/historical-convoy-219.json",
+    "bytes": 28516,
+    "sha256": "0feee4ab0144a37252d9f73670e66ce3eb02bbe481b1215cadc9691c1051c903"
+  },
+  {
+    "path": "checks/historical-convoy-3634.json",
+    "bytes": 72445,
+    "sha256": "032c76d9951c751cfcd33d1715c874a9420036203217d04054f97c7004184c49"
+  },
+  {
+    "path": "checks/historical-convoy-45.json",
+    "bytes": 77788,
+    "sha256": "8d85aec463e37ccfc65e7fa77a55c9c186d30cb97252edcd99b2db0701d33fd9"
+  },
+  {
+    "path": "checks/historical-convoy-77.json",
+    "bytes": 51401,
+    "sha256": "2e37d26fc5507760c0e9bb49c8c2455f040d9673f06e590ecdcc49fa7a42d529"
+  },
+  {
+    "path": "checks/historical-rescue-ablation-convoy-3634.json",
+    "bytes": 72451,
+    "sha256": "a077f9cae1c995276c0d1304c32d3cce99e186bf964498799710578d17b69dcd"
+  },
+  {
+    "path": "checks/replay-inputs.json",
+    "bytes": 20587,
+    "sha256": "b44744db8b3739e322b72b3ece388eea771449b36bc8e934ab8062b570f949ef"
+  },
+  {
+    "path": "checks/resource-safety.json",
+    "bytes": 9696806,
+    "sha256": "c4937998b05ca4aa199a3b597b5e530305b6f639f0f64ecceedefffabbc970dc"
+  },
+  {
+    "path": "checks/stage-status.json",
+    "bytes": 15878,
+    "sha256": "b724bac58fc5bb4fe7983f82285f5eb47bb06a0436105a936cb66e8f27c3ee4d"
+  },
+  {
+    "path": "checks/technical-checks.json",
+    "bytes": 2056,
+    "sha256": "4cc308828a8ec34f37a488390c19200a0948dc4e895045f161239d1e941d7418"
+  },
+  {
+    "path": "checks/technical-scope.md",
+    "bytes": 1086,
+    "sha256": "4d5a8b613394ab8a562bb843d2b6e91ff8e73c7a4a0c1f006015ed04800f671d"
+  },
+  {
+    "path": "data/alternative-source-comparison.csv",
+    "bytes": 359006,
+    "sha256": "329462e7913b0e1c52e55aeceba9471c9f4dd978d16306f379ea64fe837d023a"
+  },
+  {
+    "path": "data/baxi-actual-meals.csv",
+    "bytes": 4785,
+    "sha256": "d83d69fd4d86bf7a77abd100ed9022b412c0193db892d15f343fa12df93419cc"
+  },
+  {
+    "path": "data/baxi-grain-flow-replay.csv",
+    "bytes": 19329,
+    "sha256": "39b7badcff414c4df8a28bb1be588b9493cddb6569655bd07d637652748bbe1f"
+  },
+  {
+    "path": "data/candidate-observed-dispatches.csv",
+    "bytes": 878255,
+    "sha256": "997fffd6661c978919d035e9770d9bb6e896010dac5f576698022468ef4ade7a"
+  },
+  {
+    "path": "data/candidate-observed-receipts.csv",
+    "bytes": 541126,
+    "sha256": "99a2099e096104c328526f46cd1563cbe8c9da52f95103efc7db1191a9fef8ad"
+  },
+  {
+    "path": "data/candidate-pagination-audit.csv",
+    "bytes": 7106,
+    "sha256": "825ebb7ba2f048495283da182de09da725eaac0cc2f9d368883b40f99b940dfc"
+  },
+  {
+    "path": "data/candidate-pruning-loss.csv",
+    "bytes": 83410,
+    "sha256": "3e5910105cdb5ff192e9d800ee8d33142ce90918b63494b10027748669803539"
+  },
+  {
+    "path": "data/city-and-march-grain-account.csv",
+    "bytes": 151256,
+    "sha256": "c7a3cb85bfa8601755a4aa483e110796777c3c2cbe9b6d038876b2f28bc2b3ef"
+  },
+  {
+    "path": "data/donor-reserve-component-audit.csv",
+    "bytes": 84663,
+    "sha256": "8021592ff053986869c4e7fbc793d904860d6008831d5ce80ec10beeb8d113b9"
+  },
+  {
+    "path": "data/effective-demand-per-command-book.csv",
+    "bytes": 1720,
+    "sha256": "f412499f39ec25ea5dc9e5a955d9ed9eb46edfdaf7b6e997708f9ab0eacc1000"
+  },
+  {
+    "path": "data/fixed-demand-coverage-recovery.csv",
+    "bytes": 731,
+    "sha256": "dbb60c620c9c5137ba646056deb5b3c5c5714995eb2d276cd38abfc05d755b83"
+  },
+  {
+    "path": "data/fixed-demand-regression-attribution.csv",
+    "bytes": 51593,
+    "sha256": "f304c4e6837cd1a69a2553234512db38e8bbc925f20287c5af3e2087f85dd223"
+  },
+  {
+    "path": "data/fixed-first-deadline-consumption.csv",
+    "bytes": 867831,
+    "sha256": "b573f7417649f33c04482b5ab53e82dbb739a13e00ff9d8dae2b5b81a26b2530"
+  },
+  {
+    "path": "data/fixed-first-meal-paired-effect.csv",
+    "bytes": 35844,
+    "sha256": "e9e2f421d7c5a35a784b40788313c4d8d60155bdbb72978eed6279f091dd3030"
+  },
+  {
+    "path": "data/fixed-local-market-consumed-and-meal-paid.csv",
+    "bytes": 57711,
+    "sha256": "c01652ed14b60b8d74e371f9f2f7a87642f985974415ba4ce780889ecd66407b"
+  },
+  {
+    "path": "data/fixed-target-raw-receipts.csv",
+    "bytes": 499262,
+    "sha256": "c388a412e01e3a84c3fae62728e2821b9fe68017647f2e2cc720b409766526bd"
+  },
+  {
+    "path": "data/forecast-requote-results.csv",
+    "bytes": 51,
+    "sha256": "3f4d861fff425f442191442a566f1dcea4b984ca2c4e017629ec343987a3bf1a"
+  },
+  {
+    "path": "data/historical-convoy-regression.csv",
+    "bytes": 31463,
+    "sha256": "0f6bca14423149a08be5b9c086a61d530511b1470553727ab3901b5847133365"
+  },
+  {
+    "path": "data/historical-evidence-coverage.csv",
+    "bytes": 3031,
+    "sha256": "2efe134e1b15b6d487529493bfe488ed4412e2c5e84f42bd109cf24e862b604e"
+  },
+  {
+    "path": "data/historical-fixed-baseline-verification.csv",
+    "bytes": 18249,
+    "sha256": "b6859f310a0e9b7709a6e37302ba2a685f841aa44e3f0243f10d8eb8803c0d20"
+  },
+  {
+    "path": "data/historical-fixed-demand-baseline.csv",
+    "bytes": 364,
+    "sha256": "f26c43de00fef882f395f357ef74a1e8f40a7bfdbd163c4ed8d62d535bb42f8b"
+  },
+  {
+    "path": "data/incremental-plan-equivalence.csv",
+    "bytes": 2253,
+    "sha256": "14fba11744777403766a36eed4ea868963cd29cff10af99f827968fc648afea0"
+  },
+  {
+    "path": "data/military-preparation-demand-ledger.csv",
+    "bytes": 299205,
+    "sha256": "d8e79c9409c0a6085f05600f4e5133d76ec9606f563a319b097fc40c562a4046"
+  },
+  {
+    "path": "data/military-preparation-expiry.csv",
+    "bytes": 192631,
+    "sha256": "a7aa98ef758241908db572855beb418cac2c1016bbfb04cb142d4301a477062f"
+  },
+  {
+    "path": "data/old-rule-equivalence.csv",
+    "bytes": 7862,
+    "sha256": "a5abba8a40f102863f702d59b46d2105acfb23fc08019b46d7c219b53246e321"
+  },
+  {
+    "path": "data/p3-resource-occupation.csv",
+    "bytes": 112225,
+    "sha256": "15e12838da0c8933f5c969944b234f51815295d4312121105fa9faa964d54e51"
+  },
+  {
+    "path": "data/repeated-grain-transfer-audit.csv",
+    "bytes": 3371,
+    "sha256": "8629661bd63017f8b107017f0c2d35f9ae63a7fcd7baf953831e27f83befaa86"
+  },
+  {
+    "path": "data/returning-slot-coverage-recovery.csv",
+    "bytes": 104080,
+    "sha256": "5a608182c5bb557c8db467d645e96d4bb31e2e900b5f1f1998569bf2001a9370"
+  },
+  {
+    "path": "data/rolling-deadline-trial-by-target.csv",
+    "bytes": 88817,
+    "sha256": "eea7c4e3ef08f48a87914bc4d2b8987f9aaf95f73b12b8eb199553cddfcf631c"
+  },
+  {
+    "path": "data/rolling-deadline-trial-summary.csv",
+    "bytes": 245,
+    "sha256": "3b13959f6f2ce85561d7903e340f4ee8f37d97f60cf6180dd318ce8afb93c518"
+  },
+  {
+    "path": "data/scheduler-cache-validity.csv",
+    "bytes": 584,
+    "sha256": "5e1718b71984c8a4fe86afdfaaa826a6a92c6c51a66bb39b6f3bac08d208fb4d"
+  },
+  {
+    "path": "data/scheduler-performance-profile.csv",
+    "bytes": 7006,
+    "sha256": "fb995c6ec5954ace709c503d8ce13d2ad073267427f5d4b6a079822405d39836"
+  },
+  {
+    "path": "data/small-load-by-priority.csv",
+    "bytes": 109745,
+    "sha256": "c06b759b49ac76b926bbcf279d3f7ff054577ca08deede90a584f0c59191ae21"
+  },
+  {
+    "path": "data/southern-checkpoint-results.csv",
+    "bytes": 2650,
+    "sha256": "b4199be6774924bfa45eafa208c010503f450d69edd10d30845689aba629a5b5"
+  },
+  {
+    "path": "data/strategic-transport-purpose-audit.csv",
+    "bytes": 3791,
+    "sha256": "17d981382c816a5ca3ad657929034ac559232280e6bafa2fe2fc76a093f73223"
+  },
+  {
+    "path": "data/transit-grain-commitment-ledger.csv",
+    "bytes": 312902,
+    "sha256": "877a7b1d08c66216dc83e57a49354dc8552f57bcec226cb975c410d28c075c5a"
+  },
+  {
+    "path": "docs/README.md",
+    "bytes": 953,
+    "sha256": "5599c6374a8fec19d4d89a25b44b6349a008ca8a5b9455d676db4efd2c6eb71d"
+  },
+  {
+    "path": "docs/ablation-results.md",
+    "bytes": 550,
+    "sha256": "d9bb7a1f1836847b10873b56ec70f7f369cfefb1cfe56b1d309adf185a43f320"
+  },
+  {
+    "path": "docs/acceptance-answers.md",
+    "bytes": 3951,
+    "sha256": "e92f0b8bfab8db6e06de443a3093d4005cc663ed66dc81dff04e062851bd6b9d"
+  },
+  {
+    "path": "docs/baseline-and-regression.md",
+    "bytes": 1582,
+    "sha256": "01864569c8038dcf4075d9a11dfc1d7d792bdf6d82c1a133fd862525c9869da6"
+  },
+  {
+    "path": "docs/baxi-replay.md",
+    "bytes": 787,
+    "sha256": "ae52ccbec866515bf19884c29bb55dcea33d602d87e9f260a7084b68caf8e320"
+  },
+  {
+    "path": "docs/candidate-diversity.md",
+    "bytes": 610,
+    "sha256": "b416958e5812336e2ad542ad3e78454342059c9dc3aca396ed9bc983ff241b8a"
+  },
+  {
+    "path": "docs/candidate-pagination.md",
+    "bytes": 924,
+    "sha256": "da4878c81cd4b5897c90129e9ea4c24130698a5959f7c805e3dc6c0b698b4249"
+  },
+  {
+    "path": "docs/fixed-demand-root-cause.md",
+    "bytes": 1649,
+    "sha256": "bf1f7bee3b688ac86d4a1781127ea6b15d5b78a8464c70c65fb82884bd563540"
+  },
+  {
+    "path": "docs/fixed-state-acceptance.md",
+    "bytes": 2286,
+    "sha256": "a9719995fb189d1f64d011ac57c17c0587a1eac1723a2e3f95daae481840aff3"
+  },
+  {
+    "path": "docs/forecast-requotation.md",
+    "bytes": 622,
+    "sha256": "95e288d8f567b99d102f79a945a0f954568892d58d829822a33d9a67d4b6f6b3"
+  },
+  {
+    "path": "docs/historical-transport-review.md",
+    "bytes": 1522,
+    "sha256": "6b84eb7f848d389c9501bdef5ccbd768a8d78f6c511af9f7327218d66c7a7ba3"
+  },
+  {
+    "path": "docs/holdout-results.md",
+    "bytes": 186,
+    "sha256": "9fb357690d5c45838b7671566ec4e027a2ff79623d756617fcfde3e15192a49f"
+  },
+  {
+    "path": "docs/incremental-economy-plan.md",
+    "bytes": 916,
+    "sha256": "aed2d00e7c42f5104a24c5830870b74269f8ec8997818ccee9e403952c4946dc"
+  },
+  {
+    "path": "docs/known-issues.md",
+    "bytes": 437,
+    "sha256": "2ebb086d5a8781e22fca379b647d669092382d407a1c47a24a9bfed07f064776"
+  },
+  {
+    "path": "docs/long-term-balance-results.md",
+    "bytes": 443,
+    "sha256": "c1befa71234386e50f27f1b34083d18f0bdb7d6d860a28507ca4f39f0e12327f"
+  },
+  {
+    "path": "docs/military-preparation-policy.md",
+    "bytes": 716,
+    "sha256": "db795014a86714e7fb1852eacb4e48bbbb5e8b152c6a66734b60c0c580753f24"
+  },
+  {
+    "path": "docs/performance-results.md",
+    "bytes": 739,
+    "sha256": "dcbb3f5e2a9c83442aed071f34a09d05d7a35ada11040136aaa3835c407a6813"
+  },
+  {
+    "path": "docs/remaining-regressions.md",
+    "bytes": 1804,
+    "sha256": "fe813d41f81363f653494e6138bce9453c4acc5d3312bee1f905e0adaadadcd7"
+  },
+  {
+    "path": "docs/save-compatibility.md",
+    "bytes": 511,
+    "sha256": "a2638074642965179e4ca2b5103b5ef4c3180dd2c946888ae53b7751d76c82fa"
+  },
+  {
+    "path": "docs/small-load-economics.md",
+    "bytes": 693,
+    "sha256": "e19caa79cda02738944027c48b08f05c423f2b0e3b1b92fc14211ba2cd432cbf"
+  },
+  {
+    "path": "docs/source-reserve-accounting.md",
+    "bytes": 736,
+    "sha256": "85d5a364787bf21e54a5bc1437241e4e1d071bcf2e4e05bca49d72682d3e5ec5"
+  },
+  {
+    "path": "docs/transit-grain-coordination.md",
+    "bytes": 891,
+    "sha256": "01c32d6cb3b8f4aa06ce8910f3d87604bc4a4364de7a82a7243cda0020935bd3"
+  },
+  {
+    "path": "docs/v3042-readiness.md",
+    "bytes": 267,
+    "sha256": "b3dbbabb6600c0a39160feed19f47d9723ca072bbbe3195fd367124ce1f69f0a"
+  },
+  {
+    "path": "docs/validation-results.md",
+    "bytes": 1980,
+    "sha256": "a857e6cae32ad257c305aa24eb2fe711d6091fb09d3c5922e7c7bd984c6b8110"
+  },
+  {
+    "path": "sources/checkpoint-sources.json",
+    "bytes": 1859,
+    "sha256": "a792cd45c8b620906c3c53a89bba2ca7e82638074e529cb7bb1be99dc32df871"
+  },
+  {
+    "path": "sources/historical-transport-replay-index.csv",
+    "bytes": 2940,
+    "sha256": "ac7cdcbd608d156123f06cb0c3ad2ada26e6490f2c075378809f2013336fd351"
+  },
+  {
+    "path": "sources/v30411_audit.py",
+    "bytes": 17554,
+    "sha256": "04fe27e062512bcf2314edbdca837b6def68286709c8eb70a0d6081ad598733a"
+  },
+  {
+    "path": "sources/v30411_delivery.py",
+    "bytes": 34154,
+    "sha256": "fb33d670c751089afcdc90ce017525072051aa4cf147b69995caab976351da65"
+  },
+  {
+    "path": "sources/v30411_inputs.py",
+    "bytes": 3915,
+    "sha256": "b9cf81f0c960e23f4e6ae3faa83453dc8f4c443a15f42fde9064d85c618bd14f"
+  },
+  {
+    "path": "sources/v30411_replays.py",
+    "bytes": 8768,
+    "sha256": "85177758bb65c2a26e072c9f968bea2ca94bda80adb082eb7086cf4da5888e00"
+  },
+  {
+    "path": "sources/v30411_report.py",
+    "bytes": 17798,
+    "sha256": "bd07f4a82ccfb2159760effb19b830c696d6628970fad8369bc566244a0a6dde"
+  }
+]

@@ -1,0 +1,303 @@
+[
+  {
+    "group": "U0",
+    "initial": {
+      "turn": 268,
+      "date": [
+        216,
+        3,
+        1
+      ],
+      "rng": {
+        "state": 793397127,
+        "draws": 21630
+      },
+      "domain_sha256": "e20a55fc5a1c1e0bbd38d240ef5a114dfb307d57b6934148821c2e2c9e6ba3c3",
+      "legal": {
+        "owner": "liu_zhang",
+        "other_faction_stock": 3041343,
+        "legal_sources": 3,
+        "minimum_eta": 16,
+        "sources": [
+          "bajun",
+          "guanghan",
+          "zangke"
+        ],
+        "blockers": {
+          "no_eligible_escort": 14,
+          "source_safety": 4,
+          "source_convoy_limit": 3
+        },
+        "route_operations": {
+          "source_evaluations": 25,
+          "candidate_pairs": 3,
+          "route_cache_hits": 0,
+          "route_pairs": 6,
+          "route_batches": 1
+        }
+      },
+      "warehouse_grain": 2346,
+      "confirmed_transit_bookings": []
+    },
+    "final": {
+      "turn": 277,
+      "rng": {
+        "state": 504709562,
+        "draws": 22488
+      },
+      "domain_sha256": "c072ad34acb83c34a3e7ccad93631c4506d147ab0b3e7ba5abfac9007a53b9ad"
+    },
+    "actual_missing": 805
+  },
+  {
+    "group": "U1",
+    "initial": {
+      "turn": 268,
+      "date": [
+        216,
+        3,
+        1
+      ],
+      "rng": {
+        "state": 793397127,
+        "draws": 21630
+      },
+      "domain_sha256": "7edf85dfb72ecac78e050ef7f380a3f8a1776fce9066d4cf592012dec01f02d7",
+      "legal": {
+        "owner": "liu_zhang",
+        "other_faction_stock": 3041343,
+        "legal_sources": 3,
+        "minimum_eta": 16,
+        "sources": [
+          "bajun",
+          "guanghan",
+          "zangke"
+        ],
+        "blockers": {
+          "no_eligible_escort": 14,
+          "source_safety": 4,
+          "source_convoy_limit": 3
+        },
+        "route_operations": {
+          "source_evaluations": 25,
+          "candidate_pairs": 3,
+          "route_cache_hits": 0,
+          "route_pairs": 6,
+          "route_batches": 1
+        }
+      },
+      "warehouse_grain": 2346,
+      "confirmed_transit_bookings": []
+    },
+    "final": {
+      "turn": 277,
+      "rng": {
+        "state": 535234363,
+        "draws": 22502
+      },
+      "domain_sha256": "0a66e2d6a460b7a968f4862bc907a9cee783949bf114e26d7150455943e8617e"
+    },
+    "actual_missing": 3779
+  },
+  {
+    "group": "U4",
+    "initial": {
+      "turn": 268,
+      "date": [
+        216,
+        3,
+        1
+      ],
+      "rng": {
+        "state": 793397127,
+        "draws": 21630
+      },
+      "domain_sha256": "d9c59a847273b382913c1c6ecc7ca9e9a5b8fc9e9911b02ce8e25c796e80b3ca",
+      "legal": {
+        "owner": "liu_zhang",
+        "other_faction_stock": 3041343,
+        "legal_sources": 3,
+        "minimum_eta": 16,
+        "sources": [
+          "bajun",
+          "guanghan",
+          "zangke"
+        ],
+        "blockers": {
+          "no_eligible_escort": 14,
+          "source_safety": 4,
+          "source_convoy_limit": 3
+        },
+        "route_operations": {
+          "source_evaluations": 25,
+          "candidate_pairs": 3,
+          "route_cache_hits": 0,
+          "route_pairs": 6,
+          "route_batches": 1
+        }
+      },
+      "warehouse_grain": 2346,
+      "confirmed_transit_bookings": []
+    },
+    "final": {
+      "turn": 277,
+      "rng": {
+        "state": 3920807040,
+        "draws": 22399
+      },
+      "domain_sha256": "390b0ac4857043c2540a9af2b07b7b67f29bfda58d085202cd4f77397a984378"
+    },
+    "actual_missing": 3779
+  },
+  {
+    "group": "U5t",
+    "initial": {
+      "turn": 268,
+      "date": [
+        216,
+        3,
+        1
+      ],
+      "rng": {
+        "state": 793397127,
+        "draws": 21630
+      },
+      "domain_sha256": "4ce8122385c753f029192f5ed7cb8a49c2fc8c9e9bbd6918839c78530ea35a4d",
+      "legal": {
+        "owner": "liu_zhang",
+        "other_faction_stock": 3041343,
+        "legal_sources": 3,
+        "minimum_eta": 16,
+        "sources": [
+          "bajun",
+          "guanghan",
+          "zangke"
+        ],
+        "blockers": {
+          "no_eligible_escort": 14,
+          "source_safety": 4,
+          "source_convoy_limit": 3
+        },
+        "route_operations": {
+          "source_evaluations": 25,
+          "candidate_pairs": 3,
+          "route_cache_hits": 0,
+          "route_pairs": 6,
+          "route_batches": 1
+        }
+      },
+      "warehouse_grain": 2346,
+      "confirmed_transit_bookings": []
+    },
+    "final": {
+      "turn": 277,
+      "rng": {
+        "state": 2450467742,
+        "draws": 22548
+      },
+      "domain_sha256": "ffa82a362e37326ae0c227587ffb78ce7d4d2feec5e97749ff20512c292a9663"
+    },
+    "actual_missing": 0
+  },
+  {
+    "group": "U6",
+    "initial": {
+      "turn": 268,
+      "date": [
+        216,
+        3,
+        1
+      ],
+      "rng": {
+        "state": 793397127,
+        "draws": 21630
+      },
+      "domain_sha256": "4130ba73d952936738f14dee221dc78681d1b4113a951bba817a80b455082100",
+      "legal": {
+        "owner": "liu_zhang",
+        "other_faction_stock": 3041343,
+        "legal_sources": 3,
+        "minimum_eta": 16,
+        "sources": [
+          "bajun",
+          "guanghan",
+          "zangke"
+        ],
+        "blockers": {
+          "no_eligible_escort": 14,
+          "source_safety": 4,
+          "source_convoy_limit": 3
+        },
+        "route_operations": {
+          "source_evaluations": 25,
+          "candidate_pairs": 3,
+          "route_cache_hits": 0,
+          "route_pairs": 6,
+          "route_batches": 1
+        }
+      },
+      "warehouse_grain": 2346,
+      "confirmed_transit_bookings": []
+    },
+    "final": {
+      "turn": 277,
+      "rng": {
+        "state": 216545518,
+        "draws": 22420
+      },
+      "domain_sha256": "66fb1a770b9b4dcad38d961c67ad2ab1e852838a5a96483edc759635cf7f75b7"
+    },
+    "actual_missing": 0
+  },
+  {
+    "group": "V2",
+    "initial": {
+      "turn": 268,
+      "date": [
+        216,
+        3,
+        1
+      ],
+      "rng": {
+        "state": 793397127,
+        "draws": 21630
+      },
+      "domain_sha256": "404df55789a295659f5ccad0fe334fcaf08214cbb98d1559fb24ff25b3a6277b",
+      "legal": {
+        "owner": "liu_zhang",
+        "other_faction_stock": 3041343,
+        "legal_sources": 5,
+        "minimum_eta": 16,
+        "sources": [
+          "bajun",
+          "guanghan",
+          "shujun",
+          "yunnan",
+          "zangke"
+        ],
+        "blockers": {
+          "no_eligible_escort": 15,
+          "source_safety": 4
+        },
+        "route_operations": {
+          "source_evaluations": 25,
+          "candidate_pairs": 5,
+          "route_cache_hits": 0,
+          "route_pairs": 10,
+          "route_batches": 1
+        }
+      },
+      "warehouse_grain": 2346,
+      "confirmed_transit_bookings": []
+    },
+    "final": {
+      "turn": 277,
+      "rng": {
+        "state": 307140796,
+        "draws": 22438
+      },
+      "domain_sha256": "23916f34722902ef8ed61bc42346fe38f4195a7a584dd18f1830f4b7011e9880"
+    },
+    "actual_missing": 0
+  }
+]

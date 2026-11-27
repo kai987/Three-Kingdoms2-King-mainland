@@ -1,0 +1,6 @@
+fixture,sha256,compared_turns,domains_equal,decisions_equal,decision_events
+chibi-long.json.gz,76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9,3,true,true,339
+convoy-1228.json.gz,96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50,3,true,true,566
+convoy-219.json.gz,b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960,3,true,true,525
+yellow-212-winter.json.gz,7a23d58373770c32fb021ddc25bf734e6847598ac6694192342d39edffa33a85,3,true,true,73
+yellow-long.json.gz,90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837,3,true,true,962

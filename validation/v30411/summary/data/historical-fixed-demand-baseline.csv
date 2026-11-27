@@ -1,0 +1,6 @@
+group,targets,completed_windows,timely_targets,full_targets,actual_grain,first_gap_grain,returning_samples,returning_quoted,returning_delivered,returning_grain
+T0,89,89,35,33,127600,23147,23,0,16,63271
+T2,89,89,20,15,56119,9069,23,0,4,8446
+T3,89,89,19,15,62317,9783,23,0,4,10427
+T4,89,89,46,41,184387,27398,23,11,17,59882
+T5,89,89,26,22,119939,13648,23,11,9,29352

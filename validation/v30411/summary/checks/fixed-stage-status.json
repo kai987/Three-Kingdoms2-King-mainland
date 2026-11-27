@@ -1,0 +1,487 @@
+{
+  "controls": [
+    {
+      "group": "T0",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 35,
+      "full_targets": 33,
+      "actual_grain": 127600,
+      "first_gap_grain": 23147,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 16,
+      "returning_grain": 63271
+    },
+    {
+      "group": "T2",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 20,
+      "full_targets": 15,
+      "actual_grain": 56119,
+      "first_gap_grain": 9069,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 4,
+      "returning_grain": 8446
+    },
+    {
+      "group": "T3",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 19,
+      "full_targets": 15,
+      "actual_grain": 62317,
+      "first_gap_grain": 9783,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 4,
+      "returning_grain": 10427
+    },
+    {
+      "group": "T4",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 46,
+      "full_targets": 41,
+      "actual_grain": 184387,
+      "first_gap_grain": 27398,
+      "returning_samples": 23,
+      "returning_quoted": 11,
+      "returning_delivered": 17,
+      "returning_grain": 59882
+    },
+    {
+      "group": "T5",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 26,
+      "full_targets": 22,
+      "actual_grain": 119939,
+      "first_gap_grain": 13648,
+      "returning_samples": 23,
+      "returning_quoted": 11,
+      "returning_delivered": 9,
+      "returning_grain": 29352
+    }
+  ],
+  "integrated": [
+    {
+      "group": "U0",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 32,
+      "full_targets": 30,
+      "actual_grain": 130895,
+      "first_gap_grain": 22493,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 13,
+      "returning_grain": 66040
+    },
+    {
+      "group": "U1",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 18,
+      "full_targets": 14,
+      "actual_grain": 62499,
+      "first_gap_grain": 9737,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 4,
+      "returning_grain": 8994
+    },
+    {
+      "group": "U2",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 19,
+      "full_targets": 15,
+      "actual_grain": 71443,
+      "first_gap_grain": 11221,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 4,
+      "returning_grain": 8994
+    },
+    {
+      "group": "U3",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 19,
+      "full_targets": 15,
+      "actual_grain": 71555,
+      "first_gap_grain": 11221,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 5,
+      "returning_grain": 10035
+    },
+    {
+      "group": "U3a",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 19,
+      "full_targets": 15,
+      "actual_grain": 71443,
+      "first_gap_grain": 11221,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 4,
+      "returning_grain": 8994
+    },
+    {
+      "group": "U3b",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 19,
+      "full_targets": 15,
+      "actual_grain": 71555,
+      "first_gap_grain": 11221,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 5,
+      "returning_grain": 10035
+    },
+    {
+      "group": "U4",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 19,
+      "full_targets": 17,
+      "actual_grain": 81141,
+      "first_gap_grain": 13355,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 5,
+      "returning_grain": 7905
+    },
+    {
+      "group": "U5",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 26,
+      "full_targets": 23,
+      "actual_grain": 110731,
+      "first_gap_grain": 21352,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 8,
+      "returning_grain": 27015
+    },
+    {
+      "group": "U5p",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 26,
+      "full_targets": 23,
+      "actual_grain": 110071,
+      "first_gap_grain": 21352,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 8,
+      "returning_grain": 27015
+    },
+    {
+      "group": "U5t",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 19,
+      "full_targets": 17,
+      "actual_grain": 81965,
+      "first_gap_grain": 13355,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 5,
+      "returning_grain": 8290
+    },
+    {
+      "group": "U6",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 26,
+      "full_targets": 23,
+      "actual_grain": 110731,
+      "first_gap_grain": 21352,
+      "returning_samples": 23,
+      "returning_quoted": 0,
+      "returning_delivered": 8,
+      "returning_grain": 27015
+    },
+    {
+      "group": "V0",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 48,
+      "full_targets": 43,
+      "actual_grain": 166771,
+      "first_gap_grain": 27414,
+      "returning_samples": 23,
+      "returning_quoted": 11,
+      "returning_delivered": 17,
+      "returning_grain": 64437
+    },
+    {
+      "group": "V1",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 27,
+      "full_targets": 22,
+      "actual_grain": 166200,
+      "first_gap_grain": 18014,
+      "returning_samples": 23,
+      "returning_quoted": 11,
+      "returning_delivered": 9,
+      "returning_grain": 55144
+    },
+    {
+      "group": "V2",
+      "targets": 89,
+      "completed_windows": 89,
+      "timely_targets": 39,
+      "full_targets": 34,
+      "actual_grain": 153132,
+      "first_gap_grain": 23897,
+      "returning_samples": 23,
+      "returning_quoted": 11,
+      "returning_delivered": 16,
+      "returning_grain": 45354
+    }
+  ],
+  "target_order": [
+    "timely_targets",
+    "full_targets",
+    "first_gap_grain",
+    "returning_sources"
+  ],
+  "candidates": {
+    "U6": {
+      "measured": [
+        26,
+        23,
+        21352,
+        8
+      ],
+      "target": [
+        32,
+        30,
+        20833,
+        14
+      ],
+      "covers": false
+    },
+    "V2": {
+      "measured": [
+        39,
+        34,
+        23897,
+        16
+      ],
+      "target": [
+        42,
+        37,
+        24659,
+        15
+      ],
+      "covers": false
+    }
+  },
+  "exact_prior_pairs": 178,
+  "prior_identical": 178,
+  "prior_matching_receipts": 178,
+  "prior_matching_first_gaps": 178,
+  "settings": {
+    "U0": {},
+    "U1": {
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "U2": {
+      "transport_coordination_rules_version": 30411,
+      "transport_coordination_options": {
+        "features": {
+          "economics": false,
+          "diversity": false,
+          "requote": false,
+          "incremental": false,
+          "transit": false,
+          "preparation": false,
+          "pagination": true,
+          "reserve": false
+        }
+      }
+    },
+    "U3": {
+      "transport_coordination_rules_version": 30411,
+      "transport_coordination_options": {
+        "features": {
+          "economics": false,
+          "diversity": true,
+          "requote": true,
+          "incremental": false,
+          "transit": false,
+          "preparation": false,
+          "pagination": true,
+          "reserve": false
+        }
+      }
+    },
+    "U3a": {
+      "transport_coordination_rules_version": 30411,
+      "transport_coordination_options": {
+        "features": {
+          "economics": false,
+          "diversity": true,
+          "requote": false,
+          "incremental": false,
+          "transit": false,
+          "preparation": false,
+          "pagination": true,
+          "reserve": false
+        }
+      }
+    },
+    "U3b": {
+      "transport_coordination_rules_version": 30411,
+      "transport_coordination_options": {
+        "features": {
+          "economics": false,
+          "diversity": false,
+          "requote": true,
+          "incremental": false,
+          "transit": false,
+          "preparation": false,
+          "pagination": true,
+          "reserve": false
+        }
+      }
+    },
+    "U4": {
+      "transport_coordination_rules_version": 30411,
+      "transport_coordination_options": {
+        "features": {
+          "economics": false,
+          "diversity": true,
+          "requote": true,
+          "incremental": false,
+          "transit": false,
+          "preparation": false,
+          "pagination": true,
+          "reserve": true
+        }
+      }
+    },
+    "U5": {
+      "transport_coordination_rules_version": 30411,
+      "transport_coordination_options": {
+        "features": {
+          "economics": false,
+          "diversity": true,
+          "requote": true,
+          "incremental": false,
+          "transit": true,
+          "preparation": true,
+          "pagination": true,
+          "reserve": true
+        }
+      }
+    },
+    "U5p": {
+      "transport_coordination_rules_version": 30411,
+      "transport_coordination_options": {
+        "features": {
+          "economics": false,
+          "diversity": true,
+          "requote": true,
+          "incremental": false,
+          "transit": false,
+          "preparation": true,
+          "pagination": true,
+          "reserve": true
+        }
+      }
+    },
+    "U5t": {
+      "transport_coordination_rules_version": 30411,
+      "transport_coordination_options": {
+        "features": {
+          "economics": false,
+          "diversity": true,
+          "requote": true,
+          "incremental": false,
+          "transit": true,
+          "preparation": false,
+          "pagination": true,
+          "reserve": true
+        }
+      }
+    },
+    "U6": {
+      "transport_coordination_rules_version": 30411,
+      "transport_coordination_options": {
+        "features": {
+          "economics": true,
+          "diversity": true,
+          "requote": true,
+          "incremental": true,
+          "transit": true,
+          "preparation": true,
+          "pagination": true,
+          "reserve": true
+        }
+      }
+    },
+    "V0": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      }
+    },
+    "V1": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 3041,
+      "transport_coordination_options": {
+        "efficiency": true
+      }
+    },
+    "V2": {
+      "transport_coordination_rules_version": 30411,
+      "transport_coordination_options": {
+        "features": {
+          "economics": true,
+          "diversity": true,
+          "requote": true,
+          "incremental": true,
+          "transit": true,
+          "preparation": true,
+          "pagination": true,
+          "reserve": true
+        }
+      },
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      }
+    }
+  },
+  "actual_historical_losses": 45
+}

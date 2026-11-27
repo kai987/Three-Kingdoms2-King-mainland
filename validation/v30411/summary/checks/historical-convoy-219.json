@@ -1,0 +1,1073 @@
+{
+  "source": "f2f442adea78785a3b9af654587442d6134b23e5",
+  "results": [
+    {
+      "group": "U0",
+      "checkpoint": "convoy-219.json.gz",
+      "scenario": "207-09",
+      "seed": 2034,
+      "strategy": 211,
+      "winter": 221,
+      "convoy": 219,
+      "checkpoint_sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "initial_state_sha256": "2bca85a4a337b404978bf86ead8bc634bdf8430696788e3cf5e1fda3f222f615",
+      "snapshots": [
+        {
+          "turn": 122,
+          "convoy": {
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "node": "nanyang",
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 29475,
+            "initial_grain": 33075,
+            "original_bag": 12221,
+            "bag": 6387,
+            "cargo": 0,
+            "tick": 1210,
+            "path": [
+              "nanyang",
+              "yingchuan",
+              "chenliu",
+              "dongjun",
+              "wei"
+            ],
+            "original_ids": [
+              146
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              146
+            ],
+            "reserved_until_turn": 125,
+            "turn": 122,
+            "city_owner": "wei",
+            "city_stock": 30998,
+            "local_grain_legal": 24809,
+            "source_owner": "wei",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "nanyang",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "nanyang"
+                ],
+                "stock": 30998
+              },
+              {
+                "city": "xiangyang",
+                "needed": 1389,
+                "days": 5,
+                "path": [
+                  "nanyang",
+                  "xiangyang"
+                ],
+                "stock": 35126
+              },
+              {
+                "city": "henan",
+                "needed": 2222,
+                "days": 8,
+                "path": [
+                  "nanyang",
+                  "henan"
+                ],
+                "stock": 7748
+              },
+              {
+                "city": "yingchuan",
+                "needed": 2222,
+                "days": 8,
+                "path": [
+                  "nanyang",
+                  "yingchuan"
+                ],
+                "stock": 588640
+              },
+              {
+                "city": "chenliu",
+                "needed": 3333,
+                "days": 12,
+                "path": [
+                  "nanyang",
+                  "yingchuan",
+                  "chenliu"
+                ],
+                "stock": 5042
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 123,
+          "convoy": {
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "node": "yingchuan",
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 29475,
+            "initial_grain": 33075,
+            "original_bag": 12221,
+            "bag": 3654,
+            "cargo": 0,
+            "tick": 1220,
+            "path": [
+              "nanyang",
+              "yingchuan",
+              "chenliu",
+              "dongjun",
+              "wei"
+            ],
+            "original_ids": [
+              146
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              146
+            ],
+            "reserved_until_turn": 125,
+            "turn": 123,
+            "city_owner": "wei",
+            "city_stock": 586928,
+            "local_grain_legal": 581928,
+            "source_owner": "wei",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "yingchuan",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "yingchuan"
+                ],
+                "stock": 586928
+              },
+              {
+                "city": "chenliu",
+                "needed": 1800,
+                "days": 6,
+                "path": [
+                  "yingchuan",
+                  "chenliu"
+                ],
+                "stock": 4338
+              },
+              {
+                "city": "nanyang",
+                "needed": 2598,
+                "days": 9,
+                "path": [
+                  "yingchuan",
+                  "nanyang"
+                ],
+                "stock": 24809
+              },
+              {
+                "city": "henan",
+                "needed": 3039,
+                "days": 10,
+                "path": [
+                  "yingchuan",
+                  "henan"
+                ],
+                "stock": 6815
+              },
+              {
+                "city": "xiangyang",
+                "needed": 3362,
+                "days": 12,
+                "path": [
+                  "yingchuan",
+                  "xiangyang"
+                ],
+                "stock": 33143
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 124,
+          "convoy": {
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 29475,
+            "initial_grain": 33075,
+            "original_bag": 12221,
+            "bag": 1107,
+            "cargo": 0,
+            "tick": 1230,
+            "path": [
+              "nanyang",
+              "yingchuan",
+              "chenliu",
+              "dongjun",
+              "wei"
+            ],
+            "original_ids": [
+              146
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              146
+            ],
+            "reserved_until_turn": 125,
+            "turn": 124,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 125,
+          "convoy": null
+        },
+        {
+          "turn": 126,
+          "convoy": null
+        },
+        {
+          "turn": 127,
+          "convoy": null
+        },
+        {
+          "turn": 128,
+          "convoy": null
+        },
+        {
+          "turn": 129,
+          "convoy": null
+        },
+        {
+          "turn": 130,
+          "convoy": null
+        }
+      ],
+      "receipts": [
+        {
+          "event": "terminal",
+          "row": {
+            "turn": 125,
+            "year": 211,
+            "month": 2,
+            "day": 11,
+            "id": 219,
+            "outcome": "returned_home",
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "city": "wei",
+            "end_tick": 1240,
+            "reusable_turn": 128,
+            "original_officers": [
+              146
+            ],
+            "received_officers": [
+              146
+            ],
+            "delivered": {
+              "gold": 0,
+              "grain": 29475,
+              "reserves": 0,
+              "treasure": 0
+            },
+            "cargo_receipt": {
+              "cargo_dispatched": 33075,
+              "cargo_received": 6387,
+              "cargo_rations": 6387,
+              "cargo_route_loss": 3600,
+              "cargo_weather_loss": 0,
+              "cargo_delivered": 29475,
+              "cargo_returned": 0,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 5176660,
+              "escort_base_grain": 9696,
+              "escort_extra_grain": 2681
+            },
+            "waiting_days": 5,
+            "ration_spent": 12377,
+            "hunger_losses": 199,
+            "rations": {
+              "loaded": 12221,
+              "received": 6543,
+              "consumed": 12377,
+              "to_cargo": 6387,
+              "remaining": 0
+            },
+            "troops_received": 9801
+          }
+        },
+        {
+          "event": "returned_assets",
+          "row": {
+            "turn": 125,
+            "city": "wei",
+            "owner": "wei",
+            "cargo": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "final_state_sha256": "82f9daa3d277bcacb263ec31de0e28fb4bbbe63fb84bb075db7299a0b39679d6"
+    },
+    {
+      "group": "U1",
+      "checkpoint": "convoy-219.json.gz",
+      "scenario": "207-09",
+      "seed": 2034,
+      "strategy": 211,
+      "winter": 221,
+      "convoy": 219,
+      "checkpoint_sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "initial_state_sha256": "2bca85a4a337b404978bf86ead8bc634bdf8430696788e3cf5e1fda3f222f615",
+      "snapshots": [
+        {
+          "turn": 122,
+          "convoy": {
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "node": "nanyang",
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 29475,
+            "initial_grain": 33075,
+            "original_bag": 12221,
+            "bag": 6387,
+            "cargo": 0,
+            "tick": 1210,
+            "path": [
+              "nanyang",
+              "yingchuan",
+              "chenliu",
+              "dongjun",
+              "wei"
+            ],
+            "original_ids": [
+              146
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              146
+            ],
+            "reserved_until_turn": 125,
+            "turn": 122,
+            "city_owner": "wei",
+            "city_stock": 30998,
+            "local_grain_legal": 24809,
+            "source_owner": "wei",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "nanyang",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "nanyang"
+                ],
+                "stock": 30998
+              },
+              {
+                "city": "xiangyang",
+                "needed": 1389,
+                "days": 5,
+                "path": [
+                  "nanyang",
+                  "xiangyang"
+                ],
+                "stock": 35126
+              },
+              {
+                "city": "henan",
+                "needed": 2222,
+                "days": 8,
+                "path": [
+                  "nanyang",
+                  "henan"
+                ],
+                "stock": 7748
+              },
+              {
+                "city": "yingchuan",
+                "needed": 2222,
+                "days": 8,
+                "path": [
+                  "nanyang",
+                  "yingchuan"
+                ],
+                "stock": 588640
+              },
+              {
+                "city": "chenliu",
+                "needed": 3333,
+                "days": 12,
+                "path": [
+                  "nanyang",
+                  "yingchuan",
+                  "chenliu"
+                ],
+                "stock": 5042
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 123,
+          "convoy": {
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "node": "yingchuan",
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 29475,
+            "initial_grain": 33075,
+            "original_bag": 12221,
+            "bag": 3654,
+            "cargo": 0,
+            "tick": 1220,
+            "path": [
+              "nanyang",
+              "yingchuan",
+              "chenliu",
+              "dongjun",
+              "wei"
+            ],
+            "original_ids": [
+              146
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              146
+            ],
+            "reserved_until_turn": 125,
+            "turn": 123,
+            "city_owner": "wei",
+            "city_stock": 586928,
+            "local_grain_legal": 581928,
+            "source_owner": "wei",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "yingchuan",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "yingchuan"
+                ],
+                "stock": 586928
+              },
+              {
+                "city": "chenliu",
+                "needed": 1800,
+                "days": 6,
+                "path": [
+                  "yingchuan",
+                  "chenliu"
+                ],
+                "stock": 8582
+              },
+              {
+                "city": "nanyang",
+                "needed": 2598,
+                "days": 9,
+                "path": [
+                  "yingchuan",
+                  "nanyang"
+                ],
+                "stock": 24809
+              },
+              {
+                "city": "henan",
+                "needed": 3039,
+                "days": 10,
+                "path": [
+                  "yingchuan",
+                  "henan"
+                ],
+                "stock": 16826
+              },
+              {
+                "city": "xiangyang",
+                "needed": 3362,
+                "days": 12,
+                "path": [
+                  "yingchuan",
+                  "xiangyang"
+                ],
+                "stock": 33143
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 124,
+          "convoy": {
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 29475,
+            "initial_grain": 33075,
+            "original_bag": 12221,
+            "bag": 1107,
+            "cargo": 0,
+            "tick": 1230,
+            "path": [
+              "nanyang",
+              "yingchuan",
+              "chenliu",
+              "dongjun",
+              "wei"
+            ],
+            "original_ids": [
+              146
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              146
+            ],
+            "reserved_until_turn": 125,
+            "turn": 124,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 125,
+          "convoy": null
+        },
+        {
+          "turn": 126,
+          "convoy": null
+        },
+        {
+          "turn": 127,
+          "convoy": null
+        },
+        {
+          "turn": 128,
+          "convoy": null
+        },
+        {
+          "turn": 129,
+          "convoy": null
+        },
+        {
+          "turn": 130,
+          "convoy": null
+        }
+      ],
+      "receipts": [
+        {
+          "event": "terminal",
+          "row": {
+            "turn": 125,
+            "year": 211,
+            "month": 2,
+            "day": 11,
+            "id": 219,
+            "outcome": "returned_home",
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "city": "wei",
+            "end_tick": 1240,
+            "reusable_turn": 128,
+            "original_officers": [
+              146
+            ],
+            "received_officers": [
+              146
+            ],
+            "delivered": {
+              "gold": 0,
+              "grain": 29475,
+              "reserves": 0,
+              "treasure": 0
+            },
+            "cargo_receipt": {
+              "cargo_dispatched": 33075,
+              "cargo_received": 6387,
+              "cargo_rations": 6387,
+              "cargo_route_loss": 3600,
+              "cargo_weather_loss": 0,
+              "cargo_delivered": 29475,
+              "cargo_returned": 0,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 5176660,
+              "escort_base_grain": 9696,
+              "escort_extra_grain": 2681
+            },
+            "waiting_days": 5,
+            "ration_spent": 12377,
+            "hunger_losses": 199,
+            "rations": {
+              "loaded": 12221,
+              "received": 6543,
+              "consumed": 12377,
+              "to_cargo": 6387,
+              "remaining": 0
+            },
+            "troops_received": 9801
+          }
+        },
+        {
+          "event": "returned_assets",
+          "row": {
+            "turn": 125,
+            "city": "wei",
+            "owner": "wei",
+            "cargo": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "final_state_sha256": "95d4e5114950fe937a5d720ae0a39248308778fa0ee0c044041b0453250f5588"
+    },
+    {
+      "group": "U6",
+      "checkpoint": "convoy-219.json.gz",
+      "scenario": "207-09",
+      "seed": 2034,
+      "strategy": 211,
+      "winter": 221,
+      "convoy": 219,
+      "checkpoint_sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "initial_state_sha256": "2bca85a4a337b404978bf86ead8bc634bdf8430696788e3cf5e1fda3f222f615",
+      "snapshots": [
+        {
+          "turn": 122,
+          "convoy": {
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "node": "nanyang",
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 29475,
+            "initial_grain": 33075,
+            "original_bag": 12221,
+            "bag": 6387,
+            "cargo": 0,
+            "tick": 1210,
+            "path": [
+              "nanyang",
+              "yingchuan",
+              "chenliu",
+              "dongjun",
+              "wei"
+            ],
+            "original_ids": [
+              146
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              146
+            ],
+            "reserved_until_turn": 125,
+            "turn": 122,
+            "city_owner": "wei",
+            "city_stock": 30998,
+            "local_grain_legal": 24809,
+            "source_owner": "wei",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "nanyang",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "nanyang"
+                ],
+                "stock": 30998
+              },
+              {
+                "city": "xiangyang",
+                "needed": 1389,
+                "days": 5,
+                "path": [
+                  "nanyang",
+                  "xiangyang"
+                ],
+                "stock": 35126
+              },
+              {
+                "city": "henan",
+                "needed": 2222,
+                "days": 8,
+                "path": [
+                  "nanyang",
+                  "henan"
+                ],
+                "stock": 7748
+              },
+              {
+                "city": "yingchuan",
+                "needed": 2222,
+                "days": 8,
+                "path": [
+                  "nanyang",
+                  "yingchuan"
+                ],
+                "stock": 588640
+              },
+              {
+                "city": "chenliu",
+                "needed": 3333,
+                "days": 12,
+                "path": [
+                  "nanyang",
+                  "yingchuan",
+                  "chenliu"
+                ],
+                "stock": 5042
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 123,
+          "convoy": {
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "node": "yingchuan",
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 29475,
+            "initial_grain": 33075,
+            "original_bag": 12221,
+            "bag": 3654,
+            "cargo": 0,
+            "tick": 1220,
+            "path": [
+              "nanyang",
+              "yingchuan",
+              "chenliu",
+              "dongjun",
+              "wei"
+            ],
+            "original_ids": [
+              146
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              146
+            ],
+            "reserved_until_turn": 125,
+            "turn": 123,
+            "city_owner": "wei",
+            "city_stock": 586928,
+            "local_grain_legal": 581928,
+            "source_owner": "wei",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "yingchuan",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "yingchuan"
+                ],
+                "stock": 586928
+              },
+              {
+                "city": "chenliu",
+                "needed": 1800,
+                "days": 6,
+                "path": [
+                  "yingchuan",
+                  "chenliu"
+                ],
+                "stock": 4338
+              },
+              {
+                "city": "nanyang",
+                "needed": 2598,
+                "days": 9,
+                "path": [
+                  "yingchuan",
+                  "nanyang"
+                ],
+                "stock": 33809
+              },
+              {
+                "city": "henan",
+                "needed": 3039,
+                "days": 10,
+                "path": [
+                  "yingchuan",
+                  "henan"
+                ],
+                "stock": 6815
+              },
+              {
+                "city": "xiangyang",
+                "needed": 3362,
+                "days": 12,
+                "path": [
+                  "yingchuan",
+                  "xiangyang"
+                ],
+                "stock": 33143
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 124,
+          "convoy": {
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 29475,
+            "initial_grain": 33075,
+            "original_bag": 12221,
+            "bag": 1107,
+            "cargo": 0,
+            "tick": 1230,
+            "path": [
+              "nanyang",
+              "yingchuan",
+              "chenliu",
+              "dongjun",
+              "wei"
+            ],
+            "original_ids": [
+              146
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              146
+            ],
+            "reserved_until_turn": 125,
+            "turn": 124,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 125,
+          "convoy": null
+        },
+        {
+          "turn": 126,
+          "convoy": null
+        },
+        {
+          "turn": 127,
+          "convoy": null
+        },
+        {
+          "turn": 128,
+          "convoy": null
+        },
+        {
+          "turn": 129,
+          "convoy": null
+        },
+        {
+          "turn": 130,
+          "convoy": null
+        }
+      ],
+      "receipts": [
+        {
+          "event": "terminal",
+          "row": {
+            "turn": 125,
+            "year": 211,
+            "month": 2,
+            "day": 11,
+            "id": 219,
+            "outcome": "returned_home",
+            "owner": "wei",
+            "source": "wei",
+            "target": "nanyang",
+            "city": "wei",
+            "end_tick": 1240,
+            "reusable_turn": 128,
+            "original_officers": [
+              146
+            ],
+            "received_officers": [
+              146
+            ],
+            "delivered": {
+              "gold": 0,
+              "grain": 29475,
+              "reserves": 0,
+              "treasure": 0
+            },
+            "cargo_receipt": {
+              "cargo_dispatched": 33075,
+              "cargo_received": 6387,
+              "cargo_rations": 6387,
+              "cargo_route_loss": 3600,
+              "cargo_weather_loss": 0,
+              "cargo_delivered": 29475,
+              "cargo_returned": 0,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 5176660,
+              "escort_base_grain": 9696,
+              "escort_extra_grain": 2681
+            },
+            "waiting_days": 5,
+            "ration_spent": 12377,
+            "hunger_losses": 199,
+            "rations": {
+              "loaded": 12221,
+              "received": 6543,
+              "consumed": 12377,
+              "to_cargo": 6387,
+              "remaining": 0
+            },
+            "troops_received": 9801
+          }
+        },
+        {
+          "event": "returned_assets",
+          "row": {
+            "turn": 125,
+            "city": "wei",
+            "owner": "wei",
+            "cargo": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "final_state_sha256": "c9df21de4a9c8cf706756e88db4c9c559a42af8fbe3363a828f2cf638c3edd66"
+    }
+  ]
+}

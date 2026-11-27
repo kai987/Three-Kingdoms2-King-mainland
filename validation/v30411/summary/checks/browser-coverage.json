@@ -1,0 +1,19 @@
+{
+  "first_run": {
+    "passed": 113,
+    "failed": 1
+  },
+  "recovered": 1,
+  "verified_distinct_cases": 114,
+  "devices": {
+    "desktop-chromium": 57,
+    "touch-chromium": 57
+  },
+  "initial_failure": "full case timeout",
+  "repeated": [
+    [
+      "desktop-chromium",
+      "tests/browser_soldier_ui.spec.mjs:732:1 › qimen targets enemies with daily losses and experience, bilingual receipts and exact zero-troop expiry"
+    ]
+  ]
+}

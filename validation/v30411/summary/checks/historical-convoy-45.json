@@ -1,0 +1,2885 @@
+{
+  "source": "f2f442adea78785a3b9af654587442d6134b23e5",
+  "results": [
+    {
+      "group": "U0",
+      "checkpoint": "45.json.gz",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 45,
+      "checkpoint_sha256": "71dded8925c589d3a8a313c3a1be6e36a1e4aee9bd50bc1d2c9c7fa33e3feee8",
+      "initial_state_sha256": "5fb3857ea47a6131fc53389f0c3b21291c96d6004d3162cc4cba5750231368fc",
+      "snapshots": [
+        {
+          "turn": 98,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": null,
+            "status": "outbound",
+            "reason": "outbound",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 422,
+            "cargo": 0,
+            "tick": 970,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 99,
+            "turn": 98,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 1000,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 99,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 249,
+            "cargo": 0,
+            "tick": 980,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 99,
+            "turn": 99,
+            "city_owner": "han",
+            "city_stock": 11333,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 618,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 6395
+              },
+              {
+                "city": "fuling",
+                "needed": 541,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 0
+              },
+              {
+                "city": "shangyong",
+                "needed": 835,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 9626
+              },
+              {
+                "city": "bajun",
+                "needed": 857,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 0
+              },
+              {
+                "city": "xicheng",
+                "needed": 1177,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 7865
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 1000,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 100,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 29,
+            "cargo": 0,
+            "tick": 990,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 100,
+            "turn": 100,
+            "city_owner": "han",
+            "city_stock": 12178,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 618,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 6994
+              },
+              {
+                "city": "fuling",
+                "needed": 541,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 4052
+              },
+              {
+                "city": "shangyong",
+                "needed": 835,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 10054
+              },
+              {
+                "city": "bajun",
+                "needed": 857,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 5404
+              },
+              {
+                "city": "xicheng",
+                "needed": 1177,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 8825
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 1000,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 101,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1000,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 90,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 101,
+            "turn": 101,
+            "city_owner": "han",
+            "city_stock": 11318,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 568,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 3616
+              },
+              {
+                "city": "fuling",
+                "needed": 497,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 2118
+              },
+              {
+                "city": "shangyong",
+                "needed": 767,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 9195
+              },
+              {
+                "city": "bajun",
+                "needed": 788,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 7362
+              },
+              {
+                "city": "xicheng",
+                "needed": 1082,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 8283
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 910,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 102,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1010,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 181,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 102,
+            "turn": 102,
+            "city_owner": "han",
+            "city_stock": 10658,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fuling",
+                "needed": 451,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 1897
+              },
+              {
+                "city": "xincheng",
+                "needed": 586,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 1853
+              },
+              {
+                "city": "shangyong",
+                "needed": 811,
+                "days": 26,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 5338
+              },
+              {
+                "city": "bajun",
+                "needed": 717,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 6695
+              },
+              {
+                "city": "xicheng",
+                "needed": 1125,
+                "days": 39,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 7861
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 819,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 103,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1020,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 264,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 103,
+            "turn": 103,
+            "city_owner": "han",
+            "city_stock": 12570,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 470,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 2803
+              },
+              {
+                "city": "fuling",
+                "needed": 411,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 3061
+              },
+              {
+                "city": "shangyong",
+                "needed": 635,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 5879
+              },
+              {
+                "city": "bajun",
+                "needed": 652,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 12137
+              },
+              {
+                "city": "xicheng",
+                "needed": 896,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 8990
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 736,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 104,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1030,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 339,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 104,
+            "turn": 104,
+            "city_owner": "han",
+            "city_stock": 11709,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fuling",
+                "needed": 374,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 1758
+              },
+              {
+                "city": "bajun",
+                "needed": 593,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 8423
+              },
+              {
+                "city": "jiangyang",
+                "needed": 831,
+                "days": 42,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun",
+                  "jiangyang"
+                ],
+                "stock": 33513
+              },
+              {
+                "city": "baxi",
+                "needed": 902,
+                "days": 46,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun",
+                  "baxi"
+                ],
+                "stock": 7277
+              },
+              {
+                "city": "dangqu",
+                "needed": 996,
+                "days": 46,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun",
+                  "dangqu"
+                ],
+                "stock": 33770
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 661,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 105,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1040,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 408,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 105,
+            "turn": 105,
+            "city_owner": "han",
+            "city_stock": 11048,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fuling",
+                "needed": 340,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 1514
+              },
+              {
+                "city": "shangyong",
+                "needed": 730,
+                "days": 29,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 3676
+              },
+              {
+                "city": "bajun",
+                "needed": 539,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 7037
+              },
+              {
+                "city": "nanyang",
+                "needed": 693,
+                "days": 31,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "xiangyang",
+                  "nanyang"
+                ],
+                "stock": 7851
+              },
+              {
+                "city": "shangyong",
+                "needed": 724,
+                "days": 32,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 3676
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 592,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 106,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1050,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 468,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 106,
+            "turn": 106,
+            "city_owner": "han",
+            "city_stock": 11957,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fuling",
+                "needed": 311,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 2655
+              },
+              {
+                "city": "shangyong",
+                "needed": 558,
+                "days": 26,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 4175
+              },
+              {
+                "city": "bajun",
+                "needed": 493,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 12677
+              },
+              {
+                "city": "nanyang",
+                "needed": 581,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "xiangyang",
+                  "nanyang"
+                ],
+                "stock": 11785
+              },
+              {
+                "city": "xicheng",
+                "needed": 774,
+                "days": 39,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 7431
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 532,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 107,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1060,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 524,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 107,
+            "turn": 107,
+            "city_owner": "han",
+            "city_stock": 11295,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fuling",
+                "needed": 283,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 1743
+              },
+              {
+                "city": "shangyong",
+                "needed": 438,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 3493
+              },
+              {
+                "city": "nanyang",
+                "needed": 473,
+                "days": 27,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "xiangyang",
+                  "nanyang"
+                ],
+                "stock": 10846
+              },
+              {
+                "city": "bajun",
+                "needed": 449,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 678
+              },
+              {
+                "city": "xicheng",
+                "needed": 618,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 6887
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 476,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "receipts": [],
+      "final_state_sha256": "8cb92f3432c44e8d1513851e3c149ac322c94f628d14e79e7c598c60f7f06020"
+    },
+    {
+      "group": "U1",
+      "checkpoint": "45.json.gz",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 45,
+      "checkpoint_sha256": "71dded8925c589d3a8a313c3a1be6e36a1e4aee9bd50bc1d2c9c7fa33e3feee8",
+      "initial_state_sha256": "5fb3857ea47a6131fc53389f0c3b21291c96d6004d3162cc4cba5750231368fc",
+      "snapshots": [
+        {
+          "turn": 98,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": null,
+            "status": "outbound",
+            "reason": "outbound",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 422,
+            "cargo": 0,
+            "tick": 970,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 99,
+            "turn": 98,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 1000,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 99,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 249,
+            "cargo": 0,
+            "tick": 980,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 99,
+            "turn": 99,
+            "city_owner": "han",
+            "city_stock": 11333,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 618,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 6375
+              },
+              {
+                "city": "fuling",
+                "needed": 541,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 1170
+              },
+              {
+                "city": "shangyong",
+                "needed": 835,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 9626
+              },
+              {
+                "city": "bajun",
+                "needed": 857,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 0
+              },
+              {
+                "city": "xicheng",
+                "needed": 1177,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 7865
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 1000,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 100,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 29,
+            "cargo": 0,
+            "tick": 990,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 100,
+            "turn": 100,
+            "city_owner": "han",
+            "city_stock": 16176,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 618,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 9946
+              },
+              {
+                "city": "fuling",
+                "needed": 541,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 7614
+              },
+              {
+                "city": "shangyong",
+                "needed": 835,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 10124
+              },
+              {
+                "city": "bajun",
+                "needed": 857,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 9689
+              },
+              {
+                "city": "xicheng",
+                "needed": 1177,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 8853
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 1000,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 101,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1000,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 90,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 101,
+            "turn": 101,
+            "city_owner": "han",
+            "city_stock": 17562,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 568,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 8446
+              },
+              {
+                "city": "fuling",
+                "needed": 497,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 9595
+              },
+              {
+                "city": "shangyong",
+                "needed": 767,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 9265
+              },
+              {
+                "city": "bajun",
+                "needed": 788,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 16110
+              },
+              {
+                "city": "xicheng",
+                "needed": 1082,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 8311
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 910,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 102,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1010,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 181,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 102,
+            "turn": 102,
+            "city_owner": "han",
+            "city_stock": 16902,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fuling",
+                "needed": 451,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 9408
+              },
+              {
+                "city": "xincheng",
+                "needed": 586,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 8908
+              },
+              {
+                "city": "shangyong",
+                "needed": 811,
+                "days": 26,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 5408
+              },
+              {
+                "city": "bajun",
+                "needed": 717,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 14746
+              },
+              {
+                "city": "xicheng",
+                "needed": 1125,
+                "days": 39,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 7889
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 819,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 103,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1020,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 264,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 103,
+            "turn": 103,
+            "city_owner": "han",
+            "city_stock": 17814,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 470,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 10290
+              },
+              {
+                "city": "fuling",
+                "needed": 411,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 10574
+              },
+              {
+                "city": "shangyong",
+                "needed": 635,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 5949
+              },
+              {
+                "city": "bajun",
+                "needed": 652,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 20185
+              },
+              {
+                "city": "xicheng",
+                "needed": 896,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 8921
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 736,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 104,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1030,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 339,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 104,
+            "turn": 104,
+            "city_owner": "han",
+            "city_stock": 18664,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 428,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 8580
+              },
+              {
+                "city": "fuling",
+                "needed": 374,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 11218
+              },
+              {
+                "city": "shangyong",
+                "needed": 579,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 5089
+              },
+              {
+                "city": "bajun",
+                "needed": 593,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 16697
+              },
+              {
+                "city": "xicheng",
+                "needed": 816,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 6658
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 661,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 105,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1040,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 408,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 105,
+            "turn": 105,
+            "city_owner": "han",
+            "city_stock": 9583,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fuling",
+                "needed": 340,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 11018
+              },
+              {
+                "city": "xincheng",
+                "needed": 498,
+                "days": 20,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 9580
+              },
+              {
+                "city": "shangyong",
+                "needed": 730,
+                "days": 29,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 4448
+              },
+              {
+                "city": "bajun",
+                "needed": 539,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 13413
+              },
+              {
+                "city": "shangyong",
+                "needed": 724,
+                "days": 32,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 4448
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 592,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 106,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1050,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 468,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 106,
+            "turn": 106,
+            "city_owner": "han",
+            "city_stock": 11020,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 403,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 11246
+              },
+              {
+                "city": "shangyong",
+                "needed": 558,
+                "days": 26,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 4988
+              },
+              {
+                "city": "xicheng",
+                "needed": 774,
+                "days": 39,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 7363
+              },
+              {
+                "city": "hanzhong",
+                "needed": 802,
+                "days": 44,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "hanzhong"
+                ],
+                "stock": 51421
+              },
+              {
+                "city": "jiameng",
+                "needed": 1197,
+                "days": 62,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 2551
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 532,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 107,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1060,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 524,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 107,
+            "turn": 107,
+            "city_owner": "han",
+            "city_stock": 9070,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 476,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "receipts": [],
+      "final_state_sha256": "a3e1d2a9686859e1e2d9ecff2b122ad19126fc94c8a20262ada2fdbc5b90969c"
+    },
+    {
+      "group": "U6",
+      "checkpoint": "45.json.gz",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 45,
+      "checkpoint_sha256": "71dded8925c589d3a8a313c3a1be6e36a1e4aee9bd50bc1d2c9c7fa33e3feee8",
+      "initial_state_sha256": "5fb3857ea47a6131fc53389f0c3b21291c96d6004d3162cc4cba5750231368fc",
+      "snapshots": [
+        {
+          "turn": 98,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": null,
+            "status": "outbound",
+            "reason": "outbound",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 422,
+            "cargo": 0,
+            "tick": 970,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 99,
+            "turn": 98,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 1000,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 99,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 249,
+            "cargo": 0,
+            "tick": 980,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 99,
+            "turn": 99,
+            "city_owner": "han",
+            "city_stock": 11333,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 618,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 6395
+              },
+              {
+                "city": "fuling",
+                "needed": 541,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 0
+              },
+              {
+                "city": "shangyong",
+                "needed": 835,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 9626
+              },
+              {
+                "city": "bajun",
+                "needed": 857,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 0
+              },
+              {
+                "city": "xicheng",
+                "needed": 1177,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 7865
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 1000,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 100,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 29,
+            "cargo": 0,
+            "tick": 990,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 100,
+            "turn": 100,
+            "city_owner": "han",
+            "city_stock": 12178,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 618,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 7004
+              },
+              {
+                "city": "fuling",
+                "needed": 541,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 4052
+              },
+              {
+                "city": "shangyong",
+                "needed": 835,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 10054
+              },
+              {
+                "city": "bajun",
+                "needed": 857,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 5404
+              },
+              {
+                "city": "xicheng",
+                "needed": 1177,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 8811
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 1000,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 101,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1000,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 90,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 101,
+            "turn": 101,
+            "city_owner": "han",
+            "city_stock": 11318,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 568,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 5595
+              },
+              {
+                "city": "fuling",
+                "needed": 497,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 2171
+              },
+              {
+                "city": "shangyong",
+                "needed": 767,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 9195
+              },
+              {
+                "city": "bajun",
+                "needed": 788,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 4060
+              },
+              {
+                "city": "xicheng",
+                "needed": 1082,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 8269
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 910,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 102,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1010,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 181,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 102,
+            "turn": 102,
+            "city_owner": "han",
+            "city_stock": 10658,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fuling",
+                "needed": 451,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 1951
+              },
+              {
+                "city": "xincheng",
+                "needed": 586,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 5220
+              },
+              {
+                "city": "shangyong",
+                "needed": 811,
+                "days": 26,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 5338
+              },
+              {
+                "city": "bajun",
+                "needed": 717,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 2716
+              },
+              {
+                "city": "xicheng",
+                "needed": 1125,
+                "days": 39,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 7847
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 819,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 103,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1020,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 264,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 103,
+            "turn": 103,
+            "city_owner": "han",
+            "city_stock": 11570,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xincheng",
+                "needed": 470,
+                "days": 17,
+                "path": [
+                  "badong",
+                  "xincheng"
+                ],
+                "stock": 5933
+              },
+              {
+                "city": "fuling",
+                "needed": 411,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 3116
+              },
+              {
+                "city": "shangyong",
+                "needed": 635,
+                "days": 23,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong"
+                ],
+                "stock": 5879
+              },
+              {
+                "city": "bajun",
+                "needed": 652,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 8769
+              },
+              {
+                "city": "xicheng",
+                "needed": 896,
+                "days": 35,
+                "path": [
+                  "badong",
+                  "xincheng",
+                  "shangyong",
+                  "xicheng"
+                ],
+                "stock": 8926
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 736,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 104,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1030,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 339,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 104,
+            "turn": 104,
+            "city_owner": "han",
+            "city_stock": 10909,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fuling",
+                "needed": 374,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 1756
+              },
+              {
+                "city": "bajun",
+                "needed": 593,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 5996
+              },
+              {
+                "city": "jiangyang",
+                "needed": 831,
+                "days": 42,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun",
+                  "jiangyang"
+                ],
+                "stock": 33513
+              },
+              {
+                "city": "baxi",
+                "needed": 902,
+                "days": 46,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun",
+                  "baxi"
+                ],
+                "stock": 7137
+              },
+              {
+                "city": "dangqu",
+                "needed": 996,
+                "days": 46,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun",
+                  "dangqu"
+                ],
+                "stock": 33770
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 661,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 105,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1040,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 408,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 105,
+            "turn": 105,
+            "city_owner": "han",
+            "city_stock": 1828,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fuling",
+                "needed": 340,
+                "days": 19,
+                "path": [
+                  "badong",
+                  "fuling"
+                ],
+                "stock": 1512
+              },
+              {
+                "city": "bajun",
+                "needed": 539,
+                "days": 30,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun"
+                ],
+                "stock": 4636
+              },
+              {
+                "city": "jiangyang",
+                "needed": 755,
+                "days": 42,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun",
+                  "jiangyang"
+                ],
+                "stock": 32812
+              },
+              {
+                "city": "baxi",
+                "needed": 821,
+                "days": 46,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun",
+                  "baxi"
+                ],
+                "stock": 6615
+              },
+              {
+                "city": "dangqu",
+                "needed": 906,
+                "days": 46,
+                "path": [
+                  "badong",
+                  "fuling",
+                  "bajun",
+                  "dangqu"
+                ],
+                "stock": 33368
+              }
+            ],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 592,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 106,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1050,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 468,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 106,
+            "turn": 106,
+            "city_owner": "han",
+            "city_stock": 3355,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 532,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 107,
+          "convoy": {
+            "owner": "ma_teng",
+            "source": "shujun",
+            "target": "badong",
+            "node": "badong",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 0,
+            "original_bag": 1234,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 1060,
+            "path": [
+              "shujun",
+              "guanghan",
+              "fuxian",
+              "bajun",
+              "fuling",
+              "badong"
+            ],
+            "original_ids": [
+              "clerk-000263"
+            ],
+            "troops": 0,
+            "hunger": 524,
+            "occupants": [
+              "clerk-000263"
+            ],
+            "reserved_until_turn": 107,
+            "turn": 107,
+            "city_owner": "han",
+            "city_stock": 2025,
+            "local_grain_legal": null,
+            "source_owner": "ma_teng",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 320,
+              "grain": 0,
+              "reserves": 476,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "receipts": [],
+      "final_state_sha256": "ab11f0b72c2d280a7b82ddcba5622ca149c26692af46134c7c8cbe9cf60b57cc"
+    }
+  ]
+}

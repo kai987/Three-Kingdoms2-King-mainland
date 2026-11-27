@@ -1,0 +1,1866 @@
+{
+  "source": "f2f442adea78785a3b9af654587442d6134b23e5",
+  "results": [
+    {
+      "group": "U0",
+      "checkpoint": "77.json.gz",
+      "scenario": "207-09",
+      "seed": 2028,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 77,
+      "checkpoint_sha256": "0fc3ac2d3ec1d9cd2eac57d73f620fca177b615aab7e9e907334a0ce7c75ff7e",
+      "initial_state_sha256": "34a0bf0cd2823c1b5d24ebe9acbe8692502ac5844d724294b39dde8dd312ce61",
+      "snapshots": [
+        {
+          "turn": 92,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 25675,
+            "cargo": 0,
+            "tick": 910,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 101,
+            "turn": 92,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 93,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 23314,
+            "cargo": 0,
+            "tick": 920,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 101,
+            "turn": 93,
+            "city_owner": "ma_teng",
+            "city_stock": 132453,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 94,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 21294,
+            "cargo": 0,
+            "tick": 930,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 104,
+            "turn": 94,
+            "city_owner": "ma_teng",
+            "city_stock": 133517,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 95,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 19274,
+            "cargo": 0,
+            "tick": 940,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 103,
+            "turn": 95,
+            "city_owner": "ma_teng",
+            "city_stock": 132946,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 96,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 17254,
+            "cargo": 0,
+            "tick": 950,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 104,
+            "turn": 96,
+            "city_owner": "ma_teng",
+            "city_stock": 132495,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 97,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 15234,
+            "cargo": 0,
+            "tick": 960,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 105,
+            "turn": 97,
+            "city_owner": "ma_teng",
+            "city_stock": 128332,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 98,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 13214,
+            "cargo": 0,
+            "tick": 970,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 106,
+            "turn": 98,
+            "city_owner": "ma_teng",
+            "city_stock": 127880,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 99,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 11194,
+            "cargo": 0,
+            "tick": 980,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 107,
+            "turn": 99,
+            "city_owner": "ma_teng",
+            "city_stock": 127428,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 100,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 9174,
+            "cargo": 0,
+            "tick": 990,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 108,
+            "turn": 100,
+            "city_owner": "ma_teng",
+            "city_stock": 128521,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 101,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 7154,
+            "cargo": 0,
+            "tick": 1000,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 109,
+            "turn": 101,
+            "city_owner": "ma_teng",
+            "city_stock": 120168,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fufeng",
+                "needed": 13555,
+                "days": 43,
+                "path": [
+                  "jincheng",
+                  "anding",
+                  "xinping",
+                  "fufeng"
+                ],
+                "stock": 3255
+              },
+              {
+                "city": "jingzhao",
+                "needed": 14310,
+                "days": 46,
+                "path": [
+                  "jincheng",
+                  "anding",
+                  "xinping",
+                  "fufeng",
+                  "jingzhao"
+                ],
+                "stock": 3624
+              },
+              {
+                "city": "hongnong",
+                "needed": 16532,
+                "days": 54,
+                "path": [
+                  "jincheng",
+                  "anding",
+                  "xinping",
+                  "fufeng",
+                  "jingzhao",
+                  "hongnong"
+                ],
+                "stock": 4028
+              },
+              {
+                "city": "hedong",
+                "needed": 17365,
+                "days": 57,
+                "path": [
+                  "jincheng",
+                  "anding",
+                  "xinping",
+                  "fufeng",
+                  "jingzhao",
+                  "hongnong",
+                  "hedong"
+                ],
+                "stock": 21046
+              },
+              {
+                "city": "hanzhong",
+                "needed": 21221,
+                "days": 66,
+                "path": [
+                  "jincheng",
+                  "anding",
+                  "xinping",
+                  "fufeng",
+                  "hanzhong"
+                ],
+                "stock": 39473
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "receipts": [],
+      "final_state_sha256": "ac8f15a1e83addf7242ac358487dd775964c6675a7d00b439c49103f5aeb6c76"
+    },
+    {
+      "group": "U1",
+      "checkpoint": "77.json.gz",
+      "scenario": "207-09",
+      "seed": 2028,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 77,
+      "checkpoint_sha256": "0fc3ac2d3ec1d9cd2eac57d73f620fca177b615aab7e9e907334a0ce7c75ff7e",
+      "initial_state_sha256": "34a0bf0cd2823c1b5d24ebe9acbe8692502ac5844d724294b39dde8dd312ce61",
+      "snapshots": [
+        {
+          "turn": 92,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 25675,
+            "cargo": 0,
+            "tick": 910,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 101,
+            "turn": 92,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 93,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 23314,
+            "cargo": 0,
+            "tick": 920,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 101,
+            "turn": 93,
+            "city_owner": "ma_teng",
+            "city_stock": 132453,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 94,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 21294,
+            "cargo": 0,
+            "tick": 930,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 104,
+            "turn": 94,
+            "city_owner": "ma_teng",
+            "city_stock": 133517,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 95,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 19274,
+            "cargo": 0,
+            "tick": 940,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 103,
+            "turn": 95,
+            "city_owner": "ma_teng",
+            "city_stock": 132946,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 96,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 17254,
+            "cargo": 0,
+            "tick": 950,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 104,
+            "turn": 96,
+            "city_owner": "ma_teng",
+            "city_stock": 132495,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 97,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 15234,
+            "cargo": 0,
+            "tick": 960,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 105,
+            "turn": 97,
+            "city_owner": "ma_teng",
+            "city_stock": 133689,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 98,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 13214,
+            "cargo": 0,
+            "tick": 970,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 106,
+            "turn": 98,
+            "city_owner": "ma_teng",
+            "city_stock": 133117,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 99,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 11194,
+            "cargo": 0,
+            "tick": 980,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 107,
+            "turn": 99,
+            "city_owner": "ma_teng",
+            "city_stock": 132665,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 100,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 9174,
+            "cargo": 0,
+            "tick": 990,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 108,
+            "turn": 100,
+            "city_owner": "ma_teng",
+            "city_stock": 125985,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 101,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 7154,
+            "cargo": 0,
+            "tick": 1000,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 109,
+            "turn": 101,
+            "city_owner": "ma_teng",
+            "city_stock": 129364,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "receipts": [],
+      "final_state_sha256": "ea96c884099ba9e7ef205fc16d8d45bb9777f95e98fa0445c5eb6d33532b2473"
+    },
+    {
+      "group": "U6",
+      "checkpoint": "77.json.gz",
+      "scenario": "207-09",
+      "seed": 2028,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 77,
+      "checkpoint_sha256": "0fc3ac2d3ec1d9cd2eac57d73f620fca177b615aab7e9e907334a0ce7c75ff7e",
+      "initial_state_sha256": "34a0bf0cd2823c1b5d24ebe9acbe8692502ac5844d724294b39dde8dd312ce61",
+      "snapshots": [
+        {
+          "turn": 92,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 25675,
+            "cargo": 0,
+            "tick": 910,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 101,
+            "turn": 92,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 93,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 23314,
+            "cargo": 0,
+            "tick": 920,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 101,
+            "turn": 93,
+            "city_owner": "ma_teng",
+            "city_stock": 132453,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 94,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 21294,
+            "cargo": 0,
+            "tick": 930,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 104,
+            "turn": 94,
+            "city_owner": "ma_teng",
+            "city_stock": 133517,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 95,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 19274,
+            "cargo": 0,
+            "tick": 940,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 103,
+            "turn": 95,
+            "city_owner": "ma_teng",
+            "city_stock": 132946,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 96,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 17254,
+            "cargo": 0,
+            "tick": 950,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 104,
+            "turn": 96,
+            "city_owner": "ma_teng",
+            "city_stock": 132495,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 97,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 15234,
+            "cargo": 0,
+            "tick": 960,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 105,
+            "turn": 97,
+            "city_owner": "ma_teng",
+            "city_stock": 133629,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 98,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 13214,
+            "cargo": 0,
+            "tick": 970,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 106,
+            "turn": 98,
+            "city_owner": "ma_teng",
+            "city_stock": 133057,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 99,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 11194,
+            "cargo": 0,
+            "tick": 980,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 107,
+            "turn": 99,
+            "city_owner": "ma_teng",
+            "city_stock": 132605,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 100,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 9174,
+            "cargo": 0,
+            "tick": 990,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 108,
+            "turn": 100,
+            "city_owner": "ma_teng",
+            "city_stock": 133829,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 101,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "shujun",
+            "target": "hongnong",
+            "node": "jincheng",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 4303,
+            "initial_grain": 49806,
+            "original_bag": 46474,
+            "bag": 7154,
+            "cargo": 0,
+            "tick": 1000,
+            "path": [
+              "hongnong",
+              "jingzhao",
+              "anding",
+              "jincheng",
+              "longxi",
+              "nanan",
+              "wudu",
+              "yinping",
+              "zitong",
+              "fuxian",
+              "guanghan",
+              "shujun"
+            ],
+            "original_ids": [
+              612
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              612
+            ],
+            "reserved_until_turn": 109,
+            "turn": 101,
+            "city_owner": "ma_teng",
+            "city_stock": 125356,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "fufeng",
+                "needed": 13555,
+                "days": 43,
+                "path": [
+                  "jincheng",
+                  "anding",
+                  "xinping",
+                  "fufeng"
+                ],
+                "stock": 2393
+              },
+              {
+                "city": "jingzhao",
+                "needed": 14310,
+                "days": 46,
+                "path": [
+                  "jincheng",
+                  "anding",
+                  "xinping",
+                  "fufeng",
+                  "jingzhao"
+                ],
+                "stock": 3843
+              },
+              {
+                "city": "hongnong",
+                "needed": 16532,
+                "days": 54,
+                "path": [
+                  "jincheng",
+                  "anding",
+                  "xinping",
+                  "fufeng",
+                  "jingzhao",
+                  "hongnong"
+                ],
+                "stock": 4108
+              },
+              {
+                "city": "hedong",
+                "needed": 17365,
+                "days": 57,
+                "path": [
+                  "jincheng",
+                  "anding",
+                  "xinping",
+                  "fufeng",
+                  "jingzhao",
+                  "hongnong",
+                  "hedong"
+                ],
+                "stock": 22384
+              },
+              {
+                "city": "hanzhong",
+                "needed": 21221,
+                "days": 66,
+                "path": [
+                  "jincheng",
+                  "anding",
+                  "xinping",
+                  "fufeng",
+                  "hanzhong"
+                ],
+                "stock": 44263
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "receipts": [],
+      "final_state_sha256": "df648993ac0ea67918e92af0476f2e071ffd6ea8d673aaba64acaa05f0d73cb6"
+    }
+  ]
+}

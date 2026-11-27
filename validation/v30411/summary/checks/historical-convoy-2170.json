@@ -1,0 +1,785 @@
+{
+  "source": "f2f442adea78785a3b9af654587442d6134b23e5",
+  "results": [
+    {
+      "group": "U0",
+      "checkpoint": "2170.json.gz",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "winter": 221,
+      "convoy": 2170,
+      "checkpoint_sha256": "c58315282ba2dff76da32b2a0715d13167b97894304b7ba5bec9364e3131f063",
+      "initial_state_sha256": "923445ac15474f4b3c486be96a60c275518cc43e1e94958cbef29a03ed057b80",
+      "snapshots": [
+        {
+          "turn": 568,
+          "convoy": {
+            "owner": "han",
+            "source": "hanzhong",
+            "target": "jiameng",
+            "node": "jiameng",
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 60,
+            "initial_grain": 69,
+            "original_bag": 9999,
+            "bag": 5454,
+            "cargo": 0,
+            "tick": 5670,
+            "path": [
+              "jiameng",
+              "hanzhong"
+            ],
+            "original_ids": [
+              "clerk-000509"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000509"
+            ],
+            "reserved_until_turn": 570,
+            "turn": 568,
+            "city_owner": "han",
+            "city_stock": 72,
+            "local_grain_legal": 0,
+            "source_owner": "han",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "jiameng",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "jiameng"
+                ],
+                "stock": 72
+              },
+              {
+                "city": "baxi",
+                "needed": 989,
+                "days": 4,
+                "path": [
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 4686
+              },
+              {
+                "city": "zitong",
+                "needed": 3000,
+                "days": 9,
+                "path": [
+                  "jiameng",
+                  "zitong"
+                ],
+                "stock": 718
+              },
+              {
+                "city": "bajun",
+                "needed": 2912,
+                "days": 12,
+                "path": [
+                  "jiameng",
+                  "baxi",
+                  "bajun"
+                ],
+                "stock": 34481
+              },
+              {
+                "city": "fuxian",
+                "needed": 4667,
+                "days": 14,
+                "path": [
+                  "jiameng",
+                  "zitong",
+                  "fuxian"
+                ],
+                "stock": 9514
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 569,
+          "convoy": {
+            "owner": "han",
+            "source": "hanzhong",
+            "target": "jiameng",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 60,
+            "initial_grain": 69,
+            "original_bag": 9999,
+            "bag": 1908,
+            "cargo": 0,
+            "tick": 5680,
+            "path": [
+              "jiameng",
+              "hanzhong"
+            ],
+            "original_ids": [
+              "clerk-000509"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000509"
+            ],
+            "reserved_until_turn": 570,
+            "turn": 569,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "han",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 570,
+          "convoy": null
+        },
+        {
+          "turn": 571,
+          "convoy": null
+        },
+        {
+          "turn": 572,
+          "convoy": null
+        },
+        {
+          "turn": 573,
+          "convoy": null
+        },
+        {
+          "turn": 574,
+          "convoy": null
+        },
+        {
+          "turn": 575,
+          "convoy": null
+        },
+        {
+          "turn": 576,
+          "convoy": null
+        },
+        {
+          "turn": 577,
+          "convoy": null
+        }
+      ],
+      "receipts": [
+        {
+          "event": "terminal",
+          "row": {
+            "turn": 570,
+            "year": 199,
+            "month": 11,
+            "day": 21,
+            "id": 2170,
+            "outcome": "returned_home",
+            "owner": "han",
+            "source": "hanzhong",
+            "target": "jiameng",
+            "city": "hanzhong",
+            "end_tick": 5690,
+            "reusable_turn": 573,
+            "original_officers": [
+              "clerk-000509"
+            ],
+            "received_officers": [
+              "clerk-000509"
+            ],
+            "delivered": {
+              "gold": 0,
+              "grain": 60,
+              "reserves": 0,
+              "treasure": 0
+            },
+            "cargo_receipt": {
+              "cargo_dispatched": 69,
+              "cargo_received": 5454,
+              "cargo_rations": 5454,
+              "cargo_route_loss": 9,
+              "cargo_weather_loss": 0,
+              "cargo_delivered": 60,
+              "cargo_returned": 0,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 7100000,
+              "escort_base_grain": 6262,
+              "escort_extra_grain": 3737
+            },
+            "waiting_days": 3,
+            "ration_spent": 9999,
+            "hunger_losses": 298,
+            "rations": {
+              "loaded": 9999,
+              "received": 5454,
+              "consumed": 9999,
+              "to_cargo": 5454,
+              "remaining": 0
+            },
+            "troops_received": 9702
+          }
+        },
+        {
+          "event": "returned_assets",
+          "row": {
+            "turn": 570,
+            "city": "hanzhong",
+            "owner": "han",
+            "cargo": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "final_state_sha256": "dd24f977d814f1374c4b3bdab47b3bbe7ac65a18fed0de913dc0092f3ada8f63"
+    },
+    {
+      "group": "U1",
+      "checkpoint": "2170.json.gz",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "winter": 221,
+      "convoy": 2170,
+      "checkpoint_sha256": "c58315282ba2dff76da32b2a0715d13167b97894304b7ba5bec9364e3131f063",
+      "initial_state_sha256": "923445ac15474f4b3c486be96a60c275518cc43e1e94958cbef29a03ed057b80",
+      "snapshots": [
+        {
+          "turn": 568,
+          "convoy": {
+            "owner": "han",
+            "source": "hanzhong",
+            "target": "jiameng",
+            "node": "jiameng",
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 60,
+            "initial_grain": 69,
+            "original_bag": 9999,
+            "bag": 5454,
+            "cargo": 0,
+            "tick": 5670,
+            "path": [
+              "jiameng",
+              "hanzhong"
+            ],
+            "original_ids": [
+              "clerk-000509"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000509"
+            ],
+            "reserved_until_turn": 570,
+            "turn": 568,
+            "city_owner": "han",
+            "city_stock": 72,
+            "local_grain_legal": 0,
+            "source_owner": "han",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "jiameng",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "jiameng"
+                ],
+                "stock": 72
+              },
+              {
+                "city": "baxi",
+                "needed": 989,
+                "days": 4,
+                "path": [
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 4686
+              },
+              {
+                "city": "zitong",
+                "needed": 3000,
+                "days": 9,
+                "path": [
+                  "jiameng",
+                  "zitong"
+                ],
+                "stock": 718
+              },
+              {
+                "city": "bajun",
+                "needed": 2912,
+                "days": 12,
+                "path": [
+                  "jiameng",
+                  "baxi",
+                  "bajun"
+                ],
+                "stock": 34481
+              },
+              {
+                "city": "fuxian",
+                "needed": 4667,
+                "days": 14,
+                "path": [
+                  "jiameng",
+                  "zitong",
+                  "fuxian"
+                ],
+                "stock": 9514
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 569,
+          "convoy": {
+            "owner": "han",
+            "source": "hanzhong",
+            "target": "jiameng",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 60,
+            "initial_grain": 69,
+            "original_bag": 9999,
+            "bag": 1908,
+            "cargo": 0,
+            "tick": 5680,
+            "path": [
+              "jiameng",
+              "hanzhong"
+            ],
+            "original_ids": [
+              "clerk-000509"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000509"
+            ],
+            "reserved_until_turn": 570,
+            "turn": 569,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "han",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 570,
+          "convoy": null
+        },
+        {
+          "turn": 571,
+          "convoy": null
+        },
+        {
+          "turn": 572,
+          "convoy": null
+        },
+        {
+          "turn": 573,
+          "convoy": null
+        },
+        {
+          "turn": 574,
+          "convoy": null
+        },
+        {
+          "turn": 575,
+          "convoy": null
+        },
+        {
+          "turn": 576,
+          "convoy": null
+        },
+        {
+          "turn": 577,
+          "convoy": null
+        }
+      ],
+      "receipts": [
+        {
+          "event": "terminal",
+          "row": {
+            "turn": 570,
+            "year": 199,
+            "month": 11,
+            "day": 21,
+            "id": 2170,
+            "outcome": "returned_home",
+            "owner": "han",
+            "source": "hanzhong",
+            "target": "jiameng",
+            "city": "hanzhong",
+            "end_tick": 5690,
+            "reusable_turn": 573,
+            "original_officers": [
+              "clerk-000509"
+            ],
+            "received_officers": [
+              "clerk-000509"
+            ],
+            "delivered": {
+              "gold": 0,
+              "grain": 60,
+              "reserves": 0,
+              "treasure": 0
+            },
+            "cargo_receipt": {
+              "cargo_dispatched": 69,
+              "cargo_received": 5454,
+              "cargo_rations": 5454,
+              "cargo_route_loss": 9,
+              "cargo_weather_loss": 0,
+              "cargo_delivered": 60,
+              "cargo_returned": 0,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 7100000,
+              "escort_base_grain": 6262,
+              "escort_extra_grain": 3737
+            },
+            "waiting_days": 3,
+            "ration_spent": 9999,
+            "hunger_losses": 298,
+            "rations": {
+              "loaded": 9999,
+              "received": 5454,
+              "consumed": 9999,
+              "to_cargo": 5454,
+              "remaining": 0
+            },
+            "troops_received": 9702
+          }
+        },
+        {
+          "event": "returned_assets",
+          "row": {
+            "turn": 570,
+            "city": "hanzhong",
+            "owner": "han",
+            "cargo": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "final_state_sha256": "c044f4007dba6ad08b5b9b70f449b6ae489a63d5c179ec782bd1f19240571f09"
+    },
+    {
+      "group": "U6",
+      "checkpoint": "2170.json.gz",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "winter": 221,
+      "convoy": 2170,
+      "checkpoint_sha256": "c58315282ba2dff76da32b2a0715d13167b97894304b7ba5bec9364e3131f063",
+      "initial_state_sha256": "923445ac15474f4b3c486be96a60c275518cc43e1e94958cbef29a03ed057b80",
+      "snapshots": [
+        {
+          "turn": 568,
+          "convoy": {
+            "owner": "han",
+            "source": "hanzhong",
+            "target": "jiameng",
+            "node": "jiameng",
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 60,
+            "initial_grain": 69,
+            "original_bag": 9999,
+            "bag": 5454,
+            "cargo": 0,
+            "tick": 5670,
+            "path": [
+              "jiameng",
+              "hanzhong"
+            ],
+            "original_ids": [
+              "clerk-000509"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000509"
+            ],
+            "reserved_until_turn": 570,
+            "turn": 568,
+            "city_owner": "han",
+            "city_stock": 72,
+            "local_grain_legal": 0,
+            "source_owner": "han",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "jiameng",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "jiameng"
+                ],
+                "stock": 72
+              },
+              {
+                "city": "baxi",
+                "needed": 989,
+                "days": 4,
+                "path": [
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 4686
+              },
+              {
+                "city": "zitong",
+                "needed": 3000,
+                "days": 9,
+                "path": [
+                  "jiameng",
+                  "zitong"
+                ],
+                "stock": 718
+              },
+              {
+                "city": "bajun",
+                "needed": 2912,
+                "days": 12,
+                "path": [
+                  "jiameng",
+                  "baxi",
+                  "bajun"
+                ],
+                "stock": 34481
+              },
+              {
+                "city": "fuxian",
+                "needed": 4667,
+                "days": 14,
+                "path": [
+                  "jiameng",
+                  "zitong",
+                  "fuxian"
+                ],
+                "stock": 9514
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 569,
+          "convoy": {
+            "owner": "han",
+            "source": "hanzhong",
+            "target": "jiameng",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 60,
+            "initial_grain": 69,
+            "original_bag": 9999,
+            "bag": 1908,
+            "cargo": 0,
+            "tick": 5680,
+            "path": [
+              "jiameng",
+              "hanzhong"
+            ],
+            "original_ids": [
+              "clerk-000509"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000509"
+            ],
+            "reserved_until_turn": 570,
+            "turn": 569,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "han",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 570,
+          "convoy": null
+        },
+        {
+          "turn": 571,
+          "convoy": null
+        },
+        {
+          "turn": 572,
+          "convoy": null
+        },
+        {
+          "turn": 573,
+          "convoy": null
+        },
+        {
+          "turn": 574,
+          "convoy": null
+        },
+        {
+          "turn": 575,
+          "convoy": null
+        },
+        {
+          "turn": 576,
+          "convoy": null
+        },
+        {
+          "turn": 577,
+          "convoy": null
+        }
+      ],
+      "receipts": [
+        {
+          "event": "terminal",
+          "row": {
+            "turn": 570,
+            "year": 199,
+            "month": 11,
+            "day": 21,
+            "id": 2170,
+            "outcome": "returned_home",
+            "owner": "han",
+            "source": "hanzhong",
+            "target": "jiameng",
+            "city": "hanzhong",
+            "end_tick": 5690,
+            "reusable_turn": 573,
+            "original_officers": [
+              "clerk-000509"
+            ],
+            "received_officers": [
+              "clerk-000509"
+            ],
+            "delivered": {
+              "gold": 0,
+              "grain": 60,
+              "reserves": 0,
+              "treasure": 0
+            },
+            "cargo_receipt": {
+              "cargo_dispatched": 69,
+              "cargo_received": 5454,
+              "cargo_rations": 5454,
+              "cargo_route_loss": 9,
+              "cargo_weather_loss": 0,
+              "cargo_delivered": 60,
+              "cargo_returned": 0,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 7100000,
+              "escort_base_grain": 6262,
+              "escort_extra_grain": 3737
+            },
+            "waiting_days": 3,
+            "ration_spent": 9999,
+            "hunger_losses": 298,
+            "rations": {
+              "loaded": 9999,
+              "received": 5454,
+              "consumed": 9999,
+              "to_cargo": 5454,
+              "remaining": 0
+            },
+            "troops_received": 9702
+          }
+        },
+        {
+          "event": "returned_assets",
+          "row": {
+            "turn": 570,
+            "city": "hanzhong",
+            "owner": "han",
+            "cargo": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "final_state_sha256": "0c886adfc2b0a45327a808a86cfcef9f1038bbd0b8e8a4d7975e664b6763bed6"
+    }
+  ]
+}

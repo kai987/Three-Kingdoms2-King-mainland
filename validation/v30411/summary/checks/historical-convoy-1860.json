@@ -1,0 +1,3863 @@
+{
+  "source": "f2f442adea78785a3b9af654587442d6134b23e5",
+  "results": [
+    {
+      "group": "U0",
+      "checkpoint": "1860.json.gz",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 1860,
+      "checkpoint_sha256": "1b96cbb042a1e6c3a5f6ca9b88a3f90be58b52a35cdd054a286df14dee3e07f4",
+      "initial_state_sha256": "a1445c66fe70325bf1fb402cbd2292568fe0ff857e150d0974876b1b751b7850",
+      "snapshots": [
+        {
+          "turn": 621,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 10199,
+            "cargo": 0,
+            "tick": 6200,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 623,
+            "turn": 621,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 622,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 6800,
+            "cargo": 0,
+            "tick": 6210,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 625,
+            "turn": 622,
+            "city_owner": "ma_teng",
+            "city_stock": 35901,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 62572
+              },
+              {
+                "city": "yinping",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 17022
+              },
+              {
+                "city": "jiameng",
+                "needed": 16332,
+                "days": 42,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 27634
+              },
+              {
+                "city": "baxi",
+                "needed": 17553,
+                "days": 47,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 27540
+              },
+              {
+                "city": "zitong",
+                "needed": 18598,
+                "days": 48,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 61270
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 623,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 4760,
+            "cargo": 0,
+            "tick": 6220,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 626,
+            "turn": 623,
+            "city_owner": "ma_teng",
+            "city_stock": 33785,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 48982
+              },
+              {
+                "city": "yinping",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 15032
+              },
+              {
+                "city": "jiameng",
+                "needed": 16332,
+                "days": 42,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 25558
+              },
+              {
+                "city": "baxi",
+                "needed": 17554,
+                "days": 47,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 23990
+              },
+              {
+                "city": "zitong",
+                "needed": 18598,
+                "days": 48,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 53541
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 624,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 2720,
+            "cargo": 0,
+            "tick": 6230,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 626,
+            "turn": 624,
+            "city_owner": "ma_teng",
+            "city_stock": 32128,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 43489
+              },
+              {
+                "city": "yinping",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 13521
+              },
+              {
+                "city": "jiameng",
+                "needed": 9999,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 23887
+              },
+              {
+                "city": "baxi",
+                "needed": 10988,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 21219
+              },
+              {
+                "city": "zitong",
+                "needed": 11333,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 49306
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 625,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 700,
+            "cargo": 0,
+            "tick": 6240,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 627,
+            "turn": 625,
+            "city_owner": "ma_teng",
+            "city_stock": 39511,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 52433
+              },
+              {
+                "city": "yinping",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 18166
+              },
+              {
+                "city": "jiameng",
+                "needed": 9999,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 29808
+              },
+              {
+                "city": "baxi",
+                "needed": 10988,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 27345
+              },
+              {
+                "city": "zitong",
+                "needed": 11333,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 54434
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 626,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6250,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 9316,
+            "hunger": 684,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 628,
+            "turn": 626,
+            "city_owner": "ma_teng",
+            "city_stock": 37391,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 4662,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 46338
+              },
+              {
+                "city": "yinping",
+                "needed": 4662,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 16173
+              },
+              {
+                "city": "jiameng",
+                "needed": 9323,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 27709
+              },
+              {
+                "city": "baxi",
+                "needed": 10245,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 23811
+              },
+              {
+                "city": "zitong",
+                "needed": 10566,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 52278
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 627,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6260,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 8420,
+            "hunger": 1580,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 629,
+            "turn": 627,
+            "city_owner": "ma_teng",
+            "city_stock": 35731,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 4218,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 40243
+              },
+              {
+                "city": "yinping",
+                "needed": 4218,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 14660
+              },
+              {
+                "city": "jiameng",
+                "needed": 8435,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 26109
+              },
+              {
+                "city": "baxi",
+                "needed": 9270,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 18760
+              },
+              {
+                "city": "zitong",
+                "needed": 9561,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 50121
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 628,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6270,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 7610,
+            "hunger": 2390,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 630,
+            "turn": 628,
+            "city_owner": "ma_teng",
+            "city_stock": 43162,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 3817,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 49268
+              },
+              {
+                "city": "yinping",
+                "needed": 3817,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 19611
+              },
+              {
+                "city": "jiameng",
+                "needed": 7633,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 32401
+              },
+              {
+                "city": "baxi",
+                "needed": 8389,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 25332
+              },
+              {
+                "city": "zitong",
+                "needed": 8652,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 55993
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 629,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6280,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 6877,
+            "hunger": 3123,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 631,
+            "turn": 629,
+            "city_owner": "ma_teng",
+            "city_stock": 41032,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 4352,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 45171
+              },
+              {
+                "city": "yinping",
+                "needed": 4352,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 17615
+              },
+              {
+                "city": "jiameng",
+                "needed": 8704,
+                "days": 36,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 30299
+              },
+              {
+                "city": "zitong",
+                "needed": 9742,
+                "days": 40,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 53835
+              },
+              {
+                "city": "baxi",
+                "needed": 9543,
+                "days": 41,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 22557
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 630,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6290,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 6214,
+            "hunger": 3786,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 632,
+            "turn": 630,
+            "city_owner": "ma_teng",
+            "city_stock": 39362,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 3127,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 39073
+              },
+              {
+                "city": "yinping",
+                "needed": 3127,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 16099
+              },
+              {
+                "city": "jiameng",
+                "needed": 6252,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 28696
+              },
+              {
+                "city": "baxi",
+                "needed": 6870,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 19782
+              },
+              {
+                "city": "zitong",
+                "needed": 7086,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 52136
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 631,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6300,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 5615,
+            "hunger": 4385,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 633,
+            "turn": 631,
+            "city_owner": "ma_teng",
+            "city_stock": 46877,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 3744,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 50246
+              },
+              {
+                "city": "yinping",
+                "needed": 3744,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 21661
+              },
+              {
+                "city": "jiameng",
+                "needed": 7486,
+                "days": 36,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 35734
+              },
+              {
+                "city": "zitong",
+                "needed": 8379,
+                "days": 40,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 59227
+              },
+              {
+                "city": "baxi",
+                "needed": 8184,
+                "days": 41,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 27247
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 632,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6310,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 5073,
+            "hunger": 4927,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 634,
+            "turn": 632,
+            "city_owner": "ma_teng",
+            "city_stock": 44744,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 2561,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 45631
+              },
+              {
+                "city": "yinping",
+                "needed": 2561,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 19643
+              },
+              {
+                "city": "jiameng",
+                "needed": 5122,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 33629
+              },
+              {
+                "city": "baxi",
+                "needed": 5629,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 23670
+              },
+              {
+                "city": "zitong",
+                "needed": 5805,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 57067
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 633,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6320,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 4583,
+            "hunger": 5417,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 635,
+            "turn": 633,
+            "city_owner": "ma_teng",
+            "city_stock": 43070,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 2319,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 39441
+              },
+              {
+                "city": "yinping",
+                "needed": 2319,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 18124
+              },
+              {
+                "city": "jiameng",
+                "needed": 4637,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 32023
+              },
+              {
+                "city": "baxi",
+                "needed": 5096,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 20893
+              },
+              {
+                "city": "zitong",
+                "needed": 5255,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 55366
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "receipts": [],
+      "final_state_sha256": "c30e35938500c03b4271659a391a1329a688554e58afe76dda342169ba442f5b"
+    },
+    {
+      "group": "U1",
+      "checkpoint": "1860.json.gz",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 1860,
+      "checkpoint_sha256": "1b96cbb042a1e6c3a5f6ca9b88a3f90be58b52a35cdd054a286df14dee3e07f4",
+      "initial_state_sha256": "a1445c66fe70325bf1fb402cbd2292568fe0ff857e150d0974876b1b751b7850",
+      "snapshots": [
+        {
+          "turn": 621,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 10199,
+            "cargo": 0,
+            "tick": 6200,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 623,
+            "turn": 621,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 622,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 6800,
+            "cargo": 0,
+            "tick": 6210,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 625,
+            "turn": 622,
+            "city_owner": "ma_teng",
+            "city_stock": 35901,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 79352
+              },
+              {
+                "city": "yinping",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 17022
+              },
+              {
+                "city": "jiameng",
+                "needed": 16332,
+                "days": 42,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 27634
+              },
+              {
+                "city": "baxi",
+                "needed": 17553,
+                "days": 47,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 27540
+              },
+              {
+                "city": "zitong",
+                "needed": 18598,
+                "days": 48,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 61270
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 623,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 4760,
+            "cargo": 0,
+            "tick": 6220,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 626,
+            "turn": 623,
+            "city_owner": "ma_teng",
+            "city_stock": 33785,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 73169
+              },
+              {
+                "city": "yinping",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 15032
+              },
+              {
+                "city": "jiameng",
+                "needed": 16332,
+                "days": 42,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 25558
+              },
+              {
+                "city": "baxi",
+                "needed": 17554,
+                "days": 47,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 23990
+              },
+              {
+                "city": "zitong",
+                "needed": 18598,
+                "days": 48,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 53541
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 624,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 2720,
+            "cargo": 0,
+            "tick": 6230,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 626,
+            "turn": 624,
+            "city_owner": "ma_teng",
+            "city_stock": 32128,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 71065
+              },
+              {
+                "city": "yinping",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 13521
+              },
+              {
+                "city": "jiameng",
+                "needed": 9999,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 23887
+              },
+              {
+                "city": "baxi",
+                "needed": 10988,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 21219
+              },
+              {
+                "city": "zitong",
+                "needed": 11333,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 49306
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 625,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 700,
+            "cargo": 0,
+            "tick": 6240,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 627,
+            "turn": 625,
+            "city_owner": "ma_teng",
+            "city_stock": 39497,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 79305
+              },
+              {
+                "city": "yinping",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 18166
+              },
+              {
+                "city": "jiameng",
+                "needed": 9999,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 29808
+              },
+              {
+                "city": "baxi",
+                "needed": 10988,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 27345
+              },
+              {
+                "city": "zitong",
+                "needed": 11333,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 54819
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 626,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6250,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 9316,
+            "hunger": 684,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 628,
+            "turn": 626,
+            "city_owner": "ma_teng",
+            "city_stock": 37377,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 4662,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 80715
+              },
+              {
+                "city": "yinping",
+                "needed": 4662,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 16173
+              },
+              {
+                "city": "jiameng",
+                "needed": 9323,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 27709
+              },
+              {
+                "city": "baxi",
+                "needed": 10245,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 23811
+              },
+              {
+                "city": "zitong",
+                "needed": 10566,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 52663
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 627,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6260,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 8420,
+            "hunger": 1580,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 629,
+            "turn": 627,
+            "city_owner": "ma_teng",
+            "city_stock": 35717,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 4218,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 73929
+              },
+              {
+                "city": "yinping",
+                "needed": 4218,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 14660
+              },
+              {
+                "city": "jiameng",
+                "needed": 8435,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 26109
+              },
+              {
+                "city": "baxi",
+                "needed": 9270,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 20910
+              },
+              {
+                "city": "zitong",
+                "needed": 9561,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 50506
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 628,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6270,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 7610,
+            "hunger": 2390,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 630,
+            "turn": 628,
+            "city_owner": "ma_teng",
+            "city_stock": 43125,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 3817,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 81533
+              },
+              {
+                "city": "yinping",
+                "needed": 3817,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 19303
+              },
+              {
+                "city": "jiameng",
+                "needed": 7633,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 32027
+              },
+              {
+                "city": "baxi",
+                "needed": 8389,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 27034
+              },
+              {
+                "city": "zitong",
+                "needed": 8652,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 55997
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 629,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6280,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 6877,
+            "hunger": 3123,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 631,
+            "turn": 629,
+            "city_owner": "ma_teng",
+            "city_stock": 41002,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 4352,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 74737
+              },
+              {
+                "city": "yinping",
+                "needed": 4352,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 17307
+              },
+              {
+                "city": "jiameng",
+                "needed": 8704,
+                "days": 36,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 29925
+              },
+              {
+                "city": "zitong",
+                "needed": 9742,
+                "days": 40,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 53839
+              },
+              {
+                "city": "baxi",
+                "needed": 9543,
+                "days": 41,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 23459
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 630,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6290,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 6214,
+            "hunger": 3786,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 632,
+            "turn": 630,
+            "city_owner": "ma_teng",
+            "city_stock": 39332,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 3127,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 94218
+              },
+              {
+                "city": "yinping",
+                "needed": 3127,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 15791
+              },
+              {
+                "city": "jiameng",
+                "needed": 6252,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 28322
+              },
+              {
+                "city": "baxi",
+                "needed": 6870,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 20684
+              },
+              {
+                "city": "zitong",
+                "needed": 7086,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 52140
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 631,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6300,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 5615,
+            "hunger": 4385,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 633,
+            "turn": 631,
+            "city_owner": "ma_teng",
+            "city_stock": 46817,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 3744,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 27765
+              },
+              {
+                "city": "yinping",
+                "needed": 3744,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 21046
+              },
+              {
+                "city": "jiameng",
+                "needed": 7486,
+                "days": 36,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 34985
+              },
+              {
+                "city": "zitong",
+                "needed": 8379,
+                "days": 40,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 58851
+              },
+              {
+                "city": "baxi",
+                "needed": 8184,
+                "days": 41,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 27721
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 632,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6310,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 5073,
+            "hunger": 4927,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 634,
+            "turn": 632,
+            "city_owner": "ma_teng",
+            "city_stock": 45484,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 2561,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 28698
+              },
+              {
+                "city": "yinping",
+                "needed": 2561,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 28582
+              },
+              {
+                "city": "jiameng",
+                "needed": 5122,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 32880
+              },
+              {
+                "city": "baxi",
+                "needed": 5629,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 9899
+              },
+              {
+                "city": "zitong",
+                "needed": 5805,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 56690
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 633,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6320,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 4583,
+            "hunger": 5417,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 635,
+            "turn": 633,
+            "city_owner": "ma_teng",
+            "city_stock": 45010,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 2319,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 20288
+              },
+              {
+                "city": "yinping",
+                "needed": 2319,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 27663
+              },
+              {
+                "city": "jiameng",
+                "needed": 4637,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 31274
+              },
+              {
+                "city": "baxi",
+                "needed": 5096,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 4995
+              },
+              {
+                "city": "zitong",
+                "needed": 5255,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 49232
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "receipts": [],
+      "final_state_sha256": "a079329b512deb24ee41e4baa76e5ce314398cabe19e094350cbfe706bda54e6"
+    },
+    {
+      "group": "U6",
+      "checkpoint": "1860.json.gz",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 1860,
+      "checkpoint_sha256": "1b96cbb042a1e6c3a5f6ca9b88a3f90be58b52a35cdd054a286df14dee3e07f4",
+      "initial_state_sha256": "a1445c66fe70325bf1fb402cbd2292568fe0ff857e150d0974876b1b751b7850",
+      "snapshots": [
+        {
+          "turn": 621,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": null,
+            "status": "returning",
+            "reason": "escort_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 10199,
+            "cargo": 0,
+            "tick": 6200,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 623,
+            "turn": 621,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 622,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 6800,
+            "cargo": 0,
+            "tick": 6210,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 625,
+            "turn": 622,
+            "city_owner": "ma_teng",
+            "city_stock": 35901,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 62572
+              },
+              {
+                "city": "yinping",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 17022
+              },
+              {
+                "city": "jiameng",
+                "needed": 16332,
+                "days": 42,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 27634
+              },
+              {
+                "city": "baxi",
+                "needed": 17553,
+                "days": 47,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 27540
+              },
+              {
+                "city": "zitong",
+                "needed": 18598,
+                "days": 48,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 60698
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 623,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 4760,
+            "cargo": 0,
+            "tick": 6220,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 626,
+            "turn": 623,
+            "city_owner": "ma_teng",
+            "city_stock": 33785,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 49253
+              },
+              {
+                "city": "yinping",
+                "needed": 8166,
+                "days": 21,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 15032
+              },
+              {
+                "city": "jiameng",
+                "needed": 16332,
+                "days": 42,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 25558
+              },
+              {
+                "city": "baxi",
+                "needed": 17554,
+                "days": 47,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 23990
+              },
+              {
+                "city": "zitong",
+                "needed": 18598,
+                "days": 48,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 52963
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 624,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 2720,
+            "cargo": 0,
+            "tick": 6230,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 626,
+            "turn": 624,
+            "city_owner": "ma_teng",
+            "city_stock": 32128,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 43760
+              },
+              {
+                "city": "yinping",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 13521
+              },
+              {
+                "city": "jiameng",
+                "needed": 9999,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 23887
+              },
+              {
+                "city": "baxi",
+                "needed": 10988,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 21219
+              },
+              {
+                "city": "zitong",
+                "needed": 11333,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 49289
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 625,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 700,
+            "cargo": 0,
+            "tick": 6240,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 10000,
+            "hunger": 0,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 627,
+            "turn": 625,
+            "city_owner": "ma_teng",
+            "city_stock": 39511,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 52704
+              },
+              {
+                "city": "yinping",
+                "needed": 5000,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 18166
+              },
+              {
+                "city": "jiameng",
+                "needed": 9999,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 29808
+              },
+              {
+                "city": "baxi",
+                "needed": 10988,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 27345
+              },
+              {
+                "city": "zitong",
+                "needed": 11333,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 54572
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 626,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6250,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 9316,
+            "hunger": 684,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 628,
+            "turn": 626,
+            "city_owner": "ma_teng",
+            "city_stock": 37391,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 4662,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 47809
+              },
+              {
+                "city": "yinping",
+                "needed": 4662,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 16173
+              },
+              {
+                "city": "jiameng",
+                "needed": 9323,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 27709
+              },
+              {
+                "city": "baxi",
+                "needed": 10245,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 23811
+              },
+              {
+                "city": "zitong",
+                "needed": 10566,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 52416
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 627,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6260,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 8420,
+            "hunger": 1580,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 629,
+            "turn": 627,
+            "city_owner": "ma_teng",
+            "city_stock": 35731,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 4218,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 42314
+              },
+              {
+                "city": "yinping",
+                "needed": 4218,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 14660
+              },
+              {
+                "city": "jiameng",
+                "needed": 8435,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 26109
+              },
+              {
+                "city": "baxi",
+                "needed": 9270,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 19683
+              },
+              {
+                "city": "zitong",
+                "needed": 9561,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 50259
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 628,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6270,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 7610,
+            "hunger": 2390,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 630,
+            "turn": 628,
+            "city_owner": "ma_teng",
+            "city_stock": 43155,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 3817,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 51963
+              },
+              {
+                "city": "yinping",
+                "needed": 3817,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 19611
+              },
+              {
+                "city": "jiameng",
+                "needed": 7633,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 32401
+              },
+              {
+                "city": "baxi",
+                "needed": 8389,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 26255
+              },
+              {
+                "city": "zitong",
+                "needed": 8652,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 56131
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 629,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6280,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 6877,
+            "hunger": 3123,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 631,
+            "turn": 629,
+            "city_owner": "ma_teng",
+            "city_stock": 41032,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 4352,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 46466
+              },
+              {
+                "city": "yinping",
+                "needed": 4352,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 17615
+              },
+              {
+                "city": "jiameng",
+                "needed": 8704,
+                "days": 36,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 30299
+              },
+              {
+                "city": "zitong",
+                "needed": 9742,
+                "days": 40,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 53973
+              },
+              {
+                "city": "baxi",
+                "needed": 9543,
+                "days": 41,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 22680
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 630,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6290,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 6214,
+            "hunger": 3786,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 632,
+            "turn": 630,
+            "city_owner": "ma_teng",
+            "city_stock": 39362,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 3127,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 40968
+              },
+              {
+                "city": "yinping",
+                "needed": 3127,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 16099
+              },
+              {
+                "city": "jiameng",
+                "needed": 6252,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 28696
+              },
+              {
+                "city": "baxi",
+                "needed": 6870,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 19905
+              },
+              {
+                "city": "zitong",
+                "needed": 7086,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 52274
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 631,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6300,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 5615,
+            "hunger": 4385,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 633,
+            "turn": 631,
+            "city_owner": "ma_teng",
+            "city_stock": 46877,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 3744,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 52178
+              },
+              {
+                "city": "yinping",
+                "needed": 3744,
+                "days": 18,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 21354
+              },
+              {
+                "city": "jiameng",
+                "needed": 7486,
+                "days": 36,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 35359
+              },
+              {
+                "city": "zitong",
+                "needed": 8379,
+                "days": 40,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 58985
+              },
+              {
+                "city": "baxi",
+                "needed": 8184,
+                "days": 41,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 26922
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 632,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6310,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 5073,
+            "hunger": 4927,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 634,
+            "turn": 632,
+            "city_owner": "ma_teng",
+            "city_stock": 44744,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 2561,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 43995
+              },
+              {
+                "city": "yinping",
+                "needed": 2561,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 19336
+              },
+              {
+                "city": "jiameng",
+                "needed": 5122,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 33254
+              },
+              {
+                "city": "baxi",
+                "needed": 5629,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 23359
+              },
+              {
+                "city": "zitong",
+                "needed": 5805,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 56825
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 633,
+          "convoy": {
+            "owner": "liu_zhang",
+            "source": "yinping",
+            "target": "hanzhong",
+            "node": "wudu",
+            "status": "waiting",
+            "reason": "unsafe_return",
+            "delivered": 3765,
+            "initial_grain": 9065,
+            "original_bag": 19998,
+            "bag": 0,
+            "cargo": 0,
+            "tick": 6320,
+            "path": [
+              "hanzhong",
+              "wudu",
+              "yinping"
+            ],
+            "original_ids": [
+              "clerk-000512"
+            ],
+            "troops": 4583,
+            "hunger": 5417,
+            "occupants": [
+              "clerk-000512"
+            ],
+            "reserved_until_turn": 635,
+            "turn": 633,
+            "city_owner": "ma_teng",
+            "city_stock": 43070,
+            "local_grain_legal": null,
+            "source_owner": "liu_zhang",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "hanzhong",
+                "needed": 2319,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "hanzhong"
+                ],
+                "stock": 38405
+              },
+              {
+                "city": "yinping",
+                "needed": 2319,
+                "days": 15,
+                "path": [
+                  "wudu",
+                  "yinping"
+                ],
+                "stock": 17817
+              },
+              {
+                "city": "jiameng",
+                "needed": 4637,
+                "days": 30,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng"
+                ],
+                "stock": 31648
+              },
+              {
+                "city": "baxi",
+                "needed": 5096,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "hanzhong",
+                  "jiameng",
+                  "baxi"
+                ],
+                "stock": 20144
+              },
+              {
+                "city": "zitong",
+                "needed": 5255,
+                "days": 34,
+                "path": [
+                  "wudu",
+                  "yinping",
+                  "zitong"
+                ],
+                "stock": 55124
+              }
+            ],
+            "aboard_resources": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "receipts": [],
+      "final_state_sha256": "f08f8086435454ce29de135947ba9233b4ed91b1490f9b5fd3599b17056486fa"
+    }
+  ]
+}

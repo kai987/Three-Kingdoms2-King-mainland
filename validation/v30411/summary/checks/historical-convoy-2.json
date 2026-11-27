@@ -1,0 +1,3111 @@
+{
+  "source": "3ec93fbd8abe42b4c17e36f1b7e8e9b56c13501a",
+  "results": [
+    {
+      "group": "U0",
+      "checkpoint": "2.json.gz",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 2,
+      "checkpoint_sha256": "8140a2448baa2890588412e70d47ab73eeb859244606d638e0123026e20de8dc",
+      "initial_state_sha256": "5eb9d9491c1ad782b1def1325d3a901b23e1d574f3c37bc47575eb687f04ba92",
+      "snapshots": [
+        {
+          "turn": 5,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "returning",
+            "reason": "target_changed",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 1521,
+            "cargo": 6352,
+            "tick": 40,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 9,
+            "turn": 5,
+            "city_owner": "wu",
+            "city_stock": 21261,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 6,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 1240,
+            "cargo": 6352,
+            "tick": 50,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 10,
+            "turn": 6,
+            "city_owner": "wu",
+            "city_stock": 20419,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 7,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 958,
+            "cargo": 6352,
+            "tick": 60,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 11,
+            "turn": 7,
+            "city_owner": "wu",
+            "city_stock": 22746,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 8,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 673,
+            "cargo": 6352,
+            "tick": 70,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 12,
+            "turn": 8,
+            "city_owner": "wu",
+            "city_stock": 21870,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 9,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 391,
+            "cargo": 6352,
+            "tick": 80,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 13,
+            "turn": 9,
+            "city_owner": "wu",
+            "city_stock": 20983,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 10,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 110,
+            "cargo": 6352,
+            "tick": 90,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 14,
+            "turn": 10,
+            "city_owner": "wu",
+            "city_stock": 23425,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 11,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 6181,
+            "tick": 100,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 15,
+            "turn": 11,
+            "city_owner": "wu",
+            "city_stock": 22493,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6181,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 12,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 5899,
+            "tick": 110,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 16,
+            "turn": 12,
+            "city_owner": "wu",
+            "city_stock": 21549,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 5899,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 13,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 5618,
+            "tick": 120,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 13,
+            "city_owner": "wu",
+            "city_stock": 22967,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xiapi",
+                "needed": 439,
+                "days": 11,
+                "path": [
+                  "guangling",
+                  "xiapi"
+                ],
+                "stock": 50223
+              },
+              {
+                "city": "pengcheng",
+                "needed": 643,
+                "days": 16,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "pengcheng"
+                ],
+                "stock": 20402
+              },
+              {
+                "city": "donghai",
+                "needed": 690,
+                "days": 17,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai"
+                ],
+                "stock": 44023
+              },
+              {
+                "city": "jiujiang",
+                "needed": 839,
+                "days": 21,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "jiujiang"
+                ],
+                "stock": 103321
+              },
+              {
+                "city": "langya",
+                "needed": 894,
+                "days": 22,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai",
+                  "langya"
+                ],
+                "stock": 28144
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 5618,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 14,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 5336,
+            "tick": 130,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 14,
+            "city_owner": "wu",
+            "city_stock": 23016,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xiapi",
+                "needed": 387,
+                "days": 10,
+                "path": [
+                  "guangling",
+                  "xiapi"
+                ],
+                "stock": 48734
+              },
+              {
+                "city": "pengcheng",
+                "needed": 503,
+                "days": 13,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "pengcheng"
+                ],
+                "stock": 20153
+              },
+              {
+                "city": "donghai",
+                "needed": 542,
+                "days": 14,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai"
+                ],
+                "stock": 43007
+              },
+              {
+                "city": "langya",
+                "needed": 658,
+                "days": 17,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai",
+                  "langya"
+                ],
+                "stock": 26950
+              },
+              {
+                "city": "qiao",
+                "needed": 697,
+                "days": 18,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "qiao"
+                ],
+                "stock": 51033
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 5336,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 15,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "xiapi",
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 4742,
+            "tick": 140,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 15,
+            "city_owner": "wei",
+            "city_stock": 47423,
+            "local_grain_legal": 42423,
+            "source_owner": "wei",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xiapi",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "xiapi"
+                ],
+                "stock": 47423
+              },
+              {
+                "city": "pengcheng",
+                "needed": 117,
+                "days": 3,
+                "path": [
+                  "xiapi",
+                  "pengcheng"
+                ],
+                "stock": 22927
+              },
+              {
+                "city": "donghai",
+                "needed": 156,
+                "days": 4,
+                "path": [
+                  "xiapi",
+                  "donghai"
+                ],
+                "stock": 41979
+              },
+              {
+                "city": "langya",
+                "needed": 272,
+                "days": 7,
+                "path": [
+                  "xiapi",
+                  "donghai",
+                  "langya"
+                ],
+                "stock": 25744
+              },
+              {
+                "city": "qiao",
+                "needed": 311,
+                "days": 8,
+                "path": [
+                  "xiapi",
+                  "qiao"
+                ],
+                "stock": 50107
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 4742,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 16,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": null,
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 410,
+            "cargo": 4489,
+            "tick": 150,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1280,
+            "hunger": 27,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 16,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 4489,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 17,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "chenliu",
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 71,
+            "cargo": 4289,
+            "tick": 160,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1280,
+            "hunger": 27,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 17,
+            "city_owner": "wei",
+            "city_stock": 51553,
+            "local_grain_legal": 46553,
+            "source_owner": "wei",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "chenliu",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "chenliu"
+                ],
+                "stock": 51553
+              },
+              {
+                "city": "yingchuan",
+                "needed": 152,
+                "days": 4,
+                "path": [
+                  "chenliu",
+                  "yingchuan"
+                ],
+                "stock": 374101
+              },
+              {
+                "city": "henei",
+                "needed": 191,
+                "days": 5,
+                "path": [
+                  "chenliu",
+                  "henei"
+                ],
+                "stock": 33693
+              },
+              {
+                "city": "dongjun",
+                "needed": 228,
+                "days": 6,
+                "path": [
+                  "chenliu",
+                  "dongjun"
+                ],
+                "stock": 52737
+              },
+              {
+                "city": "jiyin",
+                "needed": 228,
+                "days": 6,
+                "path": [
+                  "chenliu",
+                  "jiyin"
+                ],
+                "stock": 45821
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 4289,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 18,
+          "convoy": null
+        },
+        {
+          "turn": 19,
+          "convoy": null
+        },
+        {
+          "turn": 20,
+          "convoy": null
+        },
+        {
+          "turn": 21,
+          "convoy": null
+        },
+        {
+          "turn": 22,
+          "convoy": null
+        },
+        {
+          "turn": 23,
+          "convoy": null
+        },
+        {
+          "turn": 24,
+          "convoy": null
+        },
+        {
+          "turn": 25,
+          "convoy": null
+        },
+        {
+          "turn": 26,
+          "convoy": null
+        },
+        {
+          "turn": 27,
+          "convoy": null
+        },
+        {
+          "turn": 28,
+          "convoy": null
+        },
+        {
+          "turn": 29,
+          "convoy": null
+        },
+        {
+          "turn": 30,
+          "convoy": null
+        },
+        {
+          "turn": 31,
+          "convoy": null
+        },
+        {
+          "turn": 32,
+          "convoy": null
+        },
+        {
+          "turn": 33,
+          "convoy": null
+        },
+        {
+          "turn": 34,
+          "convoy": null
+        },
+        {
+          "turn": 35,
+          "convoy": null
+        },
+        {
+          "turn": 36,
+          "convoy": null
+        },
+        {
+          "turn": 37,
+          "convoy": null
+        },
+        {
+          "turn": 38,
+          "convoy": null
+        },
+        {
+          "turn": 39,
+          "convoy": null
+        }
+      ],
+      "receipts": [
+        {
+          "event": "terminal",
+          "row": {
+            "turn": 18,
+            "year": 209,
+            "month": 3,
+            "day": 21,
+            "id": 2,
+            "outcome": "returned_home",
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "city": "henan",
+            "end_tick": 170,
+            "reusable_turn": 21,
+            "original_officers": [
+              769
+            ],
+            "received_officers": [
+              769
+            ],
+            "delivered": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            },
+            "cargo_receipt": {
+              "cargo_dispatched": 7608,
+              "cargo_received": 1521,
+              "cargo_rations": 2918,
+              "cargo_route_loss": 2091,
+              "cargo_weather_loss": 0,
+              "cargo_delivered": 0,
+              "cargo_returned": 4120,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 4470611,
+              "escort_base_grain": 4604,
+              "escort_extra_grain": 516
+            },
+            "waiting_days": 92,
+            "ration_spent": 5120,
+            "hunger_losses": 27,
+            "rations": {
+              "loaded": 2788,
+              "received": 3853,
+              "consumed": 5120,
+              "to_cargo": 1521,
+              "remaining": 0
+            },
+            "troops_received": 1280
+          }
+        },
+        {
+          "event": "returned_assets",
+          "row": {
+            "turn": 18,
+            "city": "henan",
+            "owner": "wei",
+            "cargo": {
+              "gold": 930,
+              "grain": 4120,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "final_state_sha256": "d7b15af3912133a817b5cb204bb526cb20bd728069bc290dd42944094c50da65"
+    },
+    {
+      "group": "U1",
+      "checkpoint": "2.json.gz",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 2,
+      "checkpoint_sha256": "8140a2448baa2890588412e70d47ab73eeb859244606d638e0123026e20de8dc",
+      "initial_state_sha256": "5eb9d9491c1ad782b1def1325d3a901b23e1d574f3c37bc47575eb687f04ba92",
+      "snapshots": [
+        {
+          "turn": 5,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "returning",
+            "reason": "target_changed",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 1521,
+            "cargo": 6352,
+            "tick": 40,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 9,
+            "turn": 5,
+            "city_owner": "wu",
+            "city_stock": 21261,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 6,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 1240,
+            "cargo": 6352,
+            "tick": 50,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 10,
+            "turn": 6,
+            "city_owner": "wu",
+            "city_stock": 16533,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 7,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 958,
+            "cargo": 6352,
+            "tick": 60,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 11,
+            "turn": 7,
+            "city_owner": "wu",
+            "city_stock": 18860,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 8,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 673,
+            "cargo": 6352,
+            "tick": 70,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 12,
+            "turn": 8,
+            "city_owner": "wu",
+            "city_stock": 17984,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 9,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 391,
+            "cargo": 6352,
+            "tick": 80,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 13,
+            "turn": 9,
+            "city_owner": "wu",
+            "city_stock": 17097,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 10,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 110,
+            "cargo": 6352,
+            "tick": 90,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 14,
+            "turn": 10,
+            "city_owner": "wu",
+            "city_stock": 19539,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 11,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 6181,
+            "tick": 100,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 15,
+            "turn": 11,
+            "city_owner": "wu",
+            "city_stock": 18607,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6181,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 12,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 5899,
+            "tick": 110,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 16,
+            "turn": 12,
+            "city_owner": "wu",
+            "city_stock": 17663,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 5899,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 13,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 5618,
+            "tick": 120,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 13,
+            "city_owner": "wu",
+            "city_stock": 19102,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xiapi",
+                "needed": 439,
+                "days": 11,
+                "path": [
+                  "guangling",
+                  "xiapi"
+                ],
+                "stock": 52177
+              },
+              {
+                "city": "pengcheng",
+                "needed": 643,
+                "days": 16,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "pengcheng"
+                ],
+                "stock": 24440
+              },
+              {
+                "city": "donghai",
+                "needed": 690,
+                "days": 17,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai"
+                ],
+                "stock": 46400
+              },
+              {
+                "city": "jiujiang",
+                "needed": 839,
+                "days": 21,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "jiujiang"
+                ],
+                "stock": 99781
+              },
+              {
+                "city": "langya",
+                "needed": 894,
+                "days": 22,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai",
+                  "langya"
+                ],
+                "stock": 28221
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 5618,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 14,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 5336,
+            "tick": 130,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 14,
+            "city_owner": "wu",
+            "city_stock": 25663,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xiapi",
+                "needed": 387,
+                "days": 10,
+                "path": [
+                  "guangling",
+                  "xiapi"
+                ],
+                "stock": 40769
+              },
+              {
+                "city": "pengcheng",
+                "needed": 503,
+                "days": 13,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "pengcheng"
+                ],
+                "stock": 19591
+              },
+              {
+                "city": "donghai",
+                "needed": 542,
+                "days": 14,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai"
+                ],
+                "stock": 45251
+              },
+              {
+                "city": "langya",
+                "needed": 658,
+                "days": 17,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai",
+                  "langya"
+                ],
+                "stock": 27027
+              },
+              {
+                "city": "qiao",
+                "needed": 697,
+                "days": 18,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "qiao"
+                ],
+                "stock": 51190
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 5336,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 15,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "xiapi",
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 4742,
+            "tick": 140,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 15,
+            "city_owner": "wu",
+            "city_stock": 40747,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "pengcheng",
+                "needed": 117,
+                "days": 3,
+                "path": [
+                  "xiapi",
+                  "pengcheng"
+                ],
+                "stock": 25382
+              },
+              {
+                "city": "donghai",
+                "needed": 156,
+                "days": 4,
+                "path": [
+                  "xiapi",
+                  "donghai"
+                ],
+                "stock": 44211
+              },
+              {
+                "city": "langya",
+                "needed": 272,
+                "days": 7,
+                "path": [
+                  "xiapi",
+                  "donghai",
+                  "langya"
+                ],
+                "stock": 25821
+              },
+              {
+                "city": "qiao",
+                "needed": 311,
+                "days": 8,
+                "path": [
+                  "xiapi",
+                  "qiao"
+                ],
+                "stock": 50345
+              },
+              {
+                "city": "jiujiang",
+                "needed": 349,
+                "days": 9,
+                "path": [
+                  "xiapi",
+                  "jiujiang"
+                ],
+                "stock": 88334
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 4742,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 16,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": null,
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 410,
+            "cargo": 4221,
+            "tick": 150,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1280,
+            "hunger": 27,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 16,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 4221,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 17,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "chenliu",
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 71,
+            "cargo": 4032,
+            "tick": 160,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1280,
+            "hunger": 27,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 17,
+            "city_owner": "wei",
+            "city_stock": 51903,
+            "local_grain_legal": 46903,
+            "source_owner": "wei",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "chenliu",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "chenliu"
+                ],
+                "stock": 51903
+              },
+              {
+                "city": "yingchuan",
+                "needed": 152,
+                "days": 4,
+                "path": [
+                  "chenliu",
+                  "yingchuan"
+                ],
+                "stock": 376892
+              },
+              {
+                "city": "henei",
+                "needed": 191,
+                "days": 5,
+                "path": [
+                  "chenliu",
+                  "henei"
+                ],
+                "stock": 33948
+              },
+              {
+                "city": "dongjun",
+                "needed": 228,
+                "days": 6,
+                "path": [
+                  "chenliu",
+                  "dongjun"
+                ],
+                "stock": 53064
+              },
+              {
+                "city": "jiyin",
+                "needed": 228,
+                "days": 6,
+                "path": [
+                  "chenliu",
+                  "jiyin"
+                ],
+                "stock": 46112
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 4032,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 18,
+          "convoy": null
+        },
+        {
+          "turn": 19,
+          "convoy": null
+        },
+        {
+          "turn": 20,
+          "convoy": null
+        },
+        {
+          "turn": 21,
+          "convoy": null
+        },
+        {
+          "turn": 22,
+          "convoy": null
+        },
+        {
+          "turn": 23,
+          "convoy": null
+        },
+        {
+          "turn": 24,
+          "convoy": null
+        },
+        {
+          "turn": 25,
+          "convoy": null
+        },
+        {
+          "turn": 26,
+          "convoy": null
+        },
+        {
+          "turn": 27,
+          "convoy": null
+        },
+        {
+          "turn": 28,
+          "convoy": null
+        },
+        {
+          "turn": 29,
+          "convoy": null
+        },
+        {
+          "turn": 30,
+          "convoy": null
+        },
+        {
+          "turn": 31,
+          "convoy": null
+        },
+        {
+          "turn": 32,
+          "convoy": null
+        },
+        {
+          "turn": 33,
+          "convoy": null
+        },
+        {
+          "turn": 34,
+          "convoy": null
+        },
+        {
+          "turn": 35,
+          "convoy": null
+        },
+        {
+          "turn": 36,
+          "convoy": null
+        },
+        {
+          "turn": 37,
+          "convoy": null
+        },
+        {
+          "turn": 38,
+          "convoy": null
+        },
+        {
+          "turn": 39,
+          "convoy": null
+        }
+      ],
+      "receipts": [
+        {
+          "event": "terminal",
+          "row": {
+            "turn": 18,
+            "year": 209,
+            "month": 3,
+            "day": 21,
+            "id": 2,
+            "outcome": "returned_home",
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "city": "henan",
+            "end_tick": 170,
+            "reusable_turn": 21,
+            "original_officers": [
+              769
+            ],
+            "received_officers": [
+              769
+            ],
+            "delivered": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            },
+            "cargo_receipt": {
+              "cargo_dispatched": 7608,
+              "cargo_received": 1521,
+              "cargo_rations": 3200,
+              "cargo_route_loss": 2056,
+              "cargo_weather_loss": 0,
+              "cargo_delivered": 0,
+              "cargo_returned": 3873,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 1225714,
+              "escort_base_grain": 4604,
+              "escort_extra_grain": 516
+            },
+            "waiting_days": 92,
+            "ration_spent": 5120,
+            "hunger_losses": 27,
+            "rations": {
+              "loaded": 2788,
+              "received": 3853,
+              "consumed": 5120,
+              "to_cargo": 1521,
+              "remaining": 0
+            },
+            "troops_received": 1280
+          }
+        },
+        {
+          "event": "returned_assets",
+          "row": {
+            "turn": 18,
+            "city": "henan",
+            "owner": "wei",
+            "cargo": {
+              "gold": 930,
+              "grain": 3873,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "final_state_sha256": "56ce9b40f995d69c7a65d610ac4af46f1735b9fae2c22c4970b66d2c56075950"
+    },
+    {
+      "group": "U6",
+      "checkpoint": "2.json.gz",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "winter": 221,
+      "convoy": 2,
+      "checkpoint_sha256": "8140a2448baa2890588412e70d47ab73eeb859244606d638e0123026e20de8dc",
+      "initial_state_sha256": "5eb9d9491c1ad782b1def1325d3a901b23e1d574f3c37bc47575eb687f04ba92",
+      "snapshots": [
+        {
+          "turn": 5,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "returning",
+            "reason": "target_changed",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 1521,
+            "cargo": 6352,
+            "tick": 40,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 9,
+            "turn": 5,
+            "city_owner": "wu",
+            "city_stock": 21261,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 6,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 1240,
+            "cargo": 6352,
+            "tick": 50,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 10,
+            "turn": 6,
+            "city_owner": "wu",
+            "city_stock": 20419,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 7,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 958,
+            "cargo": 6352,
+            "tick": 60,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 11,
+            "turn": 7,
+            "city_owner": "wu",
+            "city_stock": 22746,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 8,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 673,
+            "cargo": 6352,
+            "tick": 70,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 12,
+            "turn": 8,
+            "city_owner": "wu",
+            "city_stock": 21870,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 9,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 391,
+            "cargo": 6352,
+            "tick": 80,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 13,
+            "turn": 9,
+            "city_owner": "wu",
+            "city_stock": 20983,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 10,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 110,
+            "cargo": 6352,
+            "tick": 90,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 14,
+            "turn": 10,
+            "city_owner": "wu",
+            "city_stock": 23425,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6352,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 11,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 6181,
+            "tick": 100,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 15,
+            "turn": 11,
+            "city_owner": "wu",
+            "city_stock": 22493,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 6181,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 12,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 5899,
+            "tick": 110,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 16,
+            "turn": 12,
+            "city_owner": "wu",
+            "city_stock": 20776,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 5899,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 13,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "waiting",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 5618,
+            "tick": 120,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 13,
+            "city_owner": "wu",
+            "city_stock": 22939,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xiapi",
+                "needed": 439,
+                "days": 11,
+                "path": [
+                  "guangling",
+                  "xiapi"
+                ],
+                "stock": 51880
+              },
+              {
+                "city": "pengcheng",
+                "needed": 643,
+                "days": 16,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "pengcheng"
+                ],
+                "stock": 20967
+              },
+              {
+                "city": "donghai",
+                "needed": 690,
+                "days": 17,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai"
+                ],
+                "stock": 46400
+              },
+              {
+                "city": "jiujiang",
+                "needed": 839,
+                "days": 21,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "jiujiang"
+                ],
+                "stock": 99781
+              },
+              {
+                "city": "langya",
+                "needed": 894,
+                "days": 22,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai",
+                  "langya"
+                ],
+                "stock": 28221
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 5618,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 14,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "guangling",
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 5336,
+            "tick": 130,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 14,
+            "city_owner": "wu",
+            "city_stock": 23040,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xiapi",
+                "needed": 387,
+                "days": 10,
+                "path": [
+                  "guangling",
+                  "xiapi"
+                ],
+                "stock": 40472
+              },
+              {
+                "city": "pengcheng",
+                "needed": 503,
+                "days": 13,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "pengcheng"
+                ],
+                "stock": 20368
+              },
+              {
+                "city": "donghai",
+                "needed": 542,
+                "days": 14,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai"
+                ],
+                "stock": 45372
+              },
+              {
+                "city": "langya",
+                "needed": 658,
+                "days": 17,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "donghai",
+                  "langya"
+                ],
+                "stock": 27027
+              },
+              {
+                "city": "qiao",
+                "needed": 697,
+                "days": 18,
+                "path": [
+                  "guangling",
+                  "xiapi",
+                  "qiao"
+                ],
+                "stock": 51190
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 5336,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 15,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "xiapi",
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 0,
+            "cargo": 4742,
+            "tick": 140,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1307,
+            "hunger": 0,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 15,
+            "city_owner": "wei",
+            "city_stock": 39645,
+            "local_grain_legal": 34645,
+            "source_owner": "wei",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "xiapi",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "xiapi"
+                ],
+                "stock": 39645
+              },
+              {
+                "city": "pengcheng",
+                "needed": 117,
+                "days": 3,
+                "path": [
+                  "xiapi",
+                  "pengcheng"
+                ],
+                "stock": 19609
+              },
+              {
+                "city": "donghai",
+                "needed": 156,
+                "days": 4,
+                "path": [
+                  "xiapi",
+                  "donghai"
+                ],
+                "stock": 44332
+              },
+              {
+                "city": "langya",
+                "needed": 272,
+                "days": 7,
+                "path": [
+                  "xiapi",
+                  "donghai",
+                  "langya"
+                ],
+                "stock": 25821
+              },
+              {
+                "city": "qiao",
+                "needed": 311,
+                "days": 8,
+                "path": [
+                  "xiapi",
+                  "qiao"
+                ],
+                "stock": 50345
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 4742,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 16,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": null,
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 410,
+            "cargo": 4489,
+            "tick": 150,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1280,
+            "hunger": 27,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 16,
+            "city_owner": null,
+            "city_stock": null,
+            "local_grain_legal": null,
+            "source_owner": "wei",
+            "receives_here": false,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 4489,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 17,
+          "convoy": {
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "node": "chenliu",
+            "status": "returning",
+            "reason": "no_return_route",
+            "delivered": 0,
+            "initial_grain": 7608,
+            "original_bag": 2788,
+            "bag": 71,
+            "cargo": 4289,
+            "tick": 160,
+            "path": [
+              "guangling",
+              "xiapi",
+              "qiao",
+              "chenliu",
+              "henei",
+              "henan"
+            ],
+            "original_ids": [
+              769
+            ],
+            "troops": 1280,
+            "hunger": 27,
+            "occupants": [
+              769
+            ],
+            "reserved_until_turn": 18,
+            "turn": 17,
+            "city_owner": "wei",
+            "city_stock": 51893,
+            "local_grain_legal": 46893,
+            "source_owner": "wei",
+            "receives_here": true,
+            "relief_eligible": false,
+            "legal_relief_meeting": null,
+            "relief_grain_required": null,
+            "best_receiving_options": [
+              {
+                "city": "chenliu",
+                "needed": 0,
+                "days": 0,
+                "path": [
+                  "chenliu"
+                ],
+                "stock": 51893
+              },
+              {
+                "city": "yingchuan",
+                "needed": 152,
+                "days": 4,
+                "path": [
+                  "chenliu",
+                  "yingchuan"
+                ],
+                "stock": 376888
+              },
+              {
+                "city": "henei",
+                "needed": 191,
+                "days": 5,
+                "path": [
+                  "chenliu",
+                  "henei"
+                ],
+                "stock": 33948
+              },
+              {
+                "city": "dongjun",
+                "needed": 228,
+                "days": 6,
+                "path": [
+                  "chenliu",
+                  "dongjun"
+                ],
+                "stock": 53064
+              },
+              {
+                "city": "jiyin",
+                "needed": 228,
+                "days": 6,
+                "path": [
+                  "chenliu",
+                  "jiyin"
+                ],
+                "stock": 46110
+              }
+            ],
+            "aboard_resources": {
+              "gold": 930,
+              "grain": 4289,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        },
+        {
+          "turn": 18,
+          "convoy": null
+        },
+        {
+          "turn": 19,
+          "convoy": null
+        },
+        {
+          "turn": 20,
+          "convoy": null
+        },
+        {
+          "turn": 21,
+          "convoy": null
+        },
+        {
+          "turn": 22,
+          "convoy": null
+        },
+        {
+          "turn": 23,
+          "convoy": null
+        },
+        {
+          "turn": 24,
+          "convoy": null
+        },
+        {
+          "turn": 25,
+          "convoy": null
+        },
+        {
+          "turn": 26,
+          "convoy": null
+        },
+        {
+          "turn": 27,
+          "convoy": null
+        },
+        {
+          "turn": 28,
+          "convoy": null
+        },
+        {
+          "turn": 29,
+          "convoy": null
+        },
+        {
+          "turn": 30,
+          "convoy": null
+        },
+        {
+          "turn": 31,
+          "convoy": null
+        },
+        {
+          "turn": 32,
+          "convoy": null
+        },
+        {
+          "turn": 33,
+          "convoy": null
+        },
+        {
+          "turn": 34,
+          "convoy": null
+        },
+        {
+          "turn": 35,
+          "convoy": null
+        },
+        {
+          "turn": 36,
+          "convoy": null
+        },
+        {
+          "turn": 37,
+          "convoy": null
+        },
+        {
+          "turn": 38,
+          "convoy": null
+        },
+        {
+          "turn": 39,
+          "convoy": null
+        }
+      ],
+      "receipts": [
+        {
+          "event": "terminal",
+          "row": {
+            "turn": 18,
+            "year": 209,
+            "month": 3,
+            "day": 21,
+            "id": 2,
+            "outcome": "returned_home",
+            "owner": "wei",
+            "source": "henan",
+            "target": "guangling",
+            "city": "henan",
+            "end_tick": 170,
+            "reusable_turn": 21,
+            "original_officers": [
+              769
+            ],
+            "received_officers": [
+              769
+            ],
+            "delivered": {
+              "gold": 0,
+              "grain": 0,
+              "reserves": 0,
+              "treasure": 0
+            },
+            "cargo_receipt": {
+              "cargo_dispatched": 7608,
+              "cargo_received": 1521,
+              "cargo_rations": 2918,
+              "cargo_route_loss": 2091,
+              "cargo_weather_loss": 0,
+              "cargo_delivered": 0,
+              "cargo_returned": 4120,
+              "cargo_abandoned": 0,
+              "cargo_remaining": 0,
+              "cargo_loss_remainder": 4470611,
+              "escort_base_grain": 4604,
+              "escort_extra_grain": 516
+            },
+            "waiting_days": 92,
+            "ration_spent": 5120,
+            "hunger_losses": 27,
+            "rations": {
+              "loaded": 2788,
+              "received": 3853,
+              "consumed": 5120,
+              "to_cargo": 1521,
+              "remaining": 0
+            },
+            "troops_received": 1280
+          }
+        },
+        {
+          "event": "returned_assets",
+          "row": {
+            "turn": 18,
+            "city": "henan",
+            "owner": "wei",
+            "cargo": {
+              "gold": 930,
+              "grain": 4120,
+              "reserves": 0,
+              "treasure": 0
+            }
+          }
+        }
+      ],
+      "final_state_sha256": "115bbc47d4c935cd85a26adbdcfcc74846f5a668f5a3e6aa878f6e6e5b941fc1"
+    }
+  ]
+}
