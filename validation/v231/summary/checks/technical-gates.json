@@ -1,0 +1,625 @@
+{
+  "climate-browser": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "node",
+      "tests/browser_winter_agriculture_smoke.mjs",
+      "<WORKTREE>/build/winter-agriculture-v231/technical/browser-v23"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 28.699,
+    "log": "logs/climate-browser.log",
+    "log_sha256": "8a64f4671a75ef0f8aa552005289bc31e4c3c2e32865ab533943bd6cbaf11e22",
+    "log_bytes": 780,
+    "original_log_sha256": "14c8ee08550d8b403abd069f9acfb9914cfd076ba02bed71c7dc9e392e2320a9",
+    "results": {}
+  },
+  "disabled-v231-rust": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-Bu",
+      "tools/economy-balance/v231_compat.py",
+      "original",
+      "<WORKTREE>/build/winter-agriculture-v231/compatibility/disabled-v231-rust.json",
+      "candidate"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "rust",
+      "PYTHONHASHSEED": "0"
+    },
+    "exit_code": 0,
+    "seconds": 74.008,
+    "log": "logs/disabled-v231-rust.log",
+    "log_sha256": "f51c5ba0843c277817556feaea0ca12b946627f403d1b9567febeb3d815aef35",
+    "log_bytes": 375,
+    "original_log_sha256": "000c4ab595580776547f1e701e761210879fa21ca5e7a93cfb877088fc68381f",
+    "results": {}
+  },
+  "forecast-browser": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "node",
+      "tests/browser_winter_agriculture_smoke.mjs",
+      "<WORKTREE>/build/winter-agriculture-v231/technical/browser-v231",
+      "--forecast"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 33.837,
+    "log": "logs/forecast-browser.log",
+    "log_sha256": "9dafcdf74783a51056e5e61bb8aafebef913ebb6cfa1b435835a876c56734be0",
+    "log_bytes": 1092,
+    "original_log_sha256": "6b93bcdbc70748a4c032c77003d98d4e8cc8ea612e881ab143a84c97964fe61b",
+    "results": {}
+  },
+  "forecast-performance": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "python3",
+      "-B",
+      "tools/economy-balance/v231_replay.py",
+      "performance",
+      "--turns",
+      "3",
+      "--output",
+      "<WORKTREE>/build/winter-agriculture-v231/performance",
+      "184-02,211,<HOME>/.codex/worktrees/winter-climate-agriculture-v23/Three-Kingdoms2-King-mainland/build/winter-agriculture-v23/campaigns/long/W4/184-02-2026-211/terminal-save.json.gz",
+      "208-10,211,<HOME>/.codex/worktrees/winter-climate-agriculture-v23/Three-Kingdoms2-King-mainland/build/winter-agriculture-v231/campaigns/root/F2/208-10-2026-211/terminal-save.json.gz",
+      "184-02,211,<WORKTREE>/build/winter-agriculture-v231/performance/north-snow.json.gz",
+      "184-02,211,<WORKTREE>/build/winter-agriculture-v231/performance/cross-month-convoy.json.gz"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 472.393,
+    "log": "logs/forecast-performance.log",
+    "log_sha256": "69a051273c0960f376f190c400b270c3f34d651f7b4ba3b2eed52cc9116f3f68",
+    "log_bytes": 809,
+    "original_log_sha256": "f13061820b50f05ba3f1c05f12ec16aa3b327a3a56d926624ba27da873416236",
+    "results": {}
+  },
+  "forecast-specialty": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_remake_winter_forecast.py"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 4.23,
+    "log": "logs/forecast-specialty.log",
+    "log_sha256": "9198e6251955b29c6d58e07a4894f27801fad39350e43c92f48f3650474d8ec9",
+    "log_bytes": 311,
+    "results": {
+      "tests": 7
+    }
+  },
+  "full-browser-final": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "node",
+      "tools/browser-tests/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "<WORKTREE>/build/winter-agriculture-v231/checks/final-playwright.config.mjs",
+      "--workers",
+      "4"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 1116.671,
+    "log": "logs/full-browser-final.log",
+    "log_sha256": "a76ba77eaf0dbbb673ec07850ce9f44ee09856f8640354bedec7942ec6753451",
+    "log_bytes": 23142,
+    "original_log_sha256": "df48642f1cff76d6d9a784549f457ec34be77d6ac38a31056dca54886ad28917",
+    "results": {
+      "passed": 110,
+      "startTime": "2026-11-27T12:58:12.686Z",
+      "duration": 1116203.615,
+      "expected": 110,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "full-browser": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "node",
+      "tools/browser-tests/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "<WORKTREE>/build/winter-agriculture-v231/checks/full-playwright.config.mjs",
+      "--workers",
+      "2"
+    ],
+    "environment": {},
+    "exit_code": 130,
+    "seconds": 3342.666,
+    "log": "logs/full-browser.log",
+    "log_sha256": "7330fec635ebdc2e17716d57da84be3cc7a71567b4b52047dbb2d00bfe756a0a",
+    "log_bytes": 20773,
+    "original_log_sha256": "30db6486fe09e87106919a604d43fd40e78d2c5155986c8ae8a9d5c26926e684",
+    "results": {
+      "passed": 87
+    }
+  },
+  "historic-1860": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-Bu",
+      "tools/economy-balance/v231_compat.py",
+      "original",
+      "<WORKTREE>/build/winter-agriculture-v231/compatibility/archived-latest.json",
+      "archives",
+      "<HOME>/.codex/worktrees/transport-capacity-v303/Three-Kingdoms2-King-mainland/build/transport-capacity-v303/checks/convoy-1860.json.gz"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "rust",
+      "PYTHONHASHSEED": "0"
+    },
+    "exit_code": 0,
+    "seconds": 54.75,
+    "log": "logs/historic-1860.log",
+    "log_sha256": "826929a451e0ac8e4ce7208523569352202687bd32f5462fe63b95dc75e846b6",
+    "log_bytes": 509,
+    "original_log_sha256": "e2ba80c7464d80227b367ac7b3e6bbcd1ee83fa2c5c832ccc778d67eaf39e2e1",
+    "results": {}
+  },
+  "legacy-v231-rust": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-Bu",
+      "tools/economy-balance/v231_compat.py",
+      "original",
+      "<WORKTREE>/build/winter-agriculture-v231/compatibility/legacy-v231-rust.json",
+      "legacy",
+      "<HOME>/.codex/worktrees/strategic-granary-v3021/Three-Kingdoms2-King-mainland/build/strategic-granary-v3021/checkpoints/chibi-long.json.gz",
+      "<HOME>/.codex/worktrees/strategic-granary-v3021/Three-Kingdoms2-King-mainland/build/strategic-granary-v3021/checkpoints/yellow-long.json.gz",
+      "<HOME>/.codex/worktrees/strategic-granary-v3021/Three-Kingdoms2-King-mainland/build/strategic-granary-v3021/checkpoints/convoy-1228.json.gz",
+      "<HOME>/.codex/worktrees/strategic-granary-v3021/Three-Kingdoms2-King-mainland/build/strategic-granary-v3021/checkpoints/convoy-2170-g2.json.gz",
+      "<HOME>/.codex/worktrees/strategic-granary-v3021/Three-Kingdoms2-King-mainland/build/strategic-granary-v3021/checkpoints/convoy-219.json.gz",
+      "<HOME>/.codex/worktrees/transport-concurrency-v3031/Three-Kingdoms2-King-mainland/build/transport-concurrency-v3031/checks/convoy-3634-turn-711.json.gz",
+      "<HOME>/.codex/worktrees/weather-v222/Three-Kingdoms2-King-mainland/build/weather-v222/reproduction/baseline/convoy-2/checkpoint-40.json.gz",
+      "<HOME>/.codex/worktrees/weather-v222/Three-Kingdoms2-King-mainland/build/weather-v222/reproduction/baseline/convoy-45/checkpoint-970.json.gz",
+      "<HOME>/.codex/worktrees/weather-v222/Three-Kingdoms2-King-mainland/build/weather-v222/reproduction/baseline/convoy-77/checkpoint-910.json.gz"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "rust",
+      "PYTHONHASHSEED": "0"
+    },
+    "exit_code": 0,
+    "seconds": 345.691,
+    "log": "logs/legacy-v231-rust.log",
+    "log_sha256": "a418b31b9a052ac414eb4a919a6fd89131cf9ba15624877f1ebceb079ddafc48",
+    "log_bytes": 1671,
+    "original_log_sha256": "52341ef651dd01485536359e0b56aab9a42b0647feb01c1d5374a4961835b65e",
+    "results": {}
+  },
+  "native-check": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-B",
+      "game/build_march_core.py",
+      "--check"
+    ],
+    "environment": {
+      "RUSTUP_TOOLCHAIN": "1.93.0"
+    },
+    "exit_code": 0,
+    "seconds": 0.596,
+    "log": "logs/native-check.log",
+    "log_sha256": "5819cb5dfe5a37206b3be3c4919417ee169cf5b7ea9a0a869e80a1a1c22be9af",
+    "log_bytes": 529,
+    "original_log_sha256": "fd64cfef90291b6fee7fff5b136d7b3feb475814419a423ccc3f2bd71eb49a10",
+    "results": {}
+  },
+  "node-tests": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "node",
+      "--test",
+      "tests/test_remake_audio.cjs",
+      "tests/test_remake_audio_commands.cjs",
+      "tests/test_remake_autosave.cjs",
+      "tests/test_remake_battle_controls.cjs",
+      "tests/test_remake_battle_enhancement.cjs",
+      "tests/test_remake_battle_fit.cjs",
+      "tests/test_remake_battle_markers.cjs",
+      "tests/test_remake_battle_scene.cjs",
+      "tests/test_remake_battle_view.cjs",
+      "tests/test_remake_battlefields.cjs",
+      "tests/test_remake_browser_boot.cjs",
+      "tests/test_remake_browser_client.cjs",
+      "tests/test_remake_browser_scope.cjs",
+      "tests/test_remake_browser_timings.cjs",
+      "tests/test_remake_calendar_ui.cjs",
+      "tests/test_remake_capacity_ui.cjs",
+      "tests/test_remake_civil_portraits.cjs",
+      "tests/test_remake_civil_staff.cjs",
+      "tests/test_remake_cloud_recovery.cjs",
+      "tests/test_remake_cloud_save.cjs",
+      "tests/test_remake_cloud_ui.cjs",
+      "tests/test_remake_command_books.cjs",
+      "tests/test_remake_delegation_ui.cjs",
+      "tests/test_remake_development_supply_ui.cjs",
+      "tests/test_remake_dialogue.cjs",
+      "tests/test_remake_diplomacy_ui.cjs",
+      "tests/test_remake_duel_appearance.cjs",
+      "tests/test_remake_economy_supply_events.cjs",
+      "tests/test_remake_equipment.cjs",
+      "tests/test_remake_events.cjs",
+      "tests/test_remake_facilities.cjs",
+      "tests/test_remake_i18n_runtime.cjs",
+      "tests/test_remake_library_status.cjs",
+      "tests/test_remake_loading_cover.cjs",
+      "tests/test_remake_map_actions.cjs",
+      "tests/test_remake_map_bridges.cjs",
+      "tests/test_remake_map_navigation.cjs",
+      "tests/test_remake_map_render_cache.cjs",
+      "tests/test_remake_map_terrain.cjs",
+      "tests/test_remake_march_supply.cjs",
+      "tests/test_remake_march_worker.cjs",
+      "tests/test_remake_officer_choices.cjs",
+      "tests/test_remake_officer_controls.cjs",
+      "tests/test_remake_officer_selection.cjs",
+      "tests/test_remake_order_confirm.cjs",
+      "tests/test_remake_original_ui.cjs",
+      "tests/test_remake_placement_ui.cjs",
+      "tests/test_remake_portraits.cjs",
+      "tests/test_remake_preview_factions.cjs",
+      "tests/test_remake_resupply_ui.cjs",
+      "tests/test_remake_road_paths.cjs",
+      "tests/test_remake_route_controls.cjs",
+      "tests/test_remake_route_geometry.cjs",
+      "tests/test_remake_route_options.cjs",
+      "tests/test_remake_save_transfer.cjs",
+      "tests/test_remake_siege_ui.cjs",
+      "tests/test_remake_soldier_assets.cjs",
+      "tests/test_remake_soldier_combat_actions.cjs",
+      "tests/test_remake_soldier_combat_assets.cjs",
+      "tests/test_remake_soldier_scene.cjs",
+      "tests/test_remake_tactic_boundaries.cjs",
+      "tests/test_remake_tactic_effects_ui.cjs",
+      "tests/test_remake_treasure_transport_ui.cjs",
+      "tests/test_remake_treasury.cjs",
+      "tests/test_remake_tutorial.cjs",
+      "tests/test_remake_view_cache.cjs"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 36.902,
+    "log": "logs/node-tests.log",
+    "log_sha256": "e4b323e4c3563ccf61efb905d59cb03b5f60c2271b2a774986f2f82e493a1fa0",
+    "log_bytes": 19061,
+    "results": {
+      "tests": 66,
+      "passed": 66
+    }
+  },
+  "prior-features": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "node",
+      "tests/browser_engine_smoke.mjs",
+      "build/web"
+    ],
+    "environment": {
+      "TK2_REGIONAL_BROWSER_FIXTURE": "<HOME>/.codex/worktrees/regional-economy-v301/Three-Kingdoms2-King-mainland/build/regional-economy-v301/browser-opening-fixture.json",
+      "TK2_GRANARY_BROWSER_FIXTURE": "<HOME>/.codex/worktrees/strategic-granary-v302/Three-Kingdoms2-King-mainland/build/strategic-granary-v302/browser/opening.json",
+      "TK2_TRANSPORT_CAPACITY_BROWSER_FIXTURE": "<HOME>/.codex/worktrees/transport-capacity-v303/Three-Kingdoms2-King-mainland/build/transport-capacity-v303/browser/controlled-chibi-303.json",
+      "TK2_TRANSSHIPMENT_BROWSER_FIXTURE": "<HOME>/.codex/worktrees/transshipment-network-v304/Three-Kingdoms2-King-mainland/build/transshipment-v304/browser-fixture.json"
+    },
+    "exit_code": 0,
+    "seconds": 237.605,
+    "log": "logs/prior-features.log",
+    "log_sha256": "c935986487cc3c721ad9b08db8c2dc1cc1e0ed40da875643e189f52c394460e4",
+    "log_bytes": 1691,
+    "original_log_sha256": "a1e8ac0537ac31f154c4cc7c35cc7a92a1672c44307b27c88179e61866d3aa72",
+    "results": {}
+  },
+  "pyodide": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "node",
+      "tests/browser_engine_smoke.mjs",
+      "build/web"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 165.085,
+    "log": "logs/pyodide.log",
+    "log_sha256": "2a3331081524e47ee8bc31bde3dc398f4198d3cb8b6bdc156bf246b7ec34087c",
+    "log_bytes": 1017,
+    "results": {}
+  },
+  "python-campaign": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_remake_*.py"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "python"
+    },
+    "exit_code": 0,
+    "seconds": 3462.038,
+    "log": "logs/python-campaign.log",
+    "log_sha256": "6cf0f0f79cd1f1131d3ad50e7460a328f7a5d2dc1ad7cf657fa95fb772bb7ea1",
+    "log_bytes": 4529,
+    "results": {
+      "tests": 1977,
+      "skipped": 1
+    }
+  },
+  "resupply-browser": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "node",
+      "tools/browser-tests/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "tools/browser-tests/resupply.config.mjs"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 92.887,
+    "log": "logs/resupply-browser.log",
+    "log_sha256": "6ea01697ae92d4ddefff635ee6b9cc30bf8694853216ba225f517cad2507ab1d",
+    "log_bytes": 1567,
+    "results": {
+      "passed": 4,
+      "skipped": 2
+    }
+  },
+  "rust-campaign": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_remake_*.py"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "rust"
+    },
+    "exit_code": 0,
+    "seconds": 4544.217,
+    "log": "logs/rust-campaign.log",
+    "log_sha256": "ea355df4fbd1dd37c7ee993cd8611188c9a0ddc2ecabfce82d20245bbeaebc63",
+    "log_bytes": 4517,
+    "results": {
+      "tests": 1977
+    }
+  },
+  "rust-crate": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "--manifest-path",
+      "crates/march-core/Cargo.toml"
+    ],
+    "environment": {
+      "RUSTUP_TOOLCHAIN": "1.93.0"
+    },
+    "exit_code": 0,
+    "seconds": 9.759,
+    "log": "logs/rust-crate.log",
+    "log_sha256": "f9c9d87a8598bde830b8446df7fed332e630a75ccce46866cd871d286d247c65",
+    "log_bytes": 2829,
+    "original_log_sha256": "43ebbabe5af085b532abdf648ddcb30b55f98881e58cf7b759d590cd15eca3e8",
+    "results": {
+      "passed": 0
+    }
+  },
+  "rust-fmt": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "cargo",
+      "fmt",
+      "--manifest-path",
+      "crates/march-core/Cargo.toml",
+      "--",
+      "--check"
+    ],
+    "environment": {
+      "RUSTUP_TOOLCHAIN": "1.93.0"
+    },
+    "exit_code": 0,
+    "seconds": 0.213,
+    "log": "logs/rust-fmt.log",
+    "log_sha256": "539f5064798ff75a2603ef49ba0d8243d9e26a7e462142f759fd8eff31d6bc99",
+    "log_bytes": 216,
+    "results": {}
+  },
+  "save-compatibility": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "python3",
+      "-B",
+      "tools/economy-balance/v231_compat.py",
+      "finish",
+      "<WORKTREE>/build/winter-agriculture-v231/compatibility",
+      "<HOME>/.codex/worktrees/winter-climate-agriculture-v23/Three-Kingdoms2-King-mainland/build/winter-agriculture-v23/compatibility"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 0.996,
+    "log": "logs/save-compatibility.log",
+    "log_sha256": "7c89b80c4f9fc37768d6e0f774a0214e79fbac9756570f973488da6b2c51a40a",
+    "log_bytes": 360,
+    "original_log_sha256": "3edae6200613b38f30de59e1461766e7b8aab13052d9a332111b3cda43d0b596",
+    "results": {}
+  },
+  "shortage-replay": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "python3",
+      "-B",
+      "tools/economy-balance/v231_replay.py",
+      "shortage",
+      "<HOME>/.codex/worktrees/winter-climate-agriculture-v23/Three-Kingdoms2-King-mainland/build/winter-agriculture-v231/campaigns/root/F2/208-10-2026-211/checkpoints",
+      "--output",
+      "<WORKTREE>/build/winter-agriculture-v231/replays",
+      "--turns",
+      "9",
+      "--workers",
+      "2"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 834.294,
+    "log": "logs/shortage-replay.log",
+    "log_sha256": "15bba0e109b02dff42a607073da3ad2400ca15f7ee839f901badd9c651b80489",
+    "log_bytes": 435,
+    "original_log_sha256": "650cbb6896824c33141f466b16787189b5116c1b4d6f7f0b995f181a240fc1da",
+    "results": {}
+  },
+  "v231-read-python": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-Bu",
+      "tools/economy-balance/v231_compat.py",
+      "candidate",
+      "<WORKTREE>/build/winter-agriculture-v231/compatibility/candidate-python-reads-rust.json",
+      "--transfers",
+      "<WORKTREE>/build/winter-agriculture-v231/compatibility/rust/saves"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "python",
+      "PYTHONHASHSEED": "0"
+    },
+    "exit_code": 0,
+    "seconds": 12.267,
+    "log": "logs/v231-read-python.log",
+    "log_sha256": "16f8986445e1a7cc37e05195357eb60aa505d0b3322d72f3a0e656264608594a",
+    "log_bytes": 458,
+    "original_log_sha256": "6b1933d40e60abb36983c25258997273aed9afeca258b6579404948e678b11ca",
+    "results": {}
+  },
+  "v231-read-rust": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-Bu",
+      "tools/economy-balance/v231_compat.py",
+      "candidate",
+      "<WORKTREE>/build/winter-agriculture-v231/compatibility/candidate-rust-reads-python.json",
+      "--transfers",
+      "<WORKTREE>/build/winter-agriculture-v231/compatibility/python/saves"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "rust",
+      "PYTHONHASHSEED": "0"
+    },
+    "exit_code": 0,
+    "seconds": 13.671,
+    "log": "logs/v231-read-rust.log",
+    "log_sha256": "6a12d7bb0e2f65ab2f29354e7ded93a6600aca4ac9d0729023bec3b51179f119",
+    "log_bytes": 458,
+    "original_log_sha256": "52b98aae3ec293a0ea5c48a5c79f0a0c9963c5895c7dec61b1602f9107bd9a6c",
+    "results": {}
+  },
+  "v231-write-python": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-Bu",
+      "tools/economy-balance/v231_compat.py",
+      "candidate",
+      "<WORKTREE>/build/winter-agriculture-v231/compatibility/python/trace.json"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "python",
+      "PYTHONHASHSEED": "0"
+    },
+    "exit_code": 0,
+    "seconds": 60.95,
+    "log": "logs/v231-write-python.log",
+    "log_sha256": "3bf6643d2e2efe173652ad814d4bb2d7ddad7a6a737d9a79c6f085ab2069b759",
+    "log_bytes": 359,
+    "original_log_sha256": "af31cab114a7b9e80cc4a352ac5b6e6b5ad246bf9a67511eeb05684e4cea2d48",
+    "results": {}
+  },
+  "v231-write-rust": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-Bu",
+      "tools/economy-balance/v231_compat.py",
+      "candidate",
+      "<WORKTREE>/build/winter-agriculture-v231/compatibility/rust/trace.json"
+    ],
+    "environment": {
+      "MARCH_CORE_BACKEND": "rust",
+      "PYTHONHASHSEED": "0"
+    },
+    "exit_code": 0,
+    "seconds": 75.648,
+    "log": "logs/v231-write-rust.log",
+    "log_sha256": "34799a3c8fc14876b4b9cacda5529d20bc9bd87665fa0625fb7bda9bd939354e",
+    "log_bytes": 355,
+    "original_log_sha256": "6ecf9e39ad203480587ff0b5f25b0b473a064d733b78b0ebe1bd4db8b261dd3e",
+    "results": {}
+  },
+  "wasm-parity": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "node",
+      "tests/march_wasm_parity.cjs"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 43.573,
+    "log": "logs/wasm-parity.log",
+    "log_sha256": "57c419f932cbce1b0cd5dd96e389586e8425909c25831c6c55e5727367e0019b",
+    "log_bytes": 244,
+    "results": {
+      "tests": 24689
+    }
+  },
+  "web-build": {
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+      "-B",
+      "game/build_web.py",
+      "--output",
+      "build/web"
+    ],
+    "environment": {},
+    "exit_code": 0,
+    "seconds": 25.988,
+    "log": "logs/web-build.log",
+    "log_sha256": "d32f3daf7d593f227288480a54204fa01a011002089b52d15265e12e31ea0e08",
+    "log_bytes": 432,
+    "original_log_sha256": "fce3819a7e36f8088de4c3a6b6f2d3884653f68f13b90e539ef6d8734ceebf25",
+    "results": {}
+  }
+}

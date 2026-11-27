@@ -1,0 +1,12 @@
+{
+  "game_source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+  "source_files": {
+    "tests/browser_ui.spec.mjs": "eec7532b021ceac26fcb432fad12adf9c1b5308dd44bdf69c0721a227da093ce",
+    "tests/browser_soldier_ui.spec.mjs": "c82a0fd513d6ca090fad1c57587f435b7dfbb98b17ead17e64b52063a550e9cd",
+    "tests/browser_winter_agriculture_smoke.mjs": "ce4a833439190b6400b04d9de05abe162c3030fda0d610f9da0df5e222177201",
+    "tools/browser-tests/playwright.config.mjs": "a044e3a564e3ec80074f7405f60dca074115d11445a5ba4559a79fd490ee6212",
+    "tools/browser-tests/cases.json": "470ac44bc59a8233b6c17ae61860015b386aef19e0aa02907ed4c4809d76edb7"
+  },
+  "catalog_count": 29,
+  "case_registry": 55
+}

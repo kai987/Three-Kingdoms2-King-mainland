@@ -1,0 +1,489 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 743,
+      "sha256": "ad17e41c5967c074cb06133e3cfea56efa6b867ed702cd9249020ff4bb2ec262"
+    },
+    {
+      "path": "checks/baseline-identity.json",
+      "bytes": 691,
+      "sha256": "52762daf4019b3f274cf4d572b9bb0adac488fd655a6267a645b776851e429f2"
+    },
+    {
+      "path": "checks/browser-test-source.json",
+      "bytes": 685,
+      "sha256": "77f6a77df050198158060d3d70d8a84585cd1f6a3ef34828e91198eefdd78d42"
+    },
+    {
+      "path": "checks/compatibility.json",
+      "bytes": 17818,
+      "sha256": "4be9bb36dc1060e778f668aea1e3baf68b7f74dc4e2e9121e36f417b5112b007"
+    },
+    {
+      "path": "checks/detailed-ledger-identity.json",
+      "bytes": 1233,
+      "sha256": "378b55380013f18da27fd987d589b48fd26ccc24bd79ca0ea7c8d28c3238ed14"
+    },
+    {
+      "path": "checks/forecast-performance.json",
+      "bytes": 120980,
+      "sha256": "15f78487b20958d5bf5f78bd3f29e19144e71ba8017dc06c52ffefb656aece54"
+    },
+    {
+      "path": "checks/historical-convoy-2.json",
+      "bytes": 14363,
+      "sha256": "ec82c8fa839ec35fb44e88886c241e9eb9c212599ad01c0d8f3a2d844814000a"
+    },
+    {
+      "path": "checks/observer-equivalence.json",
+      "bytes": 246,
+      "sha256": "966f5a20ed2a501e09177a245cd6a422ea11a40b9bc8cfca81d66d386b438fe2"
+    },
+    {
+      "path": "checks/screenshots/ja-route-forecast.png",
+      "bytes": 8138,
+      "sha256": "d7771aa158b784a3174db0e0a83fa7f434fc4bf394d93fa2758b7e1b36c971b0"
+    },
+    {
+      "path": "checks/screenshots/ja-winter-agriculture.png",
+      "bytes": 26238,
+      "sha256": "bd8801d933e8b0ac87239b9b687438d98a585eeec9936b03ebf1ca92990b4e5f"
+    },
+    {
+      "path": "checks/screenshots/zh-Hant-route-forecast.png",
+      "bytes": 4135,
+      "sha256": "161fbffc61a6cb3ae80c77b91edac4520dc196462cec70859f7cfbb981671a6c"
+    },
+    {
+      "path": "checks/screenshots/zh-Hant-winter-agriculture.png",
+      "bytes": 14957,
+      "sha256": "126c097b3d663d31f28d8338cc7f8b798eab08584f1a14d67d00b9c995c99e9a"
+    },
+    {
+      "path": "checks/shortage-replay-detail.json",
+      "bytes": 434816,
+      "sha256": "414475fd7f5cd03f67ebe7b69d59709c7085b2107b1f297e73943f4d620a04a2"
+    },
+    {
+      "path": "checks/technical-gates.json",
+      "bytes": 22401,
+      "sha256": "9bf2928a3170d22575e3d6051f8f843e7234d9f73cfe9741b30042f86e0f8c2e"
+    },
+    {
+      "path": "data/adverse-cross-month-route-prediction.csv",
+      "bytes": 72910,
+      "sha256": "7a6e93f5f88110ae24bf7298bdacdca063cd8fa50e95fed6447cad4d57d5c48a"
+    },
+    {
+      "path": "data/adverse-fixed-route-manifest.json",
+      "bytes": 288,
+      "sha256": "6deee2465cbaf375f89b303459bf1f434bcab73ad6c0b26ce33a66351767e3cd"
+    },
+    {
+      "path": "data/agricultural-weather-identity.csv",
+      "bytes": 3110,
+      "sha256": "2aecefba3c28f43e91a279134fbca3b6fe439baffc26054dff99357871dabd2d"
+    },
+    {
+      "path": "data/agricultural-year-summary.csv",
+      "bytes": 304019,
+      "sha256": "b8f30ae837a16892a09c391badcd58993f30a1833a626256e46d1d723af5f9a4"
+    },
+    {
+      "path": "data/agriculture-risk-preparation-ablation.csv",
+      "bytes": 451,
+      "sha256": "4d2f83b3b7b60e9f51e6ee6f912090013f5a584df1ddb1a40a47c08a0b631bde"
+    },
+    {
+      "path": "data/agriculture-risk-preparation-detail.csv",
+      "bytes": 890,
+      "sha256": "ca88f119a70b5d0188b02e5b3a089875b3e07f05880fbfdbd9529fa3c767ffa7"
+    },
+    {
+      "path": "data/agriculture-risk-preparation-ledger.csv",
+      "bytes": 818,
+      "sha256": "c9fa2962546245528f12424760d4f14c3fabb349bc00af240d7bcfc00bea6246"
+    },
+    {
+      "path": "data/balance-alerts.csv",
+      "bytes": 32838,
+      "sha256": "2bf76ab03cc8ae057f3f7426fc7efa2c2d60513caa34396b2599d77cdd2d11ae"
+    },
+    {
+      "path": "data/calibrate-cross-month-route-prediction.csv",
+      "bytes": 70781,
+      "sha256": "3ccc307b96fcd09dea1057c9972ec094a8f1ec3537021c83b33cdfbe94226c23"
+    },
+    {
+      "path": "data/calibrate-fixed-route-manifest.json",
+      "bytes": 290,
+      "sha256": "2976b45ec2b518a20d1d77d141cdca8aec6a32fee7da847dc00c7e95369c2233"
+    },
+    {
+      "path": "data/calibrate-monthly-weather-joint-distribution.csv",
+      "bytes": 260331,
+      "sha256": "740ea8bba96ec654bed6c9045e003936141e1eda2d3afbeec5a73eded4f8226e"
+    },
+    {
+      "path": "data/calibrate-normals-manifest.json",
+      "bytes": 361,
+      "sha256": "b057e191e5c0d1355965594a5c07e605eeaf85e40030b40b28096ddbb552ef8f"
+    },
+    {
+      "path": "data/channel-transport-actual-ledger.csv",
+      "bytes": 1807323,
+      "sha256": "6f294f11cd1070bdbd66c4e3362803bbc067834651efc168d47522a6c95dac42"
+    },
+    {
+      "path": "data/city-shortage-checkpoint-replay.csv",
+      "bytes": 5532,
+      "sha256": "5db72ee2628e976469f4eab70b316106cc1b593e76779523c404dc17ff9f2c34"
+    },
+    {
+      "path": "data/city-shortage-checkpoints.csv",
+      "bytes": 1473,
+      "sha256": "3b669c7583940cd78064d6b8fe59970d43042383e1fcabf32a8bb23043e0bfb4"
+    },
+    {
+      "path": "data/climate-forecast-adverse.csv",
+      "bytes": 858,
+      "sha256": "1303e705acc253d95074f2c45d3daf6d63cb80039871e982618df5a9eb712f92"
+    },
+    {
+      "path": "data/climate-forecast-calibrate.csv",
+      "bytes": 843,
+      "sha256": "d95198452ce261637060436938c24f207bb179d04373c87d059a284a7dfc87dc"
+    },
+    {
+      "path": "data/climate-forecast-holdout.csv",
+      "bytes": 915,
+      "sha256": "8508cad188d8a25deee0aa79ecdc7a81b55f94328673fa02bd02e7f868299407"
+    },
+    {
+      "path": "data/controlled-route-service-level.csv",
+      "bytes": 62860,
+      "sha256": "d32995ce1967f88012ba25cb868252e0006d44df5d117636fa7ebe84df77671b"
+    },
+    {
+      "path": "data/convoy-hunger-comparison.csv",
+      "bytes": 2146,
+      "sha256": "eda1652b146722068d04a9bbd54244d40a2f3d0d55f743036e77f1cc1bcb7760"
+    },
+    {
+      "path": "data/convoy-return-safety.csv",
+      "bytes": 3172,
+      "sha256": "46e639a9c38715112eb9add8c1340aea05ea8b16fd9d7b55993b3eb6a84c8165"
+    },
+    {
+      "path": "data/cross-month-route-prediction.csv",
+      "bytes": 218742,
+      "sha256": "60a5746457632bb051371f9e7d69362aa878110ac189d6dc6571633911dc4b75"
+    },
+    {
+      "path": "data/cross-month-snowpack-forecast.csv",
+      "bytes": 7329,
+      "sha256": "f6623383b72d7d7930d9f64559b376a18e8d6aad315d9f8318d8f91917fa8c2b"
+    },
+    {
+      "path": "data/forecast-double-count-audit.csv",
+      "bytes": 68178,
+      "sha256": "de4dd3faf89f4e11d5567ddb6f92eaab1a36d53a0e1c70946db3ebc7a57255fb"
+    },
+    {
+      "path": "data/forecast-performance-profile.csv",
+      "bytes": 3754,
+      "sha256": "4be75c28b688156147c61ecacbbe4bb99df6f1608a383bf8d99aa633be2a8f15"
+    },
+    {
+      "path": "data/historical-transport-replay-index.csv",
+      "bytes": 2940,
+      "sha256": "ac7cdcbd608d156123f06cb0c3ad2ada26e6490f2c075378809f2013336fd351"
+    },
+    {
+      "path": "data/holdout-comparison.csv",
+      "bytes": 2468,
+      "sha256": "3d64caa7800fab7aab14eb9cae2bc03de8b9c681e91bb27e618792406448ce1b"
+    },
+    {
+      "path": "data/holdout-cross-month-route-prediction.csv",
+      "bytes": 72917,
+      "sha256": "793825e5154cb76713dd00127ea689633325a38ed73c4384b1dcbde225498b07"
+    },
+    {
+      "path": "data/holdout-fixed-route-manifest.json",
+      "bytes": 288,
+      "sha256": "922a84db73d871b7f861cd5651ec051c9f6e5966a127cdb44c17ea724009368d"
+    },
+    {
+      "path": "data/holdout-monthly-weather-joint-distribution.csv",
+      "bytes": 260304,
+      "sha256": "a39517fb2e11fa3385e1e96e17d617de2351a91845a9b67a74d3ee5ecc09bf05"
+    },
+    {
+      "path": "data/holdout-normals-manifest.json",
+      "bytes": 359,
+      "sha256": "42fa8f970a0ec8e7c579c8d1b3c42118d27777b6f8becb544763f41817455ae5"
+    },
+    {
+      "path": "data/long-term-economy-comparison.csv",
+      "bytes": 3838,
+      "sha256": "55fc831fc5b9e48b7edccdc92bcd26f6a2963af77536a6c8a7f61425695a4aa5"
+    },
+    {
+      "path": "data/military-grain-receipt-ledger.csv",
+      "bytes": 1629343,
+      "sha256": "b9b45247ca0f0be160b2f6d199b50303a47f1930b6ed3e8f377374fa5cc00138"
+    },
+    {
+      "path": "data/military-grain-request-ledger.csv",
+      "bytes": 2601167,
+      "sha256": "ff6873949ed10cc269c27108e1f5cef5e209e7f6593ba038e20d5e712dda032d"
+    },
+    {
+      "path": "data/military-planning-evaluations.csv",
+      "bytes": 991116,
+      "sha256": "ae06a7ebff2bfcfdb3e1ba59c563e6e6d73120210d353b76c8e3ed862905f748"
+    },
+    {
+      "path": "data/monthly-weather-joint-distribution.csv",
+      "bytes": 554095,
+      "sha256": "82f837d8e90be80ad10748ce7ceb88b22a17bbbd262493555a31c48fe8bc86f8"
+    },
+    {
+      "path": "data/pairwise.csv",
+      "bytes": 17195,
+      "sha256": "4e65a619fa1770af8a276f069d18ef02cd96a58edbd3163eadb9bd7b4a8433c2"
+    },
+    {
+      "path": "data/performance-comparison.csv",
+      "bytes": 10254,
+      "sha256": "8c54c88b6f791a4039fb658439c85f29ea9d4e73127144cab74d7e221b1e562f"
+    },
+    {
+      "path": "data/prior-nine-turn-city-grain-postings.csv",
+      "bytes": 123021,
+      "sha256": "de9ab09508101b1a39a60cb03248977cf0b42204241ba84b913dbff1fca6165f"
+    },
+    {
+      "path": "data/prior-nine-turn-city-shortage-context.csv",
+      "bytes": 54305,
+      "sha256": "8f5332b29ea50a1546111b8064350c2604b7949b526a869098bea3de19694db5"
+    },
+    {
+      "path": "data/regional-agriculture-overview.csv",
+      "bytes": 1875839,
+      "sha256": "30a1b629c72e273e19e565966c2f541a1c336a18f897310716a837942bfa971e"
+    },
+    {
+      "path": "data/regional-climate-economic-balance.csv",
+      "bytes": 54774,
+      "sha256": "f5187c36b80ac20b96b7a3b0b61675c22e38ecb59e7b596f506c0d549e638298"
+    },
+    {
+      "path": "data/regional-grain-flow-account.csv",
+      "bytes": 3885584,
+      "sha256": "ef155ae2a24b44988ff87f2327fdd3db7c6b1830bbbdedf24ef342c5e5da5c97"
+    },
+    {
+      "path": "data/report-status.json",
+      "bytes": 25014,
+      "sha256": "9a11f0a920d8ccf9b6eb9cf9059c40a1c8b285ccea9c864d04ac6cece567e46d"
+    },
+    {
+      "path": "data/river-freeze-forecast-comparison.csv",
+      "bytes": 40260,
+      "sha256": "6b771e756e5dfca32bc6b0e018b0ac3abc2914488d051b2bc1353cd5158dd37d"
+    },
+    {
+      "path": "data/route-cargo-loss-forecast.csv",
+      "bytes": 38898,
+      "sha256": "fd34e6387d6554deb2bac69242148d1328cf6a4ce7271e15ace3845f1b9bc0db"
+    },
+    {
+      "path": "data/route-eta-error-comparison.csv",
+      "bytes": 693,
+      "sha256": "c5fcf8f45342eb766765fb0ebd54ce2e6d248e76a752b2867285d733e5bea8c1"
+    },
+    {
+      "path": "data/route-ration-error-comparison.csv",
+      "bytes": 1432,
+      "sha256": "6a5807fb982ce592621b235f51783b2a9f8f2e228d96d49d964e16fe0a766bd4"
+    },
+    {
+      "path": "data/scenario-scores.csv",
+      "bytes": 14176,
+      "sha256": "22c923d8d0a3181f1954e4fe22813b340b23a3a7c562950f044a0260257b3797"
+    },
+    {
+      "path": "data/simulation-manifest.json",
+      "bytes": 566558,
+      "sha256": "452491f842b7cd64d33f041d1740e41060fe4f17e9660e523ad2b870641903a3"
+    },
+    {
+      "path": "data/southern-basin-shortage-root-cause.csv",
+      "bytes": 4840,
+      "sha256": "70fe57f1c3a6859a01f6ab1e09c61ff0a23a1ff6436928be201e75715ae90b2a"
+    },
+    {
+      "path": "data/unmet-military-demand.csv",
+      "bytes": 197380,
+      "sha256": "2fe2b38bd2e0f693ebe246a58675d67fa1b38ee3cd16de55e6244dd00f5a410a"
+    },
+    {
+      "path": "data/visible-snowpack-conditionals.csv",
+      "bytes": 22584,
+      "sha256": "1392afc2133032e2c69185d28430c5c0a143d16d5ca2313b87436417a47ea1bc"
+    },
+    {
+      "path": "data/weather-cargo-loss-audit.csv",
+      "bytes": 5397,
+      "sha256": "1450585a9e9a7c443cf350c084796cf5533c3c571b08e5d385e1cc3670376f3f"
+    },
+    {
+      "path": "data/winter-grain-timely-comparison.csv",
+      "bytes": 7249,
+      "sha256": "8f9e5a20732c019d59f32a8f9ee636c448cb459a81d7b605e82ddc9429e41631"
+    },
+    {
+      "path": "data/winter-order-timely-comparison.csv",
+      "bytes": 17855,
+      "sha256": "b6b809e02c1b330182c25453dee95bcb710798a1c419aec1789115b7d50b109e"
+    },
+    {
+      "path": "docs/README.md",
+      "bytes": 706,
+      "sha256": "d7fcb84824c8ff844df6796bf380566933278c0bb730154a93301b17f0022140"
+    },
+    {
+      "path": "docs/acceptance-answers.md",
+      "bytes": 2598,
+      "sha256": "590d636e58c0d34939bb66537009b32281d161f4f53185363a1d72f047bb800a"
+    },
+    {
+      "path": "docs/agricultural-preparation-review.md",
+      "bytes": 796,
+      "sha256": "6ce3264fe35d1d5920c0493193f05efe3100128147c07bbcd880822d5fc8e038"
+    },
+    {
+      "path": "docs/baseline-and-frozen-rules.md",
+      "bytes": 2204,
+      "sha256": "962d5562e486f305b17aaeb844262e6241d46f82251030ec2a744efa5fc6d8ed"
+    },
+    {
+      "path": "docs/data-dictionary.md",
+      "bytes": 2568,
+      "sha256": "1fccae40453797939a95f5fd284ce79c6d12e2abef8a64aa2717dba5c82f75f4"
+    },
+    {
+      "path": "docs/forecast-calibration-results.md",
+      "bytes": 1907,
+      "sha256": "f33bf7edae8985e8bfc2f1194dec9bfecbef1bc9721a32d6909ac809de592187"
+    },
+    {
+      "path": "docs/historical-transport-review.md",
+      "bytes": 567,
+      "sha256": "97b44e7fe0c85329668cc11cfa1028dd1e9b4da55974005e52c9099262bdbc5a"
+    },
+    {
+      "path": "docs/known-issues.md",
+      "bytes": 1011,
+      "sha256": "aebd9c148b254237a0119e25ee646d9011a578032d1bd75dfc6229059382f4eb"
+    },
+    {
+      "path": "docs/long-term-balance-results.md",
+      "bytes": 2525,
+      "sha256": "409281e45f763acf88711a54cb03ed8e1873379cf3f906954b2725f60ed473cc"
+    },
+    {
+      "path": "docs/military-supply-metric-definitions.md",
+      "bytes": 1347,
+      "sha256": "62e38a146073484cd6de01623e69b61653eb6ccb41c25ece63c7bba79543de42"
+    },
+    {
+      "path": "docs/military-supply-results.md",
+      "bytes": 2134,
+      "sha256": "7fe89f1949914f6ea2bea7ca18167db9662de013924986e83e1e04c270cf9720"
+    },
+    {
+      "path": "docs/next-stage-readiness.md",
+      "bytes": 536,
+      "sha256": "42be3bb61410a2fb02927fbdc768506daae38ad7dece1269e0c7a27fa037c3ff"
+    },
+    {
+      "path": "docs/performance-results.md",
+      "bytes": 1781,
+      "sha256": "6bf6608fc1cd6e1d25f434d75e2857ef77512c3cfbbbac0442c7c453f501ac9c"
+    },
+    {
+      "path": "docs/route-forecast-design.md",
+      "bytes": 1461,
+      "sha256": "e8015b59e855eba25f21411ab53f1c2077b7e468b514628011b6521a8146c332"
+    },
+    {
+      "path": "docs/southern-basin-shortage-root-cause.md",
+      "bytes": 5020,
+      "sha256": "ec2df6f8d9bd8eee111146d0d809f313c94d0900aca0de6c7b301436ca3b9fcd"
+    },
+    {
+      "path": "docs/validation-results.md",
+      "bytes": 2827,
+      "sha256": "7e5dc9a9ef3cb15b362c966037fd05d8bc0a577cb73ed0ffc679d05ed41d03bc"
+    },
+    {
+      "path": "sources/v231_compat.py",
+      "bytes": 5548,
+      "sha256": "d686f59359c7c701c263f8f8dfc2885ee46f7a8fbdd2286074be550082c8ec62"
+    },
+    {
+      "path": "sources/v231_ledger.py",
+      "bytes": 5726,
+      "sha256": "816bcb1fb64a45198be47710fe0a64763e85d33c369221c881ac11c91146d67c"
+    },
+    {
+      "path": "sources/v231_normals.py",
+      "bytes": 7161,
+      "sha256": "f75c216d9cf954ec7d53169c609496ab743111022a7b34752a0b0bc7220e9a20"
+    },
+    {
+      "path": "sources/v231_observe.py",
+      "bytes": 15801,
+      "sha256": "47f5e8b93a2fbc15894d578a6f0cfda3b51c2a0bfeb3ebf1a961c7729fbc263d"
+    },
+    {
+      "path": "sources/v231_package.py",
+      "bytes": 4873,
+      "sha256": "b7e014c7f0057cfea609d58fe1742b6d66e95366d2b3d1a6cef2aefec2c3723f"
+    },
+    {
+      "path": "sources/v231_replay.py",
+      "bytes": 11120,
+      "sha256": "5b6f3e061aafc55333881c61c281e8ea80575a8614563c017cb5ed73a5c43980"
+    },
+    {
+      "path": "sources/v231_report.py",
+      "bytes": 73001,
+      "sha256": "46e10e97156b8b0237342245c0a368fcb8d68ae3bbe6cbc63cbe218a1b648af4"
+    },
+    {
+      "path": "sources/v231_routes.py",
+      "bytes": 10284,
+      "sha256": "948ce2036164cd088e673322539e95718cdb5db90401c7b94e96f486c64a6ec9"
+    },
+    {
+      "path": "sources/v231_verify.py",
+      "bytes": 4778,
+      "sha256": "c63b9165fdad51df1c2609001d3199dcfa2d4b68f3f9f4a34e120037b442bce8"
+    },
+    {
+      "path": "sources/winter_forecast.py",
+      "bytes": 13684,
+      "sha256": "55264f646fe3b47a47f4c8fb2f0a8cf012d6bbd0f53269dc4e46fd65577ae5dc"
+    },
+    {
+      "path": "sources/winter_forecast_normals.py",
+      "bytes": 121955,
+      "sha256": "b8778a03a59ebe509de04346d9c35d8d8eb9b357c51e45770a09efa67a62c0b6"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+wave,group,scenario,seed,strategy,turn,year,month,owner,city,method,grain,deadline
+five,F2,208-10,2026,211,58,210,5,wei,xincheng,market,312,67
+five,F4,208-10,2026,211,59,210,5,wei,xincheng,market,312,68
+five,F4,208-10,2026,212,59,210,5,ma_teng,tianshui,market,3,68
+long,F4,184-02,2026,211,479,197,5,han,liaodong,granary,931,486
+long,F4,208-10,2026,211,59,210,5,wei,xincheng,market,312,68
+long,F4,208-10,2026,211,271,216,4,liu_zhang,jiameng,market,7,279
+long,F4,208-10,2026,212,59,210,5,ma_teng,tianshui,market,3,68
+long,F4,208-10,2026,212,700,228,3,wu,lujiang,market,5,709
+quick,F2,208-10,2026,211,58,210,5,wei,xincheng,market,312,67
+quick,F4,208-10,2026,211,59,210,5,wei,xincheng,market,312,68
+quick,F4,208-10,2026,212,59,210,5,ma_teng,tianshui,market,3,68
+long,F2,208-10,2026,211,58,210,5,wei,xincheng,market,312,67

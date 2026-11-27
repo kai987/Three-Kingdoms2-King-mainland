@@ -1,0 +1,30 @@
+{
+  "F2": {
+    "domain_sha256": "3aa12de952ef46f14d69487781680b514a7fa2e18fa86d74561a11e1499f2e59",
+    "rng": {
+      "state": 2269676860,
+      "draws": 72533
+    },
+    "macro": {
+      "monthly.csv": "ef64df5c447d52b971efe7d80b1e2db26083cbabe730c346a69975a377373114",
+      "factions.csv": "a40cd3943d3e69a2162510db81a1a4fc7536bc679cf2f77f585457da58e2292e",
+      "cities.csv": "e2f24d7e95ca45f9678022a6e7abdbd1a3075c23121945bf0b926f3d73deb50f"
+    },
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "detail_observer_sha256": "816bcb1fb64a45198be47710fe0a64763e85d33c369221c881ac11c91146d67c"
+  },
+  "F4": {
+    "domain_sha256": "1b30d8868b9131f289014d93da8556a64240df27feef59535d9b7aa611c9f2f0",
+    "rng": {
+      "state": 1954642347,
+      "draws": 82504
+    },
+    "macro": {
+      "monthly.csv": "cb4f62bb28c7df4628f7282b2b2b6b0bd6b2c029a7d8d972cde18a9ca53beeb1",
+      "factions.csv": "05413c6f413bd3f1af1783f5f5333b7d79b604fcc41e5afda7f371219895db3e",
+      "cities.csv": "19c959d51e3f34a07fd3767d60258319bff1368331f1497b70249b0eb38220e9"
+    },
+    "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+    "detail_observer_sha256": "816bcb1fb64a45198be47710fe0a64763e85d33c369221c881ac11c91146d67c"
+  }
+}

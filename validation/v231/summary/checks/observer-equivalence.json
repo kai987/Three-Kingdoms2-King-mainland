@@ -1,0 +1,10 @@
+{
+  "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+  "six_turns": true,
+  "domain_sha256": "8f52851eb75cbcaffe09715b2cfcb33844230c41e5963e144b0fda7b6e3ae792",
+  "rng": {
+    "state": 1568446612,
+    "draws": 274
+  },
+  "identical": true
+}

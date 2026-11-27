@@ -1,0 +1,23 @@
+{
+  "source": "5c294c92b3057a7e2073549f4b56fa7a2b1f85bb",
+  "monthly_tables": {
+    "monthly.csv": {
+      "identical": true,
+      "sha256": "ef64df5c447d52b971efe7d80b1e2db26083cbabe730c346a69975a377373114"
+    },
+    "factions.csv": {
+      "identical": true,
+      "sha256": "a40cd3943d3e69a2162510db81a1a4fc7536bc679cf2f77f585457da58e2292e"
+    },
+    "cities.csv": {
+      "identical": true,
+      "sha256": "e2f24d7e95ca45f9678022a6e7abdbd1a3075c23121945bf0b926f3d73deb50f"
+    }
+  },
+  "canonical_domain_sha256": "3aa12de952ef46f14d69487781680b514a7fa2e18fa86d74561a11e1499f2e59",
+  "rng": {
+    "state": 2269676860,
+    "draws": 72533
+  },
+  "baseline_completely_identical": true
+}

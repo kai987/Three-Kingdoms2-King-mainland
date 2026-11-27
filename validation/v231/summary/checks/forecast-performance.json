@@ -1,0 +1,4505 @@
+{
+  "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+  "samples": [
+    {
+      "checkpoint": "terminal-save.json.gz",
+      "checkpoint_sha256": "0b63d1169f6b5c51024ece1887a82b26927650d723f6fde48293aa59a1dbd07e",
+      "group": "F2",
+      "observation": false,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 3.833755,
+      "p95_cpu": 4.402289,
+      "median_wall": 6.8605566250626,
+      "p95_wall": 8.623162334086373,
+      "forecast_calls": 0,
+      "cache_hits": 0,
+      "route_search_calls": 444,
+      "candidate_routes": 159,
+      "estimate_calls": 0,
+      "mean_estimate_cpu_s": null,
+      "peak_rss": 145293312,
+      "final": {
+        "turn": 724,
+        "rng": {
+          "state": 685832404,
+          "draws": 88948
+        },
+        "domain_sha256": "9c54cf469042cfcd3bc18b4e4ebf0338c8bcc0477b5abafeebe0e10e77ca53a6"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "4f45a6e25ee8ff989d21749fe524b4f1a78ae5511199b08ba516529c933fb0fa"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "9c54cf469042cfcd3bc18b4e4ebf0338c8bcc0477b5abafeebe0e10e77ca53a6"
+          },
+          "cpu": [
+            4.296984,
+            3.4975630000000004,
+            3.833755
+          ],
+          "wall": [
+            8.623162334086373,
+            6.405469750054181,
+            7.31791429198347
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 145293312,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "4f45a6e25ee8ff989d21749fe524b4f1a78ae5511199b08ba516529c933fb0fa"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "9c54cf469042cfcd3bc18b4e4ebf0338c8bcc0477b5abafeebe0e10e77ca53a6"
+          },
+          "cpu": [
+            4.358734999999998,
+            3.453778,
+            3.7428929999999987
+          ],
+          "wall": [
+            7.245101582957432,
+            5.59685012511909,
+            6.637661458225921
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 145293312,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "4f45a6e25ee8ff989d21749fe524b4f1a78ae5511199b08ba516529c933fb0fa"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "9c54cf469042cfcd3bc18b4e4ebf0338c8bcc0477b5abafeebe0e10e77ca53a6"
+          },
+          "cpu": [
+            4.402289,
+            3.7350449999999995,
+            3.9271790000000024
+          ],
+          "wall": [
+            7.6876664170995355,
+            6.8605566250626,
+            6.80626150011085
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 145293312,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "terminal-save.json.gz",
+      "checkpoint_sha256": "0b63d1169f6b5c51024ece1887a82b26927650d723f6fde48293aa59a1dbd07e",
+      "group": "F2",
+      "observation": true,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 3.8466750000000047,
+      "p95_cpu": 4.845587000000002,
+      "median_wall": 7.419381749816239,
+      "p95_wall": 11.019437209004536,
+      "forecast_calls": 0,
+      "cache_hits": 0,
+      "route_search_calls": 444,
+      "candidate_routes": 159,
+      "estimate_calls": 0,
+      "mean_estimate_cpu_s": null,
+      "peak_rss": 145293312,
+      "final": {
+        "turn": 724,
+        "rng": {
+          "state": 685832404,
+          "draws": 88948
+        },
+        "domain_sha256": "9c54cf469042cfcd3bc18b4e4ebf0338c8bcc0477b5abafeebe0e10e77ca53a6"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "4f45a6e25ee8ff989d21749fe524b4f1a78ae5511199b08ba516529c933fb0fa"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "9c54cf469042cfcd3bc18b4e4ebf0338c8bcc0477b5abafeebe0e10e77ca53a6"
+          },
+          "cpu": [
+            4.845587000000002,
+            3.6150909999999996,
+            3.7232289999999963
+          ],
+          "wall": [
+            11.019437209004536,
+            6.603869917104021,
+            5.795344791840762
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "anding",
+              "convoy": 3115,
+              "channel": "ordinary",
+              "grain": 1639
+            },
+            {
+              "turn": 722,
+              "city": "badong",
+              "convoy": 3125,
+              "channel": "ordinary",
+              "grain": 131
+            },
+            {
+              "turn": 722,
+              "city": "dongping",
+              "convoy": 3131,
+              "channel": "ordinary",
+              "grain": 607
+            },
+            {
+              "turn": 722,
+              "city": "fufeng",
+              "convoy": 3135,
+              "channel": "ordinary",
+              "grain": 2023
+            },
+            {
+              "turn": 722,
+              "city": "danyang",
+              "convoy": 3137,
+              "channel": "strategic_granary",
+              "grain": 4509
+            },
+            {
+              "turn": 723,
+              "city": "qichun",
+              "convoy": 3133,
+              "channel": "strategic_granary",
+              "grain": 439
+            },
+            {
+              "turn": 724,
+              "city": "dongjun",
+              "convoy": 3107,
+              "channel": "ordinary",
+              "grain": 503
+            },
+            {
+              "turn": 724,
+              "city": "zitong",
+              "convoy": 3136,
+              "channel": "regional_market",
+              "grain": 459
+            },
+            {
+              "turn": 724,
+              "city": "nanyang",
+              "convoy": 3141,
+              "channel": "ordinary",
+              "grain": 74
+            }
+          ],
+          "peak_rss": 145293312,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "4f45a6e25ee8ff989d21749fe524b4f1a78ae5511199b08ba516529c933fb0fa"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "9c54cf469042cfcd3bc18b4e4ebf0338c8bcc0477b5abafeebe0e10e77ca53a6"
+          },
+          "cpu": [
+            4.448062999999998,
+            3.5006899999999987,
+            3.890007000000004
+          ],
+          "wall": [
+            8.088161749998108,
+            5.705456707859412,
+            7.724482707912102
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "anding",
+              "convoy": 3115,
+              "channel": "ordinary",
+              "grain": 1639
+            },
+            {
+              "turn": 722,
+              "city": "badong",
+              "convoy": 3125,
+              "channel": "ordinary",
+              "grain": 131
+            },
+            {
+              "turn": 722,
+              "city": "dongping",
+              "convoy": 3131,
+              "channel": "ordinary",
+              "grain": 607
+            },
+            {
+              "turn": 722,
+              "city": "fufeng",
+              "convoy": 3135,
+              "channel": "ordinary",
+              "grain": 2023
+            },
+            {
+              "turn": 722,
+              "city": "danyang",
+              "convoy": 3137,
+              "channel": "strategic_granary",
+              "grain": 4509
+            },
+            {
+              "turn": 723,
+              "city": "qichun",
+              "convoy": 3133,
+              "channel": "strategic_granary",
+              "grain": 439
+            },
+            {
+              "turn": 724,
+              "city": "dongjun",
+              "convoy": 3107,
+              "channel": "ordinary",
+              "grain": 503
+            },
+            {
+              "turn": 724,
+              "city": "zitong",
+              "convoy": 3136,
+              "channel": "regional_market",
+              "grain": 459
+            },
+            {
+              "turn": 724,
+              "city": "nanyang",
+              "convoy": 3141,
+              "channel": "ordinary",
+              "grain": 74
+            }
+          ],
+          "peak_rss": 145293312,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "4f45a6e25ee8ff989d21749fe524b4f1a78ae5511199b08ba516529c933fb0fa"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "9c54cf469042cfcd3bc18b4e4ebf0338c8bcc0477b5abafeebe0e10e77ca53a6"
+          },
+          "cpu": [
+            4.580024000000002,
+            3.5120349999999974,
+            3.8466750000000047
+          ],
+          "wall": [
+            9.211175750009716,
+            5.6855113338679075,
+            7.419381749816239
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "anding",
+              "convoy": 3115,
+              "channel": "ordinary",
+              "grain": 1639
+            },
+            {
+              "turn": 722,
+              "city": "badong",
+              "convoy": 3125,
+              "channel": "ordinary",
+              "grain": 131
+            },
+            {
+              "turn": 722,
+              "city": "dongping",
+              "convoy": 3131,
+              "channel": "ordinary",
+              "grain": 607
+            },
+            {
+              "turn": 722,
+              "city": "fufeng",
+              "convoy": 3135,
+              "channel": "ordinary",
+              "grain": 2023
+            },
+            {
+              "turn": 722,
+              "city": "danyang",
+              "convoy": 3137,
+              "channel": "strategic_granary",
+              "grain": 4509
+            },
+            {
+              "turn": 723,
+              "city": "qichun",
+              "convoy": 3133,
+              "channel": "strategic_granary",
+              "grain": 439
+            },
+            {
+              "turn": 724,
+              "city": "dongjun",
+              "convoy": 3107,
+              "channel": "ordinary",
+              "grain": 503
+            },
+            {
+              "turn": 724,
+              "city": "zitong",
+              "convoy": 3136,
+              "channel": "regional_market",
+              "grain": 459
+            },
+            {
+              "turn": 724,
+              "city": "nanyang",
+              "convoy": 3141,
+              "channel": "ordinary",
+              "grain": 74
+            }
+          ],
+          "peak_rss": 145293312,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "terminal-save.json.gz",
+      "checkpoint_sha256": "0b63d1169f6b5c51024ece1887a82b26927650d723f6fde48293aa59a1dbd07e",
+      "group": "F4",
+      "observation": false,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 4.006929000000014,
+      "p95_cpu": 4.586453000000006,
+      "median_wall": 7.572306333808228,
+      "p95_wall": 9.006577000021935,
+      "forecast_calls": 2268,
+      "cache_hits": 423,
+      "route_search_calls": 444,
+      "candidate_routes": 159,
+      "estimate_calls": 2268,
+      "mean_estimate_cpu_s": 6.429585537907281e-05,
+      "peak_rss": 145293312,
+      "final": {
+        "turn": 724,
+        "rng": {
+          "state": 685832404,
+          "draws": 88948
+        },
+        "domain_sha256": "d35a98c21cb63432960f02bf157673593156f5d66b82a8d837b3bffdc838bc36"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "a7ac052ed98853455e9653b28ef9759fafa02f0a0492dc328fa7c353933d63ed"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "d35a98c21cb63432960f02bf157673593156f5d66b82a8d837b3bffdc838bc36"
+          },
+          "cpu": [
+            4.286311999999995,
+            3.5638179999999977,
+            4.006929000000014
+          ],
+          "wall": [
+            6.836696916026995,
+            7.572306333808228,
+            9.006577000021935
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 756,
+          "estimate_cpu_seconds": 0.04778999999992095,
+          "market_transport_receipts": [],
+          "peak_rss": 145293312,
+          "forecast_cache": {
+            "route": {
+              "hits": 141,
+              "misses": 615
+            },
+            "normal": {
+              "hits": 12132,
+              "misses": 605
+            },
+            "visible": {
+              "hits": 829,
+              "misses": 101
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "a7ac052ed98853455e9653b28ef9759fafa02f0a0492dc328fa7c353933d63ed"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "d35a98c21cb63432960f02bf157673593156f5d66b82a8d837b3bffdc838bc36"
+          },
+          "cpu": [
+            4.491900999999999,
+            3.6869900000000086,
+            3.912017999999989
+          ],
+          "wall": [
+            8.792343083070591,
+            7.526705416152254,
+            7.040595665806904
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 756,
+          "estimate_cpu_seconds": 0.05029699999984416,
+          "market_transport_receipts": [],
+          "peak_rss": 145293312,
+          "forecast_cache": {
+            "route": {
+              "hits": 141,
+              "misses": 615
+            },
+            "normal": {
+              "hits": 12132,
+              "misses": 605
+            },
+            "visible": {
+              "hits": 829,
+              "misses": 101
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "a7ac052ed98853455e9653b28ef9759fafa02f0a0492dc328fa7c353933d63ed"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "d35a98c21cb63432960f02bf157673593156f5d66b82a8d837b3bffdc838bc36"
+          },
+          "cpu": [
+            4.586453000000006,
+            3.3785309999999953,
+            4.015509999999992
+          ],
+          "wall": [
+            8.19324087491259,
+            5.810626167105511,
+            8.149409875040874
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 756,
+          "estimate_cpu_seconds": 0.04773599999997202,
+          "market_transport_receipts": [],
+          "peak_rss": 145293312,
+          "forecast_cache": {
+            "route": {
+              "hits": 141,
+              "misses": 615
+            },
+            "normal": {
+              "hits": 12132,
+              "misses": 605
+            },
+            "visible": {
+              "hits": 829,
+              "misses": 101
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "terminal-save.json.gz",
+      "checkpoint_sha256": "0b63d1169f6b5c51024ece1887a82b26927650d723f6fde48293aa59a1dbd07e",
+      "group": "F4",
+      "observation": true,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 3.823565000000002,
+      "p95_cpu": 4.666751000000005,
+      "median_wall": 6.3545928748790175,
+      "p95_wall": 9.829234458040446,
+      "forecast_calls": 2268,
+      "cache_hits": 423,
+      "route_search_calls": 444,
+      "candidate_routes": 159,
+      "estimate_calls": 2268,
+      "mean_estimate_cpu_s": 6.200837742487005e-05,
+      "peak_rss": 163512320,
+      "final": {
+        "turn": 724,
+        "rng": {
+          "state": 685832404,
+          "draws": 88948
+        },
+        "domain_sha256": "d35a98c21cb63432960f02bf157673593156f5d66b82a8d837b3bffdc838bc36"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "a7ac052ed98853455e9653b28ef9759fafa02f0a0492dc328fa7c353933d63ed"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "d35a98c21cb63432960f02bf157673593156f5d66b82a8d837b3bffdc838bc36"
+          },
+          "cpu": [
+            4.526229999999998,
+            3.5013739999999984,
+            3.662717999999998
+          ],
+          "wall": [
+            8.162904082797468,
+            6.177936707856134,
+            5.348039791919291
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 756,
+          "estimate_cpu_seconds": 0.0460690000000028,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "anding",
+              "convoy": 3115,
+              "channel": "ordinary",
+              "grain": 1639
+            },
+            {
+              "turn": 722,
+              "city": "badong",
+              "convoy": 3125,
+              "channel": "ordinary",
+              "grain": 131
+            },
+            {
+              "turn": 722,
+              "city": "dongping",
+              "convoy": 3131,
+              "channel": "ordinary",
+              "grain": 607
+            },
+            {
+              "turn": 722,
+              "city": "fufeng",
+              "convoy": 3135,
+              "channel": "ordinary",
+              "grain": 2019
+            },
+            {
+              "turn": 722,
+              "city": "danyang",
+              "convoy": 3137,
+              "channel": "strategic_granary",
+              "grain": 4507
+            },
+            {
+              "turn": 723,
+              "city": "qichun",
+              "convoy": 3133,
+              "channel": "strategic_granary",
+              "grain": 439
+            },
+            {
+              "turn": 724,
+              "city": "dongjun",
+              "convoy": 3107,
+              "channel": "ordinary",
+              "grain": 503
+            },
+            {
+              "turn": 724,
+              "city": "zitong",
+              "convoy": 3136,
+              "channel": "regional_market",
+              "grain": 459
+            },
+            {
+              "turn": 724,
+              "city": "nanyang",
+              "convoy": 3141,
+              "channel": "ordinary",
+              "grain": 74
+            }
+          ],
+          "peak_rss": 145293312,
+          "forecast_cache": {
+            "route": {
+              "hits": 141,
+              "misses": 615
+            },
+            "normal": {
+              "hits": 12132,
+              "misses": 605
+            },
+            "visible": {
+              "hits": 829,
+              "misses": 101
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "a7ac052ed98853455e9653b28ef9759fafa02f0a0492dc328fa7c353933d63ed"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "d35a98c21cb63432960f02bf157673593156f5d66b82a8d837b3bffdc838bc36"
+          },
+          "cpu": [
+            4.2938959999999895,
+            3.5319410000000175,
+            3.9936539999999923
+          ],
+          "wall": [
+            7.031550041865557,
+            6.2930847918614745,
+            7.220115624833852
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 756,
+          "estimate_cpu_seconds": 0.04947099999994009,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "anding",
+              "convoy": 3115,
+              "channel": "ordinary",
+              "grain": 1639
+            },
+            {
+              "turn": 722,
+              "city": "badong",
+              "convoy": 3125,
+              "channel": "ordinary",
+              "grain": 131
+            },
+            {
+              "turn": 722,
+              "city": "dongping",
+              "convoy": 3131,
+              "channel": "ordinary",
+              "grain": 607
+            },
+            {
+              "turn": 722,
+              "city": "fufeng",
+              "convoy": 3135,
+              "channel": "ordinary",
+              "grain": 2019
+            },
+            {
+              "turn": 722,
+              "city": "danyang",
+              "convoy": 3137,
+              "channel": "strategic_granary",
+              "grain": 4507
+            },
+            {
+              "turn": 723,
+              "city": "qichun",
+              "convoy": 3133,
+              "channel": "strategic_granary",
+              "grain": 439
+            },
+            {
+              "turn": 724,
+              "city": "dongjun",
+              "convoy": 3107,
+              "channel": "ordinary",
+              "grain": 503
+            },
+            {
+              "turn": 724,
+              "city": "zitong",
+              "convoy": 3136,
+              "channel": "regional_market",
+              "grain": 459
+            },
+            {
+              "turn": 724,
+              "city": "nanyang",
+              "convoy": 3141,
+              "channel": "ordinary",
+              "grain": 74
+            }
+          ],
+          "peak_rss": 163512320,
+          "forecast_cache": {
+            "route": {
+              "hits": 141,
+              "misses": 615
+            },
+            "normal": {
+              "hits": 12132,
+              "misses": 605
+            },
+            "visible": {
+              "hits": 829,
+              "misses": 101
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              204,
+              2,
+              1
+            ],
+            "rng": {
+              "state": 1944240998,
+              "draws": 88643
+            },
+            "domain_sha256": "a7ac052ed98853455e9653b28ef9759fafa02f0a0492dc328fa7c353933d63ed"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 685832404,
+              "draws": 88948
+            },
+            "domain_sha256": "d35a98c21cb63432960f02bf157673593156f5d66b82a8d837b3bffdc838bc36"
+          },
+          "cpu": [
+            4.666751000000005,
+            3.408865999999989,
+            3.823565000000002
+          ],
+          "wall": [
+            9.829234458040446,
+            5.534916416043416,
+            6.3545928748790175
+          ],
+          "route_search_calls": 148,
+          "candidate_routes": 53,
+          "estimate_calls": 756,
+          "estimate_cpu_seconds": 0.04509499999966238,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "anding",
+              "convoy": 3115,
+              "channel": "ordinary",
+              "grain": 1639
+            },
+            {
+              "turn": 722,
+              "city": "badong",
+              "convoy": 3125,
+              "channel": "ordinary",
+              "grain": 131
+            },
+            {
+              "turn": 722,
+              "city": "dongping",
+              "convoy": 3131,
+              "channel": "ordinary",
+              "grain": 607
+            },
+            {
+              "turn": 722,
+              "city": "fufeng",
+              "convoy": 3135,
+              "channel": "ordinary",
+              "grain": 2019
+            },
+            {
+              "turn": 722,
+              "city": "danyang",
+              "convoy": 3137,
+              "channel": "strategic_granary",
+              "grain": 4507
+            },
+            {
+              "turn": 723,
+              "city": "qichun",
+              "convoy": 3133,
+              "channel": "strategic_granary",
+              "grain": 439
+            },
+            {
+              "turn": 724,
+              "city": "dongjun",
+              "convoy": 3107,
+              "channel": "ordinary",
+              "grain": 503
+            },
+            {
+              "turn": 724,
+              "city": "zitong",
+              "convoy": 3136,
+              "channel": "regional_market",
+              "grain": 459
+            },
+            {
+              "turn": 724,
+              "city": "nanyang",
+              "convoy": 3141,
+              "channel": "ordinary",
+              "grain": 74
+            }
+          ],
+          "peak_rss": 163512320,
+          "forecast_cache": {
+            "route": {
+              "hits": 141,
+              "misses": 615
+            },
+            "normal": {
+              "hits": 12132,
+              "misses": 605
+            },
+            "visible": {
+              "hits": 829,
+              "misses": 101
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "terminal-save.json.gz",
+      "checkpoint_sha256": "bd67c373a7df57dbc4aa6df60aedce85a1c29f4a99a3468343983e03070c5212",
+      "group": "F2",
+      "observation": false,
+      "scene": "208-10",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 1.4411029999999982,
+      "p95_cpu": 1.8403189999999938,
+      "median_wall": 2.580689375055954,
+      "p95_wall": 4.378813957795501,
+      "forecast_calls": 0,
+      "cache_hits": 0,
+      "route_search_calls": 213,
+      "candidate_routes": 408,
+      "estimate_calls": 0,
+      "mean_estimate_cpu_s": null,
+      "peak_rss": 416907264,
+      "final": {
+        "turn": 724,
+        "rng": {
+          "state": 3096424727,
+          "draws": 72745
+        },
+        "domain_sha256": "6ba89205a9cb952dd147e2b042d122fce1c70685b7374e67d174089fd4ed3c1e"
+      },
+      "repetitions": [
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "3aa12de952ef46f14d69487781680b514a7fa2e18fa86d74561a11e1499f2e59"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "6ba89205a9cb952dd147e2b042d122fce1c70685b7374e67d174089fd4ed3c1e"
+          },
+          "cpu": [
+            1.4041929999999923,
+            1.2081349999999986,
+            1.7215499999999793
+          ],
+          "wall": [
+            2.276673207990825,
+            1.9171466249972582,
+            3.22886058408767
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 382025728,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "3aa12de952ef46f14d69487781680b514a7fa2e18fa86d74561a11e1499f2e59"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "6ba89205a9cb952dd147e2b042d122fce1c70685b7374e67d174089fd4ed3c1e"
+          },
+          "cpu": [
+            1.5360370000000216,
+            1.3884400000000028,
+            1.8403189999999938
+          ],
+          "wall": [
+            3.1713271669577807,
+            2.580689375055954,
+            4.378813957795501
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 416907264,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "3aa12de952ef46f14d69487781680b514a7fa2e18fa86d74561a11e1499f2e59"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "6ba89205a9cb952dd147e2b042d122fce1c70685b7374e67d174089fd4ed3c1e"
+          },
+          "cpu": [
+            1.4411029999999982,
+            1.2633969999999977,
+            1.6949329999999918
+          ],
+          "wall": [
+            2.3734507497865707,
+            2.0018815419171005,
+            2.978646291885525
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 416907264,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "terminal-save.json.gz",
+      "checkpoint_sha256": "bd67c373a7df57dbc4aa6df60aedce85a1c29f4a99a3468343983e03070c5212",
+      "group": "F2",
+      "observation": true,
+      "scene": "208-10",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 1.5694830000000195,
+      "p95_cpu": 1.8866119999999853,
+      "median_wall": 2.795992833096534,
+      "p95_wall": 3.3371798750013113,
+      "forecast_calls": 0,
+      "cache_hits": 0,
+      "route_search_calls": 213,
+      "candidate_routes": 408,
+      "estimate_calls": 0,
+      "mean_estimate_cpu_s": null,
+      "peak_rss": 467501056,
+      "final": {
+        "turn": 724,
+        "rng": {
+          "state": 3096424727,
+          "draws": 72745
+        },
+        "domain_sha256": "6ba89205a9cb952dd147e2b042d122fce1c70685b7374e67d174089fd4ed3c1e"
+      },
+      "repetitions": [
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "3aa12de952ef46f14d69487781680b514a7fa2e18fa86d74561a11e1499f2e59"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "6ba89205a9cb952dd147e2b042d122fce1c70685b7374e67d174089fd4ed3c1e"
+          },
+          "cpu": [
+            1.5694830000000195,
+            1.4186369999999897,
+            1.8866119999999853
+          ],
+          "wall": [
+            2.607329542050138,
+            2.7223959579132497,
+            3.3371798750013113
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "jingzhao",
+              "convoy": 2827,
+              "channel": "ordinary",
+              "grain": 204
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2836,
+              "channel": "ordinary",
+              "grain": 3203
+            },
+            {
+              "turn": 722,
+              "city": "liaoxi",
+              "convoy": 2842,
+              "channel": "strategic_granary",
+              "grain": 1421
+            },
+            {
+              "turn": 722,
+              "city": "tianshui",
+              "convoy": 2843,
+              "channel": "ordinary",
+              "grain": 818
+            },
+            {
+              "turn": 722,
+              "city": "nanhai",
+              "convoy": 2844,
+              "channel": "strategic_granary",
+              "grain": 1530
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2846,
+              "channel": "ordinary",
+              "grain": 460
+            },
+            {
+              "turn": 722,
+              "city": "chenliu",
+              "convoy": 2849,
+              "channel": "regional_market",
+              "grain": 162
+            },
+            {
+              "turn": 723,
+              "city": "badong",
+              "convoy": 2820,
+              "channel": "ordinary",
+              "grain": 29100
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2833,
+              "channel": "ordinary",
+              "grain": 360
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2838,
+              "channel": "ordinary",
+              "grain": 755
+            },
+            {
+              "turn": 723,
+              "city": "nanhai",
+              "convoy": 2845,
+              "channel": "regional_market",
+              "grain": 3929
+            },
+            {
+              "turn": 723,
+              "city": "runan",
+              "convoy": 2848,
+              "channel": "ordinary",
+              "grain": 102
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2837,
+              "channel": "ordinary",
+              "grain": 7252
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2841,
+              "channel": "ordinary",
+              "grain": 907
+            },
+            {
+              "turn": 724,
+              "city": "linhe",
+              "convoy": 2852,
+              "channel": "strategic_granary",
+              "grain": 3866
+            },
+            {
+              "turn": 724,
+              "city": "yidu",
+              "convoy": 2859,
+              "channel": "ordinary",
+              "grain": 105
+            }
+          ],
+          "peak_rss": 467501056,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "3aa12de952ef46f14d69487781680b514a7fa2e18fa86d74561a11e1499f2e59"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "6ba89205a9cb952dd147e2b042d122fce1c70685b7374e67d174089fd4ed3c1e"
+          },
+          "cpu": [
+            1.5335489999999936,
+            1.4173060000000248,
+            1.7655530000000113
+          ],
+          "wall": [
+            2.579156291903928,
+            2.14662954187952,
+            2.8401437499560416
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "jingzhao",
+              "convoy": 2827,
+              "channel": "ordinary",
+              "grain": 204
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2836,
+              "channel": "ordinary",
+              "grain": 3203
+            },
+            {
+              "turn": 722,
+              "city": "liaoxi",
+              "convoy": 2842,
+              "channel": "strategic_granary",
+              "grain": 1421
+            },
+            {
+              "turn": 722,
+              "city": "tianshui",
+              "convoy": 2843,
+              "channel": "ordinary",
+              "grain": 818
+            },
+            {
+              "turn": 722,
+              "city": "nanhai",
+              "convoy": 2844,
+              "channel": "strategic_granary",
+              "grain": 1530
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2846,
+              "channel": "ordinary",
+              "grain": 460
+            },
+            {
+              "turn": 722,
+              "city": "chenliu",
+              "convoy": 2849,
+              "channel": "regional_market",
+              "grain": 162
+            },
+            {
+              "turn": 723,
+              "city": "badong",
+              "convoy": 2820,
+              "channel": "ordinary",
+              "grain": 29100
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2833,
+              "channel": "ordinary",
+              "grain": 360
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2838,
+              "channel": "ordinary",
+              "grain": 755
+            },
+            {
+              "turn": 723,
+              "city": "nanhai",
+              "convoy": 2845,
+              "channel": "regional_market",
+              "grain": 3929
+            },
+            {
+              "turn": 723,
+              "city": "runan",
+              "convoy": 2848,
+              "channel": "ordinary",
+              "grain": 102
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2837,
+              "channel": "ordinary",
+              "grain": 7252
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2841,
+              "channel": "ordinary",
+              "grain": 907
+            },
+            {
+              "turn": 724,
+              "city": "linhe",
+              "convoy": 2852,
+              "channel": "strategic_granary",
+              "grain": 3866
+            },
+            {
+              "turn": 724,
+              "city": "yidu",
+              "convoy": 2859,
+              "channel": "ordinary",
+              "grain": 105
+            }
+          ],
+          "peak_rss": 467501056,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "3aa12de952ef46f14d69487781680b514a7fa2e18fa86d74561a11e1499f2e59"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "6ba89205a9cb952dd147e2b042d122fce1c70685b7374e67d174089fd4ed3c1e"
+          },
+          "cpu": [
+            1.5865149999999915,
+            1.3841529999999977,
+            1.7137950000000046
+          ],
+          "wall": [
+            2.923961417051032,
+            2.795992833096534,
+            2.969540333840996
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "jingzhao",
+              "convoy": 2827,
+              "channel": "ordinary",
+              "grain": 204
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2836,
+              "channel": "ordinary",
+              "grain": 3203
+            },
+            {
+              "turn": 722,
+              "city": "liaoxi",
+              "convoy": 2842,
+              "channel": "strategic_granary",
+              "grain": 1421
+            },
+            {
+              "turn": 722,
+              "city": "tianshui",
+              "convoy": 2843,
+              "channel": "ordinary",
+              "grain": 818
+            },
+            {
+              "turn": 722,
+              "city": "nanhai",
+              "convoy": 2844,
+              "channel": "strategic_granary",
+              "grain": 1530
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2846,
+              "channel": "ordinary",
+              "grain": 460
+            },
+            {
+              "turn": 722,
+              "city": "chenliu",
+              "convoy": 2849,
+              "channel": "regional_market",
+              "grain": 162
+            },
+            {
+              "turn": 723,
+              "city": "badong",
+              "convoy": 2820,
+              "channel": "ordinary",
+              "grain": 29100
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2833,
+              "channel": "ordinary",
+              "grain": 360
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2838,
+              "channel": "ordinary",
+              "grain": 755
+            },
+            {
+              "turn": 723,
+              "city": "nanhai",
+              "convoy": 2845,
+              "channel": "regional_market",
+              "grain": 3929
+            },
+            {
+              "turn": 723,
+              "city": "runan",
+              "convoy": 2848,
+              "channel": "ordinary",
+              "grain": 102
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2837,
+              "channel": "ordinary",
+              "grain": 7252
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2841,
+              "channel": "ordinary",
+              "grain": 907
+            },
+            {
+              "turn": 724,
+              "city": "linhe",
+              "convoy": 2852,
+              "channel": "strategic_granary",
+              "grain": 3866
+            },
+            {
+              "turn": 724,
+              "city": "yidu",
+              "convoy": 2859,
+              "channel": "ordinary",
+              "grain": 105
+            }
+          ],
+          "peak_rss": 467501056,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "terminal-save.json.gz",
+      "checkpoint_sha256": "bd67c373a7df57dbc4aa6df60aedce85a1c29f4a99a3468343983e03070c5212",
+      "group": "F4",
+      "observation": false,
+      "scene": "208-10",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 1.4650969999999859,
+      "p95_cpu": 1.757643999999999,
+      "median_wall": 2.256828375160694,
+      "p95_wall": 3.2191257500089705,
+      "forecast_calls": 2217,
+      "cache_hits": 465,
+      "route_search_calls": 213,
+      "candidate_routes": 408,
+      "estimate_calls": 2217,
+      "mean_estimate_cpu_s": 5.2630581867553796e-05,
+      "peak_rss": 510197760,
+      "final": {
+        "turn": 724,
+        "rng": {
+          "state": 3096424727,
+          "draws": 72745
+        },
+        "domain_sha256": "e4bf886e3485fc7b321457313741284d8ceb2581ddd6a36254045a97f81421d7"
+      },
+      "repetitions": [
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "90c30a63a158a8e0cdf561998456cbd4af017fd1cf1b70208b01d7f76718e719"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "e4bf886e3485fc7b321457313741284d8ceb2581ddd6a36254045a97f81421d7"
+          },
+          "cpu": [
+            1.4650969999999859,
+            1.2988679999999988,
+            1.7037499999999852
+          ],
+          "wall": [
+            2.256828375160694,
+            2.166796375066042,
+            3.2191257500089705
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 739,
+          "estimate_cpu_seconds": 0.038453000000146176,
+          "market_transport_receipts": [],
+          "peak_rss": 467501056,
+          "forecast_cache": {
+            "route": {
+              "hits": 155,
+              "misses": 584
+            },
+            "normal": {
+              "hits": 9950,
+              "misses": 671
+            },
+            "visible": {
+              "hits": 115,
+              "misses": 57
+            }
+          }
+        },
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "90c30a63a158a8e0cdf561998456cbd4af017fd1cf1b70208b01d7f76718e719"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "e4bf886e3485fc7b321457313741284d8ceb2581ddd6a36254045a97f81421d7"
+          },
+          "cpu": [
+            1.4638909999999896,
+            1.2423339999999996,
+            1.7065519999999879
+          ],
+          "wall": [
+            2.2376963749993593,
+            1.8736841250211,
+            2.8071610829792917
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 739,
+          "estimate_cpu_seconds": 0.03868999999986045,
+          "market_transport_receipts": [],
+          "peak_rss": 491192320,
+          "forecast_cache": {
+            "route": {
+              "hits": 155,
+              "misses": 584
+            },
+            "normal": {
+              "hits": 9950,
+              "misses": 671
+            },
+            "visible": {
+              "hits": 115,
+              "misses": 57
+            }
+          }
+        },
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "90c30a63a158a8e0cdf561998456cbd4af017fd1cf1b70208b01d7f76718e719"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "e4bf886e3485fc7b321457313741284d8ceb2581ddd6a36254045a97f81421d7"
+          },
+          "cpu": [
+            1.6353129999999965,
+            1.3020290000000045,
+            1.757643999999999
+          ],
+          "wall": [
+            2.9037603330798447,
+            1.988066083053127,
+            2.742057542083785
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 739,
+          "estimate_cpu_seconds": 0.03953900000036015,
+          "market_transport_receipts": [],
+          "peak_rss": 510197760,
+          "forecast_cache": {
+            "route": {
+              "hits": 155,
+              "misses": 584
+            },
+            "normal": {
+              "hits": 9950,
+              "misses": 671
+            },
+            "visible": {
+              "hits": 115,
+              "misses": 57
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "terminal-save.json.gz",
+      "checkpoint_sha256": "bd67c373a7df57dbc4aa6df60aedce85a1c29f4a99a3468343983e03070c5212",
+      "group": "F4",
+      "observation": true,
+      "scene": "208-10",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 1.5506110000000035,
+      "p95_cpu": 2.040027999999978,
+      "median_wall": 2.693752042017877,
+      "p95_wall": 4.310081291012466,
+      "forecast_calls": 2217,
+      "cache_hits": 465,
+      "route_search_calls": 213,
+      "candidate_routes": 408,
+      "estimate_calls": 2217,
+      "mean_estimate_cpu_s": 5.7564727108451254e-05,
+      "peak_rss": 575766528,
+      "final": {
+        "turn": 724,
+        "rng": {
+          "state": 3096424727,
+          "draws": 72745
+        },
+        "domain_sha256": "e4bf886e3485fc7b321457313741284d8ceb2581ddd6a36254045a97f81421d7"
+      },
+      "repetitions": [
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "90c30a63a158a8e0cdf561998456cbd4af017fd1cf1b70208b01d7f76718e719"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "e4bf886e3485fc7b321457313741284d8ceb2581ddd6a36254045a97f81421d7"
+          },
+          "cpu": [
+            1.5506110000000035,
+            1.4048950000000104,
+            1.7925299999999993
+          ],
+          "wall": [
+            2.4280377908144146,
+            2.693752042017877,
+            3.0435737911611795
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 739,
+          "estimate_cpu_seconds": 0.043379999999160646,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "jingzhao",
+              "convoy": 2827,
+              "channel": "ordinary",
+              "grain": 204
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2836,
+              "channel": "ordinary",
+              "grain": 3203
+            },
+            {
+              "turn": 722,
+              "city": "liaoxi",
+              "convoy": 2842,
+              "channel": "strategic_granary",
+              "grain": 1421
+            },
+            {
+              "turn": 722,
+              "city": "tianshui",
+              "convoy": 2843,
+              "channel": "ordinary",
+              "grain": 818
+            },
+            {
+              "turn": 722,
+              "city": "nanhai",
+              "convoy": 2844,
+              "channel": "strategic_granary",
+              "grain": 1530
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2846,
+              "channel": "ordinary",
+              "grain": 460
+            },
+            {
+              "turn": 722,
+              "city": "chenliu",
+              "convoy": 2849,
+              "channel": "regional_market",
+              "grain": 162
+            },
+            {
+              "turn": 723,
+              "city": "badong",
+              "convoy": 2820,
+              "channel": "ordinary",
+              "grain": 29100
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2833,
+              "channel": "ordinary",
+              "grain": 360
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2838,
+              "channel": "ordinary",
+              "grain": 755
+            },
+            {
+              "turn": 723,
+              "city": "nanhai",
+              "convoy": 2845,
+              "channel": "regional_market",
+              "grain": 3929
+            },
+            {
+              "turn": 723,
+              "city": "runan",
+              "convoy": 2848,
+              "channel": "ordinary",
+              "grain": 102
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2837,
+              "channel": "ordinary",
+              "grain": 7252
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2841,
+              "channel": "ordinary",
+              "grain": 907
+            },
+            {
+              "turn": 724,
+              "city": "linhe",
+              "convoy": 2852,
+              "channel": "strategic_granary",
+              "grain": 3866
+            },
+            {
+              "turn": 724,
+              "city": "yidu",
+              "convoy": 2859,
+              "channel": "ordinary",
+              "grain": 105
+            }
+          ],
+          "peak_rss": 545308672,
+          "forecast_cache": {
+            "route": {
+              "hits": 155,
+              "misses": 584
+            },
+            "normal": {
+              "hits": 9950,
+              "misses": 671
+            },
+            "visible": {
+              "hits": 115,
+              "misses": 57
+            }
+          }
+        },
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "90c30a63a158a8e0cdf561998456cbd4af017fd1cf1b70208b01d7f76718e719"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "e4bf886e3485fc7b321457313741284d8ceb2581ddd6a36254045a97f81421d7"
+          },
+          "cpu": [
+            1.4649249999999938,
+            1.3282750000000192,
+            1.6445019999999886
+          ],
+          "wall": [
+            2.427519166143611,
+            1.9823352498933673,
+            2.4582181670702994
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 739,
+          "estimate_cpu_seconds": 0.043655000000256905,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "jingzhao",
+              "convoy": 2827,
+              "channel": "ordinary",
+              "grain": 204
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2836,
+              "channel": "ordinary",
+              "grain": 3203
+            },
+            {
+              "turn": 722,
+              "city": "liaoxi",
+              "convoy": 2842,
+              "channel": "strategic_granary",
+              "grain": 1421
+            },
+            {
+              "turn": 722,
+              "city": "tianshui",
+              "convoy": 2843,
+              "channel": "ordinary",
+              "grain": 818
+            },
+            {
+              "turn": 722,
+              "city": "nanhai",
+              "convoy": 2844,
+              "channel": "strategic_granary",
+              "grain": 1530
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2846,
+              "channel": "ordinary",
+              "grain": 460
+            },
+            {
+              "turn": 722,
+              "city": "chenliu",
+              "convoy": 2849,
+              "channel": "regional_market",
+              "grain": 162
+            },
+            {
+              "turn": 723,
+              "city": "badong",
+              "convoy": 2820,
+              "channel": "ordinary",
+              "grain": 29100
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2833,
+              "channel": "ordinary",
+              "grain": 360
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2838,
+              "channel": "ordinary",
+              "grain": 755
+            },
+            {
+              "turn": 723,
+              "city": "nanhai",
+              "convoy": 2845,
+              "channel": "regional_market",
+              "grain": 3929
+            },
+            {
+              "turn": 723,
+              "city": "runan",
+              "convoy": 2848,
+              "channel": "ordinary",
+              "grain": 102
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2837,
+              "channel": "ordinary",
+              "grain": 7252
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2841,
+              "channel": "ordinary",
+              "grain": 907
+            },
+            {
+              "turn": 724,
+              "city": "linhe",
+              "convoy": 2852,
+              "channel": "strategic_granary",
+              "grain": 3866
+            },
+            {
+              "turn": 724,
+              "city": "yidu",
+              "convoy": 2859,
+              "channel": "ordinary",
+              "grain": 105
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 155,
+              "misses": 584
+            },
+            "normal": {
+              "hits": 9950,
+              "misses": 671
+            },
+            "visible": {
+              "hits": 115,
+              "misses": 57
+            }
+          }
+        },
+        {
+          "scene": "208-10",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 721,
+            "date": [
+              228,
+              10,
+              1
+            ],
+            "rng": {
+              "state": 2269676860,
+              "draws": 72533
+            },
+            "domain_sha256": "90c30a63a158a8e0cdf561998456cbd4af017fd1cf1b70208b01d7f76718e719"
+          },
+          "final": {
+            "turn": 724,
+            "rng": {
+              "state": 3096424727,
+              "draws": 72745
+            },
+            "domain_sha256": "e4bf886e3485fc7b321457313741284d8ceb2581ddd6a36254045a97f81421d7"
+          },
+          "cpu": [
+            1.5709340000000225,
+            1.447685000000007,
+            2.040027999999978
+          ],
+          "wall": [
+            3.1852918330114335,
+            2.9086742501240224,
+            4.310081291012466
+          ],
+          "route_search_calls": 71,
+          "candidate_routes": 136,
+          "estimate_calls": 739,
+          "estimate_cpu_seconds": 0.040586000000018885,
+          "market_transport_receipts": [
+            {
+              "turn": 722,
+              "city": "jingzhao",
+              "convoy": 2827,
+              "channel": "ordinary",
+              "grain": 204
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2836,
+              "channel": "ordinary",
+              "grain": 3203
+            },
+            {
+              "turn": 722,
+              "city": "liaoxi",
+              "convoy": 2842,
+              "channel": "strategic_granary",
+              "grain": 1421
+            },
+            {
+              "turn": 722,
+              "city": "tianshui",
+              "convoy": 2843,
+              "channel": "ordinary",
+              "grain": 818
+            },
+            {
+              "turn": 722,
+              "city": "nanhai",
+              "convoy": 2844,
+              "channel": "strategic_granary",
+              "grain": 1530
+            },
+            {
+              "turn": 722,
+              "city": "wuling",
+              "convoy": 2846,
+              "channel": "ordinary",
+              "grain": 460
+            },
+            {
+              "turn": 722,
+              "city": "chenliu",
+              "convoy": 2849,
+              "channel": "regional_market",
+              "grain": 162
+            },
+            {
+              "turn": 723,
+              "city": "badong",
+              "convoy": 2820,
+              "channel": "ordinary",
+              "grain": 29100
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2833,
+              "channel": "ordinary",
+              "grain": 360
+            },
+            {
+              "turn": 723,
+              "city": "xinping",
+              "convoy": 2838,
+              "channel": "ordinary",
+              "grain": 755
+            },
+            {
+              "turn": 723,
+              "city": "nanhai",
+              "convoy": 2845,
+              "channel": "regional_market",
+              "grain": 3929
+            },
+            {
+              "turn": 723,
+              "city": "runan",
+              "convoy": 2848,
+              "channel": "ordinary",
+              "grain": 102
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2837,
+              "channel": "ordinary",
+              "grain": 7252
+            },
+            {
+              "turn": 724,
+              "city": "wuling",
+              "convoy": 2841,
+              "channel": "ordinary",
+              "grain": 907
+            },
+            {
+              "turn": 724,
+              "city": "linhe",
+              "convoy": 2852,
+              "channel": "strategic_granary",
+              "grain": 3866
+            },
+            {
+              "turn": 724,
+              "city": "yidu",
+              "convoy": 2859,
+              "channel": "ordinary",
+              "grain": 105
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 155,
+              "misses": 584
+            },
+            "normal": {
+              "hits": 9950,
+              "misses": 671
+            },
+            "visible": {
+              "hits": 115,
+              "misses": 57
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "north-snow.json.gz",
+      "checkpoint_sha256": "c0b4aab4f16744e9110e2d1a87ea2d36f31510964bbdff0d68c0a3723618639c",
+      "group": "F2",
+      "observation": false,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 0.6089279999999917,
+      "p95_cpu": 0.7879480000000001,
+      "median_wall": 1.1399370417930186,
+      "p95_wall": 1.7126886248588562,
+      "forecast_calls": 0,
+      "cache_hits": 0,
+      "route_search_calls": 24,
+      "candidate_routes": 33,
+      "estimate_calls": 0,
+      "mean_estimate_cpu_s": null,
+      "peak_rss": 575766528,
+      "final": {
+        "turn": 39,
+        "rng": {
+          "state": 40370347,
+          "draws": 1408
+        },
+        "domain_sha256": "3af59c9fbfcd7a6c5961a37e56a8d2a61908e389ed18807257bb7ec07b821156"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "1b3c67043b7f30abd9db4166f3b2f58bf19a7cfd368bc749bf970af3dc4971cf"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "3af59c9fbfcd7a6c5961a37e56a8d2a61908e389ed18807257bb7ec07b821156"
+          },
+          "cpu": [
+            0.5898039999999867,
+            0.5191700000000026,
+            0.6853820000000042
+          ],
+          "wall": [
+            0.9696255000308156,
+            1.1385993328876793,
+            1.1752635829616338
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "1b3c67043b7f30abd9db4166f3b2f58bf19a7cfd368bc749bf970af3dc4971cf"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "3af59c9fbfcd7a6c5961a37e56a8d2a61908e389ed18807257bb7ec07b821156"
+          },
+          "cpu": [
+            0.6089279999999917,
+            0.5224839999999915,
+            0.7015899999999817
+          ],
+          "wall": [
+            1.1399370417930186,
+            0.8818924999795854,
+            1.7126886248588562
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "1b3c67043b7f30abd9db4166f3b2f58bf19a7cfd368bc749bf970af3dc4971cf"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "3af59c9fbfcd7a6c5961a37e56a8d2a61908e389ed18807257bb7ec07b821156"
+          },
+          "cpu": [
+            0.6103889999999978,
+            0.5005749999999978,
+            0.7879480000000001
+          ],
+          "wall": [
+            1.2119033329654485,
+            1.0270551249850541,
+            1.662824457976967
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "north-snow.json.gz",
+      "checkpoint_sha256": "c0b4aab4f16744e9110e2d1a87ea2d36f31510964bbdff0d68c0a3723618639c",
+      "group": "F2",
+      "observation": true,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 0.6089660000000094,
+      "p95_cpu": 0.6598709999999812,
+      "median_wall": 1.0432779579423368,
+      "p95_wall": 1.2132630408741534,
+      "forecast_calls": 0,
+      "cache_hits": 0,
+      "route_search_calls": 24,
+      "candidate_routes": 33,
+      "estimate_calls": 0,
+      "mean_estimate_cpu_s": null,
+      "peak_rss": 575766528,
+      "final": {
+        "turn": 39,
+        "rng": {
+          "state": 40370347,
+          "draws": 1408
+        },
+        "domain_sha256": "3af59c9fbfcd7a6c5961a37e56a8d2a61908e389ed18807257bb7ec07b821156"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "1b3c67043b7f30abd9db4166f3b2f58bf19a7cfd368bc749bf970af3dc4971cf"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "3af59c9fbfcd7a6c5961a37e56a8d2a61908e389ed18807257bb7ec07b821156"
+          },
+          "cpu": [
+            0.6089660000000094,
+            0.5379779999999812,
+            0.6450949999999978
+          ],
+          "wall": [
+            1.0012824579607695,
+            0.9002562079112977,
+            1.2132630408741534
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 38,
+              "city": "chenliu",
+              "convoy": 24,
+              "channel": "strategic_granary",
+              "grain": 3689
+            },
+            {
+              "turn": 38,
+              "city": "yuyang",
+              "convoy": 25,
+              "channel": "ordinary",
+              "grain": 8754
+            },
+            {
+              "turn": 39,
+              "city": "qiao",
+              "convoy": 27,
+              "channel": "strategic_granary",
+              "grain": 580
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "1b3c67043b7f30abd9db4166f3b2f58bf19a7cfd368bc749bf970af3dc4971cf"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "3af59c9fbfcd7a6c5961a37e56a8d2a61908e389ed18807257bb7ec07b821156"
+          },
+          "cpu": [
+            0.6010880000000043,
+            0.5139819999999986,
+            0.6301509999999837
+          ],
+          "wall": [
+            1.2007760421838611,
+            0.9912997088395059,
+            1.070297084050253
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 38,
+              "city": "chenliu",
+              "convoy": 24,
+              "channel": "strategic_granary",
+              "grain": 3689
+            },
+            {
+              "turn": 38,
+              "city": "yuyang",
+              "convoy": 25,
+              "channel": "ordinary",
+              "grain": 8754
+            },
+            {
+              "turn": 39,
+              "city": "qiao",
+              "convoy": 27,
+              "channel": "strategic_granary",
+              "grain": 580
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "1b3c67043b7f30abd9db4166f3b2f58bf19a7cfd368bc749bf970af3dc4971cf"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "3af59c9fbfcd7a6c5961a37e56a8d2a61908e389ed18807257bb7ec07b821156"
+          },
+          "cpu": [
+            0.6194070000000238,
+            0.5053879999999822,
+            0.6598709999999812
+          ],
+          "wall": [
+            1.147051875013858,
+            1.0305542501155287,
+            1.0432779579423368
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 38,
+              "city": "chenliu",
+              "convoy": 24,
+              "channel": "strategic_granary",
+              "grain": 3689
+            },
+            {
+              "turn": 38,
+              "city": "yuyang",
+              "convoy": 25,
+              "channel": "ordinary",
+              "grain": 8754
+            },
+            {
+              "turn": 39,
+              "city": "qiao",
+              "convoy": 27,
+              "channel": "strategic_granary",
+              "grain": 580
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "north-snow.json.gz",
+      "checkpoint_sha256": "c0b4aab4f16744e9110e2d1a87ea2d36f31510964bbdff0d68c0a3723618639c",
+      "group": "F4",
+      "observation": false,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 0.5939109999999914,
+      "p95_cpu": 0.6727239999999881,
+      "median_wall": 0.9715496669523418,
+      "p95_wall": 1.1601689998060465,
+      "forecast_calls": 135,
+      "cache_hits": 9,
+      "route_search_calls": 24,
+      "candidate_routes": 33,
+      "estimate_calls": 135,
+      "mean_estimate_cpu_s": 9.527407407543049e-05,
+      "peak_rss": 575766528,
+      "final": {
+        "turn": 39,
+        "rng": {
+          "state": 40370347,
+          "draws": 1408
+        },
+        "domain_sha256": "96e50dcc669646e862f717831d1f1be0626cd27911d9d0550ca7c1cea3293456"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "0ffa3abfbce90e1f0b5f79a97578c9ceceb25e20e7bba7d4782ea6cb301349e7"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "96e50dcc669646e862f717831d1f1be0626cd27911d9d0550ca7c1cea3293456"
+          },
+          "cpu": [
+            0.6042529999999999,
+            0.5142710000000079,
+            0.639581000000021
+          ],
+          "wall": [
+            1.0573029168881476,
+            0.9508272500243038,
+            1.0329317499417812
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 45,
+          "estimate_cpu_seconds": 0.0042289999999809424,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 3,
+              "misses": 42
+            },
+            "normal": {
+              "hits": 463,
+              "misses": 97
+            },
+            "visible": {
+              "hits": 67,
+              "misses": 132
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "0ffa3abfbce90e1f0b5f79a97578c9ceceb25e20e7bba7d4782ea6cb301349e7"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "96e50dcc669646e862f717831d1f1be0626cd27911d9d0550ca7c1cea3293456"
+          },
+          "cpu": [
+            0.5641290000000083,
+            0.5298819999999864,
+            0.6262679999999818
+          ],
+          "wall": [
+            0.9715496669523418,
+            0.8992220829240978,
+            1.0412757089361548
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 45,
+          "estimate_cpu_seconds": 0.003950000000060072,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 3,
+              "misses": 42
+            },
+            "normal": {
+              "hits": 463,
+              "misses": 97
+            },
+            "visible": {
+              "hits": 67,
+              "misses": 132
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "0ffa3abfbce90e1f0b5f79a97578c9ceceb25e20e7bba7d4782ea6cb301349e7"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "96e50dcc669646e862f717831d1f1be0626cd27911d9d0550ca7c1cea3293456"
+          },
+          "cpu": [
+            0.5939109999999914,
+            0.5123920000000055,
+            0.6727239999999881
+          ],
+          "wall": [
+            0.9178738750051707,
+            0.8163333330303431,
+            1.1601689998060465
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 45,
+          "estimate_cpu_seconds": 0.004683000000142101,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 3,
+              "misses": 42
+            },
+            "normal": {
+              "hits": 463,
+              "misses": 97
+            },
+            "visible": {
+              "hits": 67,
+              "misses": 132
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "north-snow.json.gz",
+      "checkpoint_sha256": "c0b4aab4f16744e9110e2d1a87ea2d36f31510964bbdff0d68c0a3723618639c",
+      "group": "F4",
+      "observation": true,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 0.6147849999999835,
+      "p95_cpu": 0.6603120000000047,
+      "median_wall": 1.030751375015825,
+      "p95_wall": 1.2481631671544164,
+      "forecast_calls": 135,
+      "cache_hits": 9,
+      "route_search_calls": 24,
+      "candidate_routes": 33,
+      "estimate_calls": 135,
+      "mean_estimate_cpu_s": 9.826666666720451e-05,
+      "peak_rss": 575766528,
+      "final": {
+        "turn": 39,
+        "rng": {
+          "state": 40370347,
+          "draws": 1408
+        },
+        "domain_sha256": "96e50dcc669646e862f717831d1f1be0626cd27911d9d0550ca7c1cea3293456"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "0ffa3abfbce90e1f0b5f79a97578c9ceceb25e20e7bba7d4782ea6cb301349e7"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "96e50dcc669646e862f717831d1f1be0626cd27911d9d0550ca7c1cea3293456"
+          },
+          "cpu": [
+            0.6147849999999835,
+            0.6298129999999844,
+            0.6603120000000047
+          ],
+          "wall": [
+            0.9756697500124574,
+            1.2481631671544164,
+            1.0691141670104116
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 45,
+          "estimate_cpu_seconds": 0.004383000000075299,
+          "market_transport_receipts": [
+            {
+              "turn": 38,
+              "city": "chenliu",
+              "convoy": 24,
+              "channel": "strategic_granary",
+              "grain": 3689
+            },
+            {
+              "turn": 38,
+              "city": "yuyang",
+              "convoy": 25,
+              "channel": "ordinary",
+              "grain": 8753
+            },
+            {
+              "turn": 39,
+              "city": "qiao",
+              "convoy": 27,
+              "channel": "strategic_granary",
+              "grain": 580
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 3,
+              "misses": 42
+            },
+            "normal": {
+              "hits": 463,
+              "misses": 97
+            },
+            "visible": {
+              "hits": 67,
+              "misses": 132
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "0ffa3abfbce90e1f0b5f79a97578c9ceceb25e20e7bba7d4782ea6cb301349e7"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "96e50dcc669646e862f717831d1f1be0626cd27911d9d0550ca7c1cea3293456"
+          },
+          "cpu": [
+            0.6114910000000009,
+            0.5537759999999992,
+            0.6284070000000099
+          ],
+          "wall": [
+            1.030751375015825,
+            1.0920834171120077,
+            1.202980832895264
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 45,
+          "estimate_cpu_seconds": 0.004673999999994294,
+          "market_transport_receipts": [
+            {
+              "turn": 38,
+              "city": "chenliu",
+              "convoy": 24,
+              "channel": "strategic_granary",
+              "grain": 3689
+            },
+            {
+              "turn": 38,
+              "city": "yuyang",
+              "convoy": 25,
+              "channel": "ordinary",
+              "grain": 8753
+            },
+            {
+              "turn": 39,
+              "city": "qiao",
+              "convoy": 27,
+              "channel": "strategic_granary",
+              "grain": 580
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 3,
+              "misses": 42
+            },
+            "normal": {
+              "hits": 463,
+              "misses": 97
+            },
+            "visible": {
+              "hits": 67,
+              "misses": 132
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 36,
+            "date": [
+              185,
+              1,
+              21
+            ],
+            "rng": {
+              "state": 2627619546,
+              "draws": 1380
+            },
+            "domain_sha256": "0ffa3abfbce90e1f0b5f79a97578c9ceceb25e20e7bba7d4782ea6cb301349e7"
+          },
+          "final": {
+            "turn": 39,
+            "rng": {
+              "state": 40370347,
+              "draws": 1408
+            },
+            "domain_sha256": "96e50dcc669646e862f717831d1f1be0626cd27911d9d0550ca7c1cea3293456"
+          },
+          "cpu": [
+            0.5796860000000095,
+            0.480573000000021,
+            0.6157959999999889
+          ],
+          "wall": [
+            0.8865340419579297,
+            0.6874213751871139,
+            0.9235791661776602
+          ],
+          "route_search_calls": 8,
+          "candidate_routes": 11,
+          "estimate_calls": 45,
+          "estimate_cpu_seconds": 0.004209000000003016,
+          "market_transport_receipts": [
+            {
+              "turn": 38,
+              "city": "chenliu",
+              "convoy": 24,
+              "channel": "strategic_granary",
+              "grain": 3689
+            },
+            {
+              "turn": 38,
+              "city": "yuyang",
+              "convoy": 25,
+              "channel": "ordinary",
+              "grain": 8753
+            },
+            {
+              "turn": 39,
+              "city": "qiao",
+              "convoy": 27,
+              "channel": "strategic_granary",
+              "grain": 580
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 3,
+              "misses": 42
+            },
+            "normal": {
+              "hits": 463,
+              "misses": 97
+            },
+            "visible": {
+              "hits": 67,
+              "misses": 132
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "cross-month-convoy.json.gz",
+      "checkpoint_sha256": "db7fcf972800fe7cd143c6ceed66051c9e3a49ba104a9b302ae974bf68b096f6",
+      "group": "F2",
+      "observation": false,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 0.7109560000000101,
+      "p95_cpu": 0.8147260000000074,
+      "median_wall": 1.094169083982706,
+      "p95_wall": 2.3281456250697374,
+      "forecast_calls": 0,
+      "cache_hits": 0,
+      "route_search_calls": 9,
+      "candidate_routes": 0,
+      "estimate_calls": 0,
+      "mean_estimate_cpu_s": null,
+      "peak_rss": 575766528,
+      "final": {
+        "turn": 8,
+        "rng": {
+          "state": 2153325410,
+          "draws": 288
+        },
+        "domain_sha256": "57dab97d19100f37ed5580cac67dd94c97b473af01879d8126d97f54d8ebbbc3"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "7feb404b77a7128cbc94ee1c825ec5a28052afbf996a3e81ef43ce956b32df78"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "57dab97d19100f37ed5580cac67dd94c97b473af01879d8126d97f54d8ebbbc3"
+          },
+          "cpu": [
+            0.38349999999999795,
+            0.7520559999999819,
+            0.8147260000000074
+          ],
+          "wall": [
+            0.5560532088857144,
+            1.2154229581356049,
+            1.2717574581038207
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "7feb404b77a7128cbc94ee1c825ec5a28052afbf996a3e81ef43ce956b32df78"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "57dab97d19100f37ed5580cac67dd94c97b473af01879d8126d97f54d8ebbbc3"
+          },
+          "cpu": [
+            0.3886789999999962,
+            0.7109560000000101,
+            0.6747980000000098
+          ],
+          "wall": [
+            0.7227799170650542,
+            1.094169083982706,
+            1.0514720838982612
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": false,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "7feb404b77a7128cbc94ee1c825ec5a28052afbf996a3e81ef43ce956b32df78"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "57dab97d19100f37ed5580cac67dd94c97b473af01879d8126d97f54d8ebbbc3"
+          },
+          "cpu": [
+            0.3957380000000228,
+            0.7449730000000159,
+            0.7630610000000217
+          ],
+          "wall": [
+            0.6390012078918517,
+            1.2781385839916766,
+            2.3281456250697374
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "cross-month-convoy.json.gz",
+      "checkpoint_sha256": "db7fcf972800fe7cd143c6ceed66051c9e3a49ba104a9b302ae974bf68b096f6",
+      "group": "F2",
+      "observation": true,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 0.7278929999999946,
+      "p95_cpu": 0.826816000000008,
+      "median_wall": 1.4550339169800282,
+      "p95_wall": 2.4527645830530673,
+      "forecast_calls": 0,
+      "cache_hits": 0,
+      "route_search_calls": 9,
+      "candidate_routes": 0,
+      "estimate_calls": 0,
+      "mean_estimate_cpu_s": null,
+      "peak_rss": 575766528,
+      "final": {
+        "turn": 8,
+        "rng": {
+          "state": 2153325410,
+          "draws": 288
+        },
+        "domain_sha256": "57dab97d19100f37ed5580cac67dd94c97b473af01879d8126d97f54d8ebbbc3"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "7feb404b77a7128cbc94ee1c825ec5a28052afbf996a3e81ef43ce956b32df78"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "57dab97d19100f37ed5580cac67dd94c97b473af01879d8126d97f54d8ebbbc3"
+          },
+          "cpu": [
+            0.4082699999999875,
+            0.7278929999999946,
+            0.8124930000000177
+          ],
+          "wall": [
+            0.8655916668940336,
+            1.4550339169800282,
+            1.5064059169963002
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 2,
+              "channel": "ordinary",
+              "grain": 17342
+            },
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 4,
+              "channel": "ordinary",
+              "grain": 19314
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "7feb404b77a7128cbc94ee1c825ec5a28052afbf996a3e81ef43ce956b32df78"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "57dab97d19100f37ed5580cac67dd94c97b473af01879d8126d97f54d8ebbbc3"
+          },
+          "cpu": [
+            0.39575999999999567,
+            0.826816000000008,
+            0.7085869999999943
+          ],
+          "wall": [
+            0.6624041250906885,
+            2.4527645830530673,
+            1.3904554171022028
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 2,
+              "channel": "ordinary",
+              "grain": 17342
+            },
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 4,
+              "channel": "ordinary",
+              "grain": 19314
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F2",
+          "observation": true,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "7feb404b77a7128cbc94ee1c825ec5a28052afbf996a3e81ef43ce956b32df78"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "57dab97d19100f37ed5580cac67dd94c97b473af01879d8126d97f54d8ebbbc3"
+          },
+          "cpu": [
+            0.4334130000000016,
+            0.7770730000000015,
+            0.7280959999999936
+          ],
+          "wall": [
+            0.7715932088904083,
+            1.6463297919835895,
+            1.4564342498779297
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 0,
+          "estimate_cpu_seconds": 0,
+          "market_transport_receipts": [
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 2,
+              "channel": "ordinary",
+              "grain": 17342
+            },
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 4,
+              "channel": "ordinary",
+              "grain": 19314
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 0,
+              "misses": 0
+            },
+            "normal": {
+              "hits": 0,
+              "misses": 0
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "cross-month-convoy.json.gz",
+      "checkpoint_sha256": "db7fcf972800fe7cd143c6ceed66051c9e3a49ba104a9b302ae974bf68b096f6",
+      "group": "F4",
+      "observation": false,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 0.6811179999999979,
+      "p95_cpu": 0.9052269999999965,
+      "median_wall": 1.116816708119586,
+      "p95_wall": 1.7212879578582942,
+      "forecast_calls": 57,
+      "cache_hits": 3,
+      "route_search_calls": 9,
+      "candidate_routes": 0,
+      "estimate_calls": 57,
+      "mean_estimate_cpu_s": 0.00010429824561099035,
+      "peak_rss": 575766528,
+      "final": {
+        "turn": 8,
+        "rng": {
+          "state": 2153325410,
+          "draws": 288
+        },
+        "domain_sha256": "62c9c70f02fb3bc8550c91fb0d0104dfa5cf8dff37d6063731fc95695e19dd17"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "8e6bb16f233b2cd88e1ee3acbe23ac0d84b753e74239f80d9954a8ec32acff4d"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "62c9c70f02fb3bc8550c91fb0d0104dfa5cf8dff37d6063731fc95695e19dd17"
+          },
+          "cpu": [
+            0.4695030000000031,
+            0.7191940000000159,
+            0.9052269999999965
+          ],
+          "wall": [
+            1.0933022920507938,
+            1.5020764998625964,
+            1.7212879578582942
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 19,
+          "estimate_cpu_seconds": 0.0025809999999353295,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 1,
+              "misses": 18
+            },
+            "normal": {
+              "hits": 230,
+              "misses": 27
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 8
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "8e6bb16f233b2cd88e1ee3acbe23ac0d84b753e74239f80d9954a8ec32acff4d"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "62c9c70f02fb3bc8550c91fb0d0104dfa5cf8dff37d6063731fc95695e19dd17"
+          },
+          "cpu": [
+            0.3798810000000117,
+            0.6859620000000177,
+            0.688161000000008
+          ],
+          "wall": [
+            0.744191916892305,
+            1.1537858750671148,
+            1.2342832922004163
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 19,
+          "estimate_cpu_seconds": 0.001643000000029815,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 1,
+              "misses": 18
+            },
+            "normal": {
+              "hits": 230,
+              "misses": 27
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 8
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": false,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "8e6bb16f233b2cd88e1ee3acbe23ac0d84b753e74239f80d9954a8ec32acff4d"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "62c9c70f02fb3bc8550c91fb0d0104dfa5cf8dff37d6063731fc95695e19dd17"
+          },
+          "cpu": [
+            0.39544499999999516,
+            0.6811179999999979,
+            0.6452830000000063
+          ],
+          "wall": [
+            0.6546380410436541,
+            1.116816708119586,
+            1.0285429579671472
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 19,
+          "estimate_cpu_seconds": 0.0017209999998613057,
+          "market_transport_receipts": [],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 1,
+              "misses": 18
+            },
+            "normal": {
+              "hits": 230,
+              "misses": 27
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 8
+            }
+          }
+        }
+      ]
+    },
+    {
+      "checkpoint": "cross-month-convoy.json.gz",
+      "checkpoint_sha256": "db7fcf972800fe7cd143c6ceed66051c9e3a49ba104a9b302ae974bf68b096f6",
+      "group": "F4",
+      "observation": true,
+      "scene": "184-02",
+      "strategy": "211",
+      "samples": 9,
+      "median_cpu": 0.7059439999999881,
+      "p95_cpu": 0.8875009999999861,
+      "median_wall": 1.1537055000662804,
+      "p95_wall": 1.7569907500874251,
+      "forecast_calls": 57,
+      "cache_hits": 3,
+      "route_search_calls": 9,
+      "candidate_routes": 0,
+      "estimate_calls": 57,
+      "mean_estimate_cpu_s": 8.287719298363172e-05,
+      "peak_rss": 575766528,
+      "final": {
+        "turn": 8,
+        "rng": {
+          "state": 2153325410,
+          "draws": 288
+        },
+        "domain_sha256": "62c9c70f02fb3bc8550c91fb0d0104dfa5cf8dff37d6063731fc95695e19dd17"
+      },
+      "repetitions": [
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "8e6bb16f233b2cd88e1ee3acbe23ac0d84b753e74239f80d9954a8ec32acff4d"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "62c9c70f02fb3bc8550c91fb0d0104dfa5cf8dff37d6063731fc95695e19dd17"
+          },
+          "cpu": [
+            0.415662999999995,
+            0.720168000000001,
+            0.8875009999999861
+          ],
+          "wall": [
+            0.8074888749979436,
+            1.4756320829037577,
+            1.7569907500874251
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 19,
+          "estimate_cpu_seconds": 0.001605000000012069,
+          "market_transport_receipts": [
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 2,
+              "channel": "ordinary",
+              "grain": 17342
+            },
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 4,
+              "channel": "ordinary",
+              "grain": 19314
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 1,
+              "misses": 18
+            },
+            "normal": {
+              "hits": 230,
+              "misses": 27
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 8
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "8e6bb16f233b2cd88e1ee3acbe23ac0d84b753e74239f80d9954a8ec32acff4d"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "62c9c70f02fb3bc8550c91fb0d0104dfa5cf8dff37d6063731fc95695e19dd17"
+          },
+          "cpu": [
+            0.404674,
+            0.6605669999999577,
+            0.7245049999999651
+          ],
+          "wall": [
+            0.6204333330970258,
+            0.94720199983567,
+            1.1537055000662804
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 19,
+          "estimate_cpu_seconds": 0.0013810000001228673,
+          "market_transport_receipts": [
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 2,
+              "channel": "ordinary",
+              "grain": 17342
+            },
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 4,
+              "channel": "ordinary",
+              "grain": 19314
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 1,
+              "misses": 18
+            },
+            "normal": {
+              "hits": 230,
+              "misses": 27
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 8
+            }
+          }
+        },
+        {
+          "scene": "184-02",
+          "strategy": 211,
+          "group": "F4",
+          "observation": true,
+          "initial": {
+            "turn": 5,
+            "date": [
+              184,
+              3,
+              11
+            ],
+            "rng": {
+              "state": 1988910083,
+              "draws": 160
+            },
+            "domain_sha256": "8e6bb16f233b2cd88e1ee3acbe23ac0d84b753e74239f80d9954a8ec32acff4d"
+          },
+          "final": {
+            "turn": 8,
+            "rng": {
+              "state": 2153325410,
+              "draws": 288
+            },
+            "domain_sha256": "62c9c70f02fb3bc8550c91fb0d0104dfa5cf8dff37d6063731fc95695e19dd17"
+          },
+          "cpu": [
+            0.3963179999999511,
+            0.7331540000000132,
+            0.7059439999999881
+          ],
+          "wall": [
+            0.5972223749849945,
+            1.5712091668974608,
+            1.3795766672119498
+          ],
+          "route_search_calls": 3,
+          "candidate_routes": 0,
+          "estimate_calls": 19,
+          "estimate_cpu_seconds": 0.0017379999999320717,
+          "market_transport_receipts": [
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 2,
+              "channel": "ordinary",
+              "grain": 17342
+            },
+            {
+              "turn": 8,
+              "city": "chenliu",
+              "convoy": 4,
+              "channel": "ordinary",
+              "grain": 19314
+            }
+          ],
+          "peak_rss": 575766528,
+          "forecast_cache": {
+            "route": {
+              "hits": 1,
+              "misses": 18
+            },
+            "normal": {
+              "hits": 230,
+              "misses": 27
+            },
+            "visible": {
+              "hits": 0,
+              "misses": 8
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

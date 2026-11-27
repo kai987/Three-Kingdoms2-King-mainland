@@ -1,0 +1,565 @@
+{
+  "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+  "original": "73212456ddbeb17cf4cecf320b5eeaf63bcf4c58",
+  "no_weather_22_221_checkpoints": 60,
+  "unchanged_v23_checkpoints": 37,
+  "save_formats": [
+    "plain",
+    "compact"
+  ],
+  "cross_backend_phases": {
+    "winter": {
+      "date": [
+        209,
+        1,
+        11
+      ],
+      "before": "0b1a525fea0aff495b4add4616eb5e359d83422eff555a8e41f7e273d3d81104",
+      "after": "6b3c3d278eaff61dc10202ef089371dd29af95cea15cceadc2e78b05fb0f0528",
+      "rng": {
+        "state": 2131058180,
+        "draws": 450
+      },
+      "snow": 30,
+      "multiplier": 100,
+      "finalized": false,
+      "visible_risk": 9958
+    },
+    "spring": {
+      "date": [
+        209,
+        4,
+        11
+      ],
+      "before": "ac163c695af009340696283a406f6dc11ffeb88efb46b9fa5f85f0dded0e18f7",
+      "after": "08b4877ecf03d8d7154f9275a22ed22bab056be66f88aeba651257dcbe9991a7",
+      "rng": {
+        "state": 3411212740,
+        "draws": 769
+      },
+      "snow": 0,
+      "multiplier": 100,
+      "finalized": false,
+      "visible_risk": 11
+    },
+    "frozen": {
+      "date": [
+        209,
+        6,
+        1
+      ],
+      "before": "6b256492c7d78d0894c9f2ec2ec8206f8a7cbc87d19fa127311471c80b1a0a63",
+      "after": "79b79e39414ea5d40503b822af478632e08d0dfa33d27e7436b4e440c7b071a7",
+      "rng": {
+        "state": 1100518947,
+        "draws": 1335
+      },
+      "snow": 0,
+      "multiplier": 100,
+      "finalized": true,
+      "visible_risk": 0
+    },
+    "harvest": {
+      "date": [
+        209,
+        9,
+        21
+      ],
+      "before": "4d9917bd08082d0814a862f4823366f484830061a12cd6a63202adb0fb1c15a5",
+      "after": "7d126b6e30f44054cee429b56d6a5f3a18995cf8ac7d34622be3282817de7b8b",
+      "rng": {
+        "state": 288395135,
+        "draws": 2006
+      },
+      "snow": 0,
+      "multiplier": 100,
+      "finalized": true,
+      "visible_risk": 0
+    }
+  },
+  "historic_replayed": [
+    2,
+    45,
+    77,
+    219,
+    1228,
+    1860,
+    2170,
+    3634
+  ],
+  "historic_quoted": [
+    126,
+    1685,
+    1706,
+    1723,
+    1902,
+    2095
+  ],
+  "historical_artifacts": [
+    {
+      "file": "chibi-long.json.gz",
+      "sha256": "76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9",
+      "present": [],
+      "outcome": "replayed",
+      "trace": [
+        {
+          "turn": 393,
+          "sha256": "16698b969b1801f6600f11d3bab778d12ee180e9ecd5aa13861f15ec7a019fba",
+          "domain_sha256": "f4184ce4ea70fc8f9cb6435384b5a8eef118f72574188b937380e920ceb2b503",
+          "rng": {
+            "state": 3057002245,
+            "draws": 46073
+          }
+        },
+        {
+          "turn": 394,
+          "sha256": "ecdac19b5b28c7226edd7ee4b3d99a21a2c3c41fb8fcf11ad4c8fa1e53617f18",
+          "domain_sha256": "bd43dee02a50b476f1595645b0e63d49a2cb8c26c0aeb4e7e87b4c3bf932ac3b",
+          "rng": {
+            "state": 1075765024,
+            "draws": 46426
+          }
+        },
+        {
+          "turn": 395,
+          "sha256": "505f93a2101f06524e61465e4c95fd147570d1e217f3277e6fb1686abf93ab1f",
+          "domain_sha256": "aa8e8b13df5119c22647d4c83bb1789a0b4ef964eaea76fb233fa7ba9ec6c60b",
+          "rng": {
+            "state": 1256299586,
+            "draws": 46518
+          }
+        },
+        {
+          "turn": 396,
+          "sha256": "3754a76db6a776ebe0b0d5c727be7c6db3afa739cada553144c8a54260ce8129",
+          "domain_sha256": "a2fdc0b74bf0ed192117e20989540a30a7d7a2cf0dd86227bd9fb2e7e2da1fd1",
+          "rng": {
+            "state": 3256000738,
+            "draws": 46697
+          }
+        }
+      ]
+    },
+    {
+      "file": "yellow-long.json.gz",
+      "sha256": "90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837",
+      "present": [],
+      "outcome": "replayed",
+      "trace": [
+        {
+          "turn": 401,
+          "sha256": "d786057ee6951d46709e54c83781567175f5e7a87ab44684b320cdeec591d730",
+          "domain_sha256": "ac953d7ca46b7f6818b985781dbe1b8953d620faeca54c8d5b3b02aa40bf9ff8",
+          "rng": {
+            "state": 3908732612,
+            "draws": 32475
+          }
+        },
+        {
+          "turn": 402,
+          "sha256": "4f7f8162aa83a8369c3ffa95da3a36ff2cf57e4ba51bac6fd0f15101c3aff369",
+          "domain_sha256": "d3efd03c0dafe4493c5544af202e3a9e5c0185ac6137b7366796726153644a35",
+          "rng": {
+            "state": 2069613339,
+            "draws": 32558
+          }
+        },
+        {
+          "turn": 403,
+          "sha256": "f401b5e480752720d30f7c97d6d159456737fed97073e0ab8655daf76e8bc129",
+          "domain_sha256": "e56aa2ef8b739702128c155ed26b759069bf59c1be1228241c2706fd26111f3f",
+          "rng": {
+            "state": 1815636474,
+            "draws": 32719
+          }
+        },
+        {
+          "turn": 404,
+          "sha256": "ba712a27176d73dbc476fe8e07f254bc96797b7509cb17f75ff914d2b5f41834",
+          "domain_sha256": "2c480c41677866f5d87b5e1726a49d93fdee43a6fe3b0eafa253bce47e2422f3",
+          "rng": {
+            "state": 3508004327,
+            "draws": 32762
+          }
+        }
+      ]
+    },
+    {
+      "file": "convoy-1228.json.gz",
+      "sha256": "96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50",
+      "present": [
+        1228
+      ],
+      "outcome": "replayed",
+      "trace": [
+        {
+          "turn": 406,
+          "sha256": "17fa3b63ea04ede3a94e72962d463ea0023bdb3d1150739a0b1f76391e5fda27",
+          "domain_sha256": "782ae4643d0438d565d937904b3b142281e71b9e4cd747070f49e5cfe916310c",
+          "rng": {
+            "state": 108377290,
+            "draws": 47599
+          }
+        },
+        {
+          "turn": 407,
+          "sha256": "ac3a8546a05ffcc47fa1f4bd5123cb992ece8e7f638dae9189673ae9fdcf17f4",
+          "domain_sha256": "acbaaf510f8b18d218164ecb53ba4721bad9e2d070c418c827a36a43bbaaf82b",
+          "rng": {
+            "state": 3061568977,
+            "draws": 47641
+          }
+        },
+        {
+          "turn": 408,
+          "sha256": "9176ae4327dc2906258145f8f86ab0443bf58538b2fa13043a05f417cb53569c",
+          "domain_sha256": "069cc62523f80c3f890f504cf91427755737ef425a13788588bf90d91a59e4c0",
+          "rng": {
+            "state": 456654403,
+            "draws": 47705
+          }
+        },
+        {
+          "turn": 409,
+          "sha256": "26004c9ea31230141265eeb8b652122f879cc02f0f52cc5f5bb0adf7fb52acbd",
+          "domain_sha256": "3f2cd5feefd98ba6961eeb00d40d1ff2c8493f6c43ea2bd9d47dd5df838b8833",
+          "rng": {
+            "state": 632199648,
+            "draws": 47815
+          }
+        }
+      ]
+    },
+    {
+      "file": "convoy-2170-g2.json.gz",
+      "sha256": "c58315282ba2dff76da32b2a0715d13167b97894304b7ba5bec9364e3131f063",
+      "present": [
+        2170
+      ],
+      "outcome": "replayed",
+      "trace": [
+        {
+          "turn": 568,
+          "sha256": "2a4145a219927f0b0e9287c5d43fad645c7523b23a429cd9a0716846c147b395",
+          "domain_sha256": "a9d8df7d97b381f079e433dda008cb4604d7d21c698a331e7713d08c5b884f12",
+          "rng": {
+            "state": 2988752585,
+            "draws": 54952
+          }
+        },
+        {
+          "turn": 569,
+          "sha256": "e02a8fda1c0c920d9e030269ae7cf0af8be54f78143cd4c80e7c768fcfa2ea2a",
+          "domain_sha256": "6d8c70ca63dc4c3ede00adf604582eed7aa427d097072c876929ab46a3d03993",
+          "rng": {
+            "state": 2583926110,
+            "draws": 54978
+          }
+        },
+        {
+          "turn": 570,
+          "sha256": "4ba3180330ed704949776393558af99919bbe472c165bfe96f11b388b45a31db",
+          "domain_sha256": "d6159f03b3576fadfc77c1fa6fea56f29a82acf4530bf292733539fbd68092b0",
+          "rng": {
+            "state": 1543731731,
+            "draws": 55105
+          }
+        },
+        {
+          "turn": 571,
+          "sha256": "c424165b1b6766805a4670135869a19be9a56cdd27d7f3fb56219f20cbea0671",
+          "domain_sha256": "9afd26bd2dcf84a1a23d55f00a77ed1b561fe6ef67e4a9fbf0309f39d4e1b289",
+          "rng": {
+            "state": 2278351572,
+            "draws": 55273
+          }
+        }
+      ]
+    },
+    {
+      "file": "convoy-219.json.gz",
+      "sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "present": [
+        219
+      ],
+      "outcome": "replayed",
+      "trace": [
+        {
+          "turn": 122,
+          "sha256": "7a601ec3b7d4b9b279ee188bbc75bb1e584e94a5a76d3bbb44181005ade9aec8",
+          "domain_sha256": "90adaf32a80c24c57322fa97570182febc020629a09e7795fa352808875fb915",
+          "rng": {
+            "state": 3742518463,
+            "draws": 7643
+          }
+        },
+        {
+          "turn": 123,
+          "sha256": "37363f3e4bd4e49649a9e544b3f529dd79d364ebd0d3fe02fc1ab71f7269ac0a",
+          "domain_sha256": "fc8232760384cc0d98add86526161c0f9a429b91d850517a9647013f3a8fba93",
+          "rng": {
+            "state": 1139780567,
+            "draws": 7748
+          }
+        },
+        {
+          "turn": 124,
+          "sha256": "7f5142364d77fa8bbc698be1520ab7b67767d22f91284af9201257196fb20871",
+          "domain_sha256": "151b5eff7815bad4ac36c24e19e960e6ff41cd13d6ac04cbfba5c2c678bab8ae",
+          "rng": {
+            "state": 1713370672,
+            "draws": 7856
+          }
+        },
+        {
+          "turn": 125,
+          "sha256": "71718528e9e006a926c71d5f40feed41fcdcb0ca460ad27995d05015527ff80e",
+          "domain_sha256": "a591a64daac3a83c3bf032abfdfb5031fead122912a553e48c0e04de45edef19",
+          "rng": {
+            "state": 2756816809,
+            "draws": 7880
+          }
+        }
+      ]
+    },
+    {
+      "file": "convoy-3634-turn-711.json.gz",
+      "sha256": "90bb976774a85656ba6f25d35eb6b02de5c8c387f34f52e573456571589589fd",
+      "present": [
+        3634
+      ],
+      "outcome": "replayed",
+      "trace": [
+        {
+          "turn": 711,
+          "sha256": "bb28137013e008b263684b24caf230c5fde839fca8aa6a2962e1acac57571734",
+          "domain_sha256": "8c08c5cf0ff99c84ab7202f3d7b8743514783ca112b7cef94920a8bebbe5b0b3",
+          "rng": {
+            "state": 447546932,
+            "draws": 91432
+          }
+        },
+        {
+          "turn": 712,
+          "sha256": "957c8386f91faaf125982cfe7529c7fe6640473739efa2b47fb48f2754260655",
+          "domain_sha256": "beb30fb4dbaa2ed098f1c95228beaeb12197de7a2da37bff65496856943e4bae",
+          "rng": {
+            "state": 1749058154,
+            "draws": 91766
+          }
+        },
+        {
+          "turn": 713,
+          "sha256": "7aff4d9cafabfc419ec6e5e7e3dec7be894afd4b03f7bf37ba0f6af194fa4c7f",
+          "domain_sha256": "4186c88fa523cfaed2f0ef712454b042e3b1b5e7e7dd6244e5d9bd178a510d1c",
+          "rng": {
+            "state": 1726909761,
+            "draws": 91842
+          }
+        },
+        {
+          "turn": 714,
+          "sha256": "9b943f68ba9d753fc733116c8c0c6721c7b09e6ba0962557bd31006a3174c8fa",
+          "domain_sha256": "145297041f81563934f3918235d101aa37aa31a43b6253c07e1d0298f9f017b1",
+          "rng": {
+            "state": 1931210358,
+            "draws": 91925
+          }
+        }
+      ]
+    },
+    {
+      "file": "checkpoint-40.json.gz",
+      "sha256": "8140a2448baa2890588412e70d47ab73eeb859244606d638e0123026e20de8dc",
+      "present": [
+        2
+      ],
+      "outcome": "replayed",
+      "trace": [
+        {
+          "turn": 5,
+          "sha256": "6795558c5845773e46c136a55d2c1d803c0da836d92c60e72289a98527cb748d",
+          "domain_sha256": "fe324bed861262046160097ce0ae380e34eaf262dda766292eac30b18bfafcf6",
+          "rng": {
+            "state": 2530165964,
+            "draws": 389
+          }
+        },
+        {
+          "turn": 6,
+          "sha256": "2d971fae182f46476929770dc6dbd1f674423367702365bd22c254ef6230d5f8",
+          "domain_sha256": "3ffea21dd8b96acf9e93e537498ee944d4454262ab9c182f5de11354a92554b1",
+          "rng": {
+            "state": 1772305298,
+            "draws": 430
+          }
+        },
+        {
+          "turn": 7,
+          "sha256": "a288dbfea1f6c4cb98c3a64f2ff4e0a888982a77c27f8d64fd22c22afa6b843e",
+          "domain_sha256": "38eb339bfc2b64650333bc46b30a66abf6237be167da86ef088262e1cb2d8238",
+          "rng": {
+            "state": 826332960,
+            "draws": 499
+          }
+        },
+        {
+          "turn": 8,
+          "sha256": "a6730878b95990a420ef585f2634b64195c702e736609e97b07baa077332eb32",
+          "domain_sha256": "5325cbe25d111379bf33d850b76a7361ffa3d2abdcbfd91bcae9b31213499d7c",
+          "rng": {
+            "state": 594457562,
+            "draws": 526
+          }
+        }
+      ]
+    },
+    {
+      "file": "checkpoint-970.json.gz",
+      "sha256": "71dded8925c589d3a8a313c3a1be6e36a1e4aee9bd50bc1d2c9c7fa33e3feee8",
+      "present": [
+        45
+      ],
+      "outcome": "replayed",
+      "trace": [
+        {
+          "turn": 98,
+          "sha256": "68b70c3d3dd8569c96ab61b0e198f7a0127a7945b00a48cad5dd2f3244737247",
+          "domain_sha256": "e9b26b5108f57edd8734684e7fc3162245744bcdf087218db01f162df6cc9f89",
+          "rng": {
+            "state": 2483970893,
+            "draws": 4112
+          }
+        },
+        {
+          "turn": 99,
+          "sha256": "9fe32397b528f5e83b5d0cf48f3f972831b17343d1cfd63aa8f10a5e21462684",
+          "domain_sha256": "54695f17d2019724d9a9d3b4aa375666a17106d7354700d1f9d41aaa8cb1f01b",
+          "rng": {
+            "state": 115804093,
+            "draws": 4143
+          }
+        },
+        {
+          "turn": 100,
+          "sha256": "459bd087d1214880c628199d9085ed8089a392c287d3e343fa7743a043676215",
+          "domain_sha256": "6bcbffa43283cfec83f0fb95fd0750d48675f21c764aac1c143d5b19ba845bf4",
+          "rng": {
+            "state": 3813645378,
+            "draws": 4184
+          }
+        },
+        {
+          "turn": 101,
+          "sha256": "487b109acc3710ca0d48d317e702fc73f30c1b7e2819621a2e1f53938fe3654a",
+          "domain_sha256": "5137e517623b2a0c522d0d172f38bb19e81f78e3b4c706dc1a0fe9459bb74b90",
+          "rng": {
+            "state": 3272304253,
+            "draws": 4204
+          }
+        }
+      ]
+    },
+    {
+      "file": "checkpoint-910.json.gz",
+      "sha256": "0fc3ac2d3ec1d9cd2eac57d73f620fca177b615aab7e9e907334a0ce7c75ff7e",
+      "present": [
+        77
+      ],
+      "outcome": "replayed",
+      "trace": [
+        {
+          "turn": 92,
+          "sha256": "e7946226b9f821779c3d71c42766870ac01b4a8650fdca6dcb6d27a20c27007b",
+          "domain_sha256": "06bff9dfdfe3c93164aa75c950a8e2eb1cd9f5f0e8d7d264503ba52b50b761b8",
+          "rng": {
+            "state": 2053389797,
+            "draws": 5030
+          }
+        },
+        {
+          "turn": 93,
+          "sha256": "6388b46c384dead4ce909fb66156f2be1ba5d224750f15dfad515d0a6646080c",
+          "domain_sha256": "a5c81abe126637656ea8f9ae3d9b2c18a7f13f6857c3b0b81a4471a6beb30ef6",
+          "rng": {
+            "state": 1761718025,
+            "draws": 5178
+          }
+        },
+        {
+          "turn": 94,
+          "sha256": "37184621e66d19f3a5b8f814e09f84a4d8cb01142860445725aec6b2a7b4cd37",
+          "domain_sha256": "5c611f4577bcc3f710d10d2b8217bb67fb8dedb051d401dd26826d875eef5251",
+          "rng": {
+            "state": 716588672,
+            "draws": 5225
+          }
+        },
+        {
+          "turn": 95,
+          "sha256": "2289ff1914e8ce042222736d39eda6e65d2ab670692028efcd6043a658ecdfec",
+          "domain_sha256": "999726700debfc62d173513f5d169d0aeae92865370a6302c0e9e62b294ead52",
+          "rng": {
+            "state": 804641415,
+            "draws": 5262
+          }
+        }
+      ]
+    },
+    {
+      "file": "convoy-1860.json.gz",
+      "sha256": "1b96cbb042a1e6c3a5f6ca9b88a3f90be58b52a35cdd054a286df14dee3e07f4",
+      "present": [
+        1860
+      ],
+      "outcome": "replayed",
+      "trace": [
+        {
+          "turn": 621,
+          "sha256": "f8df5093f7b906b397e8aa3693b6936d119068bb8c845c3992f4a1c462a4def5",
+          "domain_sha256": "11c6c2d772bb6c1c6d2aae35b77b8e7e3489ca98006323d885dd5d9932a9728c",
+          "rng": {
+            "state": 3721070268,
+            "draws": 73276
+          }
+        },
+        {
+          "turn": 622,
+          "sha256": "9739bcb658e59ff55d392e2581d9f2b1622ab445b78557b6ae6a10372ebf1ae6",
+          "domain_sha256": "f9ea06e8c0a5ac20e8e5598b7f5e1a08ccbba5f86908555850f386e272de61a0",
+          "rng": {
+            "state": 453622964,
+            "draws": 73419
+          }
+        },
+        {
+          "turn": 623,
+          "sha256": "60bc50c4cc34ee51652e13f941565684170d8999804f92a2c01eb4316b3fff75",
+          "domain_sha256": "d9ac015671a986770d598fd41bcc07edeec4e11775df0c4d2a313fa323e067fb",
+          "rng": {
+            "state": 364474401,
+            "draws": 73479
+          }
+        },
+        {
+          "turn": 624,
+          "sha256": "f83e3fb19e2bae0e36dbfee52cb54d648a19771570ba18a824763e69ec6f4259",
+          "domain_sha256": "95fd7fe3cb987d7ed3685aa231c57a00971473e84164628303a5e96890b53045",
+          "rng": {
+            "state": 762013123,
+            "draws": 73725
+          }
+        }
+      ]
+    }
+  ],
+  "verified_file_sha256": {
+    "candidate-rust.json": "601f375e75d6756474be8254e0affda41257f5b76b642fa60f727cd64f86a5bc",
+    "candidate-python.json": "601f375e75d6756474be8254e0affda41257f5b76b642fa60f727cd64f86a5bc",
+    "legacy-v231-rust.json": "92793b6aed74f2c026e0b08cdac4acf0db2efdd2a06185f6ba3e3d9a002d55bd",
+    "candidate-rust-reads-python.json": "b89ed7ee4dab690175b5a34965fc316a386fe23595d2264bc76d74be8e283581",
+    "disabled-v231-rust.json": "402fd7286db723154f65941f9baae79982030002a4e2e62b0c51e22717c62b87",
+    "archived-latest.json": "6a94a6040146b263911aca91c2aff4b29a6154b070f9116cdd55e7633ee0395f",
+    "candidate-python-reads-rust.json": "b89ed7ee4dab690175b5a34965fc316a386fe23595d2264bc76d74be8e283581"
+  }
+}

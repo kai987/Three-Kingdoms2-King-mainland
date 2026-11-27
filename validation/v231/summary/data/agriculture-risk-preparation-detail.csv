@@ -1,0 +1,4 @@
+group,kind,turn,year,month,owner,city,method,grain,deadline,request_id,weather_risk,projected_multiplier,expected_risk_gap,prior_reliable_receipts,source,convoy,dispatched_grain,paid_gold,books_spent,escort_ids,original_eta,region,actual_receipt_turn,actual_receipt_grain,finalized_agriculture_status,finalized_agriculture_multiplier,post_receipt_missing_known_window
+F2,agriculture_preparation_detail,58,210,5,wei,xincheng,market,312,67,wei/xincheng/67/market,30,85,312,2019,nanjun,86,344,4,2,[106],61,qinling_highlands,61,312,severe,85,1496
+F4,agriculture_preparation_detail,59,210,5,wei,xincheng,market,312,68,wei/xincheng/68/market,30,85,312,1968,yidu,86,349,4,2,[6],62,qinling_highlands,62,312,severe,85,0
+F4,agriculture_preparation_detail,271,216,4,liu_zhang,jiameng,market,7,279,liu_zhang/jiameng/279/market,14,95,7,0,hanzhong,892,8,1,2,[160],273,qinling_highlands,273,7,severe,85,0

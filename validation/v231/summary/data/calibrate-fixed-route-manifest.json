@@ -1,0 +1,9 @@
+{
+  "phase": "calibrate",
+  "seed_start": 300000,
+  "count": 120,
+  "source": "a8c854ac05d7691bb460fab9591f362ffee63637",
+  "catalog_sha256": "6c6ba7f2dafb4b6dec0922383456b33231baf8bdbeb8f9ffeded1beed428ea60",
+  "conservative_eta_covered": 38,
+  "whole_route_engine": "winter_travel.day"
+}

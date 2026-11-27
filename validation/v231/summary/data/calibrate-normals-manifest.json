@@ -1,0 +1,13 @@
+{
+  "source": "5c294c92b3057a7e2073549f4b56fa7a2b1f85bb",
+  "phase": "calibrate",
+  "seed_start": 100000,
+  "count": 1000,
+  "calendar_days": 360,
+  "profiles": [
+    false,
+    true
+  ],
+  "catalog_sha256": "6c6ba7f2dafb4b6dec0922383456b33231baf8bdbeb8f9ffeded1beed428ea60",
+  "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7"
+}

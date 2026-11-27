@@ -1,0 +1,9 @@
+wave,scenario,seed,strategy,months,baseline_requests,candidate_requests,market_grain,dispatched_grain,change_in_city_turns,change_in_grain_gap
+five,207-09,2034,211,60,0,0,0,0,0,0
+five,208-10,2026,211,60,0,1,312,0,0,7790
+five,208-10,2026,212,60,0,1,3,0,-10,-2011
+quick,184-02,2026,211,24,0,0,0,0,0,0
+quick,207-09,2034,211,24,0,0,0,0,0,0
+quick,208-10,2026,211,24,0,1,312,0,0,0
+quick,208-10,2026,212,24,0,1,3,0,0,140
+quick,263-05,2026,211,24,0,0,0,0,0,0
