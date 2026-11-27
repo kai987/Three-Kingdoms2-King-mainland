@@ -1126,6 +1126,15 @@
         "save"
       ]
     },
+    "tests/test_remake_winter_forecast.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "logistics",
+        "map",
+        "save"
+      ]
+    },
     "tests/test_remake_winter_transport.py": {
       "tier": "related",
       "groups": [

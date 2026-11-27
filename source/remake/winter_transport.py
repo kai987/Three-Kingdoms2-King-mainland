@@ -19,6 +19,15 @@ def protected_cost(game,state,quote,units,*,position=0,stop=None,credit=0):
     return dict(days=days,blocked=ice,meal=amount,safety=rules.ceil_div(amount*(SAFETY_PERCENT-100),100))
 
 
+def seasonal_meals(state, ids, outward, returning, *, reserves=0):
+    """One provision quote per direction and one shared safety allowance."""
+    divisor=march_supply.denominator()*rules.RATION_SCALE
+    escort=march_supply.ration_units(state,ids)
+    out=rules.ceil_div((escort+reserves)*outward['total_ration_weight'],divisor)
+    back=rules.ceil_div(escort*returning['total_ration_weight'],divisor)
+    return out,back,rules.ceil_div((out+back)*SAFETY_PERCENT,100)
+
+
 def budget(game,state,row,*,return_quote=None):
     journey=row['journeys'][-1]
     book=journey['supply']

@@ -511,6 +511,12 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                             winter_weather.initialize(self, candidate, requested, options=options)
                         except ValueError as exc:
                             raise GameError('氣候實驗選項無效。') from exc
+                    if winter_climate.FORECAST_FIELD in payload:
+                        requested = payload[winter_climate.FORECAST_FIELD]
+                        if (type(requested) is not int or requested != winter_climate.FORECAST_VERSION
+                                or not winter_climate.enabled(candidate)):
+                            raise GameError('季節預報 V2.3.1 需要冬季氣候 V2.3。')
+                        candidate.extension[winter_climate.FORECAST_FIELD] = requested
                     if transport_emergency.FIELD in payload:
                         requested = payload[transport_emergency.FIELD]
                         if type(requested) is not int or requested not in (0, transport_emergency.VERSION):
@@ -1033,6 +1039,11 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         economy_rules.validate(state)
         logistics_rules.validate(state)
         winter_weather.validate(self, state)
+        if winter_climate.FORECAST_FIELD in state.extension:
+            forecast = state.extension[winter_climate.FORECAST_FIELD]
+            if (type(forecast) is not int or forecast != winter_climate.FORECAST_VERSION
+                    or not winter_climate.enabled(state)):
+                raise ValueError('Winter forecast version')
         transport_emergency.validate_version(state)
         grain_market.validate(state)
         market_pricing.validate(state)

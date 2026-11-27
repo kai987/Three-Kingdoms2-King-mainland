@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 
 from . import faction_economy, historical_campaigns, logistics, logistics_rules
-from . import march_supply, strategic_granary as reserve, winter_travel, winter_weather
+from . import march_supply, strategic_granary as reserve, winter_climate, winter_travel, winter_weather
 
 
 def inbound(game, state, row, projected):
@@ -19,7 +19,18 @@ def inbound(game, state, row, projected):
     status, conditional_eta = ('blocked' if blocked else 'reliable'), None
     if not blocked and winter_weather.movement(state):
         outlook = winter_travel.seasonal_forecast(game, state, journey['quote'], position=winter_travel.work(book))
-        if outlook['reaches']:
+        if winter_climate.forecast_enabled(state):
+            from . import winter_forecast
+            if outlook['bounded']:
+                status='blocked'
+            else:
+                eta=max(eta,logistics_rules.ceil_div(outlook['expected_arrival_days'],10))
+                projected=min(projected,winter_forecast.net_cargo(
+                    row['cargo']['grain'],outlook,row[logistics.LOSS_FIELD]))
+                if outlook['seasonal_freeze_risk']>=2_000:
+                    status='seasonal'
+                    conditional_eta=eta
+        elif outlook['reaches']:
             status = 'seasonal'
             # Widen uncertain ETAs using published information. No date is
             # promised for a stopped convoy or a route that has lost access.

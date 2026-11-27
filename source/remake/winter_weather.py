@@ -329,8 +329,9 @@ def view(game, state):
     if not stage(state):
         return {}
     pool = state.extension[POOL]
-    from . import logistics, winter_transport, winter_travel, march_supply
-    def journey_info(row,reserves=0):
+    from . import logistics, winter_transport, winter_travel, march_supply, winter_strategy
+    forecast_enabled=winter_climate.forecast_enabled(state)
+    def journey_info(row,reserves=0,*,show_outlook=True):
         supply,quote=row['supply'],row['quote']
         position=winter_travel.work(supply)
         days,_,_,blocked=winter_travel.forecast(game,state,quote,position=position)
@@ -340,10 +341,14 @@ def view(game, state):
         alternative=None
         if blocked and here and state.cities[quote['path'][-1]].owner==row['owner']:
             alternative=game._travel_path(state,here,quote['path'][-1],row['owner'],'land')
-        return dict(days=days,expected=expected,remaining_work=remaining,blocked=blocked or supply['winter']['blocked'],
+        result=dict(days=days,expected=expected,remaining_work=remaining,blocked=blocked or supply['winter']['blocked'],
                     shortage=march_supply.remaining_requirement(game,state,row,reserves=reserves),
                     current_city=here,next_city=march_supply.next_city(row),
                     alternative=alternative['path'] if alternative else None)
+        if forecast_enabled and show_outlook:
+            from . import winter_forecast
+            result['outlook']=winter_forecast.trip(game,state,quote,position=position)
+        return result
     armies={str(row['id']):journey_info(row) for row in state.extension['travel']['marches']
             if row['owner']==state.player and 'winter' in row['supply']}
     cargo={}
@@ -351,7 +356,8 @@ def view(game, state):
         trip=convoy['journeys'][-1]
         if convoy['owner']==state.player and 'winter' in trip['supply']:
             row=dict(trip,owner=convoy['owner'],officers=convoy['officers'])
-            info=journey_info(row,convoy['cargo']['reserves'])
+            info=journey_info(row,convoy['cargo']['reserves'],show_outlook=False)
+            back=None
             info['expected_grain']=None if info['days'] is None else winter_travel.estimate_cargo(
                 game,state,trip['quote'],convoy['cargo']['grain'],position=winter_travel.work(trip['supply']),
                 remainder=convoy.get('cargo_loss_remainder',0))
@@ -364,26 +370,39 @@ def view(game, state):
                     status['return_legal']=route is not None
                     if route:
                         status.update(winter_transport.budget(game,state,convoy,return_quote=route[1]))
+                        back=route[1]
                 info['safety']=status
+            if forecast_enabled:
+                from . import winter_forecast
+                info['outlook']=winter_forecast.trip(game,state,trip['quote'],back,
+                                                    position=winter_travel.work(trip['supply']))
             cargo[str(convoy['id'])]=info
     seasonal={}
     if (corrected(state,PREPARATION) and state.player in game.catalog.factions
-            and state.month in (9,10,11,12,1,2,3)
+            and winter_strategy.season_open(state)
             and any(row['owner']==state.player for rows in (state.extension['logistics']['convoys'],
                                                             state.extension['travel']['marches']) for row in rows)):
         from . import faction_economy,winter_strategy
         seasonal=winter_strategy.seasonal_requirements(game,state,state.player,faction_economy.plan(game,state,state.player))
+    def regional_view(key,row):
+        visible={**row,'weather':NAMES[row['severity']],'road':NAMES[road_weather(row)],
+                 'season_chance':winter_climate.snow_probability(state,key,state.month)}
+        if 'options' in pool:
+            visible.update(depth_limit=winter_climate.snow_depth_limit(state,key),
+                           agriculture=winter_agriculture.summary(state,key))
+        if forecast_enabled:
+            from . import winter_forecast
+            visible['snowpack_risk']=winter_forecast.snowpack_risk(state,key)
+            visible['agriculture']['risk_multiplier']=winter_agriculture.planning_multiplier(
+                state,key,(visible['agriculture']['year'],6))
+        return visible
     return dict(stage=pool['stage'], tick=pool['tick'], as_of=date_at(game.catalog.data, pool['tick']),
         work_per_day=winter_travel.QUANTA, reaches=game.catalog.climate.frozen_reaches, marches=armies,convoys=cargo,
         seasonal=seasonal,
         cities=({key: ({**row, 'agriculture_region_id': winter_climate.CITY_AGRICULTURE[key]}
                        if key in winter_climate.CITY_AGRICULTURE else row)
                  for key, row in game.catalog.climate.cities.items()} if 'options' in pool else game.catalog.climate.cities),
-        regions={key: {**row, 'weather': NAMES[row['severity']], 'road': NAMES[road_weather(row)],
-                       'season_chance': winter_climate.snow_probability(state, key, state.month),
-                       **({'depth_limit': winter_climate.snow_depth_limit(state, key),
-                           'agriculture': winter_agriculture.summary(state, key)} if 'options' in pool else {})}
-                 for key, row in pool['regions'].items()},
+        regions={key:regional_view(key,row) for key,row in pool['regions'].items()},
         ice={key: {**row, 'navigation': ICE_NAMES[row['state']], 'speed_percent': SPEED_PERCENT[row['state']]}
              for key, row in pool['ice'].items()})
 

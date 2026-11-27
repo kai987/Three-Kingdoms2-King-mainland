@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import NamedTuple
 
 from . import command_books, historical_campaigns, logistics, logistics_rules as rules, march_supply
-from . import transport_capacity, winter_travel, winter_weather
+from . import transport_capacity, winter_climate, winter_travel, winter_weather
 from .grain_units import denominator
 
 WAIT_DAYS = 3
@@ -96,9 +96,14 @@ def windows(state, army, *, stopped=False, game=None):
             position=winter_travel.work(book)
             if elapsed*winter_travel.QUANTA<position:
                 continue
-            forecast=(winter_travel.checkpoint_forecast if winter_weather.corrected(state,winter_weather.PREPARATION)
-                      else winter_travel.forecast)
-            eta=forecast(game,state,route,position=position,stop=elapsed*winter_travel.QUANTA)[0]
+            if winter_climate.forecast_enabled(state):
+                from . import winter_forecast
+                outlook=winter_forecast.estimate(game,state,route,position=position,stop=elapsed*winter_travel.QUANTA)
+                eta=None if outlook['bounded'] else outlook['expected_arrival_days']
+            else:
+                forecast=(winter_travel.checkpoint_forecast if winter_weather.corrected(state,winter_weather.PREPARATION)
+                          else winter_travel.forecast)
+                eta=forecast(game,state,route,position=position,stop=elapsed*winter_travel.QUANTA)[0]
             if eta is None:
                 break
             start=clock+eta
@@ -336,6 +341,7 @@ class Planner:
     def candidates(self, source, *, budget=None, selected=None, cargo=None, origin=None, live=None,
                    loads=None, urgent_only=False):
         game, state = self.game, self.state
+        seasonal=winter_climate.forecast_enabled(state)
         key = source.id
         policy = logistics._pool(state)['cities'][key]['policy'] if live is None else live['route_policy']
         automatic=transport_capacity.automation(state,source.owner)
@@ -405,7 +411,14 @@ class Planner:
                         continue
                     if selected is not None and mode!=selected['mode']:
                         continue
-                    days=winter_travel.quote_days(game,state,route)
+                    if seasonal:
+                        from . import winter_forecast
+                        outlook=winter_forecast.estimate(game,state,route)
+                        if outlook['bounded'] or outlook['currently_blocked']:
+                            continue
+                        days=outlook['expected_arrival_days']
+                    else:
+                        days=winter_travel.quote_days(game,state,route)
                     dates = timing(slot,now,days)
                     if dates is None:
                         continue
@@ -422,7 +435,8 @@ class Planner:
                     # ownership or actual reception space changes.
                     return_tick = boundary(eta)
                     outward_parts=rules.plan(route,march_supply.travel_rules(game))
-                    outward=march_supply.quoted_weight(game,state,route,route['days'])
+                    outward=(outlook['total_ration_weight'] if seasonal else
+                             march_supply.quoted_weight(game,state,route,route['days']))
                     risks=game._march_risks(route,None)
                     season = projected_state(state,return_tick)
                     missing_slot = len(ids) if live or selected else 1
@@ -451,10 +465,17 @@ class Planner:
                         if back is None:
                             blocked='unsafe_return'
                             continue
-                        backward = march_supply.quoted_weight(game,state,back[1],back[1]['days'])
-                        if not demand.urgent and winter_travel.route_risk(game,state,back[1],days+wait):
-                            blocked='unsafe_return'
-                            continue
+                        if seasonal:
+                            return_outlook=winter_forecast.estimate(game,state,back[1],start_in=max(0,return_tick-now))
+                            if return_outlook['bounded']:
+                                blocked='unsafe_return'
+                                continue
+                            backward=return_outlook['total_ration_weight']
+                        else:
+                            backward=march_supply.quoted_weight(game,state,back[1],back[1]['days'])
+                            if not demand.urgent and winter_travel.route_risk(game,state,back[1],days+wait):
+                                blocked='unsafe_return'
+                                continue
                         credit = live['journeys'][-1]['supply']['credit_units'] if live else 0
                         bag = ration_budget(troop_count+100*len(team),outward,wait*rules.RATION_SCALE,
                                             backward,credit=credit)
@@ -474,6 +495,8 @@ class Planner:
                             room,net=shipment(game,route,needed,room,outward_parts,risks,state=state)
                         else:
                             net=0
+                        if seasonal and room:
+                            net=min(net,winter_forecast.net_cargo(room,outlook))
                         percent=efficiency(net,room,bag.total)
                         urgent=demand.urgent or eta<=demand.deadline<=now+WAIT_DAYS
                         if not net or selected is None and percent<EFFICIENCY_NORMAL and not urgent:
@@ -486,7 +509,8 @@ class Planner:
                             blocked='heavy_escort'
                             continue
                         result=dict(march_id=ident,city=slot.city,officers=list(team),quote=route,route_mode=mode,
-                            cost_grain=bag.total, max_grain=room, needed_grain=needed, eta_turn=state.turn+winter_travel.quote_turns(game,state,route))
+                            cost_grain=bag.total, max_grain=room, needed_grain=needed,
+                            eta_turn=state.turn+(rules.ceil_div(days,10) if seasonal else winter_travel.quote_turns(game,state,route)))
                         result[FIELD]=dict(request_id=demand.key,deadline=demand.deadline,required=needed,
                             eta_tick=eta, wait_until=boundary(eta+WAIT_DAYS),wait_days=wait, cargo=room,
                             estimated_net=min(needed,net), return_city=back[1]['path'][-1],return_days=back[1]['days'],

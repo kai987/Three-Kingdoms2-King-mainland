@@ -7,7 +7,7 @@ from . import (city_economy, climate_regions, command_books, domestic, facilitie
                historical_campaigns, logistics, logistics_rules, logistics_strategy, strategic_granary as reserve,
                winter_agriculture, winter_climate, winter_travel, winter_weather)
 from .errors import GameError
-from . import granary_demand, transport_capacity
+from . import granary_demand, transport_capacity, winter_climate
 
 
 def _plan(game, state, owner, *, except_order=None):
@@ -63,6 +63,13 @@ def profile(game, state, city, budget, forecast):
 
 
 def _risk(game, state, quote, *, offset=0, seasonal=False):
+    if winter_climate.forecast_enabled(state):
+        from . import winter_forecast
+        outlook=winter_forecast.estimate(game,state,quote,start_in=offset)
+        if outlook['bounded'] or not offset and outlook['currently_blocked']:
+            return None
+        return dict(days=outlook['expected_arrival_days'],risk=outlook['extra_days'],
+                    reaches=outlook['reaches'],extra_weight=0,outlook=outlook)
     days = quote['days']
     if winter_weather.movement(state):
         days, _, ice = winter_travel.checkpoint_forecast(game,state,quote)
@@ -185,6 +192,7 @@ class Network:
 
     def collect(self, targets, sources=None, *, stock_credit=None, urgent_targets=()):
         state = self.state
+        seasonal = winter_climate.forecast_enabled(state)
         if not command_books.can_spend(state,self.owner,'dispatch_transport'):
             for key in targets:
                 self.rejected[key]['no_command_books'] += 1
@@ -250,7 +258,7 @@ class Network:
                     if not outward or not backward:
                         self.rejected[key]['no_legal_route' if not outward else 'no_legal_return'] += 1
                         continue
-                    if self._measure(backward[0][1]) is None:
+                    if not seasonal and self._measure(backward[0][1]) is None:
                         self.rejected[key]['winter_route_risk'] += 1
                         continue
                     for mode, route in outward:
@@ -259,15 +267,22 @@ class Network:
                             self.rejected[key]['winter_route_risk'] += 1
                             continue
                         back = self._measure(backward[0][1], timing['days'])
-                        if back is None or self.automatic and (timing['reaches'] or back['reaches']):
+                        if back is None or self.automatic and not seasonal and (timing['reaches'] or back['reaches']):
                             self.rejected[key]['winter_route_risk'] += 1
                             continue
-                        rations = logistics.escort_rations(self.game,state,[escort],route,backward[0][1])
-                        extra_weight = timing['extra_weight']+back['extra_weight']
-                        if extra_weight:
-                            from . import march_supply
-                            rations += logistics_rules.ceil_div(extra_weight*march_supply.ration_units(state,[escort]),
-                                march_supply.denominator()*logistics_rules.RATION_SCALE)
+                        if seasonal:
+                            from . import winter_transport
+                            outward_rations,return_rations,rations=winter_transport.seasonal_meals(
+                                state,[escort],timing['outlook'],back['outlook'])
+                        else:
+                            rations = logistics.escort_rations(self.game,state,[escort],route,backward[0][1])
+                            extra_weight = timing['extra_weight']+back['extra_weight']
+                            if extra_weight:
+                                from . import march_supply
+                                rations += logistics_rules.ceil_div(extra_weight*march_supply.ration_units(state,[escort]),
+                                    march_supply.denominator()*logistics_rules.RATION_SCALE)
+                            outward_rations=logistics._rations(self.game,state,route,[escort],logistics._empty_cargo())
+                            return_rations=logistics._rations(self.game,state,backward[0][1],[escort],logistics._empty_cargo())
                         limit = min(policy['max_grain'],free-rations)
                         load_capacity=None
                         if physical:
@@ -281,8 +296,7 @@ class Network:
                             mode=mode, route=route, path=route['path'], return_path=backward[0][1]['path'],
                             days=timing['days'], return_days=back['days'], risk=timing['risk']+back['risk'],
                             ice=sorted(set(timing['reaches']) | set(back['reaches'])), limit=limit,
-                            rations=rations, outbound_rations=logistics._rations(self.game,state,route,[escort],logistics._empty_cargo()),
-                            return_rations=logistics._rations(self.game,state,backward[0][1],[escort],logistics._empty_cargo()),
+                            rations=rations, outbound_rations=outward_rations, return_rations=return_rations,
                             floor=floor, free=free)
                         if floor < normal_floor:
                             values['release_floor'] = floor
@@ -290,6 +304,8 @@ class Network:
                             values['capacity']=load_capacity
                         if self.automatic and transport_capacity.enabled(state,'throughput_ranking'):
                             values['rank_turnover']=True
+                        if seasonal:
+                            values['seasonal_outlook']=timing['outlook']
                         options[key].append(values)
         return options
 
@@ -309,12 +325,15 @@ class Network:
         if not 0 < load <= limit:
             return None
         net = logistics.projected_grain(game,option['route'],load,state=state)
+        if 'seasonal_outlook' in option:
+            from . import winter_forecast
+            net=min(net,winter_forecast.net_cargo(load,option['seasonal_outlook']))
         if not net:
             return None
         ticks = max(1, logistics_rules.ceil_div(option['days'],10))
         rate = facilities.market_rate(game,facilities._pool(state)['cities'][city.id]['town'],
                                       'buy',state.month,state=state,city=city.id)
-        values = {key:value for key,value in option.items() if key != 'route'}
+        values = {key:value for key,value in option.items() if key not in ('route','seasonal_outlook')}
         values.update(load=load, net=net, arrival_turn=state.turn+ticks,
                       deadline=deadline, reference_price=rate,
                       landed_cents=landed_cents(0,option['rations'],rate,net), eta=ticks,
