@@ -2,6 +2,19 @@
   "schema": "tk2-browser-cases-v1",
   "cases": [
     {
+      "id": "transport-coordination",
+      "title": "transport coordination is opt-in and its observer ledger follows the selected language",
+      "groups": [
+        "economy",
+        "logistics",
+        "scenarios"
+      ],
+      "scenario_ids": [
+        "mainland184-02"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
       "id": "title-cover",
       "title": "pixel loading cover animates, plays the original title and waits for Start before the 184 chooser",
       "groups": [

@@ -9,6 +9,7 @@ let campaignWinter=false,campaignClimate=false,campaignForecast=false,campaignCo
 let campaignRegional=false,campaignRegionalTrade=false;
 let campaignGranary=false,campaignGranaryCandidate=false,campaignGranaryDispatch=false,campaignGranaryWinter=false,campaignGranaryRelay=false;
 let campaignTransportCapacity=false;
+let campaignTransportCoordination=false;
 let campaignTransshipment=false;
 const lifespanLabels={historical:['史實','史実'],none:['無','なし']};
 let allocationDialogContext=null,allocationCloseEpoch=0;
@@ -146,6 +147,43 @@ function factionBase(row){
  const size=city=>rank[view.catalog.city_profiles?.[city.id]?.tier]||0;
  return owned.sort((a,b)=>size(b)-size(a)||a.id.localeCompare(b.id))[0]?.id;
 }
+function coordinationOverview(standings,names){
+ const ledger=view.catalog.transport_coordination;
+ if(!ledger)return '';
+ const reasons={
+  source_convoy_limit:['運輸位置已滿','輸送枠使用中'],
+  source_transport_busy:['運輸位置已滿','輸送枠使用中'],
+  no_eligible_escort:['缺少合格押運人員','護送担当者不足'],
+  no_spare_officer:['缺少合格押運人員','護送担当者不足'],
+  no_escorts:['缺少合格押運人員','護送担当者不足'],
+  source_minimum_reserve:['來源城保護儲糧','輸送元の備蓄保護'],
+  insufficient_return_rations:['往返口糧不足','往復の兵糧不足'],
+  no_legal_route:['沒有合法路線','通行可能な経路なし'],
+  no_legal_return:['沒有合法返程','帰還可能な経路なし'],
+  too_late_or_already_covered:['趕不上缺糧期限','不足の期限に間に合わない'],
+  unsafe_weather_window:['天氣風險過高','天候リスクが高い'],
+  market_stock_or_gold:['市糧或資金不足','市場在庫・資金不足'],
+  below_economic_load:['貨糧不足以抵銷運輸成本','積荷が輸送費を下回る'],
+ };
+ const rows=standings.filter(({f})=>ledger[f.id]).map(({f})=>{
+  const report=ledger[f.id];
+  const blocked=Object.entries(report.blockers).filter(([key])=>reasons[key])
+   .sort((a,b)=>b[1]-a[1]).map(([key])=>battleText(...reasons[key]));
+  if(report.remaining&&!report.books)blocked.unshift(battleText('命令書不足','命令書不足'));
+  return `<tr><th scope="row">${escapeHtml(names.get(f.id))}</th><td>${report.urgent}</td>
+   <td>${report.demand}</td><td>${report.reliable}</td><td>${report.remaining}</td>
+   <td>${report.sources}</td><td>${report.books}</td><td>${report.active}</td><td>${report.completed}</td>
+   <td>${escapeHtml([...new Set(blocked)].slice(0,3).join('、')||'—')}</td></tr>`;
+ }).join('');
+ const captions=[['勢力','勢力'],['緊急需求','緊急需要'],['需求糧','必要兵糧'],['可靠到貨','確度の高い到着見込み'],
+  ['未覆蓋糧','未充足兵糧'],['可用來源','輸送候補都市'],['命令書','命令書'],['活動運隊','活動中の輸送隊'],
+  ['已完成供糧','供給完了'],['主要限制','主な制約']];
+ const pending=battleText('完成首個 AI 回合後顯示。','最初のAIターン終了後に表示します。');
+ return `<details class="faction-logistics-overview" data-transport-coordination><summary>${battleText('輸送統籌','輸送調整')}</summary>
+  ${rows?`<div class="faction-ledger-scroll"><table><thead><tr>${captions.map(label=>`<th scope="col">${battleText(...label)}</th>`).join('')}</tr></thead>
+   <tbody>${rows}</tbody></table></div>`:`<p class="small">${pending}</p>`}</details>`;
+}
+
 function factionLedger({observer=false}={}){
  const standings=view.catalog.factions.map(f=>({f,r:factionResources(f.id,null)}));
  if(observer)standings.sort((a,b)=>b.r.cities-a.r.cities);
@@ -181,7 +219,7 @@ function factionLedger({observer=false}={}){
  return `<details class="faction-ledger"><summary>各势力资源</summary>
  <p class="small">${battleText('物資按目前所屬都市的庫存合計。','物資は現在支配する都市の備蓄を合計しています。')}</p>
  <p class="small">${battleText('兵士為武將所率的兵力，現役為在籍武將人數。行軍與戰鬥中的人員也計入。','兵士は武将が率いる兵の数、現役は所属武将の人数です。行軍中・戦闘中の部隊も集計に含まれます。')}</p>
- <div class="faction-ledger-scroll"><table${observer?' class="faction-ledger-with-base"':''}><thead><tr><th scope="col">势力</th><th scope="col"${observer?' aria-sort="descending"':''}>都市</th>${observer?`<th scope="col">${battleText('本據','本拠')}</th>`:''}<th scope="col">同盟</th><th scope="col">現役</th><th scope="col">兵士</th><th scope="col">預備兵</th><th scope="col" data-l10n-literal>金</th><th scope="col">兵糧</th></tr></thead><tbody>${rows}</tbody></table></div></details>${logisticsView}${recoveryView}`;
+ <div class="faction-ledger-scroll"><table${observer?' class="faction-ledger-with-base"':''}><thead><tr><th scope="col">势力</th><th scope="col"${observer?' aria-sort="descending"':''}>都市</th>${observer?`<th scope="col">${battleText('本據','本拠')}</th>`:''}<th scope="col">同盟</th><th scope="col">現役</th><th scope="col">兵士</th><th scope="col">預備兵</th><th scope="col" data-l10n-literal>金</th><th scope="col">兵糧</th></tr></thead><tbody>${rows}</tbody></table></div></details>${logisticsView}${recoveryView}${coordinationOverview(standings,names)}`;
 }
 function routeRisk(quote){
  const lines=(quote.routes||[]).filter(r=>r.hazard).map(r=>{
@@ -507,6 +545,7 @@ function selectFaction(){
   <label class="setup-winter"><input id="strategic-granary-candidate-option" type="checkbox" ${campaignGranaryCandidate?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('使用 V3.0.2.1 候選調糧規則','V3.0.2.1 の候補ルールを使用する')}</label>
   <label class="setup-winter"><input id="transport-capacity-option" type="checkbox" ${campaignTransportCapacity?'checked':''}> ${battleText('啟用水陸運輸容量 V3.0.3（實驗）','水陸輸送容量 V3.0.3 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="transshipment-option" type="checkbox" ${campaignTransshipment?'checked':''}> ${battleText('啟用城池中轉 V3.0.4（實驗）','都市間の積み替え V3.0.4 を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="transport-coordination-option" type="checkbox" ${campaignTransportCoordination?'checked':''}> ${battleText('啟用 AI 輸送統籌 V3.0.4.1（實驗）','AIの輸送調整 V3.0.4.1 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="strategic-dispatch-option" type="checkbox" ${campaignGranaryDispatch?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用 AI 主動調糧','AIの事前輸送を有効にする')}</label>
   <label class="setup-winter"><input id="strategic-winter-option" type="checkbox" ${campaignGranaryWinter?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用冬季戰略儲備','冬季備蓄を有効にする')}</label>
   <label class="setup-winter"><input id="strategic-relay-option" type="checkbox" ${campaignGranaryRelay?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用單站中轉（實驗）','1都市での積み替えを有効にする（実験）')}</label>
@@ -573,6 +612,7 @@ function selectFaction(){
   $('#strategic-granary-candidate-option').onchange=event=>{campaignGranaryCandidate=event.target.checked;};
   $('#transport-capacity-option').onchange=event=>{campaignTransportCapacity=event.target.checked;};
   $('#transshipment-option').onchange=event=>{campaignTransshipment=event.target.checked;};
+  $('#transport-coordination-option').onchange=event=>{campaignTransportCoordination=event.target.checked;};
   $('#strategic-dispatch-option').onchange=event=>{campaignGranaryDispatch=event.target.checked;};
   $('#strategic-winter-option').onchange=event=>{campaignGranaryWinter=event.target.checked;};
   $('#strategic-relay-option').onchange=event=>{campaignGranaryRelay=event.target.checked;};
@@ -590,6 +630,7 @@ function selectFaction(){
        ...(campaignRegional?{regional_market_rules_version:301}:{}),
        ...(campaignTransportCapacity?{transport_capacity_rules_version:303}:{}),
        ...(campaignTransshipment?{transshipment_rules_version:304}:{}),
+       ...(campaignTransportCoordination?{transport_coordination_rules_version:3041}:{}),
        ...(campaignRegionalTrade?{regional_trade_automation:true}:{}),
        ...(campaignGranary?{strategic_granary_rules_version:campaignGranaryCandidate?3021:302,
          strategic_granary_options:{proactive:campaignGranaryDispatch,winter:campaignGranaryWinter,relay:campaignGranaryRelay,
@@ -600,6 +641,7 @@ function selectFaction(){
     campaignGranary=campaignGranaryCandidate=campaignGranaryDispatch=campaignGranaryWinter=campaignGranaryRelay=false;
     campaignTransportCapacity=false;
     campaignTransshipment=false;
+    campaignTransportCoordination=false;
     cityCommandGroups.clear();
     selectedCity=view.catalog.factions.find(x=>x.id===f)?.city||pending.focus;actor=target=null;mapMode='all';dialog.close();render();
     if(isObserver())setObserverPlaying(true);

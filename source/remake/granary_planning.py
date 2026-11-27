@@ -190,7 +190,7 @@ class Network:
             self.physical[key]=transport_capacity.physical(self.game,self.state,route)
         return self.physical[key]
 
-    def collect(self, targets, sources=None, *, stock_credit=None, urgent_targets=()):
+    def collect(self, targets, sources=None, *, stock_credit=None, urgent_targets=(), include_return=False):
         state = self.state
         seasonal = winter_climate.forecast_enabled(state)
         if not command_books.can_spend(state,self.owner,'dispatch_transport'):
@@ -298,6 +298,8 @@ class Network:
                             ice=sorted(set(timing['reaches']) | set(back['reaches'])), limit=limit,
                             rations=rations, outbound_rations=outward_rations, return_rations=return_rations,
                             floor=floor, free=free)
+                        if include_return:
+                            values['return_quote'] = backward[0][1]
                         if floor < normal_floor:
                             values['release_floor'] = floor
                         if load_capacity is not None:
@@ -333,7 +335,7 @@ class Network:
         ticks = max(1, logistics_rules.ceil_div(option['days'],10))
         rate = facilities.market_rate(game,facilities._pool(state)['cities'][city.id]['town'],
                                       'buy',state.month,state=state,city=city.id)
-        values = {key:value for key,value in option.items() if key not in ('route','seasonal_outlook')}
+        values = {key:value for key,value in option.items() if key not in ('route','seasonal_outlook','return_quote')}
         values.update(load=load, net=net, arrival_turn=state.turn+ticks,
                       deadline=deadline, reference_price=rate,
                       landed_cents=landed_cents(0,option['rations'],rate,net), eta=ticks,

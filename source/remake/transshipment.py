@@ -315,13 +315,20 @@ def _dispatch(game, state, payload, plan, owner):
             used = min(debit,batch['available'])
             if used:
                 parts.append([batch['convoy'],used])
-                batch['available'] -= used
                 debit -= used
         if debit:
             raise GameError(BLOCKED)
     cargo = dict(logistics._empty_cargo(),grain=grain)
-    row = logistics.dispatch(game,state,dict(source=source,target=offer['target'],officers=[officer],
-                             cargo=cargo,route_mode=offer['mode']),owner,transshipment_quote=offer)
+    debits = dict(parts)
+    for batch in offer['lots']:
+        batch['available'] -= debits.get(batch['convoy'], 0)
+    try:
+        row = logistics.dispatch(game,state,dict(source=source,target=offer['target'],officers=[officer],
+                                 cargo=cargo,route_mode=offer['mode']),owner,transshipment_quote=offer)
+    except GameError:
+        for batch in offer['lots']:
+            batch['available'] += debits.get(batch['convoy'], 0)
+        raise
     plan['batches'].append(dict(convoy=row['id'],stage=stage,source=source,target=offer['target'],grain=grain,
         rations=offer['rations'],capacity=offer['capacity'],books=command_books.cost('dispatch_transport'),
         officer=officer,parents=parts,turn=state.turn,eta=offer['eta'],estimated=net,receipt=None,terminal=None,

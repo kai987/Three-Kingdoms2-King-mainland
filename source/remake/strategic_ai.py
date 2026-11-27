@@ -17,7 +17,7 @@ from . import grain_relief, grain_units
 from .march_supply import denominator, OFFICER_UNITS, estimate as march_grain, next_supply_days, required_grain, travel_rules
 from . import city_economy, faction_economy, logistics_rules, logistics_strategy, military_budget, war_recovery
 from .route_hazards import allocate_survivors
-from . import strategic_granary, transport_capacity, winter_travel, winter_weather
+from . import strategic_granary, transport_capacity, transport_coordination, winter_travel, winter_weather
 
 
 class StrategicAI:
@@ -44,6 +44,7 @@ class StrategicAI:
         self.recovery_v211 = logistics_strategy.war_recovery(state)
         self.recovery_wait = {}
         self.winter_checked = set()
+        self.coordinated_transport = transport_coordination.enabled(state)
         holdings = Counter(city.owner for city in state.cities.values() if city.owner != 'neutral')
         # Let both sides concentrate on the remaining fronts once the map
         # has consolidated. Earlier campaigns retain their wider priorities.
@@ -58,7 +59,8 @@ class StrategicAI:
 
     def economy_plan(self, owner):
         if owner not in self.economy_plans:
-            self.economy_plans[owner] = faction_economy.plan(self.game,self.state,owner,granary=self.granary)
+            self.economy_plans[owner] = faction_economy.plan(self.game, self.state, owner, granary=self.granary,
+                                                           coordinated=self.coordinated_transport)
         return self.economy_plans[owner]
 
     def recovery_support(self, city):
@@ -611,6 +613,9 @@ class StrategicAI:
         else:
             requests.sort()
         for _, _, key, gold, grain in requests:
+            if self.coordinated_transport:
+                transport_coordination.request(self.state, owner, key, grain, gold, self.settings['max_route_turns'])
+                continue
             if logistics.dispatch_ai_supply(self.game, self.state, self.state.cities[key], gold, grain,
                                             protected_officers=protected, require_return=True,
                                             max_turns=self.settings['max_route_turns'],
@@ -663,6 +668,10 @@ class StrategicAI:
 
         for _, _, _, key, source_id, grain,gold in sorted(requests):
             source = self.state.cities[source_id]
+            if self.coordinated_transport:
+                transport_coordination.request(self.state, owner, source_id, grain, gold,
+                                               self.settings['max_route_turns'])
+                continue
             if (not any(logistics.supply_shortages(self.state,source,gold,grain))
                     or logistics.dispatch_ai_supply(self.game,self.state,source,gold,grain,
                                                     max_turns=self.settings['max_route_turns'],
@@ -818,6 +827,9 @@ class StrategicAI:
         scheduled=sum(x for t,(_,_,x) in enumerate(economy.cities[key].timeline,1) if t<=eta)
         if scheduled>=grain:
             result='awaiting_transport'
+        elif self.coordinated_transport:
+            transport_coordination.request(self.state, owner, key, city.grain + grain, 0, eta)
+            result='coordination_requested'
         elif facilities._ready(self.state,owner) and command_books.can_spend(self.state,owner,'trade_grain'):
             budget=economy.budgets[key]
             offer=facilities.emergency_quote(self.game,self.state,city,grain)
@@ -967,6 +979,8 @@ def run(campaign, state, payload):
     has_domestic = 'domestic' in x
     escort_checked = set()
     relief_done = {state.cities[key].owner for key in x['ai_queue'][:x['ai_cursor']] if key in state.cities}
+    shadow = transport_coordination.shadowing(state)
+    shadow_done = set(relief_done)
     if has_domestic:
         from .domestic import prepare_ai, prioritize_grain
         for owner in sorted(campaign.catalog.factions):
@@ -975,9 +989,15 @@ def run(campaign, state, payload):
     while x['ai_cursor'] < len(x['ai_queue']):
         key = x['ai_queue'][x['ai_cursor']];x['ai_cursor'] += 1
         city = state.cities.get(key)
-        if city is None or city.owner in (state.player,'neutral') or not command_books.can_spend(state,city.owner):
+        if city is None or city.owner in (state.player,'neutral'):
             continue
-        if logistics_strategy.staging(state) and city.owner not in escort_checked:
+        if ai.coordinated_transport or shadow and city.owner not in shadow_done:
+            transport_coordination.run(campaign, state, city.owner, 'urgent')
+            if shadow:
+                shadow_done.add(city.owner)
+        if not command_books.can_spend(state,city.owner):
+            continue
+        if not ai.coordinated_transport and logistics_strategy.staging(state) and city.owner not in escort_checked:
             from . import escort_planning
             escort_checked.add(city.owner)
             if any(row['owner']==city.owner for row in state.extension['travel']['marches']):
@@ -985,13 +1005,13 @@ def run(campaign, state, payload):
                     ai.economy_plans.pop(city.owner,None)
                     ai.grain_outlooks.pop(city.owner,None)
         outlook = ai.grain_outlook(city.owner)
-        if (ai.v21 or ai.granary) and has_domestic and city.owner not in relief_done:
+        if (ai.v21 or ai.granary or ai.coordinated_transport) and has_domestic and city.owner not in relief_done:
             outlook = prioritize_grain(campaign, state, city.owner, outlook,
                                         economy_plan=ai.economy_plan(city.owner))
             relief_done.add(city.owner)
             ai.grain_outlooks[city.owner] = outlook
             ai.economy_plans.pop(city.owner, None)
-            if winter_weather.stage(state)>=5:
+            if not ai.coordinated_transport and winter_weather.stage(state)>=5:
                 from . import winter_strategy
                 winter_strategy.prepare(ai,city.owner)
         if outlook[0] is not None and not ai.military_budget:
@@ -1030,7 +1050,8 @@ def run(campaign, state, payload):
                   if ai.v21 else sorted(campaign.catalog.factions))
         for owner in owners:
             if owner != state.player:
-                finish_faction_turn(campaign, state, owner, outlook=ai.grain_outlook(owner))
+                finish_faction_turn(campaign, state, owner,
+                                    outlook=None if ai.coordinated_transport else ai.grain_outlook(owner))
                 if ai.adaptive:
                     ai.record_pressure(owner)
     campaign._complete_turn(state)

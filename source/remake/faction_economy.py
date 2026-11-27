@@ -283,7 +283,7 @@ class FactionEconomyPlan:
 
 
 def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=HORIZON,
-         granary=False, except_order=None):
+         granary=False, except_order=None, coordinated=False):
     projected_convoys = {} if granary else None
     budgets = (military_budget.budgets(game,state,owner,stationed=stationed,incomes=incomes,
                                       inbound_cache=projected_convoys) if base is None else base)
@@ -293,18 +293,25 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
     candidate = granary and strategic_granary.candidate(state)
     winter_reserves=winter_strategy.planned_reserves(game,state,owner)
     shipments, due = defaultdict(lambda: defaultdict(int)), defaultdict(int)
-    uncertain = defaultdict(lambda: defaultdict(int)) if granary else None
+    uncertain = defaultdict(lambda: defaultdict(int)) if granary or coordinated else None
     conditional, convoy_rows = defaultdict(lambda: defaultdict(int)), defaultdict(list)
     book = pending(state, owner, granary=granary, except_id=except_order)
     away = set()
+    intermediate = set()
+    if coordinated:
+        from . import transshipment
+        intermediate = {batch['convoy'] for plan in transshipment._plans(state).values()
+                        for batch in plan['batches'] if batch['target'] != plan['target']}
     for row in state.extension.get('logistics', {}).get('convoys', ()):
         if row['owner'] == owner:
             away.update(row['officers'])
-        if (candidate and row['owner'] == owner and not row['delivery_done']
+        if coordinated and (row['id'] in intermediate or 'convoy_relief' in row):
+            continue
+        if ((candidate or coordinated) and row['owner'] == owner and not row['delivery_done']
                 and row['status'] != 'returning' and row['target_march'] is None
                 and 'convoy_relief' not in row and row['target'] in budgets):
             from . import granary_demand
-            projected = projected_convoys.get(row['id'])
+            projected = projected_convoys.get(row['id']) if projected_convoys is not None else None
             if projected is None:
                 projected = logistics.inbound_grain(game,row,state)
             fact = granary_demand.inbound(game, state, row, projected)
@@ -364,9 +371,9 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
         if staged:
             row['staging_grain'] = staged[key]
         projected = _forecast(game, state, city, row, shipments[key], held, turns, next_income)
-        if granary:
+        if granary or coordinated:
             projected.risky_receipts = dict(uncertain[key])
-        if candidate:
+        if candidate or coordinated:
             projected.conditional_receipts = dict(conditional[key])
             projected.convoy_receipts = convoy_rows[key]
         forecast[key] = projected

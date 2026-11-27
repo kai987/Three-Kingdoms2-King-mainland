@@ -61,12 +61,12 @@ def _meal(game, state, quote, escort, *, offset=0):
     return days,budget.outbound+budget.wait
 
 
-def _entity(game, state, owner, source, active, absent, decision, posts, *, automatic):
+def _entity(game, state, owner, source, active, absent, decision, posts, *, automatic, coordinated=False):
     ledger = logistics._pool(state)['cities'][source.id]
     policy=transport_capacity.ai_policy(state,owner,ledger['policy'],automatic=automatic)
     if transport_capacity.dispatch_blocker(state,source,active):
         return None, 'source_transport_busy'
-    if not policy['max_grain'] or not policy['max_officers']:
+    if (coordinated and not policy['enabled']) or not policy['max_grain'] or not policy['max_officers']:
         return None, 'source_policy'
     if automatic and historical_campaigns.hold_longyou_garrison(game,state,source):
         return None, 'source_defence'
@@ -82,9 +82,11 @@ def _entity(game, state, owner, source, active, absent, decision, posts, *, auto
     eligible=[i for i in officers if i not in locked and state.officers[i].health>0
               and logistics._pool(state)['receipts'].get(str(i),0)<=state.turn
               and state.extension.get('civil_staff',{}).get('people',{}).get(i,{}).get('working',True)]
-    if transport_capacity.enabled(state):
-        allowed=set(logistics._eligible(game,state,source,absent=absent,automatic=automatic))
-        eligible=[i for i in eligible if i in allowed and logistics.escort_defence(game,state,source,[i])]
+    if coordinated or transport_capacity.enabled(state):
+        allowed=set(logistics._eligible(game,state,source,absent=absent,automatic=automatic,
+                                        capacity_checks=coordinated))
+        eligible=[i for i in eligible if i in allowed and logistics.escort_defence(
+            game,state,source,[i],capacity_checks=coordinated,absent=absent if coordinated else None)]
     if not eligible:
         return None, 'no_escorts'
     escort=min(eligible,key=lambda i:(state.officers[i].troops,logistics._key(i)))
@@ -100,14 +102,16 @@ def _entity(game, state, owner, source, active, absent, decision, posts, *, auto
     if strategic_granary.enabled(state):
         unreserved = min(unreserved, strategic_granary.available(state,source))
     floor = max(policy['reserve_grain'], budget.get('minimum_export_floor',0),
-                budget.get('next_installment',0),budget.get('safety_reserve',0) if budget.get('threatened') else 0)
+                budget.get('next_installment',0),
+                budget.get('safety_reserve',0) if coordinated or budget.get('threatened') else 0)
     return (source,policy,escort,max(0,unreserved-floor)), None
 
 
 class Planner:
     """One demand pass. Path books are scoped to the unchanged route state."""
 
-    def __init__(self, game, state, owner, *, decision=None, automatic=False):
+    def __init__(self, game, state, owner, *, decision=None, automatic=False, include_routes=False,
+                 coordinated=False):
         self.game, self.state, self.owner = game,state,owner
         self.decision, self.automatic = decision,automatic
         self.holdings=[c for c in state.cities.values() if c.owner==owner]
@@ -116,13 +120,15 @@ class Planner:
         self.posts=domestic.appointments(state,owner)
         self.routes={}
         self.work=Counter()
+        self.route_details = {} if include_routes else None
+        self.coordinated = coordinated
 
     def _route_book(self, target, candidates):
         groups=defaultdict(list)
         for city,policy,*_ in candidates:
             groups[policy['allow_sea'],policy['allow_special']].append((city.id,policy))
         for preferences, entries in groups.items():
-            key=(target.id,preferences)
+            key = preferences if self.coordinated else (target.id, preferences)
             pairs={(city,target.id) for city,_ in entries}
             missing=pairs-self.routes.get(key,({},set()))[1]
             if missing:
@@ -130,11 +136,11 @@ class Planner:
                 paths=logistics._supply_routes(self.game,self.state,self.owner,pair_list,entries[0][1])
                 stored,visited=self.routes.setdefault(key,({},set()))
                 stored.update(paths)
-                visited.update(missing)
+                visited.update(pair for pair in (pair_list if self.coordinated else missing))
                 self.work.update(route_searches=1,quotations=len(pair_list))
             else:
                 self.work['cache_hits']+=1
-        return {k:self.routes[target.id,k][0] for k in groups}
+        return {k: self.routes[k if self.coordinated else (target.id, k)][0] for k in groups}
 
     def options(self, target, requested, *, source=None, purpose='procurement', deadline=None):
         game,state,owner=self.game,self.state,self.owner
@@ -154,15 +160,17 @@ class Planner:
                 continue
             floor=data['monthly_supply'] if self.automatic and (purpose=='trade' or deadline is None or deadline>30) else 0
             cap=facilities._rule(game,'trade_max_batches') * facilities._rule(game,'trade_batch_grain')
-            amount=min(data['stock']-floor,city.gold*BASE//prices['buy'],logistics.LIMIT-city.grain,cap)
+            gold_floor = self.decision.budgets[city.id]['wage_gold'] if self.coordinated else 0
+            available_gold = max(0, city.gold - gold_floor)
+            amount=min(data['stock']-floor,available_gold*BASE//prices['buy'],logistics.LIMIT-city.grain,cap)
             if self.automatic and purpose=='trade':
                 amount=min(amount,quota_left(state,city.id,'buy'))
             if amount<=0:
                 failures['source_stock' if data['stock']<=floor else
-                         'source_gold' if city.gold*BASE<prices['buy'] else 'source_capacity']+=1
+                         'source_gold' if available_gold*BASE<prices['buy'] else 'source_capacity']+=1
                 continue
             entity,reason=_entity(game,state,owner,city,self.active,self.absent,self.decision,self.posts,
-                                  automatic=self.automatic)
+                                  automatic=self.automatic,coordinated=self.coordinated)
             if reason:
                 failures[reason]+=1
                 continue
@@ -269,6 +277,8 @@ class Planner:
                     return_route_types=sorted({leg['mode'] for leg in backward[0][1]['routes']}))
                 if loading is not None:
                     row['capacity']=loading
+                if self.route_details is not None:
+                    self.route_details[row['token']] = route, backward[0][1]
                 results.append(row)
         self.work['evaluations']+=1
         role='commercial_purchase' if purpose=='trade' else 'agricultural_output'

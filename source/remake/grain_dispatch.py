@@ -7,7 +7,7 @@ from .errors import GameError
 from .officers import ref_sort_key
 
 
-def _donors(game, state, plan):
+def _donors(game, state, plan, *, coordinated=False):
     owner = plan.owner
     pool = state.extension['logistics']
     active = transport_capacity.activity(state)
@@ -22,11 +22,11 @@ def _donors(game, state, plan):
         city, ledger = state.cities[key], pool['cities'][key]
         policy=transport_capacity.ai_policy(state,owner,ledger['policy'],automatic=transport_capacity.automation(state,owner))
         minimum = max(policy['reserve_grain'], budget['minimum_export_floor'])
-        if budget['threatened']:
+        if coordinated or budget['threatened']:
             minimum = max(minimum, budget['safety_reserve'])
         if transport_capacity.dispatch_blocker(state,city,active):
             excluded[key] = 'source_convoy_limit'
-        elif (not policy['max_grain'] or not policy['max_officers']
+        elif (coordinated and not policy['enabled'] or not policy['max_grain'] or not policy['max_officers']
               or historical_campaigns.hold_longyou_garrison(game, state, city)):
             excluded[key] = 'source_policy'
         elif city.grain - budget['reserved_grain'] <= minimum:
@@ -38,10 +38,12 @@ def _donors(game, state, plan):
                        and state.officers[ident].health > 0
                        and state.extension['officer_actions'].get(str(ident)) != state.turn
                        and pool['receipts'].get(str(ident), 0) <= state.turn]
-            if transport_capacity.enabled(state):
-                eligible=set(logistics._eligible(game,state,city,absent=absent))
+            if coordinated or transport_capacity.enabled(state):
+                eligible=set(logistics._eligible(game,state,city,absent=absent,
+                                             automatic=True if coordinated else None,capacity_checks=coordinated))
                 escorts=[ident for ident in escorts if ident in eligible and logistics.escort_defence(
-                    game,state,city,[ident],threatened=budget['threatened'])]
+                    game,state,city,[ident],threatened=budget['threatened'],absent=absent if coordinated else None,
+                    capacity_checks=coordinated)]
             if len(present) <= policy['reserve_officers'] or not escorts:
                 excluded[key] = 'no_eligible_escort'
                 continue
@@ -59,21 +61,29 @@ def _reverse_shipments(state, owner):
         and row['turn'] >= state.turn - 2}
 
 
-def _options(game, state, plan, keys):
+def _options(game, state, plan, keys, *, route_cache=None, returns=None):
     owner = plan.owner
-    groups, failures = _donors(game, state, plan)
+    coordinated = route_cache is not None
+    groups, failures = _donors(game, state, plan, coordinated=coordinated)
     reverse = _reverse_shipments(state, owner)
     detailed = logistics_strategy.enabled(state, logistics_strategy.TRANSPORT)
     candidates, rejected = defaultdict(list), {key: Counter(
         reason for source, reason in failures.items() if source != key) for key in keys}
-    for donors in groups.values():
+    for signature, donors in groups.items():
         pairs = {(source, target) for source, _, policy, _ in donors for target in keys
                  if source != target and (source, target) not in reverse
                  and policy['target_city'] in (None, target)}
         if not pairs:
             continue
-        quotes = logistics._supply_routes(game, state, owner,
-            sorted(pairs | {(target, source) for source, target in pairs}), donors[0][2])
+        related = pairs | {(target, source) for source, target in pairs}
+        if coordinated:
+            quotes, visited = route_cache.setdefault(signature, ({}, set()))
+            missing = related - visited
+            if missing:
+                quotes.update(logistics._supply_routes(game, state, owner, sorted(missing), donors[0][2]))
+                visited.update(missing)
+        else:
+            quotes = logistics._supply_routes(game, state, owner, sorted(related), donors[0][2])
         for source, escort, policy, minimum in donors:
             city = state.cities[source]
             stock = city.grain - plan.budgets[source]['reserved_grain']
@@ -92,7 +102,7 @@ def _options(game, state, plan, keys):
                 # Actual unloaded convoys choose the fastest legal route
                 # home. Price that full route, not just its first checkpoint.
                 physical=transport_capacity.enabled(state,'physical_capacity')
-                for mode, quote in outward if detailed or physical else outward[:1]:
+                for mode, quote in outward if coordinated or detailed or physical else outward[:1]:
                     rations = logistics.escort_rations(game,state,[escort],quote,backward[0][1])
                     gross = min(policy['max_grain'], stock - minimum - rations)
                     if physical:
@@ -109,6 +119,8 @@ def _options(game, state, plan, keys):
                         continue
                     back_days=winter_travel.quote_days(game,state,backward[0][1]) if transport_capacity.enabled(
                         state,'throughput_ranking') else 0
+                    if returns is not None:
+                        returns[source, target, mode] = backward[0][1]
                     candidates[target].append((source, escort, mode, quote, rations, gross, net, minimum,back_days))
     return candidates, rejected
 

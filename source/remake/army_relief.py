@@ -290,8 +290,9 @@ def source_blocker(game,state,source,policy,active):
 
 class Planner:
     """Scoped to one domestic transport pass or one read-only preview."""
-    def __init__(self, game, state, owner):
+    def __init__(self, game, state, owner, *, coordinated=False):
         self.game, self.state, self.owner = game, state, owner
+        self.coordinated = coordinated
         self.armies = {row['id']:row for row in state.extension['travel']['marches']
                        if row['owner']==owner and row['officers']}
         self.demands = {ident:requirement(game,state,row) for ident,row in self.armies.items()}
@@ -339,7 +340,7 @@ class Planner:
         return source_blocker(self.game,self.state,source,policy,self.active)
 
     def candidates(self, source, *, budget=None, selected=None, cargo=None, origin=None, live=None,
-                   loads=None, urgent_only=False):
+                   loads=None, urgent_only=False, targets=None):
         game, state = self.game, self.state
         seasonal=winter_climate.forecast_enabled(state)
         key = source.id
@@ -351,7 +352,8 @@ class Planner:
             reason = self.source_reason(source, policy)
             if reason:
                 return (), reason
-        ids = sorted(logistics._eligible(game,state,source),key=lambda i:escort_rank(state,i)) if live is None else live['officers']
+        ids = sorted(logistics._eligible(game,state,source,capacity_checks=self.coordinated),
+                     key=lambda i:escort_rank(state,i)) if live is None else live['officers']
         from . import logistics_strategy
         if live is None and selected is None and logistics_strategy.staging(state):
             from .escort_planning import assigned_to_war
@@ -375,6 +377,8 @@ class Planner:
         now = _calendar_tick(state)
         remaining = {}
         for ident,demand in self.demands.items():
+            if targets is not None and ident not in targets:
+                continue
             if (selected is not None and ident!=selected['march_id']) or (live and ident!=live['target_march']):
                 continue
             if demand.required and (not urgent_only or demand.urgent):
@@ -417,6 +421,10 @@ class Planner:
                         if outlook['bounded'] or outlook['currently_blocked']:
                             continue
                         days=outlook['expected_arrival_days']
+                        if self.coordinated:
+                            conservative = winter_forecast.estimate(game,state,route,conservative=True)
+                            if conservative['bounded']:
+                                continue
                     else:
                         days=winter_travel.quote_days(game,state,route)
                     dates = timing(slot,now,days)
@@ -467,6 +475,16 @@ class Planner:
                             continue
                         if seasonal:
                             return_outlook=winter_forecast.estimate(game,state,back[1],start_in=max(0,return_tick-now))
+                            if self.coordinated:
+                                conservative_eta = max(days, conservative['expected_arrival_days'])
+                                conservative_back = winter_forecast.estimate(game,state,back[1],
+                                    start_in=max(0,return_tick-now+conservative_eta-days),conservative=True)
+                                if conservative_back['bounded']:
+                                    blocked = 'unsafe_return'
+                                    continue
+                                outward = max(outward, conservative['total_ration_weight'])
+                                return_outlook = dict(return_outlook, total_ration_weight=max(
+                                    return_outlook['total_ration_weight'],conservative_back['total_ration_weight']))
                             if return_outlook['bounded']:
                                 blocked='unsafe_return'
                                 continue
@@ -516,6 +534,9 @@ class Planner:
                             estimated_net=min(needed,net), return_city=back[1]['path'][-1],return_days=back[1]['days'],
                             return_weight=backward, outbound=bag.outbound, wait=bag.wait, returning=bag.returning,
                             safety=bag.safety, efficiency=percent, escort_troops=troop_count)
+                        if self.coordinated and seasonal:
+                            result['conservative_eta'] = eta + conservative_eta - days
+                            result['conservative_net'] = min(net,winter_forecast.net_cargo(room,conservative))
                         if physical and live is None:
                             result['capacity']=loading
                         rank=(eta>demand.deadline, not demand.urgent, cap_time(eta,demand.deadline),

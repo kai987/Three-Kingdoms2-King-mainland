@@ -687,14 +687,26 @@ def _hire_staff(game, state, owner, city_ids):
 
 def prioritize_grain(game, state, owner, outlook=None, *, economy_plan=None):
     from . import (diplomacy, faction_economy, grain_dispatch, grain_relief, logistics_strategy,
-                   military_budget, strategic_granary)
+                   military_budget, strategic_granary, transport_coordination)
 
     strategic = strategic_granary.enabled(state)
-    if state.phase == 'ai' and owner != state.player and (logistics_strategy.enabled(state) or strategic):
+    coordinated = transport_coordination.enabled(state)
+    if state.phase == 'ai' and owner != state.player and (logistics_strategy.enabled(state) or strategic or coordinated):
         def rebuild():
-            return faction_economy.plan(game,state,owner,granary=strategic)
+            return faction_economy.plan(game, state, owner, granary=strategic, coordinated=coordinated)
 
         plan = economy_plan if economy_plan is not None else rebuild()
+        if coordinated:
+            if plan.shortages(state) and diplomacy.request_available_grain(game, state, owner):
+                plan = rebuild()
+            if strategic:
+                from . import granary_planning
+                granary_planning.refresh_reserves(game, state, owner, plan)
+            _, shortages = plan.outlook(state)
+            later = {key: row for key, row in shortages.items() if row.zero_in > grain_relief.WARNING_TURNS}
+            if later:
+                grain_relief.invest(game, state, owner, (None, later))
+            return plan.outlook(state)
         if strategic:
             urgent = plan.shortages(state,within=1)
             if urgent and any(row['bought'] for row in grain_dispatch.recover(game,state,owner,plan,only=urgent)):
@@ -740,7 +752,7 @@ def prioritize_grain(game, state, owner, outlook=None, *, economy_plan=None):
     return outlook
 
 
-def run_automatic(game, state, owner, *, outlook=None, economy_plan=None):
+def run_automatic(game, state, owner, *, outlook=None, economy_plan=None, defer_transport=False):
     """Spend the faction's remaining orders under the shared policy, once per turn."""
     from . import faction_economy, grain_relief, logistics_strategy, military_budget
 
@@ -809,7 +821,7 @@ def run_automatic(game, state, owner, *, outlook=None, economy_plan=None):
                         _report(state, city, 'recruit', **quote)
                 if command_books.remaining(state, owner) == remaining:
                     break
-        elif task == 'transport' and 'logistics' in state.extension:
+        elif task == 'transport' and 'logistics' in state.extension and not defer_transport:
             from . import logistics
             plans = (economy_plan.budgets if economy_plan is not None else
                      military_budget.budgets(game, state, owner)
@@ -832,10 +844,16 @@ def run_automatic(game, state, owner, *, outlook=None, economy_plan=None):
 
 def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
     """After manual commands and before the calendar advances, once per city."""
-    from . import faction_economy, grain_relief, logistics_strategy, military_budget, strategic_granary
+    from . import (faction_economy, grain_relief, logistics_strategy, military_budget,
+                   strategic_granary, transport_coordination)
+    coordinated = (automatic and state.phase == 'ai' and owner not in (state.player, 'neutral')
+                   and transport_coordination.enabled(state))
+    if coordinated:
+        transport_coordination.run(game, state, owner, 'followup')
     strategic = strategic_granary.enabled(state)
     planned = (logistics_strategy.enabled(state) or strategic) and owner not in (state.player, 'neutral')
-    economy_plan = faction_economy.plan(game, state, owner, granary=strategic) if planned else None
+    economy_plan = (faction_economy.plan(game, state, owner, granary=strategic, coordinated=coordinated)
+                    if planned or coordinated else None)
     if economy_plan is not None:
         outlook = economy_plan.outlook(state)
         if logistics_strategy.enabled(state, logistics_strategy.GARRISON):
@@ -847,7 +865,8 @@ def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
     hold_grain = {key for key, city in state.cities.items() if city.owner == owner} if statewide is not None else shortages
     food_priority = grain_relief.imminent_shortages(shortages)
     if automatic:
-        run_automatic(game, state, owner, outlook=outlook, economy_plan=economy_plan)
+        run_automatic(game, state, owner, outlook=outlook, economy_plan=economy_plan,
+                      defer_transport=coordinated)
         from . import facilities
         facilities.synchronize(game,state)
         if military_budget.enabled(state) and owner!=state.player:
@@ -861,9 +880,20 @@ def finish_faction_turn(game, state, owner, *, automatic=True, outlook=None):
         treasures.auto_turn(game, state, owner, food_priority=food_priority)
         if owner != state.player:
             from . import city_development, regional_market
-            regional_market.automatic_trade(game,state,owner,shortages)
+            if not coordinated:
+                regional_market.automatic_trade(game,state,owner,shortages)
             treasures.ai_idle_turn(game, state, owner, food_priority=food_priority)
             city_development.auto_turn(game, state, owner, shortages=shortages)
+            if coordinated:
+                from . import logistics
+                transport_coordination.run(game, state, owner, 'elective')
+                post = appointments(state, owner)
+                if post and 'transport' in post['policy']['task_order']:
+                    for key, city in sorted(state.cities.items()):
+                        if city.owner == owner and key not in food_priority and command_books.can_spend(
+                                state, owner, 'dispatch_transport'):
+                            logistics.auto_dispatch_city(game, state, key, plans=economy_plan.budgets, non_grain=True)
+                regional_market.automatic_trade(game, state, owner, shortages)
     synchronize(game, state)
     summary = dict(gold=0, grain=0, reserves=0, morale=0, cities=0, reason='turn')
     first_city = None

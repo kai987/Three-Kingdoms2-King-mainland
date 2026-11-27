@@ -602,6 +602,37 @@ test('faction resources show current allies and large factions receive 40 comman
  expect(errors.get(page)).toEqual([]);
 });
 
+test('transport coordination is opt-in and its observer ledger follows the selected language',async({page})=>{
+ await opening(page);
+ const option=page.locator('#transport-coordination-option');
+ await expect(option).not.toBeChecked();
+ await expect(option).toHaveAccessibleName(/AI 輸送統籌 V3\.0\.4\.1/);
+ await option.check();
+ for(const id of ['#transport-capacity-option','#transshipment-option','#winter-forecast-option']){
+  await expect(page.locator(id)).not.toBeChecked();
+ }
+ await page.locator('#begin-observation').click();
+ await expect(page.locator('#observer-status')).toHaveAttribute('data-observer-state','playing');
+ await page.locator('#observer-toggle').click();
+ await expect(page.locator('#observer-status')).toHaveAttribute('data-observer-state','paused');
+ const ledger=page.locator('#inspector [data-transport-coordination]');
+ await expect(ledger.locator('summary')).toHaveText('輸送統籌');
+ if(!await ledger.locator('tbody tr').count()){
+  await page.locator('#observer-step').click();
+  await tacticalDismiss(page);
+ }
+ await expect(ledger.locator('tbody tr')).not.toHaveCount(0,{timeout:120_000});
+ if(await ledger.getAttribute('open')===null)await ledger.locator('summary').click();
+ await expect(ledger.getByRole('columnheader',{name:'未覆蓋糧'})).toBeVisible();
+ await page.locator('#utility-menu summary').click();
+ await page.locator('#language').selectOption('ja');
+ await expect(ledger.locator('summary')).toHaveText('輸送調整');
+ if(await ledger.getAttribute('open')===null)await ledger.locator('summary').click();
+ await expect(ledger.getByRole('columnheader',{name:'未充足兵糧'})).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2)).toBe(true);
+ expect(errors.get(page)).toEqual([]);
+});
+
 test('observer speed changes cadence without resuming a pause and city counts follow ownership',async({page})=>{
  await opening(page);
  const hanResources=/金\s*17,?360\s*·\s*糧\s*602,?610\s*·\s*兵士\s*124,?000\s*·\s*預備兵\s*13,?243\s*·\s*現役\s*49/;
