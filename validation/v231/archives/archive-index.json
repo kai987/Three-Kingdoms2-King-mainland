@@ -1,0 +1,3325 @@
+{
+  "archives": [
+    {
+      "file": "v231-summary.zip",
+      "bytes": 2379100,
+      "sha256": "68a84f94654e2510544b6f3c1486f3b6534044f72afc87f38261a76e298e31a2",
+      "files": 101
+    },
+    {
+      "file": "v231-technical.zip",
+      "bytes": 536878,
+      "sha256": "173f12a18856427d50ff9c6068028cc5414271784645e5078a5e6c5818914953",
+      "files": 49
+    },
+    {
+      "file": "v231-rapid.zip",
+      "bytes": 21646049,
+      "sha256": "7aabf7c4d4ef667dc56103515f4f339545f6af3a6470c735e43db477091f080d",
+      "files": 182
+    },
+    {
+      "file": "v231-five-year.zip",
+      "bytes": 62730942,
+      "sha256": "3b85a208aadb6a3cc66098156b359acb890bfff0703dd3bba1f7051416d28d42",
+      "files": 173
+    },
+    {
+      "file": "v231-holdout.zip",
+      "bytes": 11717577,
+      "sha256": "d62b6830023d12833fdec2ecf79c8eb92e9f3ab5cd2826c722025e7cd8668f8c",
+      "files": 47
+    },
+    {
+      "file": "v231-twenty-year-01.zip",
+      "bytes": 60155302,
+      "sha256": "b254b94f47516ed3acfd9ef3246dee1b552a812faeb9d34a3206edbf6eef5355",
+      "files": 50
+    },
+    {
+      "file": "v231-twenty-year-02.zip",
+      "bytes": 21759317,
+      "sha256": "8d12d9b8543d3fc9ce55d72c0eb49bebc70d6eb305d9171ac69711cc941dbf4c",
+      "files": 6
+    },
+    {
+      "file": "v231-root-cause.zip",
+      "bytes": 24223535,
+      "sha256": "47106e83c681a06d6236594be9226830c15b1c2e15c68126fbf596188622d2a2",
+      "files": 27
+    },
+    {
+      "file": "v231-channel-audit.zip",
+      "bytes": 49330409,
+      "sha256": "182b6f16d15f71d987ad92855794f8c43d77867d34ca4badf1cb433226fd626e",
+      "files": 36
+    }
+  ],
+  "files": [
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/README.md",
+      "bytes": 743
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/SHA256SUMS.txt",
+      "bytes": 9887
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/baseline-identity.json",
+      "bytes": 691
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/browser-test-source.json",
+      "bytes": 685
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/compatibility.json",
+      "bytes": 17818
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/detailed-ledger-identity.json",
+      "bytes": 1233
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/forecast-performance.json",
+      "bytes": 120980
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/historical-convoy-2.json",
+      "bytes": 14363
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/observer-equivalence.json",
+      "bytes": 246
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/screenshots/ja-route-forecast.png",
+      "bytes": 8138
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/screenshots/ja-winter-agriculture.png",
+      "bytes": 26238
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/screenshots/zh-Hant-route-forecast.png",
+      "bytes": 4135
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/screenshots/zh-Hant-winter-agriculture.png",
+      "bytes": 14957
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/shortage-replay-detail.json",
+      "bytes": 434816
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/checks/technical-gates.json",
+      "bytes": 22401
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/adverse-cross-month-route-prediction.csv",
+      "bytes": 72910
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/adverse-fixed-route-manifest.json",
+      "bytes": 288
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/agricultural-weather-identity.csv",
+      "bytes": 3110
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/agricultural-year-summary.csv",
+      "bytes": 304019
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/agriculture-risk-preparation-ablation.csv",
+      "bytes": 451
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/agriculture-risk-preparation-detail.csv",
+      "bytes": 890
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/agriculture-risk-preparation-ledger.csv",
+      "bytes": 818
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/balance-alerts.csv",
+      "bytes": 32838
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/calibrate-cross-month-route-prediction.csv",
+      "bytes": 70781
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/calibrate-fixed-route-manifest.json",
+      "bytes": 290
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/calibrate-monthly-weather-joint-distribution.csv",
+      "bytes": 260331
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/calibrate-normals-manifest.json",
+      "bytes": 361
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/channel-transport-actual-ledger.csv",
+      "bytes": 1807323
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/city-shortage-checkpoint-replay.csv",
+      "bytes": 5532
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/city-shortage-checkpoints.csv",
+      "bytes": 1473
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/climate-forecast-adverse.csv",
+      "bytes": 858
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/climate-forecast-calibrate.csv",
+      "bytes": 843
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/climate-forecast-holdout.csv",
+      "bytes": 915
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/controlled-route-service-level.csv",
+      "bytes": 62860
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/convoy-hunger-comparison.csv",
+      "bytes": 2146
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/convoy-return-safety.csv",
+      "bytes": 3172
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/cross-month-route-prediction.csv",
+      "bytes": 218742
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/cross-month-snowpack-forecast.csv",
+      "bytes": 7329
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/forecast-double-count-audit.csv",
+      "bytes": 68178
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/forecast-performance-profile.csv",
+      "bytes": 3754
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/historical-transport-replay-index.csv",
+      "bytes": 2940
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/holdout-comparison.csv",
+      "bytes": 2468
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/holdout-cross-month-route-prediction.csv",
+      "bytes": 72917
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/holdout-fixed-route-manifest.json",
+      "bytes": 288
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/holdout-monthly-weather-joint-distribution.csv",
+      "bytes": 260304
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/holdout-normals-manifest.json",
+      "bytes": 359
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/long-term-economy-comparison.csv",
+      "bytes": 3838
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/military-grain-receipt-ledger.csv",
+      "bytes": 1629343
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/military-grain-request-ledger.csv",
+      "bytes": 2601167
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/military-planning-evaluations.csv",
+      "bytes": 991116
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/monthly-weather-joint-distribution.csv",
+      "bytes": 554095
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/pairwise.csv",
+      "bytes": 17195
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/performance-comparison.csv",
+      "bytes": 10254
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/prior-nine-turn-city-grain-postings.csv",
+      "bytes": 123021
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/prior-nine-turn-city-shortage-context.csv",
+      "bytes": 54305
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/regional-agriculture-overview.csv",
+      "bytes": 1875839
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/regional-climate-economic-balance.csv",
+      "bytes": 54774
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/regional-grain-flow-account.csv",
+      "bytes": 3885584
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/report-status.json",
+      "bytes": 25014
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/river-freeze-forecast-comparison.csv",
+      "bytes": 40260
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/route-cargo-loss-forecast.csv",
+      "bytes": 38898
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/route-eta-error-comparison.csv",
+      "bytes": 693
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/route-ration-error-comparison.csv",
+      "bytes": 1432
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/scenario-scores.csv",
+      "bytes": 14176
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/simulation-manifest.json",
+      "bytes": 566558
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/southern-basin-shortage-root-cause.csv",
+      "bytes": 4840
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/unmet-military-demand.csv",
+      "bytes": 197380
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/validation-manifest.json",
+      "bytes": 16452
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/visible-snowpack-conditionals.csv",
+      "bytes": 22584
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/weather-cargo-loss-audit.csv",
+      "bytes": 5397
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/winter-grain-timely-comparison.csv",
+      "bytes": 7249
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/data/winter-order-timely-comparison.csv",
+      "bytes": 17855
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/README.md",
+      "bytes": 706
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/acceptance-answers.md",
+      "bytes": 2598
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/agricultural-preparation-review.md",
+      "bytes": 796
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/baseline-and-frozen-rules.md",
+      "bytes": 2204
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/data-dictionary.md",
+      "bytes": 2568
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/forecast-calibration-results.md",
+      "bytes": 1907
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/historical-transport-review.md",
+      "bytes": 567
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/known-issues.md",
+      "bytes": 1011
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/long-term-balance-results.md",
+      "bytes": 2525
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/military-supply-metric-definitions.md",
+      "bytes": 1347
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/military-supply-results.md",
+      "bytes": 2134
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/next-stage-readiness.md",
+      "bytes": 536
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/performance-results.md",
+      "bytes": 1781
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/route-forecast-design.md",
+      "bytes": 1461
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/southern-basin-shortage-root-cause.md",
+      "bytes": 5020
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/docs/validation-results.md",
+      "bytes": 2827
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/sources/v231_compat.py",
+      "bytes": 5548
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/sources/v231_ledger.py",
+      "bytes": 5726
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/sources/v231_normals.py",
+      "bytes": 7161
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/sources/v231_observe.py",
+      "bytes": 15801
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/sources/v231_package.py",
+      "bytes": 4873
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/sources/v231_replay.py",
+      "bytes": 11120
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/sources/v231_report.py",
+      "bytes": 73001
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/sources/v231_routes.py",
+      "bytes": 10284
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/sources/v231_verify.py",
+      "bytes": 4778
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/sources/winter_forecast.py",
+      "bytes": 13684
+    },
+    {
+      "archive": "v231-summary.zip",
+      "original_path": "summary/sources/winter_forecast_normals.py",
+      "bytes": 121955
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/climate-browser.log",
+      "bytes": 780
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/disabled-v231-rust.log",
+      "bytes": 375
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/forecast-browser.log",
+      "bytes": 1092
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/forecast-performance.log",
+      "bytes": 809
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/forecast-specialty.log",
+      "bytes": 311
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/full-browser-final.log",
+      "bytes": 23142
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/full-browser.log",
+      "bytes": 20773
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/historic-1860.log",
+      "bytes": 509
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/legacy-v231-rust.log",
+      "bytes": 1671
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/native-check.log",
+      "bytes": 529
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/node-tests.log",
+      "bytes": 19061
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/prior-features.log",
+      "bytes": 1691
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/pyodide.log",
+      "bytes": 1017
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/python-campaign.log",
+      "bytes": 4529
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/resupply-browser.log",
+      "bytes": 1567
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/rust-campaign.log",
+      "bytes": 4517
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/rust-crate.log",
+      "bytes": 2829
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/rust-fmt.log",
+      "bytes": 216
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/save-compatibility.log",
+      "bytes": 360
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/shortage-replay.log",
+      "bytes": 435
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/v231-read-python.log",
+      "bytes": 458
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/v231-read-rust.log",
+      "bytes": 458
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/v231-write-python.log",
+      "bytes": 359
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/v231-write-rust.log",
+      "bytes": 355
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/wasm-parity.log",
+      "bytes": 244
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "logs/web-build.log",
+      "bytes": 432
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "checks/full-browser-results.json",
+      "bytes": 6369252
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "checks/baseline-identity.json",
+      "bytes": 691
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "checks/observer-equivalence.json",
+      "bytes": 246
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "checks/browser-test-source.json",
+      "bytes": 685
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "technical/browser-v23/ja-winter-agriculture.png",
+      "bytes": 18781
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "technical/browser-v23/zh-Hant-winter-agriculture.png",
+      "bytes": 10850
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "technical/browser-v231/ja-route-forecast.png",
+      "bytes": 8138
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "technical/browser-v231/ja-winter-agriculture.png",
+      "bytes": 26238
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "technical/browser-v231/zh-Hant-route-forecast.png",
+      "bytes": 4135
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "technical/browser-v231/zh-Hant-winter-agriculture.png",
+      "bytes": 14957
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "compatibility/archived-latest.json",
+      "bytes": 1591
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "compatibility/candidate-python-reads-rust.json",
+      "bytes": 1745
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "compatibility/candidate-python.json",
+      "bytes": 1745
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "compatibility/candidate-rust-reads-python.json",
+      "bytes": 1745
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "compatibility/candidate-rust.json",
+      "bytes": 1745
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "compatibility/compatibility.json",
+      "bytes": 17818
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "compatibility/disabled-v231-rust.json",
+      "bytes": 12372
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "compatibility/legacy-v231-rust.json",
+      "bytes": 34644
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "provenance/frozen-source.txt",
+      "bytes": 41
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "provenance/plan-long.json",
+      "bytes": 759
+    },
+    {
+      "archive": "v231-technical.zip",
+      "original_path": "provenance/plan-quick-holdout-five.json",
+      "bytes": 8311
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 7442
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/184-02-2026-211/184-02/cities.csv",
+      "bytes": 308977
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/184-02-2026-211/184-02/factions.csv",
+      "bytes": 83657
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 10830
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/184-02-2026-211/184-02/run.json",
+      "bytes": 3509
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/184-02-2026-211/events.jsonl.gz",
+      "bytes": 383608
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/184-02-2026-211/run-v231.json",
+      "bytes": 13753
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 17684
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 114613
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/207-09-2034-211/207-09/capture-recovery.csv",
+      "bytes": 3779
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/207-09-2034-211/207-09/cities.csv",
+      "bytes": 339322
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/207-09-2034-211/207-09/factions.csv",
+      "bytes": 92653
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/207-09-2034-211/207-09/monthly.csv",
+      "bytes": 10899
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/207-09-2034-211/207-09/run.json",
+      "bytes": 5142
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/207-09-2034-211/events.jsonl.gz",
+      "bytes": 857935
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/207-09-2034-211/run-v231.json",
+      "bytes": 16938
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/207-09-2034-211/supply-episodes-weather-aware.csv",
+      "bytes": 50647
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/207-09-2034-211/terminal-save.json.gz",
+      "bytes": 160289
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 2666
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-211/208-10/cities.csv",
+      "bytes": 340099
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-211/208-10/factions.csv",
+      "bytes": 104651
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 11074
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-211/208-10/run.json",
+      "bytes": 4135
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-211/events.jsonl.gz",
+      "bytes": 1555431
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-211/run-v231.json",
+      "bytes": 16205
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 48716
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 145164
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 5681
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-212/208-10/cities.csv",
+      "bytes": 340074
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-212/208-10/factions.csv",
+      "bytes": 105247
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 11035
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-212/208-10/run.json",
+      "bytes": 2929
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-212/events.jsonl.gz",
+      "bytes": 658573
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-212/run-v231.json",
+      "bytes": 15002
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 54553
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 132672
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/263-05-2026-211/263-05/capture-recovery.csv",
+      "bytes": 2827
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/263-05-2026-211/263-05/cities.csv",
+      "bytes": 366519
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/263-05-2026-211/263-05/factions.csv",
+      "bytes": 43415
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/263-05-2026-211/263-05/monthly.csv",
+      "bytes": 11094
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/263-05-2026-211/263-05/run.json",
+      "bytes": 2309
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/263-05-2026-211/events.jsonl.gz",
+      "bytes": 694338
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/263-05-2026-211/run-v231.json",
+      "bytes": 13317
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/263-05-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 39438
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F1/263-05-2026-211/terminal-save.json.gz",
+      "bytes": 112004
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 7442
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/184-02-2026-211/184-02/cities.csv",
+      "bytes": 308977
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/184-02-2026-211/184-02/factions.csv",
+      "bytes": 83657
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 10830
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/184-02-2026-211/184-02/run.json",
+      "bytes": 3511
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/184-02-2026-211/events.jsonl.gz",
+      "bytes": 383608
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/184-02-2026-211/run-v231.json",
+      "bytes": 13754
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 17684
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 114617
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/207-09-2034-211/207-09/capture-recovery.csv",
+      "bytes": 3779
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/207-09-2034-211/207-09/cities.csv",
+      "bytes": 339322
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/207-09-2034-211/207-09/factions.csv",
+      "bytes": 92653
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/207-09-2034-211/207-09/monthly.csv",
+      "bytes": 10899
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/207-09-2034-211/207-09/run.json",
+      "bytes": 5142
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/207-09-2034-211/events.jsonl.gz",
+      "bytes": 857935
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/207-09-2034-211/run-v231.json",
+      "bytes": 16937
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/207-09-2034-211/supply-episodes-weather-aware.csv",
+      "bytes": 50647
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/207-09-2034-211/terminal-save.json.gz",
+      "bytes": 160298
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 2772
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-211/208-10/cities.csv",
+      "bytes": 340093
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-211/208-10/factions.csv",
+      "bytes": 104652
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 11074
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-211/208-10/run.json",
+      "bytes": 4336
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-211/events.jsonl.gz",
+      "bytes": 1559703
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-211/run-v231.json",
+      "bytes": 16442
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 48717
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 149472
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 5681
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-212/208-10/cities.csv",
+      "bytes": 340074
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-212/208-10/factions.csv",
+      "bytes": 105247
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 11035
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-212/208-10/run.json",
+      "bytes": 2929
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-212/events.jsonl.gz",
+      "bytes": 658573
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-212/run-v231.json",
+      "bytes": 15001
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 54553
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 132694
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/263-05-2026-211/263-05/capture-recovery.csv",
+      "bytes": 2827
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/263-05-2026-211/263-05/cities.csv",
+      "bytes": 366519
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/263-05-2026-211/263-05/factions.csv",
+      "bytes": 43415
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/263-05-2026-211/263-05/monthly.csv",
+      "bytes": 11094
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/263-05-2026-211/263-05/run.json",
+      "bytes": 2310
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/263-05-2026-211/events.jsonl.gz",
+      "bytes": 694338
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/263-05-2026-211/run-v231.json",
+      "bytes": 13317
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/263-05-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 39438
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F2/263-05-2026-211/terminal-save.json.gz",
+      "bytes": 112037
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 8674
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/184-02-2026-211/184-02/cities.csv",
+      "bytes": 308388
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/184-02-2026-211/184-02/factions.csv",
+      "bytes": 83775
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 10898
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/184-02-2026-211/184-02/run.json",
+      "bytes": 2531
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/184-02-2026-211/events.jsonl.gz",
+      "bytes": 342202
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/184-02-2026-211/run-v231.json",
+      "bytes": 13252
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 16021
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 97473
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/207-09-2034-211/207-09/capture-recovery.csv",
+      "bytes": 3776
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/207-09-2034-211/207-09/cities.csv",
+      "bytes": 339121
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/207-09-2034-211/207-09/factions.csv",
+      "bytes": 92629
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/207-09-2034-211/207-09/monthly.csv",
+      "bytes": 10930
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/207-09-2034-211/207-09/run.json",
+      "bytes": 5146
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/207-09-2034-211/events.jsonl.gz",
+      "bytes": 871189
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/207-09-2034-211/run-v231.json",
+      "bytes": 17282
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/207-09-2034-211/supply-episodes-weather-aware.csv",
+      "bytes": 48708
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/207-09-2034-211/terminal-save.json.gz",
+      "bytes": 159253
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 3550
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-211/208-10/cities.csv",
+      "bytes": 340088
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-211/208-10/factions.csv",
+      "bytes": 104546
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 11072
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-211/208-10/run.json",
+      "bytes": 4753
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-211/events.jsonl.gz",
+      "bytes": 1536441
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-211/run-v231.json",
+      "bytes": 17009
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 49609
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 147080
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 6415
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-212/208-10/cities.csv",
+      "bytes": 340271
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-212/208-10/factions.csv",
+      "bytes": 104870
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 11014
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-212/208-10/run.json",
+      "bytes": 4542
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-212/events.jsonl.gz",
+      "bytes": 826552
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-212/run-v231.json",
+      "bytes": 16391
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 56954
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 144486
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/263-05-2026-211/263-05/capture-recovery.csv",
+      "bytes": 2868
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/263-05-2026-211/263-05/cities.csv",
+      "bytes": 366545
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/263-05-2026-211/263-05/factions.csv",
+      "bytes": 43924
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/263-05-2026-211/263-05/monthly.csv",
+      "bytes": 11095
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/263-05-2026-211/263-05/run.json",
+      "bytes": 3716
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/263-05-2026-211/events.jsonl.gz",
+      "bytes": 756462
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/263-05-2026-211/run-v231.json",
+      "bytes": 15251
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/263-05-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 44398
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F3/263-05-2026-211/terminal-save.json.gz",
+      "bytes": 142486
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 8674
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/184-02-2026-211/184-02/cities.csv",
+      "bytes": 308388
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/184-02-2026-211/184-02/factions.csv",
+      "bytes": 83775
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 10898
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/184-02-2026-211/184-02/run.json",
+      "bytes": 2530
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/184-02-2026-211/events.jsonl.gz",
+      "bytes": 342202
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/184-02-2026-211/run-v231.json",
+      "bytes": 13250
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 16021
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 97480
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/207-09-2034-211/207-09/capture-recovery.csv",
+      "bytes": 3776
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/207-09-2034-211/207-09/cities.csv",
+      "bytes": 339121
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/207-09-2034-211/207-09/factions.csv",
+      "bytes": 92629
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/207-09-2034-211/207-09/monthly.csv",
+      "bytes": 10930
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/207-09-2034-211/207-09/run.json",
+      "bytes": 5145
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/207-09-2034-211/events.jsonl.gz",
+      "bytes": 871189
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/207-09-2034-211/run-v231.json",
+      "bytes": 17280
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/207-09-2034-211/supply-episodes-weather-aware.csv",
+      "bytes": 48708
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/207-09-2034-211/terminal-save.json.gz",
+      "bytes": 159257
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 3550
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-211/208-10/cities.csv",
+      "bytes": 340089
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-211/208-10/factions.csv",
+      "bytes": 104546
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 11073
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-211/208-10/run.json",
+      "bytes": 4749
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-211/events.jsonl.gz",
+      "bytes": 1542648
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-211/run-v231.json",
+      "bytes": 17041
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 49609
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 146238
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 6462
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-212/208-10/cities.csv",
+      "bytes": 340229
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-212/208-10/factions.csv",
+      "bytes": 104843
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 11005
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-212/208-10/run.json",
+      "bytes": 4982
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-212/events.jsonl.gz",
+      "bytes": 842692
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-212/run-v231.json",
+      "bytes": 16866
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 55331
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 159322
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/263-05-2026-211/263-05/capture-recovery.csv",
+      "bytes": 2868
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/263-05-2026-211/263-05/cities.csv",
+      "bytes": 366545
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/263-05-2026-211/263-05/factions.csv",
+      "bytes": 43924
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/263-05-2026-211/263-05/monthly.csv",
+      "bytes": 11095
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/263-05-2026-211/263-05/run.json",
+      "bytes": 3716
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/263-05-2026-211/events.jsonl.gz",
+      "bytes": 756462
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/263-05-2026-211/run-v231.json",
+      "bytes": 15250
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/263-05-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 44398
+    },
+    {
+      "archive": "v231-rapid.zip",
+      "original_path": "campaigns/quick/F4/263-05-2026-211/terminal-save.json.gz",
+      "bytes": 142514
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/207-09-2034-211/207-09/capture-recovery.csv",
+      "bytes": 4665
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/207-09-2034-211/207-09/cities.csv",
+      "bytes": 834577
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/207-09-2034-211/207-09/factions.csv",
+      "bytes": 233025
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/207-09-2034-211/207-09/monthly.csv",
+      "bytes": 26792
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/207-09-2034-211/207-09/run.json",
+      "bytes": 4958
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/207-09-2034-211/events.jsonl.gz",
+      "bytes": 2998413
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/207-09-2034-211/run-v231.json",
+      "bytes": 17944
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/207-09-2034-211/supply-episodes-weather-aware.csv",
+      "bytes": 72496
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/207-09-2034-211/terminal-save.json.gz",
+      "bytes": 173468
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 3662
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-211/208-10/cities.csv",
+      "bytes": 834486
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-211/208-10/factions.csv",
+      "bytes": 260935
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 27027
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-211/208-10/run.json",
+      "bytes": 6192
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-211/events.jsonl.gz",
+      "bytes": 4844764
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-211/run-v231.json",
+      "bytes": 19314
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 98118
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 198276
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 8129
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-212/208-10/cities.csv",
+      "bytes": 835461
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-212/208-10/factions.csv",
+      "bytes": 262743
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 26955
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-212/208-10/run.json",
+      "bytes": 5398
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-212/events.jsonl.gz",
+      "bytes": 2503821
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-212/run-v231.json",
+      "bytes": 19066
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 88055
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F1/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 172718
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 9115
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-211/184-02/cities.csv",
+      "bytes": 773754
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-211/184-02/factions.csv",
+      "bytes": 218888
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 26351
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-211/184-02/run.json",
+      "bytes": 5967
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-211/events.jsonl.gz",
+      "bytes": 2090767
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-211/run-v231.json",
+      "bytes": 18415
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 37829
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 153815
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-212/184-02/capture-recovery.csv",
+      "bytes": 14744
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-212/184-02/cities.csv",
+      "bytes": 762341
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-212/184-02/factions.csv",
+      "bytes": 219248
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-212/184-02/monthly.csv",
+      "bytes": 26265
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-212/184-02/run.json",
+      "bytes": 4585
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-212/events.jsonl.gz",
+      "bytes": 1597173
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-212/run-v231.json",
+      "bytes": 17680
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 61648
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/184-02-2026-212/terminal-save.json.gz",
+      "bytes": 160911
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/207-09-2034-211/207-09/capture-recovery.csv",
+      "bytes": 4665
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/207-09-2034-211/207-09/cities.csv",
+      "bytes": 834577
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/207-09-2034-211/207-09/factions.csv",
+      "bytes": 233025
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/207-09-2034-211/207-09/monthly.csv",
+      "bytes": 26792
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/207-09-2034-211/207-09/run.json",
+      "bytes": 4960
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/207-09-2034-211/events.jsonl.gz",
+      "bytes": 2998413
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/207-09-2034-211/run-v231.json",
+      "bytes": 17945
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/207-09-2034-211/supply-episodes-weather-aware.csv",
+      "bytes": 72496
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/207-09-2034-211/terminal-save.json.gz",
+      "bytes": 173484
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 3258
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-211/208-10/cities.csv",
+      "bytes": 835026
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-211/208-10/factions.csv",
+      "bytes": 261344
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 26940
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-211/208-10/run.json",
+      "bytes": 5971
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-211/events.jsonl.gz",
+      "bytes": 4744750
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-211/run-v231.json",
+      "bytes": 19691
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 72969
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 184894
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 8129
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-212/208-10/cities.csv",
+      "bytes": 835461
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-212/208-10/factions.csv",
+      "bytes": 262743
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 26955
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-212/208-10/run.json",
+      "bytes": 5398
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-212/events.jsonl.gz",
+      "bytes": 2503821
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-212/run-v231.json",
+      "bytes": 19065
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 88055
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 172746
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/263-05-2026-211/263-05/capture-recovery.csv",
+      "bytes": 3672
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/263-05-2026-211/263-05/cities.csv",
+      "bytes": 913378
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/263-05-2026-211/263-05/factions.csv",
+      "bytes": 107682
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/263-05-2026-211/263-05/monthly.csv",
+      "bytes": 26749
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/263-05-2026-211/263-05/run.json",
+      "bytes": 3923
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/263-05-2026-211/events.jsonl.gz",
+      "bytes": 2156715
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/263-05-2026-211/run-v231.json",
+      "bytes": 15540
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/263-05-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 65032
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F2/263-05-2026-211/terminal-save.json.gz",
+      "bytes": 159072
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/207-09-2034-211/207-09/capture-recovery.csv",
+      "bytes": 4761
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/207-09-2034-211/207-09/cities.csv",
+      "bytes": 834189
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/207-09-2034-211/207-09/factions.csv",
+      "bytes": 231732
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/207-09-2034-211/207-09/monthly.csv",
+      "bytes": 26756
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/207-09-2034-211/207-09/run.json",
+      "bytes": 4928
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/207-09-2034-211/events.jsonl.gz",
+      "bytes": 2953926
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/207-09-2034-211/run-v231.json",
+      "bytes": 17563
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/207-09-2034-211/supply-episodes-weather-aware.csv",
+      "bytes": 72289
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/207-09-2034-211/terminal-save.json.gz",
+      "bytes": 161757
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 4283
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-211/208-10/cities.csv",
+      "bytes": 834914
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-211/208-10/factions.csv",
+      "bytes": 260731
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 26900
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-211/208-10/run.json",
+      "bytes": 4361
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-211/events.jsonl.gz",
+      "bytes": 4509023
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-211/run-v231.json",
+      "bytes": 17944
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 77542
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 164596
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 8808
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-212/208-10/cities.csv",
+      "bytes": 837061
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-212/208-10/factions.csv",
+      "bytes": 262011
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 26873
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-212/208-10/run.json",
+      "bytes": 5011
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-212/events.jsonl.gz",
+      "bytes": 2890007
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-212/run-v231.json",
+      "bytes": 19272
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 81027
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F3/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 173626
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 13376
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-211/184-02/cities.csv",
+      "bytes": 772293
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-211/184-02/factions.csv",
+      "bytes": 220439
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 26414
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-211/184-02/run.json",
+      "bytes": 3990
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-211/events.jsonl.gz",
+      "bytes": 1559402
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-211/run-v231.json",
+      "bytes": 17655
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 54640
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 137497
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-212/184-02/capture-recovery.csv",
+      "bytes": 13924
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-212/184-02/cities.csv",
+      "bytes": 765478
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-212/184-02/factions.csv",
+      "bytes": 220977
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-212/184-02/monthly.csv",
+      "bytes": 26306
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-212/184-02/run.json",
+      "bytes": 6209
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-212/events.jsonl.gz",
+      "bytes": 1890404
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-212/run-v231.json",
+      "bytes": 19708
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 46762
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/184-02-2026-212/terminal-save.json.gz",
+      "bytes": 177095
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/207-09-2034-211/207-09/capture-recovery.csv",
+      "bytes": 4761
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/207-09-2034-211/207-09/cities.csv",
+      "bytes": 834189
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/207-09-2034-211/207-09/factions.csv",
+      "bytes": 231732
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/207-09-2034-211/207-09/monthly.csv",
+      "bytes": 26756
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/207-09-2034-211/207-09/run.json",
+      "bytes": 4927
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/207-09-2034-211/events.jsonl.gz",
+      "bytes": 2953926
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/207-09-2034-211/run-v231.json",
+      "bytes": 17561
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/207-09-2034-211/supply-episodes-weather-aware.csv",
+      "bytes": 72289
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/207-09-2034-211/terminal-save.json.gz",
+      "bytes": 161766
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 4756
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-211/208-10/cities.csv",
+      "bytes": 834637
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-211/208-10/factions.csv",
+      "bytes": 261226
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 26903
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-211/208-10/run.json",
+      "bytes": 4754
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-211/events.jsonl.gz",
+      "bytes": 4561743
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-211/run-v231.json",
+      "bytes": 18228
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 84268
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 177577
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 9091
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-212/208-10/cities.csv",
+      "bytes": 836946
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-212/208-10/factions.csv",
+      "bytes": 262014
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 26865
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-212/208-10/run.json",
+      "bytes": 6574
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-212/events.jsonl.gz",
+      "bytes": 3169949
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-212/run-v231.json",
+      "bytes": 21055
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 86084
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 204657
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/263-05-2026-211/263-05/capture-recovery.csv",
+      "bytes": 3612
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/263-05-2026-211/263-05/cities.csv",
+      "bytes": 911697
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/263-05-2026-211/263-05/factions.csv",
+      "bytes": 108821
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/263-05-2026-211/263-05/monthly.csv",
+      "bytes": 26834
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/263-05-2026-211/263-05/run.json",
+      "bytes": 3735
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/263-05-2026-211/events.jsonl.gz",
+      "bytes": 2410781
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/263-05-2026-211/run-v231.json",
+      "bytes": 15438
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/263-05-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 66582
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/F4/263-05-2026-211/terminal-save.json.gz",
+      "bytes": 156616
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/dry/190-01-2031-211/190-01/capture-recovery.csv",
+      "bytes": 7829
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/dry/190-01-2031-211/190-01/cities.csv",
+      "bytes": 789242
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/dry/190-01-2031-211/190-01/factions.csv",
+      "bytes": 453191
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/dry/190-01-2031-211/190-01/monthly.csv",
+      "bytes": 26732
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/dry/190-01-2031-211/190-01/run.json",
+      "bytes": 6258
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/dry/190-01-2031-211/events.jsonl.gz",
+      "bytes": 1885964
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/dry/190-01-2031-211/run-v231.json",
+      "bytes": 16988
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/dry/190-01-2031-211/supply-episodes-weather-aware.csv",
+      "bytes": 34938
+    },
+    {
+      "archive": "v231-five-year.zip",
+      "original_path": "campaigns/five/dry/190-01-2031-211/terminal-save.json.gz",
+      "bytes": 171527
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/184-02-2043-211/184-02/capture-recovery.csv",
+      "bytes": 10379
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/184-02-2043-211/184-02/cities.csv",
+      "bytes": 764166
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/184-02-2043-211/184-02/factions.csv",
+      "bytes": 212265
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/184-02-2043-211/184-02/monthly.csv",
+      "bytes": 26115
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/184-02-2043-211/184-02/run.json",
+      "bytes": 4367
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/184-02-2043-211/events.jsonl.gz",
+      "bytes": 1315308
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/184-02-2043-211/run-v231.json",
+      "bytes": 17484
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/184-02-2043-211/supply-episodes-weather-aware.csv",
+      "bytes": 45812
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/184-02-2043-211/terminal-save.json.gz",
+      "bytes": 155830
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/208-10-2044-212/208-10/capture-recovery.csv",
+      "bytes": 9234
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/208-10-2044-212/208-10/cities.csv",
+      "bytes": 839587
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/208-10-2044-212/208-10/factions.csv",
+      "bytes": 263017
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/208-10-2044-212/208-10/monthly.csv",
+      "bytes": 26871
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/208-10-2044-212/208-10/run.json",
+      "bytes": 6190
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/208-10-2044-212/events.jsonl.gz",
+      "bytes": 2713831
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/208-10-2044-212/run-v231.json",
+      "bytes": 18345
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/208-10-2044-212/supply-episodes-weather-aware.csv",
+      "bytes": 98459
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F2/208-10-2044-212/terminal-save.json.gz",
+      "bytes": 196450
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2041-211/184-02/capture-recovery.csv",
+      "bytes": 10838
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2041-211/184-02/cities.csv",
+      "bytes": 767948
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2041-211/184-02/factions.csv",
+      "bytes": 220024
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2041-211/184-02/monthly.csv",
+      "bytes": 26415
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2041-211/184-02/run.json",
+      "bytes": 4534
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2041-211/events.jsonl.gz",
+      "bytes": 1685473
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2041-211/run-v231.json",
+      "bytes": 16726
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2041-211/supply-episodes-weather-aware.csv",
+      "bytes": 38901
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2041-211/terminal-save.json.gz",
+      "bytes": 146191
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2043-211/184-02/capture-recovery.csv",
+      "bytes": 9350
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2043-211/184-02/cities.csv",
+      "bytes": 769237
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2043-211/184-02/factions.csv",
+      "bytes": 211627
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2043-211/184-02/monthly.csv",
+      "bytes": 26132
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2043-211/184-02/run.json",
+      "bytes": 3752
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2043-211/events.jsonl.gz",
+      "bytes": 1474605
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2043-211/run-v231.json",
+      "bytes": 15866
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2043-211/supply-episodes-weather-aware.csv",
+      "bytes": 37900
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/184-02-2043-211/terminal-save.json.gz",
+      "bytes": 144131
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/208-10-2044-212/208-10/capture-recovery.csv",
+      "bytes": 6380
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/208-10-2044-212/208-10/cities.csv",
+      "bytes": 837073
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/208-10-2044-212/208-10/factions.csv",
+      "bytes": 260523
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/208-10-2044-212/208-10/monthly.csv",
+      "bytes": 26871
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/208-10-2044-212/208-10/run.json",
+      "bytes": 6576
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/208-10-2044-212/events.jsonl.gz",
+      "bytes": 2662864
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/208-10-2044-212/run-v231.json",
+      "bytes": 19546
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/208-10-2044-212/supply-episodes-weather-aware.csv",
+      "bytes": 96696
+    },
+    {
+      "archive": "v231-holdout.zip",
+      "original_path": "campaigns/holdout/F4/208-10-2044-212/terminal-save.json.gz",
+      "bytes": 202629
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 17879
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/184-02-2026-211/184-02/cities.csv",
+      "bytes": 3226534
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/184-02-2026-211/184-02/factions.csv",
+      "bytes": 954598
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 112198
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/184-02-2026-211/184-02/run.json",
+      "bytes": 7700
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/184-02-2026-211/events.jsonl.gz",
+      "bytes": 13340518
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/184-02-2026-211/run-v231.json",
+      "bytes": 21773
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 215706
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 238046
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 10002
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/208-10/cities.csv",
+      "bytes": 3448285
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/208-10/factions.csv",
+      "bytes": 1089386
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 113061
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/208-10/run.json",
+      "bytes": 5588
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/checkpoints/0047-jiangxia.json.gz",
+      "bytes": 125937
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/checkpoints/0076-fuling.json.gz",
+      "bytes": 145583
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/checkpoints/0173-badong.json.gz",
+      "bytes": 159777
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/checkpoints/0224-baxi.json.gz",
+      "bytes": 203832
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/checkpoints/0247-guanghan.json.gz",
+      "bytes": 172901
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/checkpoints/0278-yidu.json.gz",
+      "bytes": 205696
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/checkpoints/0302-poyang.json.gz",
+      "bytes": 194755
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/checkpoints/0350-nanjun.json.gz",
+      "bytes": 202459
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/events.jsonl.gz",
+      "bytes": 21777146
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/run-v231.json",
+      "bytes": 20355
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 416444
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 227009
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 23211
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-212/208-10/cities.csv",
+      "bytes": 3498709
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-212/208-10/factions.csv",
+      "bytes": 1080111
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 113894
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-212/208-10/run.json",
+      "bytes": 6993
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-212/events.jsonl.gz",
+      "bytes": 17429683
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-212/run-v231.json",
+      "bytes": 23218
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 259047
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/F4/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 271843
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 6746
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/208-10/cities.csv",
+      "bytes": 3462310
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/208-10/factions.csv",
+      "bytes": 1087431
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 113351
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/208-10/run.json",
+      "bytes": 4774
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/checkpoints/0097-wuling.json.gz",
+      "bytes": 171423
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/checkpoints/0205-xindu.json.gz",
+      "bytes": 216771
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/checkpoints/0214-guiyang.json.gz",
+      "bytes": 222625
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/checkpoints/0317-badong.json.gz",
+      "bytes": 206434
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/checkpoints/0374-baxi.json.gz",
+      "bytes": 205998
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/checkpoints/0427-jiangxia.json.gz",
+      "bytes": 194049
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/checkpoints/0443-yidu.json.gz",
+      "bytes": 199277
+    },
+    {
+      "archive": "v231-twenty-year-01.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/checkpoints/0488-guanghan.json.gz",
+      "bytes": 210977
+    },
+    {
+      "archive": "v231-twenty-year-02.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/events.jsonl.gz",
+      "bytes": 21542670
+    },
+    {
+      "archive": "v231-twenty-year-02.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/run-v231.json",
+      "bytes": 18611
+    },
+    {
+      "archive": "v231-twenty-year-02.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 250863
+    },
+    {
+      "archive": "v231-twenty-year-02.zip",
+      "original_path": "campaigns/long/W2/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 196735
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 5873
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/208-10/cities.csv",
+      "bytes": 3431101
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/208-10/factions.csv",
+      "bytes": 1079158
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 113004
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/208-10/run.json",
+      "bytes": 5984
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/checkpoints/0047-jiangxia.json.gz",
+      "bytes": 130497
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/checkpoints/0071-luling.json.gz",
+      "bytes": 150529
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/checkpoints/0158-badong.json.gz",
+      "bytes": 180930
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/checkpoints/0191-yidu.json.gz",
+      "bytes": 180730
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/checkpoints/0257-jianan.json.gz",
+      "bytes": 178790
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/checkpoints/0266-changsha.json.gz",
+      "bytes": 209193
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/checkpoints/0268-baxi.json.gz",
+      "bytes": 204278
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/checkpoints/0269-wuling.json.gz",
+      "bytes": 210096
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/events.jsonl.gz",
+      "bytes": 21462423
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/run-v231.json",
+      "bytes": 20150
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 271302
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "campaigns/root/F2/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 205622
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "replays/city-shortage-checkpoint-replay.csv",
+      "bytes": 5532
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "replays/shortage-replay-detail.json",
+      "bytes": 434816
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "performance/cross-month-convoy-provenance.json",
+      "bytes": 350
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "performance/cross-month-convoy.json.gz",
+      "bytes": 56149
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "performance/forecast-performance-profile.csv",
+      "bytes": 3754
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "performance/forecast-performance.json",
+      "bytes": 120980
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "performance/north-snow-provenance.json",
+      "bytes": 189
+    },
+    {
+      "archive": "v231-root-cause.zip",
+      "original_path": "performance/north-snow.json.gz",
+      "bytes": 80448
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 5873
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/208-10/cities.csv",
+      "bytes": 3431101
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/208-10/factions.csv",
+      "bytes": 1079158
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 113004
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/208-10/run.json",
+      "bytes": 5986
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/checkpoints/0047-jiangxia.json.gz",
+      "bytes": 130497
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/checkpoints/0071-luling.json.gz",
+      "bytes": 150529
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/checkpoints/0158-badong.json.gz",
+      "bytes": 180930
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/checkpoints/0191-yidu.json.gz",
+      "bytes": 180730
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/checkpoints/0257-jianan.json.gz",
+      "bytes": 178790
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/checkpoints/0266-changsha.json.gz",
+      "bytes": 209193
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/checkpoints/0268-baxi.json.gz",
+      "bytes": 204278
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/checkpoints/0269-wuling.json.gz",
+      "bytes": 210096
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/events.jsonl.gz",
+      "bytes": 21892408
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/run-v231.json",
+      "bytes": 20359
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 271302
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F2/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 205622
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 10002
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/208-10/cities.csv",
+      "bytes": 3448285
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/208-10/factions.csv",
+      "bytes": 1089386
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 113061
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/208-10/run.json",
+      "bytes": 5581
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/checkpoints/0047-jiangxia.json.gz",
+      "bytes": 125937
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/checkpoints/0076-fuling.json.gz",
+      "bytes": 145583
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/checkpoints/0173-badong.json.gz",
+      "bytes": 159777
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/checkpoints/0224-baxi.json.gz",
+      "bytes": 203832
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/checkpoints/0247-guanghan.json.gz",
+      "bytes": 172901
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/checkpoints/0278-yidu.json.gz",
+      "bytes": 205696
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/checkpoints/0302-poyang.json.gz",
+      "bytes": 194755
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/checkpoints/0350-nanjun.json.gz",
+      "bytes": 202459
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/events.jsonl.gz",
+      "bytes": 22210593
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/run-v231.json",
+      "bytes": 20521
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 416444
+    },
+    {
+      "archive": "v231-channel-audit.zip",
+      "original_path": "channel-audit/long/F4/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 227009
+    }
+  ]
+}
