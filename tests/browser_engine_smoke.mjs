@@ -19,6 +19,7 @@ const transportSave=process.env.TK2_TRANSPORT_CAPACITY_BROWSER_FIXTURE;
 const transshipmentSave=process.env.TK2_TRANSSHIPMENT_BROWSER_FIXTURE;
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const decode=bytes=>new TextDecoder('utf-8',{fatal:true}).decode(bytes);
+const responseDecoder=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true});
 const jsonFile=name=>JSON.parse(fs.readFileSync(name,'utf8'));
 const manifest=jsonFile(path.join(build,'runtime/engine-manifest.json'));
 assert.equal(manifest.schema,'tk2-browser-engine-v1');
@@ -91,22 +92,24 @@ with tempfile.TemporaryDirectory(prefix='tk2-cpu-replay-') as directory:
                          rng=json.loads(final['body'])['state']['rng']),ensure_ascii=False))
 `;
 
-let py,responseSemantic;
+let py,dispatchForSmoke;
 const bridges=new Map(),trace=[],wasmResults=[];
 function request(pathname,{method='GET',body,instance='primary',status=200}={}){
  const bridge=bridges.get(instance);assert(bridge,'known isolated runtime instance');
  const operation={instance,path:pathname,method,...(body===undefined?{}:{body})};
  if(body!==undefined)assert.equal(typeof body,'string','POST bodies remain JSON text');
  // JS null is JsNull in Pyodide 314, not Python None. Omit body for reads.
- const result=body===undefined?bridge.dispatch_json(pathname,method):bridge.dispatch_json(pathname,method,body);
+ const result=body===undefined?dispatchForSmoke(bridge,pathname,method):dispatchForSmoke(bridge,pathname,method,body);
  let response;
- try{response=result.toJs({dict_converter:Object.fromEntries});}finally{result.destroy();}
- assert.equal(typeof response.body,'string');
- assert.equal(response.status,status,`${instance} ${method} ${pathname}: ${response.body.slice(0,300)}`);
+ try{response=result.toJs({create_pyproxies:false});}finally{result.destroy();}
+ const [responseStatus,responseBytes,semantic]=response;
+ assert(responseBytes instanceof Uint8Array,'WASM response is UTF-8 bytes');
+ const responseBody=responseDecoder.decode(responseBytes);
+ assert.equal(responseStatus,status,`${instance} ${method} ${pathname}: ${responseBody.slice(0,300)}`);
  trace.push(operation);
- wasmResults.push({status:response.status,response_semantic_sha256:responseSemantic(response.body),
-  ...(pathname==='/api/save'&&status===200?{save:response.body}:{})});
- return response.body;
+ wasmResults.push({status:responseStatus,response_semantic_sha256:semantic,
+  ...(pathname==='/api/save'&&status===200?{save:responseBody}:{})});
+ return responseBody;
 }
 function state(instance='primary'){return JSON.parse(request('/api/state',{instance}));}
 function command(view,kind,payload={},instance='primary'){
@@ -147,9 +150,13 @@ sys.path.insert(0, '/tk2/source')
 os.environ['MARCH_CORE_BACKEND'] = 'python'
 from remake.browser_runtime import BrowserRuntime
 from hashlib import sha256
-def _tk2_response_semantic(body):
-    return sha256(json.dumps(json.loads(body),sort_keys=True,ensure_ascii=False,allow_nan=False).encode('utf-8')).hexdigest()`);
- responseSemantic=py.globals.get('_tk2_response_semantic');
+def _tk2_smoke_dispatch(bridge, *args):
+    response=bridge.dispatch_json(*args)
+    body=response['body']
+    # Hash the original JSON inside WASM and transfer the complete UTF-8 body once.
+    semantic=json.dumps(json.loads(body),sort_keys=True,ensure_ascii=False,allow_nan=False)
+    return response['status'],body.encode('utf-8'),sha256(semantic.encode('utf-8')).hexdigest()`);
+ dispatchForSmoke=py.globals.get('_tk2_smoke_dispatch');
  const tacticalData=JSON.parse(py.runPython(`from remake.battle_grid import _library as _battle_library
 from remake.tactical_ai import _learnability as _battle_learnability
 json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
@@ -481,6 +488,6 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
   transshipment_batch_roundtrip:transshipmentBatch}));
 }finally{
  for(const bridge of bridges.values())bridge.destroy();
- responseSemantic?.destroy();
+ dispatchForSmoke?.destroy();
  fs.rmSync(temporary,{recursive:true,force:true});
 }
