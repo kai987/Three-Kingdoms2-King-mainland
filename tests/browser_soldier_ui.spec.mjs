@@ -27,15 +27,19 @@ async function opening(page){
 }
 async function idle(page){await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);}
 async function save(page){return page.evaluate(async()=>{const r=await fetch('/api/save');if(!r.ok)throw Error('Actual soldier save could not be inspected');return r.json();});}
-async function read(page,withView=true,{openingTroopSources,facilityActor}={}){
+async function read(page,withView=true,{openingTroopSources,facilityActor,tacticId}={}){
  if(!withView)return {save:await save(page)};
- return page.evaluate(async({sourceKinds,facilityActor})=>{
+ return page.evaluate(async({sourceKinds,facilityActor,tacticId})=>{
   const [a,b]=await Promise.all([fetch('/api/save'),fetch('/api/state')]);
   if(!a.ok||!b.ok)throw Error('Actual soldier state could not be inspected');
   const state=await b.json(),save=await a.json(),view=state.view||state;
   if(facilityActor!==undefined){
    const id=String(facilityActor),facility=view.catalog.battle_tactical.actors[id].facility;
    return {save,view:{catalog:{battle_tactical:{actors:{[id]:{facility}}}}}};
+  }
+  if(tacticId!==undefined){
+   const cost=view.catalog.battle_tactical.tactic_costs[tacticId];
+   return {save,view:{catalog:{battle_tactical:{tactic_costs:{[tacticId]:cost}}}}};
   }
   if(!sourceKinds)return {save,view};
 
@@ -52,7 +56,7 @@ async function read(page,withView=true,{openingTroopSources,facilityActor}={}){
    battle_tactical:{actors:{[selected]:{attack_targets:tactical.actors[selected].attack_targets}}},
    library:examples,
   }}};
- },{sourceKinds:openingTroopSources,facilityActor});
+ },{sourceKinds:openingTroopSources,facilityActor,tacticId});
 }
 async function load(page,value,name='controlled-soldier-boundary.json'){
  await page.locator('#load').click();await page.locator('#save-file').setInputFiles({name,mimeType:'application/json',buffer:Buffer.from(JSON.stringify(value))});
@@ -548,7 +552,7 @@ test('fire arrows burn carried grain and conversion loyalty gates stay actionabl
   const value=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B',new URL('./browser_tactic_effect_fixture.py',import.meta.url).pathname,kind],{encoding:'utf8',maxBuffer:12*1024*1024,timeout:90_000}));
   await load(page,value.save,'controlled-original-tactic-'+kind+'.json');
   await page.locator(`[data-actor="${value.actor}"]`).click();await page.locator(`[data-target="${value.target}"]`).click();
-  const before=await read(page);await control(page,'tactic');await page.locator('#tactic-choice').selectOption(String(value.tactic));
+  const before=await read(page,true,{tacticId:value.tactic});await control(page,'tactic');await page.locator('#tactic-choice').selectOption(String(value.tactic));
   const forecast=page.locator('#tactic-effect-preview .tactic-effect-forecast:visible');
   await expect(forecast).toHaveAttribute('data-tactic-success',String(value.preview.success_percent));
   await expect(page.locator('#confirm-tactic')).toBeEnabled();
