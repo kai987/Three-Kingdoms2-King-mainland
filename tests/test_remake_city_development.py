@@ -93,6 +93,7 @@ class DevelopmentTests(unittest.TestCase):
         game, state = setup()
         state.extension['treasury'] = treasures.empty(game, state)
         governor = state.officers[1]
+        treasures.set_governor(game, state, dict(city='capital', officer=1), 'one')
         profile = governor.profile
         for intellect, bonus in ((59, 0), (60, 5), (74, 5), (75, 10), (89, 10),
                                  (90, 11), (91, 12), (98, 19), (99, 20)):

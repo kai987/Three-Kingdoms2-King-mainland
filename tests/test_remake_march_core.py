@@ -4,6 +4,7 @@ Use --wasm-vectors to emit read-only Python reference vectors for Node's real
 WebAssembly ABI test. No live server or existing player campaign is changed.
 """
 from copy import deepcopy
+from functools import partial
 import gzip
 from hashlib import sha256
 import json
@@ -19,7 +20,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical, digest
-from remake import civil_staff, domestic, historical_campaigns, starting_garrisons
+from remake import civil_staff, domestic, historical_campaigns, starting_garrisons, treasures
 from remake.errors import GameError
 from remake.march_core import CoreUnavailable, config_for, invoke, using_backend
 from remake.route_hazards import allocate_survivors, evaluate_leg, route_allowed
@@ -95,6 +96,7 @@ def historical_payroll(campaign, state):
 
 @patch.object(civil_staff, 'settle_payroll', historical_payroll)
 @patch.object(domestic, 'rebalance_changed_garrisons', lambda *_: None, create=True)
+@patch.object(treasures, '_governor', partial(treasures._governor, legacy=True))
 @pre_civil_staff_profile()
 @pre_city_development_opening()
 @patch.object(historical_campaigns, 'RULES', {
@@ -117,7 +119,13 @@ def campaign_result(case, alternate_backend=None, *, legacy_catalog_sha256=None)
     def checkpoint(label):
         game.validate(game.state)
         saved = game.export_save()
-        result[label] = dict(save=digest(saved), state=digest(game.to_dict()),
+        # These frozen fixtures predate automatic appointments. Actual
+        # cross-backend round trips below still compare the complete saves.
+        for office in saved['state']['extension']['domestic']['factions'].values():
+            assert office.pop('manual_offices') == []
+            office.update(civil=None, military=None)
+        saved['checksum'] = digest({key: value for key, value in saved.items() if key != 'checksum'})
+        result[label] = dict(save=digest(saved), state=digest(saved['state']),
                              save_version=saved['version'],
                              rng=dict(state=game.state.rng.state, draws=game.state.rng.draws),
                              soldiers=game.state.soldiers.copy(), turn=game.state.turn,
@@ -126,8 +134,7 @@ def campaign_result(case, alternate_backend=None, *, legacy_catalog_sha256=None)
                                  grain={key:city.grain for key,city in sorted(game.state.cities.items())},
                                  travel=deepcopy(game.state.extension['travel'])))
         if legacy_catalog_sha256 is not None:
-            # Additional migration evidence only. The primary full v2 state
-            # and save hashes above are never normalized during acceptance.
+            # The v1 envelope additionally predates the command book pool.
             previous=deepcopy(saved)
             previous['state']['extension'].pop('command_books')
             previous['version']=1

@@ -26,7 +26,7 @@ class HistoricalOpeningGovernorsTests(unittest.TestCase):
                 for city, post in appointments.items():
                     ident = catalog.ids[post['person_id']]
                     row = state.extension['treasury']['cities'][city]
-                    self.assertEqual((row['governor'], row['governor_mode']), (ident, 'manual'))
+                    self.assertEqual((row['governor'], row['governor_mode']), (ident, 'historical'))
                     self.assertIn(ident, state.cities[city].roster.officer_ids)
                     self.assertEqual(state.officers[ident].faction_id, state.cities[city].owner)
 

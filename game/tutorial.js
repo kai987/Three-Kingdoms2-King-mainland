@@ -15,8 +15,8 @@
   'tutorial.city.detail':{'zh-Hant':'在地圖上點選本方城池，確認資金、兵糧與預備兵。',ja:'地図で自勢力の都市を選び、資金・兵糧・予備兵を確認します。'},
   'tutorial.allocate':{'zh-Hant':'確認一次編兵',ja:'兵の編制を確定する'},
   'tutorial.allocate.detail':{'zh-Hant':'進入「軍務 → 編兵」，設定目標兵數並確認。切換下一名武將不消耗額外命令書；完成後結束編兵。',ja:'「軍務 → 編制」で目標兵数を入力し、確定します。次の武将への切替で命令書は追加消費しません。配分後は編制を終了します。'},
-  'tutorial.domestic':{'zh-Hant':'委任兩名勢力內政官',ja:'勢力の内政官を2人任命する'},
-  'tutorial.domestic.detail':{'zh-Hant':'在勢力內政委任民政官與軍備官，兩人管理全勢力都市。先查看政策與費用；人數不足時可考慮登用地方文吏，或先結束指引。',ja:'勢力の内政で民政官と軍備官を任命し、方針と費用を確認します。2人が全都市を担当します。人数不足なら地方文吏の登用を検討するか、ガイドを終了できます。'},
+ 'tutorial.domestic':{'zh-Hant':'確認勢力內政官',ja:'勢力の内政担当を確認する'},
+ 'tutorial.domestic.detail':{'zh-Hant':'在勢力內政查看民政官、軍備官及委任方針，確認後儲存。可沿用自動選任。',ja:'勢力の内政で民政官と軍備官、方針を確認して保存します。自動選任のままでも進められます。'},
   'tutorial.route':{'zh-Hant':'查看行軍估算',ja:'行軍の見積りを確認する'},
   'tutorial.route.detail':{'zh-Hant':'在「軍務 → 出陣」選擇目的城與武將，查看日數、兵糧及減員風險。查看或取消不出陣，不必為指引派兵。',ja:'「軍務 → 出陣」で目的地と武将を選び、日数・兵糧・損耗の危険を確認します。見積りの確認だけでよく、出陣する必要はありません。'},
   'tutorial.turn':{'zh-Hant':'推進最初三旬',ja:'最初の3旬を進める'},
@@ -38,8 +38,6 @@
    if(elapsed<0){status='inactive';return;}
    if(status==='active'){
     if(step()==='city'&&selectedCity&&g.cities?.[selectedCity]?.owner===g.player)done.add('city');
-    const posts=g.extension?.domestic?.factions?.[g.player];
-    if(step()==='domestic'&&posts?.civil!==null&&posts?.civil!==undefined&&posts?.military!==null&&posts?.military!==undefined)done.add('domestic');
     if(step()==='turn'&&elapsed>=3)done.add('turn');
    }
    if(done.size===STEPS.length)status='complete';
@@ -47,6 +45,7 @@
   }
   function command(kind,payload,before,after){
    if(status!=='active'||identity(after)!==key)return;
+   if(kind==='set_domestic'&&step()==='domestic'&&after.revision>before.revision)done.add('domestic');
    if(kind==='allocate'&&step()==='allocate'&&after.revision>before.revision)done.add('allocate');
    observe(after);
   }

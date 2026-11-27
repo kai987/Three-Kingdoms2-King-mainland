@@ -331,7 +331,7 @@ class TreasuryCampaignTests(unittest.TestCase):
         self.assertEqual(game.state.extension['treasury']['ledger'], ledger)
         game.validate(game.state)
 
-    def test_succession_replaces_dead_manual_governor_with_actual_chosen_ruler(self):
+    def test_succession_replaces_dead_manual_governor_by_ability(self):
         game = self.game()
         ruler = game.state.extension['leaders']['shu']
         self.cmd(game, 'set_governor', city='xiangyang', officer=ruler)
@@ -342,11 +342,11 @@ class TreasuryCampaignTests(unittest.TestCase):
         game._reconcile_factions(game.state)
         pending = game.state.extension['pending_succession']['shu']
         self.assertEqual(game.state.extension['treasury']['cities'][city.id]['governor_mode'], 'auto')
-        self.assertEqual(game.state.extension['treasury']['cities'][city.id]['governor'], pending['provisional'])
+        self.assertEqual(game.state.extension['treasury']['cities'][city.id]['governor'], 439)
         self.fails(game, 'reward_officer', city=city.id, officer=146, kind='gold', amount=1)
         choice = pending['candidates'][-1]
         self.cmd(game, 'choose_successor', officer=choice)
-        self.assertEqual(game.state.extension['treasury']['cities'][city.id]['governor'], choice)
+        self.assertEqual(game.state.extension['treasury']['cities'][city.id]['governor'], 439)
         self.assertEqual(game.state.officers[choice].loyalty, 100)
         self.fails(game, 'reward_officer', city=city.id, officer=choice, kind='gold', amount=1)
         game.validate(game.state)

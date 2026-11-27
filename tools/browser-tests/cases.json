@@ -45,6 +45,13 @@
       "scenario_scope": "fixed"
     },
     {
+      "id": "city-intelligence-headquarters",
+      "title": "city intelligence shows the development figures and uses the map name for headquarters",
+      "groups": ["map", "scenarios", "economy", "people"],
+      "scenario_ids": ["mainland200-01"],
+      "scenario_scope": "fixed"
+    },
+    {
       "id": "observer-speed",
       "title": "observer speed changes cadence without resuming a pause and city counts follow ownership",
       "groups": [

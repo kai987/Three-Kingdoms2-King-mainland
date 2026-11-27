@@ -139,6 +139,7 @@ class DelegationReplayTests(unittest.TestCase):
         civil = min(ids, key=lambda i: (-state.officers[i].profile.intellect, ref_sort_key(i)))
         military = min((i for i in ids if i != civil),
             key=lambda i: (-state.officers[i].profile.martial_strength, ref_sort_key(i)))
+        self.original_military = military
         self.command('set_domestic', faction=state.player, civil=civil, military=military,
             policy=dict(auto_recruit=True, auto_persuade=True, min_chance=0,
                 recruit_enabled=True, training_enabled=True,
@@ -245,21 +246,6 @@ class DelegationReplayTests(unittest.TestCase):
     def reinforce_184_guards(self):
         """Use available reserves before defending the exposed one-city start."""
         game, state = self.games[0], self.games[0].state
-        post = domestic.appointments(state, state.player)
-        if post['military'] is None:
-            # Rival automatic persuasion can legitimately recruit the military
-            # official. A human commander must refill that vacancy rather than
-            # leave all newly recruited city reserves unassigned indefinitely.
-            # Use the real appointment eligibility and public command; do not
-            # restore the defecting officer, edit loyalty, or suppress AI work.
-            eligible = domestic.view(game, state)['factions'][state.player]['eligible_officers']
-            choices = [i for i in eligible if i != post['civil']]
-            if choices:
-                ident = min(choices, key=lambda i: (-state.officers[i].profile.martial_strength,
-                                                  ref_sort_key(i)))
-                self.command('set_domestic', faction=state.player, military=ident)
-                self.reappointed_military.append((state.turn, ident))
-                game, state = self.games[0], self.games[0].state
         for city in sorted(state.cities.values(), key=lambda c: c.id):
             if city.owner != state.player:
                 continue
@@ -379,7 +365,6 @@ class DelegationReplayTests(unittest.TestCase):
         self.phases, self.commands = Counter(), Counter()
         self.player_reports, self.ai_reports, self.ai_work, self.convoy_reports = set(), set(), set(), set()
         self.generated, self.staff_attack_sent, self.staff_battles = None, False, set()
-        self.reappointed_military = []
         data = json.loads((ROOT / 'game/data/campaigns' / filename).read_text())
         data['facility_ai_default'] = False
         # This office-only seeded persuasion/reappointment regression keeps
@@ -410,12 +395,19 @@ class DelegationReplayTests(unittest.TestCase):
         self.checkpoint()
         self.configure()
         if filename == '184-02.json':
-            # An exposed lone-city faction cannot survive by passing every
-            # turn. Liu Bei occupies the empty neighbouring city while Guan Yu
-            # stays at home to defend and replace a defecting military officer.
+            # The legacy economy replay uses a public departure to exercise
+            # automatic replacement across Python/Rust and JSON restores.
             self.reinforce_184_guards()
-            self.command('depart', source='yan', target='fanyang',
-                         officers=[951], route_mode='land')
+            officers = [951]
+            if legacy_economy:
+                self.command('set_domestic', faction=faction, military='auto')
+                officers.append(self.original_military)
+            state = self.command('depart', source='yan', target='fanyang', officers=officers, route_mode='land')
+            if legacy_economy:
+                replacement = domestic.appointments(state, faction)['military']
+                self.assertIsNotNone(replacement)
+                self.assertNotIn(replacement, officers)
+                reappointed_turn = state.turn
         if staff:
             candidate = self.games[0].state.extension['civil_staff']['cities']['nanyang']['candidate']
             self.assertIsNotNone(candidate)
@@ -459,9 +451,7 @@ class DelegationReplayTests(unittest.TestCase):
             self.assertNotIn(self.generated, catalog.by_id)
             self.assertEqual(len(catalog.definitions), 1083)
         if filename == '184-02.json' and legacy_economy:
-            self.assertTrue(self.reappointed_military,
-                'Real persuasion must be followed by a legal replacement military appointment')
-            self.assertTrue(any(kind == 'allocation' and turn >= self.reappointed_military[0][0]
+            self.assertTrue(any(kind == 'allocation' and turn >= reappointed_turn
                                 for turn, _, kind in self.player_reports),
                             'The replacement official must resume actual local reserve allocation')
         self.assertEqual(digest(catalog.data), original_catalog, 'Replay mutated the real catalog')
@@ -476,9 +466,7 @@ class DelegationReplayTests(unittest.TestCase):
     def test_184_liu_yan_six_turns_are_identical_in_python_and_rust(self):
         self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'))
 
-    def test_184_historical_save_preserves_defection_reappointment_and_allocation(self):
-        # With the expanded 184 map, this seed still produces an actual
-        # defection, a replacement appointment, and a subsequent allocation.
+    def test_184_historical_save_preserves_departure_reappointment_and_allocation(self):
         self.replay('184-02.json', 'liu_yan', 9, backends=('python', 'rust'),
                     legacy_economy=True, seed=2027)
 

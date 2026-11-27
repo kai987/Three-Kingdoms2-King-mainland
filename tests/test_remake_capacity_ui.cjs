@@ -199,6 +199,7 @@ async function weightedTransferChecks(){
  vm.runInContext(source.slice(source.indexOf("let campaignDifficulty="),source.indexOf("const $=")),context);
  vm.runInContext(source.slice(source.indexOf('function factionResources('),source.indexOf('function factionBase(')),context);
  vm.runInContext(source.slice(source.indexOf('const factionCastleStyles='),source.indexOf('function smoothMapPath(')),context);
+ vm.runInContext(source.slice(source.indexOf('function mapCityName('),source.indexOf('const mapColor=')),context);
  vm.runInContext(source.slice(source.indexOf('function selectFaction('),source.indexOf('function renderMap(')),context);
  context.selectFaction();
  const menu=element('#inspector').innerHTML;

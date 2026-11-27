@@ -336,9 +336,10 @@ class CampaignSession:
             factors = city_development.agriculture_details(preview_game, None, city, facilities['town'], opening=development)
             agriculture = None
             if factors is not None:
-                count = len(officers) if owner != 'neutral' else 0
+                ruler = d['faction_rulers'].get(owner)
+                count = sum(officer['id'] != ruler for officer in officers) if owner != 'neutral' else 0
                 wage = {key: value * count for key, value in payroll.officer_wage(0).items()}
-                active_bill = garrison_grain_cost(d, city, d['start_year'], d['start_month'], active if count else 0, 0)
+                active_bill = garrison_grain_cost(d, city, d['start_year'], d['start_month'], active if owner != 'neutral' else 0, 0)
                 agriculture = _agricultural_balance(factors, balance, 0, active_bill, wage, facilities)
             prefect = d.get('initial_governors', {}).get(city)
             governor = c.ids[prefect['person_id']] if prefect else None

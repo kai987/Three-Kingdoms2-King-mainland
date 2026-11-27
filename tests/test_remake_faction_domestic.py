@@ -84,7 +84,7 @@ class FactionDomesticTests(unittest.TestCase):
                                  (civil, military))
                 self.assertEqual(view['cities'][key]['training_preview']['gain'],
                                  2 + state.officers[military].profile.martial_strength // 25)
-            self.assertIsNone(view['factions']['wei']['civil'])
+            self.assertEqual(view['factions']['wei']['civil'], state.cities['nanyang'].roster.officer_ids[0])
             logistics.view(game, state)
         self.assertEqual(game.export_save(), saved)
         self.assertEqual(state.rng.draws, 0)
@@ -177,6 +177,48 @@ class FactionDomesticTests(unittest.TestCase):
         self.assertEqual(state.extension['domestic']['factions']['shu']['civil'], civil)
         self.assertTrue(domestic.view(game, state)['factions']['shu']['civil_active'])
         game.validate(state)
+
+    def test_automatic_offices_and_governors_follow_a_real_transfer_and_arrival(self):
+        game = self.game()
+        state = game.state
+        civil = domestic.appointments(state, 'shu')['civil']
+        military = domestic.appointments(state, 'shu')['military']
+        self.assertEqual((civil, military), (439, 146))
+        self.assertEqual(state.extension['treasury']['cities']['xiangyang']['governor'], civil)
+        game.command('transfer', dict(source='xiangyang', target='nanjun', officers=[civil, military],
+                                     route_mode='land'), game.revision)
+        state = game.state
+        self.assertEqual(domestic.appointments(state, 'shu')['civil'], 999)
+        self.assertEqual(domestic.appointments(state, 'shu')['military'], 255)
+        self.assertEqual(state.extension['treasury']['cities']['xiangyang']['governor'], 999)
+        game._complete_turn(state)
+        game.command('arrivals', {}, game.revision)
+        state = game.state
+        self.assertEqual(domestic.appointments(state, 'shu')['civil'], civil)
+        self.assertEqual(domestic.appointments(state, 'shu')['military'], military)
+        self.assertEqual(state.extension['treasury']['cities']['nanjun']['governor'], civil)
+        self.assertEqual(state.rng.draws, 0)
+
+    def test_restore_former_rules_preserves_player_choices_and_recalculates_automatic_posts(self):
+        game = self.game()
+        game.command('set_domestic', dict(faction='shu', civil=999), game.revision)
+        old = game.export_save()
+        state = old['state']
+        for post in state['extension']['domestic']['factions'].values():
+            post.pop('manual_offices')
+        state['extension']['domestic']['factions']['shu']['military'] = None
+        state['extension']['treasury']['cities']['xiangyang']['governor'] = state['extension']['leaders']['shu']
+        old['checksum'] = digest({key: value for key, value in old.items() if key != 'checksum'})
+        restored = Campaign(game.catalog)
+        restored.load_save(old, 0)
+        post = domestic.appointments(restored.state, 'shu')
+        self.assertEqual((post['civil'], post['military'], post['manual_offices']), (999, 146, ['civil']))
+        self.assertEqual(restored.state.extension['treasury']['cities']['xiangyang']['governor'], 439)
+        saved = restored.export_save()
+        for key in ('rng', 'soldiers', 'cities', 'officers'):
+            self.assertEqual(saved['state'][key], state[key], key)
+        restored.command('set_domestic', dict(faction='shu', civil='auto'), restored.revision)
+        self.assertEqual(domestic.appointments(restored.state, 'shu')['civil'], 439)
 
     def test_transfer_reassigns_both_garrisons_without_changing_marching_troops(self):
         game = self.game()
@@ -280,7 +322,7 @@ class FactionDomesticTests(unittest.TestCase):
         self.assertTrue(domestic.view(game, state)['factions']['shu']['civil_active'])
         game.validate(state)
 
-    def test_death_removes_only_the_affected_post_and_conserves_released_troops(self):
+    def test_death_refills_only_the_affected_post_and_conserves_released_troops(self):
         game = self.game()
         civil, military = self.appoint(game)
         state = game.state
@@ -291,7 +333,8 @@ class FactionDomesticTests(unittest.TestCase):
         home.roster.officer_ids.remove(civil)
         domestic.add_reserves(game, state, home, released, morale_value=domestic.morale(state, home.id))
         domestic.synchronize(game, state)
-        self.assertIsNone(state.extension['domestic']['factions']['shu']['civil'])
+        treasures.synchronize(game, state)
+        self.assertEqual(domestic.appointments(state, 'shu')['civil'], 999)
         self.assertEqual(state.extension['domestic']['factions']['shu']['military'], military)
         game.validate(state)
 
@@ -306,8 +349,8 @@ class FactionDomesticTests(unittest.TestCase):
         posts = state.extension['domestic']['factions']['shu']
         self.assertEqual((posts['civil'], posts['military']), (civil, military))
         lost_view = domestic.view(game, state)['cities']['nanjun']
-        self.assertIsNone(lost_view['civil'])
-        self.assertEqual(lost_view['monthly_bonus_preview'], dict(gold=0, grain=0))
+        self.assertEqual(lost_view['civil'], domestic.appointments(state, 'wei')['civil'])
+        self.assertEqual(lost_view['income_points'], 0)
         game.validate(state)
         # A separate controlled transition captures the civil official while
         # the ruler and military official remain in the other owned city.
@@ -322,7 +365,7 @@ class FactionDomesticTests(unittest.TestCase):
         home.owner = 'wei'
         state.officers[civil].faction_id = 'wei'
         game._reconcile_factions(state)
-        self.assertIsNone(state.extension['domestic']['factions']['shu']['civil'])
+        self.assertEqual(domestic.appointments(state, 'shu')['civil'], 999)
         self.assertEqual(state.extension['domestic']['factions']['shu']['military'], military)
         game.validate(state)
 
@@ -359,19 +402,17 @@ class FactionDomesticTests(unittest.TestCase):
         game.validate(state)
 
     def test_defection_revokes_one_faction_office_without_moving_the_other(self):
-        game = self.game()
-        civil, military = self.appoint(game)
+        game = self.game(player='wei')
+        civil, military = 439, 146
+        domestic.set_policy(game, game.state, dict(faction='shu', civil=civil, military=military), 'shu')
+        game.command('persuade_officer', dict(city='nanyang', actor=123, officer=civil), game.revision)
         state = game.state
-        state.cities['xiangyang'].roster.officer_ids.remove(civil)
-        state.cities['nanyang'].roster.officer_ids.append(civil)
-        state.officers[civil].faction_id = 'wei'
-        domestic.synchronize(game, state)
-        self.assertIsNone(state.extension['domestic']['factions']['shu']['civil'])
+        self.assertEqual(state.officers[civil].faction_id, 'wei')
+        self.assertEqual(domestic.appointments(state, 'shu')['civil'], 999)
         self.assertEqual(state.extension['domestic']['factions']['shu']['military'], military)
-        self.assertIsNone(state.extension['domestic']['factions']['wei']['civil'])
+        self.assertEqual(domestic.appointments(state, 'wei')['civil'], civil)
         for key in ('xiangyang', 'nanjun'):
-            self.assertEqual(domestic.view(game, state)['cities'][key]['monthly_bonus_preview'],
-                             dict(gold=0, grain=0))
+            self.assertGreater(domestic.view(game, state)['cities'][key]['monthly_bonus_preview']['gold'], 0)
         game.validate(state)
 
     def test_automatic_recruitment_uses_best_target_across_disconnected_owned_cities(self):
