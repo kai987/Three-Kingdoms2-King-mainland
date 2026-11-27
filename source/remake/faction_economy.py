@@ -138,6 +138,7 @@ class Forecast:
     risky_receipts: dict = field(default_factory=dict)
     conditional_receipts: dict = field(default_factory=dict)
     convoy_receipts: list = field(default_factory=list)
+    agricultural_risk: tuple[int, int] | None = None
 
 
 def balance(stock, timeline, deliveries=()):
@@ -160,7 +161,9 @@ def _forecast(game, state, city, row, inbound, booked, turns, next_income):
     data = game.catalog.data
     reserve_troops = city.reserves
     rations = row['residents'] + row['garrison']
-    timeline, receipts = [], {}
+    timeline, receipts, climate_losses = [], {}, {}
+    from . import winter_agriculture
+    region = winter_agriculture.region_for(game, city.id) if winter_agriculture.planning_enabled(state) else None
     installment_at_open = (state.day - 1) // 10
     daily_reserve, running = 0, 0
     for ahead in range(1, turns + 1):
@@ -172,6 +175,10 @@ def _forecast(game, state, city, row, inbound, booked, turns, next_income):
             income = (next_income if date_offset == 3 else
                       city_economy.monthly_income(game, city.id, state, date=(year, month + 1)))
             harvest = income['grain']
+            if region is not None:
+                factor = winter_agriculture.planning_multiplier(state, region, (year, month + 1))
+                if factor < 100:
+                    climate_losses[ahead] = harvest - harvest * factor // 100
             if date_offset == 3:
                 harvest += domestic.earned_grain(state, city.id, income)
                 if state.month == facilities.HARVEST_MONTH:
@@ -197,8 +204,18 @@ def _forecast(game, state, city, row, inbound, booked, turns, next_income):
     # Cargo that will arrive beyond the horizon can fill long-term storage,
     # but cannot hide a gap/payroll charge before its actual arrival.
     tail = max(0, tail - sum(amount for ago, amount in inbound.items() if ago > turns))
-    return Forecast(row['fixed'], zero, gaps, daily_reserve, tail, settled,
-                    receipts, tuple(timeline), max(0, logistics.LIMIT - stock), due_now)
+    forecast = Forecast(row['fixed'], zero, gaps, daily_reserve, tail, settled,
+                        receipts, tuple(timeline), max(0, logistics.LIMIT - stock), due_now)
+    if climate_losses:
+        weaker = [(income-climate_losses.get(ahead, 0), due, inbound)
+                  for ahead, (income, due, inbound) in enumerate(timeline, 1)]
+        adverse, _, _ = balance(stock, weaker)
+        additional = [(when, loss - normal) for (when, loss), (_, normal) in zip(adverse, gaps) if loss > normal]
+        if additional and row['fixed']:
+            deadline = additional[0][0]
+            needed = min(row['fixed'], sum(loss for _, loss in additional))
+            forecast.agricultural_risk = deadline, needed
+    return forecast
 
 
 def sustainable(regular, civilians, wages, reserves, active_rate, reserve_rate, *, added=0):
@@ -240,6 +257,11 @@ class FactionEconomyPlan:
         return sorted(keys, key=lambda key: (self.cities[key].zero_in,
             -self.cities[key].first_missing, -sum(gap for t, gap in self.cities[key].gaps if t <= 3),
             not self.budgets[key]['threatened'], key))
+
+    def agricultural_needs(self):
+        return sorted(((key, *forecast.agricultural_risk) for key, forecast in self.cities.items()
+                       if forecast.agricultural_risk and forecast.agricultural_risk[0] > 1),
+                      key=lambda item: (item[1], -item[2], item[0]))
 
     def outlook(self, state):
         stock = sum(row['stock'] for row in self.budgets.values())
@@ -349,6 +371,9 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
             projected.convoy_receipts = convoy_rows[key]
         forecast[key] = projected
         reserve = max(minimum, projected.reserve)
+        if projected.agricultural_risk:
+            row['agricultural_risk'] = projected.agricultural_risk
+            reserve += projected.agricultural_risk[1]
         first = projected.zero_in
         timely = sum(amount for eta, amount in shipments[key].items()
                      if (first is None and eta <= turns) or first is not None and eta < first)

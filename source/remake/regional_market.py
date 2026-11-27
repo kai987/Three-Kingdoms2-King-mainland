@@ -2,7 +2,7 @@
 from collections import Counter, defaultdict
 
 from . import (city_economy, command_books, economic_regions, facilities, grain_market,
-               logistics, logistics_rules, market_pricing as pricing, observer, staging_supply)
+               logistics, logistics_rules, market_pricing as pricing, observer, staging_supply, winter_agriculture)
 from .errors import GameError
 from .regional_procurement import BASE, Planner, landed_cents, quota_left
 
@@ -261,6 +261,10 @@ def procure(game,state,owner,plan):
     if pricing.stage(state)<pricing.PROCUREMENT:
         return False
     keys=plan.shortages(state,within=9)
+    preparation = {}
+    if winter_agriculture.planning_enabled(state):
+        preparation = {key: (due, grain) for key, due, grain in plan.agricultural_needs() if key not in keys}
+        keys += list(preparation)
     if not keys or not command_books.can_spend(state,owner,2):
         return False
     reviews=pricing.pool(state)['reviews']
@@ -271,20 +275,23 @@ def procure(game,state,owner,plan):
     attempts=[]
     for key in keys:
         target,row=state.cities[key],plan.cities[key]
-        requested=min(row.monthly*2,sum(gap for _,gap in row.gaps))
+        planning = key in preparation
+        due, needed = preparation[key] if planning else (row.zero_in, sum(gap for _,gap in row.gaps))
+        requested = min(row.monthly*2, needed)
         if requested<=0:
             continue
         local=facilities.emergency_quote(game,state,target,requested)
         if not plan.budgets[key]['market_affordable']:
             local=dict(local,grain=0)
-        if row.zero_in<=1 and (local['grain']>=requested or
+        if due<=1 and (local['grain']>=requested or
                 local['grain'] and not command_books.can_spend(state,owner,3)):
             continue
-        quotes,rejections=planner.options(target,requested,deadline=row.zero_in*10)
+        quotes,rejections=planner.options(target,requested,deadline=due*10)
         best=None
         for q in quotes:
             eta=q['arrival_turn']-state.turn
-            remaining=sum(gap for when,gap in row.gaps if when>eta)
+            remaining = (requested if q['timely'] and eta < due else 0) if planning else sum(
+                gap for when,gap in row.gaps if when>eta)
             if conflicts(state,q) or not remaining:
                 continue
             if local['grain']>=requested and (not q['timely'] or q['landed_cents']>=local['rate']*100):
@@ -295,12 +302,16 @@ def procure(game,state,owner,plan):
                 continue
             best=q
             break
-        attempts.append(dict(target=key,required=requested,deadline=row.zero_in*10,local=local['grain'],
+        attempts.append(dict(target=key,required=requested,deadline=due*10,local=local['grain'],
                              candidates=len(quotes),rejections=rejections,
                              source=None if best is None else best['source']))
         if best:
             pricing.report('regional_procurement_plan',state,owner=owner,attempts=attempts,work=dict(planner.work))
             start(game,state,best,automatic=True)
+            if planning:
+                from . import winter_weather
+                winter_weather.report('agricultural_preparation', turn=state.turn, year=state.year, month=state.month,
+                                      owner=owner, city=key, method='market', grain=best['net'], deadline=state.turn+due)
             return True
     pricing.report('regional_procurement_plan',state,owner=owner,attempts=attempts,work=dict(planner.work))
     return False

@@ -235,26 +235,30 @@ def seasonal_forecast(game,state,quote,*,start_in=0,position=0,pressure=False):
     pool=state.extension.get(weather.POOL)
     if pool is None:
         return dict(extra_days=0,extra_weight=0,reaches=())
+    from . import winter_climate
+    new_climate = winter_climate.enabled(state)
     elapsed=start_in*QUANTA
     delay=extra=0
     risks=set()
     for part,work in _segments(plan(game,quote),position):
         month=((state.month-1)+(state.day-1+elapsed//QUANTA)//30)%12+1
-        months,chance,cold,_=climate_regions.REGIONS[part.region]
-        if month in months:
-            exposure=100 if pressure else chance
-            if part.mode in ('plain','mountain','desert'):
-                severity=2 if pressure else 1
-                duration=weather.TIME_PERCENT[severity]
-                rate=_medium(part.mode,severity,severity,0,True)[1]
-                clear=_medium(part.mode,0,0,0,False)[1]
-                delay+=work*(duration-100)*exposure
-                extra+=work*(duration*rate-100*clear)*exposure
+        if part.mode in ('plain','mountain','desert'):
+            if new_climate:
+                exposures = winter_climate.seasonal_exposure(state, part.region, month, pressure=pressure)
+            else:
+                months,chance,_,_=climate_regions.REGIONS[part.region]
+                severity = 2 if pressure else 1
+                exposures = ((severity, severity, (100 if pressure else chance)*100),) if month in months else ()
+            if exposures:
+                clear = _medium(part.mode,0,0,0,False)[1]
+            for snow, road, exposure in exposures:
+                duration = weather.TIME_PERCENT[road]
+                rate = _medium(part.mode,snow,road,0,True)[1]
+                delay += work*(duration-100)*exposure
+                extra += work*(duration*rate-100*clear)*exposure
         if part.reach in pool['ice'] and pool['stage']>=4:
             reach=game.catalog.climate.frozen_reaches[part.reach]
-            cold_months=climate_regions.REGIONS[reach['freeze_region_id']][2]
-            typical=(cold_months[climate_regions.WINTER_MONTHS.index(month)]
-                     if month in climate_regions.WINTER_MONTHS else 0)
+            typical=winter_climate.cold_normal(state, reach['freeze_region_id'], month)
             ice=pool['ice'][part.reach]
             trend=max(weather.BASE_ICE[typical],weather.BASE_ICE[pool['regions'][reach['freeze_region_id']]['cold']]
                       if elapsed//QUANTA<=10 else 0)
@@ -262,8 +266,8 @@ def seasonal_forecast(game,state,quote,*,start_in=0,position=0,pressure=False):
                     30,elapsed//QUANTA+rules.ceil_div(work,QUANTA))>=6000:
                 risks.add(part.reach)
         elapsed+=work
-    return dict(extra_days=rules.ceil_div(delay,10_000*QUANTA),
-                extra_weight=rules.ceil_div(extra,10_000*QUANTA),reaches=tuple(sorted(risks)))
+    return dict(extra_days=rules.ceil_div(delay,1_000_000*QUANTA),
+                extra_weight=rules.ceil_div(extra,1_000_000*QUANTA),reaches=tuple(sorted(risks)))
 
 
 def leg_time(game, state, leg):

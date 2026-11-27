@@ -608,11 +608,16 @@ def close_harvest(game, state):
 
 def settle_harvest(game, state, awards):
     """Credit the bonus before the last ration debit and report the player's cities."""
+    from . import winter_climate, winter_weather
+    trace = winter_climate.enabled(state) and winter_weather.observing()
     player_awards = {}
     for key, bonus in awards.items():
         city = state.cities[key]
         stored = min(bonus, max(0, LIMIT - city.grain))
         city.grain += stored
+        if trace:
+            winter_weather.report('agriculture_harvest', year=state.year, month=HARVEST_MONTH,
+                                  city=key, owner=city.owner, award=bonus, stored=stored)
         if city.owner == state.player:
             player_awards[key] = stored
     if player_awards:

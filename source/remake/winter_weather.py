@@ -4,7 +4,9 @@ from contextvars import ContextVar
 from functools import lru_cache
 from hashlib import sha256
 
+from . import winter_agriculture, winter_climate
 from .climate_regions import REGIONS, WINTER_MONTHS
+from .winter_climate import DURATION, LEGACY_DEPTH as MAX_DEPTH, MELT, SNOWFALL
 
 FIELD = 'weather_rules_version'
 POOL = 'winter_weather'
@@ -15,10 +17,6 @@ PREPARATION = 2
 CORRECTIONS = TRANSPORT | PREPARATION
 NAMES = ('clear', 'light_snow', 'heavy_snow', 'blizzard')
 ICE_NAMES = ('open', 'floating_ice', 'partial_ice', 'frozen')
-DURATION = ((0, 0), (1, 3), (2, 4), (1, 3))
-SNOWFALL = (0, 1, 3, 6)
-MELT = (4, 2, 1, 0)
-MAX_DEPTH = 30
 BASE_ICE = (-6, -2, 3, 5)
 SPEED_PERCENT = (100, 75, 50, 0)
 TIME_PERCENT = (100, 115, 140, 200)
@@ -57,19 +55,27 @@ def corrected(state, flag):
     return bool(state.extension.get(POOL, {}).get('adjustments', 0) & flag)
 
 
-def initialize(game, state, requested=None):
-    if requested is not None and (type(requested) is not int or requested not in (0, VERSION, CORRECTED)):
+def initialize(game, state, requested=None, *, options=None):
+    if requested is not None and (type(requested) is not int or requested not in (0, VERSION, CORRECTED, winter_climate.VERSION)):
         raise ValueError('Winter weather rules version')
+    climate = requested == winter_climate.VERSION
+    if options is not None and not climate:
+        raise ValueError('Climate options require weather V2.3')
     selected = _stage.get() if requested is None else (5 if requested else 0)
-    adjustments = _adjustments.get() if requested is None else (CORRECTIONS if requested == CORRECTED else 0)
+    adjustments = _adjustments.get() if requested is None else (CORRECTIONS if climate or requested == CORRECTED else 0)
     if selected:
-        state.extension[FIELD] = CORRECTED if adjustments else VERSION
+        state.extension[FIELD] = requested if climate else (CORRECTED if adjustments else VERSION)
         state.extension[POOL] = dict(stage=selected, seed=seed_for(state.seed), tick=0,
             regions={key: dict(severity=0, began=0, ends=0, depth=0, cold=0,
                                winter=0, snow_seen=False) for key in REGIONS},
             ice={key: dict(index=0, state=0, changed=0) for key in game.catalog.climate.frozen_reaches})
+        pool = state.extension[POOL]
         if adjustments:
-            state.extension[POOL]['adjustments'] = adjustments
+            pool['adjustments'] = adjustments
+        if climate:
+            pool.update(options=winter_climate.normalize({} if options is None else options), agriculture=None)
+            for row in pool['regions'].values():
+                row.update(snow_cover_run=0, fallback_winter=0)
     else:
         state.extension.pop(FIELD, None)
         state.extension.pop(POOL, None)
@@ -105,11 +111,19 @@ def snowfall(seed, region, year, month, ten_days, guarantee=False):
     months, chance, _, _ = REGIONS[region]
     if month not in months:
         return 0, 0, 0
+    return _snow_event(seed, region, year, month, ten_days, chance, winter_climate.LEGACY_SEVERITY, guarantee)
+
+
+@lru_cache(maxsize=4096)
+def _snow_event(seed, region, year, month, ten_days, chance, weights, guarantee):
+    if not chance and not guarantee:
+        return 0, 0, 0
     roll = draw(seed, region, year, month, ten_days, 'snow', 100)
     if roll >= chance and not guarantee:
         return 0, 0, 0
     strength = draw(seed, region, year, month, ten_days, 'severity', 100)
-    severity = (1 if strength < 70 else 2 if strength < 95 else 3) if roll < chance else 1
+    light, heavy, _ = weights
+    severity = (1 if strength < light else 2 if strength < light + heavy else 3) if roll < chance else 1
     low, high = DURATION[severity]
     duration = low + draw(seed, region, year, month, ten_days, 'duration', high-low+1)
     first = 1 + ten_days*10 + draw(seed, region, year, month, ten_days, 'begin', 11-duration)
@@ -131,6 +145,80 @@ def ice_step(index, previous, cold, sensitivity):
     return index, ice_state(index, previous)
 
 
+@lru_cache(maxsize=4096)
+def _spring_event(seed, region, year, month, slot, chance):
+    if not chance or draw(seed, region, year, month, slot, 'spring-frost', 100) >= chance:
+        return 0, 0, False
+    duration = 1 + draw(seed, region, year, month, slot, 'spring-duration', 3)
+    first = 1 + slot*10 + draw(seed, region, year, month, slot, 'spring-begin', 11-duration)
+    late_snow = (month == 4 and draw(seed, region, year, month, slot, 'late-snow', 100)
+                 < winter_climate.LATE_SNOW.get(region, 0))
+    return first, first + duration - 1, late_snow
+
+
+@lru_cache(maxsize=1024)
+def _exceptional_wave(seed, winter):
+    if draw(seed, 'jiangnan', winter, 12, 0, 'cold-wave', 100) >= winter_climate.WAVE_PROBABILITY:
+        return 0, 0
+    duration = 2 + draw(seed, 'jiangnan', winter, 12, 0, 'wave-duration', 3)
+    first = ordinal((winter, 12, 1)) + draw(seed, 'jiangnan', winter, 12, 0, 'wave-begin', 91-duration)
+    return first, first + duration - 1
+
+
+def _advance_climate_region(state, pool, key, row, date, tick, full_winter, wave_span, ledger):
+    year, month, day = date
+    slot = (day - 1) // 10
+    winter = winter_year(year, month)
+    ordinary = winter_climate.snow_probability(state, key, month)
+    legacy_months, _, _, core = REGIONS[key]
+    if ordinary and row['winter'] != winter:
+        row.update(winter=winter, snow_seen=False, fallback_winter=0)
+    if core and full_winter and month == 3 and day == 21 and not row['snow_seen']:
+        row['fallback_winter'] = winter
+    fallback = month == 3 and slot == 2 and row['fallback_winter'] == winter
+    snow, first, last = _snow_event(pool['seed'], key, year, month, slot, ordinary,
+                                    winter_climate.severity_distribution(state, key), fallback)
+    event = (snow, tick - day + first, tick - day + last) if snow and first <= day <= last else (0, 0, 0)
+    cold = winter_climate.cold_normal(state, key, month)
+    # A newly eligible snowy month alone does not add ordinary cold draws.
+    if month in legacy_months:
+        roll = draw(pool['seed'], key, year, month, day, 'cold', 100)
+        cold = min(3, max(0, cold+(roll >= 80)-(roll < 20)))
+    first, last, late_snow = _spring_event(pool['seed'], key, year, month, slot,
+                                           winter_climate.spring_probability(state, key, month))
+    frost = first <= day <= last
+    late = frost and late_snow
+    if frost:
+        cold = max(2, cold)
+        if late:
+            event = max(event, (1, tick - day + first, tick - day + last))
+    serial = ordinal(date)
+    wave = key in winter_climate.WAVE_REGIONS and wave_span[0] <= serial <= wave_span[1]
+    if wave:
+        event = max(event, (winter_climate.WAVE_REGIONS[key],
+                            tick - serial + wave_span[0], tick - serial + wave_span[1]))
+        cold = max(2, cold)
+    severity, began, ends = event
+    limit = winter_climate.snow_depth_limit(state, key)
+    depth = (min(limit, row['depth'] + SNOWFALL[severity]) if severity else max(0, row['depth'] - MELT[cold]))
+    row.update(severity=severity, began=began, ends=ends, depth=depth, cold=cold,
+               snow_cover_run=row['snow_cover_run']+1 if depth else 0)
+    if severity and month in WINTER_MONTHS:
+        row['snow_seen'] = True
+    if ledger is not None:
+        winter_agriculture.observe(ledger, key, month, tick, row, frost=frost or wave, late=late, wave=wave)
+
+
+def _observe_agriculture(pool, date, tick):
+    year, month, day = date
+    winter = winter_year(year, month)
+    full = ordinal(date) - tick + 1 <= ordinal((winter, 11, 1))
+    ledger = winter_agriculture.begin_day(pool, date, tick, complete_start=full)
+    wave = (_exceptional_wave(pool['seed'], winter)
+            if full and month in (12, 1, 2) and pool['options']['exceptional_cold_wave'] else (0, 0))
+    return full, ledger, wave
+
+
 def advance(game, state, tick):
     pool = state.extension.get(POOL)
     if pool is None or tick <= pool['tick']:
@@ -141,7 +229,17 @@ def advance(game, state, tick):
     year, month, day = date_at(data, tick)
     winter = winter_year(year, month)
     obs = _observer.get()
+    new_climate = 'options' in pool
+    if new_climate:
+        date = year, month, day
+        full, ledger, wave = _observe_agriculture(pool, date, tick)
     for key, row in pool['regions'].items():
+        if new_climate:
+            _advance_climate_region(state, pool, key, row, date, tick, full, wave, ledger)
+            if obs:
+                obs('region', {k:v for k,v in dict(tick=tick, year=year, month=month, day=day, region=key, **row).items()
+                               if k not in ('snow_cover_run','fallback_winter')})
+            continue
         months, _, cold_months, core = REGIONS[key]
         if month in months and row['winter'] != winter:
             row.update(winter=winter, snow_seen=False)
@@ -166,6 +264,11 @@ def advance(game, state, tick):
             row['snow_seen'] = True
         if obs:
             obs('region', dict(tick=tick, year=year, month=month, day=day, region=key, **row))
+    if new_climate and (month, day) == (5, 30):
+        winter_agriculture.finalize(ledger, pool['options']['agricultural_climate'])
+        if obs:
+            for region, row in ledger['regions'].items():
+                obs('agriculture_year', dict(year=year, region=region, complete=ledger['complete_start'], **row))
     if pool['stage'] >= 4:
         for key, reach in game.catalog.climate.frozen_reaches.items():
             row = pool['ice'][key]
@@ -273,9 +376,13 @@ def view(game, state):
     return dict(stage=pool['stage'], tick=pool['tick'], as_of=date_at(game.catalog.data, pool['tick']),
         work_per_day=winter_travel.QUANTA, reaches=game.catalog.climate.frozen_reaches, marches=armies,convoys=cargo,
         seasonal=seasonal,
-        cities=game.catalog.climate.cities,
+        cities=({key: ({**row, 'agriculture_region_id': winter_climate.CITY_AGRICULTURE[key]}
+                       if key in winter_climate.CITY_AGRICULTURE else row)
+                 for key, row in game.catalog.climate.cities.items()} if 'options' in pool else game.catalog.climate.cities),
         regions={key: {**row, 'weather': NAMES[row['severity']], 'road': NAMES[road_weather(row)],
-                       'season_chance': REGIONS[key][1] if state.month in REGIONS[key][0] else 0}
+                       'season_chance': winter_climate.snow_probability(state, key, state.month),
+                       **({'depth_limit': winter_climate.snow_depth_limit(state, key),
+                           'agriculture': winter_agriculture.summary(state, key)} if 'options' in pool else {})}
                  for key, row in pool['regions'].items()},
         ice={key: {**row, 'navigation': ICE_NAMES[row['state']], 'speed_percent': SPEED_PERCENT[row['state']]}
              for key, row in pool['ice'].items()})
@@ -284,18 +391,21 @@ def view(game, state):
 def validate(game, state):
     pool = state.extension.get(POOL)
     version = state.extension.get(FIELD, 0)
-    if type(version) is not int or version not in (0, VERSION, CORRECTED):
+    if type(version) is not int or version not in (0, VERSION, CORRECTED, winter_climate.VERSION):
         raise ValueError('Winter weather rules version')
     if version == 0:
         if POOL in state.extension:
             raise ValueError('Unexpected winter state')
         return
     fields = {'stage','seed','tick','regions','ice'}
-    if version == CORRECTED:
+    climate = version == winter_climate.VERSION
+    if version == CORRECTED or climate:
         fields.add('adjustments')
+    if climate:
+        fields.update(('options', 'agriculture'))
     if (not isinstance(pool, dict) or set(pool) != fields
             or type(pool['stage']) is not int or not 1 <= pool['stage'] <= 5
-            or version == CORRECTED and (pool['stage'] != 5 or type(pool['adjustments']) is not int
+            or (version == CORRECTED or climate) and (pool['stage'] != 5 or type(pool['adjustments']) is not int
                                           or not 1 <= pool['adjustments'] <= CORRECTIONS)
             or pool['seed'] != seed_for(state.seed) or type(pool['tick']) is not int
             or pool['tick'] != (state.turn-1)*10 or not isinstance(pool['regions'], dict)
@@ -303,12 +413,22 @@ def validate(game, state):
             or set(pool['ice']) != game.catalog.climate.frozen_reaches.keys()):
         raise ValueError('Winter weather state')
     tick = pool['tick']
-    for row in pool['regions'].values():
-        if (not isinstance(row, dict) or set(row) != {'severity','began','ends','depth','cold','winter','snow_seen'}
+    regional_fields = {'severity','began','ends','depth','cold','winter','snow_seen'}
+    if climate:
+        if winter_climate.normalize(pool['options']) != pool['options'] or pool['adjustments'] != CORRECTIONS:
+            raise ValueError('Winter climate configuration')
+        regional_fields.update(('snow_cover_run', 'fallback_winter'))
+        _validate_agriculture_calendar(game, state, pool)
+    for key, row in pool['regions'].items():
+        limit = winter_climate.snow_depth_limit(state, key) if climate else MAX_DEPTH
+        if (not isinstance(row, dict) or set(row) != regional_fields
                 or any(type(row[k]) is not int for k in row.keys()-{'snow_seen'})
                 or type(row['snow_seen']) is not bool or not 0 <= row['severity'] <= 3
-                or not 0 <= row['cold'] <= 3 or not 0 <= row['depth'] <= MAX_DEPTH
+                or not 0 <= row['cold'] <= 3 or not 0 <= row['depth'] <= limit
                 or not 0 <= row['winter'] <= state.year
+                or climate and (not 0 <= row['fallback_winter'] <= row['winter']
+                                or not 0 <= row['snow_cover_run'] <= tick
+                                or bool(row['snow_cover_run']) != bool(row['depth']))
                 or (not 1 <= row['began'] <= tick <= row['ends'] <= tick+3 if row['severity']
                     else row['began'] != 0 or row['ends'] != 0)):
             raise ValueError('Regional weather state')
@@ -320,3 +440,18 @@ def validate(game, state):
                 or ice_state(row['index'], row['state']) != row['state']
                 or pool['stage'] < 4 and any(row.values())):
             raise ValueError('River ice state')
+
+
+def _validate_agriculture_calendar(game, state, pool):
+    data = game.catalog.data
+    start = ordinal((data['start_year'], data['start_month'], 1))
+    year, month, day = date_at(data, pool['tick'])
+    cycle = year + int(month >= 11)
+    beginning = ordinal((cycle - 1, 11, 1))
+    closure = ordinal((cycle, 5, 30))
+    began = max(1, beginning - start + 1) if pool['tick'] and start <= closure else None
+    finalized = bool(began is not None and ordinal((year, month, day)) >= closure)
+    settled = sum(1 << index for index, closing_month in enumerate(winter_agriculture.MONTHS)
+                  if finalized and state.year == cycle and closing_month <= state.month)
+    winter_agriculture.validate(pool, year=cycle, began=began, finalized=finalized,
+                                 complete_start=start <= beginning, settled=settled)

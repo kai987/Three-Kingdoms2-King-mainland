@@ -11,6 +11,7 @@ from .market_pricing import FIELD as MARKET_VERSION_FIELD, STAGE as MARKET_STAGE
 from .strategic_granary import FIELD as GRANARY_VERSION_FIELD
 from .transshipment import FIELD as TRANSSHIPMENT_VERSION_FIELD
 from .transport_emergency import FIELD as TRANSPORT_VERSION_FIELD, EXPERIMENT as TRANSPORT_EXPERIMENT_FIELD
+from .winter_climate import VERSION as CLIMATE_VERSION
 
 MAX_STATE_BYTES = 32 * 1024 * 1024
 MAX_FILE_BYTES = 2 * 1024 * 1024 - 128
@@ -23,6 +24,8 @@ def header(state):
                                MARKET_VERSION_FIELD, MARKET_STAGE_FIELD, MARKET_AUTOMATION_FIELD, GRANARY_VERSION_FIELD,
                                TRANSSHIPMENT_VERSION_FIELD)
                            if key in state['extension']}
+    if state['extension'].get('weather_rules_version') == CLIMATE_VERSION:
+        result['extension']['weather_rules_version'] = CLIMATE_VERSION
     return result
 
 

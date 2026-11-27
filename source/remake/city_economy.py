@@ -6,7 +6,7 @@ and rear-city frontier maintenance settles at the month rollover.
 from copy import deepcopy
 from heapq import heappop, heappush
 
-from . import economy_rules, grain_units
+from . import economy_rules, grain_units, winter_agriculture, winter_climate
 from .route_hazards import route_allowed
 from .route_network import effective
 
@@ -105,13 +105,31 @@ def opening_monthly_income(game, city_id, *, development=None, facility=None):
     return scale_monthly_grain(facilities.income_after_damage(income, facility['damage']))
 
 
-def monthly_income(game, city_id, state, *, date=None, town=None):
+def _normal_income(game, city_id, state, date, town):
     from . import city_development, facilities
 
-    income = _monthly_base_income(game.catalog.data, city_id, date or (state.year, state.month))
+    income = _monthly_base_income(game.catalog.data, city_id, date)
     if city_id in state.cities:
         income = city_development.adjust_income(game, state, city_id, income, town=town)
     return scale_monthly_grain(facilities.adjusted_income(state, city_id, income))
+
+
+def monthly_income(game, city_id, state, *, date=None, town=None):
+    if winter_climate.enabled(state):
+        return climate_production(game, city_id, state, date=date, town=town)[0]
+    return _normal_income(game, city_id, state, date or (state.year, state.month), town)
+
+
+def climate_production(game, city_id, state, *, date=None, town=None):
+    """Regular income and its climate breakdown at the same ledger date."""
+    date = date or (state.year, state.month)
+    income = _normal_income(game, city_id, state, date, town)
+    region = winter_agriculture.region_for(game, city_id)
+    factor = winter_agriculture.multiplier(state, region, date)
+    regular = income['grain']
+    grain = regular * factor // 100
+    income['grain'] = grain
+    return income, dict(region=region, regular=regular, adjusted=grain, factor=factor)
 
 
 def _frontier_sponsor(data, city_id, rule, owners, routes, outposts):
