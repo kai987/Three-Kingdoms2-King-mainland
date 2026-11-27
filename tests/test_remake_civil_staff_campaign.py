@@ -328,12 +328,13 @@ class CivilStaffCampaignTests(unittest.TestCase):
 
     def test_monthly_salary_is_one_player_summary_and_income_and_soldiers_reconcile(self):
         game = self.new(free=False, extra=True)
+        game.command('set_domestic', dict(faction='shu', civil=None, military=None), game.revision)
         self.hire(game, 'nanjun')
         self.hire(game, 'runan')
         owned = [c for c in game.state.cities.values() if c.owner == 'shu']
         before = {field: sum(getattr(c, field) for c in owned) for field in ('gold', 'grain', 'reserves')}
         incomes = [city_economy.monthly_income(game, city.id, game.state) for city in owned]
-        wages = [payroll.wage(game.state.officers[ident]) for city in owned for ident in city.roster.officer_ids]
+        wages = [payroll.monthly_due(game.state, city) for city in owned]
         paid = self.enterContext(record_garrison_charges())
         for _ in range(3): self.step(game)
         salaries = [e for e in game.state.extension['events']['items'] if e['kind'] == 'staff_salary']
@@ -358,6 +359,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
 
     def test_payroll_shortfall_round_trips_and_the_same_turn_never_counts_twice(self):
         game = self.new(free=False)
+        game.command('set_domestic', dict(faction='shu', civil=None, military=None), game.revision)
         ident = self.hire(game)
         city = game.state.cities['nanjun']
         city.gold, city.grain = 2, 0

@@ -81,7 +81,7 @@ class TreasuresTests(unittest.TestCase):
         self.assertEqual({key: row['treasure'] for key, row in pool['cities'].items()},
                          dict(capital=6, border=2, large=4, neutral=0, lone=2))
         self.assertEqual(pool['ledger'], dict(initial=14, found=0, spent=0, sold=0, lost=0))
-        self.assertEqual(pool['cities']['capital']['governor'], 1, 'Present ruler precedes higher-virtue officers')
+        self.assertEqual(pool['cities']['capital']['governor'], 2)
         self.assertEqual(pool['cities']['border']['governor'], 5, 'Health breaks a virtue/intellect tie')
         self.assertEqual(pool['cities']['lone']['governor'], 'clerk-000001')
         before = deepcopy(state)
@@ -108,7 +108,7 @@ class TreasuresTests(unittest.TestCase):
                     self.assertLessEqual(marches.call_count, 1, operation.__name__)
                     self.assertLessEqual(battles.call_count, 1, operation.__name__)
                     rows = (state.extension['treasury'] if result is None else result)['cities']
-                    self.assertEqual(rows['capital']['governor'], 3 if away else 1)
+                    self.assertEqual(rows['capital']['governor'], 3 if away else 2)
                     if result is not None:
                         self.assertEqual(rows['capital']['eligible_actors'], [3] if away else [1, 2, 3])
 
@@ -150,7 +150,7 @@ class TreasuresTests(unittest.TestCase):
         treasures.synchronize(game, state)
         self.assertEqual(row['governor'], 2)
         treasures.set_governor(game, state, dict(city='capital', officer=None), 'one')
-        self.assertEqual((row['governor'], row['governor_mode']), (1, 'auto'))
+        self.assertEqual((row['governor'], row['governor_mode']), (2, 'auto'))
         treasures.set_governor(game, state, dict(city='capital', officer=2), 'one')
         state.extension['travel']['marches'] = [dict(officers=[2])]
         treasures.synchronize(game, state)
@@ -158,6 +158,20 @@ class TreasuresTests(unittest.TestCase):
         self.fails(game, state, treasures.set_governor, dict(city='capital', officer=2))
         self.fails(game, state, treasures.set_governor, dict(city='capital', officer=7))
         self.fails(game, state, treasures.set_governor, dict(city='neutral', officer=None))
+
+    def test_historical_governor_transitions_to_automatic_after_a_roster_change(self):
+        game, state = fixture()
+        game.catalog.ids = {'person-1': 1}
+        game.catalog.data['initial_governors'] = {'capital': {'person_id': 'person-1'}}
+        state.extension['treasury'] = treasures.empty(game, state)
+        row = state.extension['treasury']['cities']['capital']
+        self.assertEqual((row['governor'], row['governor_mode']), (1, 'historical'))
+        treasures.validate(game, state)
+        state.cities['capital'].roster.officer_ids.remove(3)
+        state.cities['border'].roster.officer_ids.append(3)
+        treasures.synchronize(game, state)
+        self.assertEqual((row['governor'], row['governor_mode']), (2, 'auto'))
+        treasures.validate(game, state)
 
     def test_search_success_and_failure_use_exactly_one_draw_and_one_action(self):
         for seed, success in ((2, True), (1, False)):
@@ -225,6 +239,7 @@ class TreasuresTests(unittest.TestCase):
 
     def test_reward_quote_intervals_match_exact_formula_and_cap_without_rng(self):
         game, state = fixture()
+        treasures.set_governor(game, state, dict(city='capital', officer=1), 'one')
         state.officers[2].loyalty = 98
         before = deepcopy(state)
         with patch.object(treasures, '_gold_gain', wraps=treasures._gold_gain) as quotes:

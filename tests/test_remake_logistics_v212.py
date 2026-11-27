@@ -34,6 +34,7 @@ class LogisticsV212Tests(TestCase):
         game=previous.Headless(self.catalog,record_journal=False)
         with strategy.experiment(4,army=True,recovery=True,candidate=SETTINGS if new else None):
             game.command('new',dict(faction='shu',seed=2026),0)
+        game.command('set_domestic',dict(faction='shu',civil=None),game.revision)
         return game
 
     def set_troops(self,state,ident,troops):

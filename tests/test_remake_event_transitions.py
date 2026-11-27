@@ -177,6 +177,7 @@ class CampaignEventTransitionTests(unittest.TestCase):
             next(row for row in data['initial_officers'] if row['person_id'] == ruler)['resolve_death_year'] = True
         game = start(catalog_with(change))
         ident = game.catalog.ids[ruler]
+        game.command('set_domestic', dict(faction='shu', military=None), game.revision)
         original = game.state.officers[ident].troops
         reserves = game.state.cities['xiangyang'].reserves
         successor = max((i for i in game.state.cities['xiangyang'].roster.officer_ids if i != ident),
@@ -302,6 +303,7 @@ class CampaignEventTransitionTests(unittest.TestCase):
             data['city_foundings'] = {'baxi': dict(year=218, month=1, parent='xiangyang', resource_divisor=4)}
             data['city_income']['baxi'] = dict(gold=0, grain=0, reserves=0)
         game = start(catalog_with(change))
+        game.command('set_domestic', dict(faction='shu', civil=None, military=None), game.revision)
         paid = self.enterContext(record_garrison_charges(include_payroll=True))
         original = {field: getattr(game.state.cities['xiangyang'], field) for field in ('gold', 'grain', 'reserves')}
         for _ in range(2):
@@ -314,9 +316,8 @@ class CampaignEventTransitionTests(unittest.TestCase):
         self.assertEqual(found[0]['details'], dict(parent='xiangyang'))
         self.assertEqual(found[0]['factions'], ['shu'])
         self.assertEqual(game.state.cities['baxi'].owner, 'shu')
-        from remake.payroll import wage
-        gold_wages = {city: sum(wage(game.state.officers[i])['gold']
-                               for i in game.state.cities[city].roster.officer_ids)
+        from remake.payroll import monthly_due
+        gold_wages = {city: monthly_due(game.state, game.state.cities[city])['gold']
                       for city in ('baxi', 'xiangyang')}
         for field, amount in original.items():
             split = (amount - before_founding if field == 'grain' else amount) // 4

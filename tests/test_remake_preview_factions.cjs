@@ -18,7 +18,7 @@ const context={refreshDialogueFeedback(){},refreshPersonnelDialogue(){},setupPre
  GamePortraits:require('../game/portraits.js').create({document:null,i18n}),GameI18n:i18n,
  escapeHtml:value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),
  mapCamera:{x:350,y:250,zoom:3},board:cityElements.map((row,index)=>({id:row.dataset.city,position:[100+index*20,200]})),
- cityName:id=>'城'+id,
+ cityName:id=>id==='capital'?'許縣':'城'+id,
  $:selector=>selector==='#setup-summary'?summary:cityElements.find(row=>selector===`[data-city="${row.dataset.city}"]`),
  document:{querySelectorAll:selector=>selector==='input[name=faction]'?radios:cityElements,addEventListener:(type,handler)=>{if(type==='game-language-change')languageHandlers.push(handler);}},localAutosave:null,
  renderMap(){renders++;},renderCity(){cityRenders++;},showCityInformation:id=>information.push(id),finishMapAction(){throw Error('Preview cannot execute a map command');},
@@ -28,6 +28,7 @@ context.preview=context.setupPreview;context.owners=context.preview.initial_owne
 vm.createContext(context);
 vm.runInContext(source.slice(source.indexOf('function factionResources('),source.indexOf('function factionBase(')),context);
 vm.runInContext(source.match(/^function battleText\(.*$/m)[0],context);
+vm.runInContext(source.slice(source.indexOf('function mapCityName('),source.indexOf('const mapColor=')),context);
 vm.runInContext(source.slice(source.indexOf('function previewRulerPortrait('),source.indexOf('function renderMap(')),context);
 vm.runInContext(source.match(/^document\.addEventListener\('game-language-change',.*$/m)[0],context);
 const mapStart=source.indexOf('function renderMap('),chooseStart=source.indexOf(' const choose=(id,inspect=false)=>{',mapStart),chooseEnd=source.indexOf(' const navigationControls=',chooseStart);
@@ -42,7 +43,8 @@ const checked=()=>radios.filter(row=>row.checked).map(row=>row.value);
 // using this scenario's year/month ownership instead of the running campaign.
 cityElements[1].onclick({detail:1});
 assert.equal(context.setupPreview.faction,'wei');assert.equal(context.setupPreview.focus,'occupied');
-assert.deepEqual(checked(),['wei']);assert(summary.textContent.includes('曹操 · 2座都市 · 根據地城capital'));
+assert.deepEqual(checked(),['wei']);assert(summary.textContent.includes('曹操 · 2座都市 · 根據地'));
+assert(summary.innerHTML.includes('data-setup-faction-base="capital">許</span>'));
 assert(summary.innerHTML.includes('class="setup-ruler-portrait"'));assert(summary.innerHTML.includes('data-portrait-person="san14-candidate-0002"'));
 assert(summary.innerHTML.indexOf('setup-ruler-portrait')<summary.innerHTML.indexOf('setup-summary-copy'),'The dated ruler portrait precedes the introduction');
 assert(summary.textContent.includes('金 200 · 兵糧 1000 · 兵士 860 · 預備兵 300 · 現役 4人'));assert.deepEqual(information,['occupied']);assert.equal(cityRenders,0);

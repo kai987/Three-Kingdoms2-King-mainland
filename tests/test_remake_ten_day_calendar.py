@@ -167,6 +167,7 @@ class TenDayCalendarTests(unittest.TestCase):
                 row['troops'] = 15
         game = Campaign(catalog)
         game.command('new', dict(faction='shu', seed=2026), 0)
+        game.command('set_domestic', dict(faction='shu', military=None), game.revision)
         game.command('end_turn', {}, game.revision)
         game.command('ai', dict(turn=1), game.revision)
         self.assertEqual((game.state.turn, game.state.month, game.state.day), (2, 11, 11))

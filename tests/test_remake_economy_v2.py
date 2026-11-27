@@ -41,11 +41,11 @@ class AgricultureV2Tests(unittest.TestCase):
         view = session.command('new', dict(faction='shu', seed=2026), 0)
         self.assertEqual(opening['grain_balance'], dict(production=1228, upkeep=2542, civilian=492, net=-1806))
         self.assertEqual(view['catalog']['city_agriculture']['jiangxia'], opening['agriculture'])
-        self.assertEqual(opening['agriculture']['net_grain'], -2346)
+        self.assertEqual(opening['agriculture']['net_grain'], -2336)
         projection = view['catalog']['facilities']['cities']['jiangxia']['develop']['agriculture']
         self.assertEqual(projection['after'],
                          dict(population_cap=90000, town_bonus_percent=4, civilian_grain=656,
-                              regular_grain=1240, net_grain=-2498))
+                              regular_grain=1240, net_grain=-2488))
         snapshot = session.export_save()
         self.assertEqual(session.view()['catalog']['city_agriculture']['jiangxia'], opening['agriculture'])
         self.assertEqual(session.export_save(), snapshot)

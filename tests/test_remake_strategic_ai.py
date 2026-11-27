@@ -473,6 +473,7 @@ class StrategicAITests(unittest.TestCase):
             origin.roster.officer_ids.remove(ident);target.roster.officer_ids.append(ident)
             game.state.officers[ident].faction_id='wei'
         self.assertEqual(len(target.roster.officer_ids),99)
+        game._reconcile_factions(game.state)
         game.validate(game.state)
         self.ai_turn(game)
         self.assertFalse([m for m in game.state.extension['travel']['marches'] if m['kind']=='transfer' and m['target']=='yingchuan'])

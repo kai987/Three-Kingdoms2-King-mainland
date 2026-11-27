@@ -18,6 +18,14 @@ test.beforeEach(async({page})=>{
  await expect(page.locator('#game-loading-cover')).not.toBeVisible();
  await page.locator('input[name=faction][value=shu]').check();await page.locator('#begin').click();
  await expect(page.locator('#end-turn')).toBeEnabled();await expect(page.locator('#event-dialog')).toBeVisible();await dismissEvents(page);
+ // Keep the warehouse stock available for manual rescue and the no-rescue control.
+ await page.locator('#city-command-tab-city').click();
+ await page.locator('#city-domestic').click();
+ await page.locator('#office-civil').selectOption('');
+ await page.locator('#save-domestic').click();
+ await expect(page.locator('.domestic-saved')).toBeVisible();
+ await page.keyboard.press('Escape');
+ await expect(page.locator('#dialog')).not.toBeVisible();
 });
 async function idle(page){await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);}
 async function dismissEvents(page){
@@ -51,6 +59,7 @@ async function openLogistics(page){
 }
 async function depart(page){
  await page.locator('#city-jump').selectOption('nanyang');const initial=await saved(page);
+ await page.locator('#city-command-tab-army').click();
  await page.locator('#transfer').click();await page.locator('#transfer-city').selectOption('bajun');
  const ruler=String(initial.state.extension.leaders.shu),officer=page.locator(`input[name=transfer-officer]:enabled:not([value="${ruler}"])`).first();
  const ident=await officer.getAttribute('value');await officer.check();

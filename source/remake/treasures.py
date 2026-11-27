@@ -20,6 +20,7 @@ DEFAULT_POLICY = dict(enabled=False, target_loyalty=90, gold_budget=100,
                       gold_floor=100, treasure_floor=1, prefer='gold')
 _FIELDS = {'schema', 'cities', 'factions', 'ledger', 'auto_turns'}
 _CITY_FIELDS = {'owner', 'treasure', 'governor', 'governor_mode'}
+_OPENING_ROSTER = 'opening_governor_roster'
 _LEDGER_FIELDS = {'initial', 'found', 'spent', 'sold', 'lost'}
 # Game opening stocks carrying forward the 190 relocation receipt. The early
 # successor scenarios represent depletion during the wars around Chang'an.
@@ -56,19 +57,33 @@ def _present(game, state, city, ident, *, unused=False, away=None):
     return ident not in game._march_ids(state) and ident not in _battle_ids(state)
 
 
-def _governor(game, state, city, row=None, *, away=None):
+def _fixed_governor(game, state, city, row, away):
+    if not row or row['owner'] != city.owner or row['governor_mode'] == 'auto':
+        return None
+    if row['governor_mode'] == 'historical' and row[_OPENING_ROSTER] != sorted(
+            city.roster.officer_ids, key=ref_sort_key):
+        return None
+    ident = row['governor']
+    return ident if _present(game, state, city, ident, away=away) else None
+
+
+def _governor(game, state, city, row=None, *, away=None, legacy=False):
     if city.owner == 'neutral':
         return None
-    if (row and row['owner'] == city.owner and row['governor_mode'] == 'manual'
-            and _present(game, state, city, row['governor'], away=away)):
-        return row['governor']
-    leader = state.extension.get('leaders', {}).get(city.owner)
+    if away is None:
+        away = game._march_ids(state) | _battle_ids(state)
+    fixed = _fixed_governor(game, state, city, row, away)
+    if fixed is not None:
+        return fixed
     eligible = [ident for ident in city.roster.officer_ids if _present(game, state, city, ident, away=away)]
-    if leader in eligible:
-        return leader
-    return min(eligible, key=lambda ident: (-state.officers[ident].profile.virtue,
-        -state.officers[ident].profile.intellect, -state.officers[ident].health,
-        ref_sort_key(ident))) if eligible else None
+    if legacy:
+        leader = state.extension.get('leaders', {}).get(city.owner)
+        if leader in eligible:
+            return leader
+    primary, secondary = ('virtue', 'intellect') if legacy else ('intellect', 'virtue')
+    return min(eligible, default=None, key=lambda ident: (
+        -getattr(state.officers[ident].profile, primary), -getattr(state.officers[ident].profile, secondary),
+        -state.officers[ident].health, ref_sort_key(ident)))
 
 
 def current_governor(game, state, city):
@@ -89,14 +104,17 @@ def opening_stock(data, city_id, owner, year, month):
 def empty(game, state):
     cities = {}
     posts = game.catalog.data.get('initial_governors', {})
+    away = game._march_ids(state) | _battle_ids(state)
     for key, city in state.cities.items():
         amount = opening_stock(game.catalog.data, key, city.owner, state.year, state.month)
         post = posts.get(key)
         incumbent = game.catalog.ids[post['person_id']] if post else None
-        appointed = incumbent is not None and _present(game, state, city, incumbent)
+        appointed = incumbent is not None and _present(game, state, city, incumbent, away=away)
         cities[key] = dict(owner=city.owner, treasure=amount,
-                           governor=incumbent if appointed else _governor(game, state, city),
-                           governor_mode='manual' if appointed else 'auto')
+                           governor=incumbent if appointed else _governor(game, state, city, away=away),
+                           governor_mode='historical' if appointed else 'auto')
+        if appointed:
+            cities[key][_OPENING_ROSTER] = sorted(city.roster.officer_ids, key=ref_sort_key)
     owners = set(game.catalog.factions) - {'neutral'}
     return dict(schema=SCHEMA, cities=cities,
         factions={owner: deepcopy(DEFAULT_POLICY) for owner in sorted(owners)},
@@ -112,11 +130,24 @@ def synchronize(game, state):
     for key, city in state.cities.items():
         row = pool['cities'].setdefault(key,
             dict(owner=city.owner, treasure=0, governor=None, governor_mode='auto'))
+        fixed = _fixed_governor(game, state, city, row, away)
         if row['owner'] != city.owner:
-            row.update(owner=city.owner, governor=None, governor_mode='auto')
-        if row['governor_mode'] == 'manual' and not _present(game, state, city, row['governor'], away=away):
-            row['governor_mode'] = 'auto'
-        row['governor'] = _governor(game, state, city, row, away=away)
+            row['owner'] = city.owner
+        if fixed is None:
+            row.update(governor=_governor(game, state, city, away=away), governor_mode='auto')
+            row.pop(_OPENING_ROSTER, None)
+
+
+def migrate_auto_governors(game, state):
+    """Recognize the previously saved automatic assignment before re-ranking it."""
+    cities = _pool(state)['cities']
+    away = game._march_ids(state) | _battle_ids(state)
+    for key, city in state.cities.items():
+        row = cities.get(key)
+        if (isinstance(row, dict) and set(row) == _CITY_FIELDS and row['owner'] == city.owner
+                and row['governor_mode'] == 'auto' and type(row['governor']) in (int, str, type(None))
+                and row['governor'] == _governor(game, state, city, away=away, legacy=True)):
+            row['governor'] = _governor(game, state, city, away=away)
 
 
 def count(state, city_id):
@@ -324,6 +355,7 @@ def set_governor(game, state, payload, owner):
         if not _present(game, state, city, ident):
             raise GameError('太守必須為本城在場且健康的本方武將。')
     row = _pool(state)['cities'][city.id]
+    row.pop(_OPENING_ROSTER, None)
     row['governor_mode'] = 'auto' if ident is None else 'manual'
     row['governor'] = ident if ident is not None else _governor(game, state, city)
     details = dict(governor=state.officers[row['governor']].person_id if row['governor'] is not None else None,
@@ -515,17 +547,25 @@ def validate(game, state):
     if (not isinstance(ledger, dict) or set(ledger) != _LEDGER_FIELDS
             or any(not _int(value, 0, LIMIT) for value in ledger.values())):
         raise ValueError('Treasury asset ledger')
+    away = game._march_ids(state) | _battle_ids(state)
     for key, city in state.cities.items():
         row = pool['cities'][key]
-        if (not isinstance(row, dict) or set(row) != _CITY_FIELDS or row['owner'] != city.owner
-                or not _int(row['treasure'], 0, 99) or row['governor_mode'] not in ('auto', 'manual')):
+        mode = row.get('governor_mode') if isinstance(row, dict) else None
+        fields = _CITY_FIELDS | {_OPENING_ROSTER} if mode == 'historical' else _CITY_FIELDS
+        if (mode not in ('auto', 'manual', 'historical') or set(row) != fields or row['owner'] != city.owner
+                or not _int(row['treasure'], 0, 99)):
             raise ValueError('Treasury city fields')
         if row['governor'] is not None:
             parse_officer_ref(row['governor'], game.catalog.rules)
-        if row['governor'] != _governor(game, state, city, row):
-            raise ValueError('Treasury governor availability')
-        if row['governor_mode'] == 'manual' and row['governor'] is None:
-            raise ValueError('Treasury manual governor')
+        if mode == 'auto':
+            if row['governor'] != _governor(game, state, city, away=away):
+                raise ValueError('Treasury governor availability')
+        elif _fixed_governor(game, state, city, row, away) is None:
+            raise ValueError('Treasury appointed governor')
+        if mode == 'historical':
+            post = game.catalog.data.get('initial_governors', {}).get(key)
+            if post is None or game.catalog.ids[post['person_id']] != row['governor']:
+                raise ValueError('Treasury historical governor')
     cargo_amounts = [convoy.get('cargo', {}).get('treasure', 0)
         for convoy in state.extension.get('logistics', {}).get('convoys', [])]
     if any(not _int(amount, 0, 99) for amount in cargo_amounts):

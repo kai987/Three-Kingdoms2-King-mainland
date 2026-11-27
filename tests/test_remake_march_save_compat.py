@@ -1,7 +1,7 @@
 """Real eight-case save/RNG baselines and cross-backend campaign compatibility.
 
 The large arithmetic/vector ABI matrix stays in test_remake_march_core.py.
-The primary v2 goldens pin complete saves and states without normalization.
+The primary v2 goldens retain the historical opening and appointment setup.
 A separate, declared migration comparison preserves the unchanged v1 evidence.
 """
 from copy import deepcopy
@@ -85,7 +85,7 @@ class MarchReferenceBaselineTests(unittest.TestCase):
                 for stage in CHECKPOINTS:
                     # This supplemental copy removes only the added order pool
                     # and restores the old envelope version/catalog identity.
-                    # Complete current hashes remain pinned in the test above.
+                    # The v2 fixture additionally checks the command book pool.
                     proof = actual[stage]['legacy_compatibility']
                     self.assertEqual(proof, {key: previous[stage][key] for key in ('state', 'save')}, stage)
                     for key in ('rng', 'soldiers', 'turn'):

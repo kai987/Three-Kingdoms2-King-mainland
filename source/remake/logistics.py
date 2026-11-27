@@ -453,9 +453,8 @@ def _safe_quote(game, state, source, target, policy, *, quotes=None):
 
 def _eligible(game, state, source, *, absent=None, automatic=None, compound_actor=None, capacity_checks=False):
     busy = game._march_ids(state) if absent is None else absent
-    from .domestic import appointments
-    offices = appointments(state, source.owner)
-    assigned = {offices.get('civil'), offices.get('military')}
+    from .domestic import officers_reserved_for_duty
+    assigned = officers_reserved_for_duty(state, source.owner)
     ids = [i for i in source.roster.officer_ids if i not in busy and i not in assigned
             and state.officers[i].alive and state.officers[i].faction_id == source.owner
             and state.officers[i].health > 0
@@ -720,13 +719,13 @@ def preview(game, state, city_id):
     if target.owner != source.owner:
         return None, 'no_friendly_target'
     inbound = _inbound(state, target.id)
-    eligible = sorted(_eligible(game, state, source), key=lambda i: (
+    absent = game._march_ids(state)
+    eligible = sorted(_eligible(game, state, source, absent=absent), key=lambda i: (
         -state.officers[i].profile.martial_strength, -state.officers[i].profile.intellect, _key(i)))
-    from .domestic import appointments
-    offices = appointments(state, source.owner)
-    retained = max(policy['reserve_officers'], sum(ident is not None and ident in source.roster.officer_ids
-        and ident not in game._march_ids(state) for ident in (offices.get('civil'), offices.get('military'))))
-    slots = min(policy['max_officers'], max(0, _present_count(game, state, source) - retained))
+    from .domestic import officers_reserved_for_duty
+    assigned = officers_reserved_for_duty(state, source.owner)
+    retained = max(policy['reserve_officers'], len(assigned.intersection(source.roster.officer_ids) - absent))
+    slots = min(policy['max_officers'], max(0, _present_count(game, state, source, absent=absent) - retained))
     ids = [i for i in eligible if escort_defence(game,state,source,[i])][:min(slots, 1)]
     if not ids:
         return None, 'no_spare_officer'

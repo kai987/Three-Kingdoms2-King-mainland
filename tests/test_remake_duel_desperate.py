@@ -199,6 +199,10 @@ class DesperateDuelTests(unittest.TestCase):
                 state['extension'].pop('facilities')
                 state['extension'].pop('equipment')
                 state['extension'].pop('command_books')
+                # The frozen duel corpus opened before automatic faction appointments.
+                for office in state['extension']['domestic']['factions'].values():
+                    self.assertEqual(office.pop('manual_offices'), [])
+                    office.update(civil=None, military=None)
                 # Compare the frozen exchange oracle after projecting out the
                 # new spatial/AP state. The old single-actor action scheduler
                 # advanced one round after a completed nonterminal duel; the
