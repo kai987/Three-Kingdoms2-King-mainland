@@ -1,0 +1,11 @@
+baseline,candidate,checkpoint,input_sha256,equal_non_facility_states,new_missing_grain,paired,unpaired,missing_in_control,missing_in_candidate,original_targets_without_observed_bill,control_required,candidate_required,control_paid,candidate_paid,control_missing,candidate_missing
+N0,N1,chibi-long.json.gz,76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9,true,0,17,0,[],[],"[[""wei"",""fufeng"",402]]",12652,12652,12652,12652,0,0
+N0,N1,convoy-1228.json.gz,96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50,true,0,25,0,[],[],[],23267,23267,21117,21117,2150,2150
+N0,N1,convoy-219.json.gz,b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960,true,0,14,0,[],[],[],22543,22543,22073,22073,470,470
+N0,N1,yellow-212-winter.json.gz,7a23d58373770c32fb021ddc25bf734e6847598ac6694192342d39edffa33a85,true,0,1,0,[],[],[],1922,1922,1922,1922,0,0
+N0,N1,yellow-long.json.gz,90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837,true,0,31,0,[],[],[],35588,35588,33066,33066,2522,2522
+N2,N3,chibi-long.json.gz,76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9,true,0,18,0,[],[],[],13732,13732,13732,13732,0,0
+N2,N3,convoy-1228.json.gz,96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50,true,0,25,0,[],[],[],23610,23610,22260,22260,1350,1350
+N2,N3,convoy-219.json.gz,b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960,true,0,14,0,[],[],[],22543,22543,22543,22543,0,0
+N2,N3,yellow-212-winter.json.gz,7a23d58373770c32fb021ddc25bf734e6847598ac6694192342d39edffa33a85,true,0,1,0,[],[],[],1922,1922,1922,1922,0,0
+N2,N3,yellow-long.json.gz,90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837,true,0,31,0,[],[],[],36180,36180,35629,35629,551,551

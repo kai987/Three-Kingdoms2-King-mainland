@@ -1,0 +1,287 @@
+{
+  "base": "d8b507ec813cc50f890c74bafbdc9a1586738621",
+  "head_at_run": "e21704834237279a962ee2109aef505e8f53ffc9",
+  "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+  "protocol_sha256": "3d2b04381ec1ab1c5c78e551634ec589918a7e47fdd512885c0292ac3bf2dda6",
+  "runner_sha256": "921df5e18e0c5b0f7cb51f5dd4336cd779da12cc5aeacb921a7d41a83446a508",
+  "host": {
+    "os": "Darwin",
+    "arch": "arm64",
+    "python": "3.13.16"
+  },
+  "groups": {
+    "N0": {},
+    "N1": {
+      "transport_infrastructure_rules_version": 3042
+    },
+    "N2": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      }
+    },
+    "N3": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      },
+      "transport_infrastructure_rules_version": 3042
+    }
+  },
+  "cases": [
+    {
+      "wave": "quick",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N0",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N1",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "207-09",
+      "seed": 2034,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N0",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "207-09",
+      "seed": 2034,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N1",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N0",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N1",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "months": 24,
+      "study_group": "N0",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "months": 24,
+      "study_group": "N1",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "263-05",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N0",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "263-05",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N1",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N2",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N3",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N2",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N3",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "months": 24,
+      "study_group": "N2",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "months": 24,
+      "study_group": "N3",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "263-05",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N2",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    {
+      "wave": "quick",
+      "scenario": "263-05",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N3",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    }
+  ]
+}

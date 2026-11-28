@@ -1,0 +1,327 @@
+{
+  "path": "bundles/v3042-quick-N2.zip",
+  "bytes": 6057711,
+  "sha256": "4e8d134b87b5e6044df4d8b61fee3477cc5ccc95ccdbb2df9adf38832d6bc06c",
+  "members": [
+    {
+      "path": "raw/quick/N2/184-02-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 58177,
+      "sha256": "75e4320de97f71869edd5f30eefce8fdb0d39f8cd3b0bbc5b8a83469103d50a6"
+    },
+    {
+      "path": "raw/quick/N2/184-02-2026-211-identity.json",
+      "bytes": 18310,
+      "sha256": "83e2da5c3c65fea3e440cdf06f4db76f541d1d4fc1409e9c452069279b2f165b"
+    },
+    {
+      "path": "raw/quick/N2/184-02-2026-211-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "40a7bfe45ea3f1b54e15abffb60edb53d8d659596a77437830f75865b3d9ff76"
+    },
+    {
+      "path": "raw/quick/N2/208-10-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 34072,
+      "sha256": "92ff04ed8083efd2d35e947ee586982010d76501e3a8312584dc934b6013a902"
+    },
+    {
+      "path": "raw/quick/N2/208-10-2026-211-identity.json",
+      "bytes": 23040,
+      "sha256": "ebaacfb5ff61bc078b9d2389ee5547b5f607639fd646cb09de26f57920634c1f"
+    },
+    {
+      "path": "raw/quick/N2/208-10-2026-211-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "4c957f763df9c2f445633e2dbb58906b67a600996fccb4feeafecd05538acdfe"
+    },
+    {
+      "path": "raw/quick/N2/208-10-2026-212-actual-and-opening.jsonl.gz",
+      "bytes": 48416,
+      "sha256": "6442387ed177f5dce44d53bfe59ea193e7844994b549efc7db9409f4735cdfa4"
+    },
+    {
+      "path": "raw/quick/N2/208-10-2026-212-identity.json",
+      "bytes": 22714,
+      "sha256": "7dd94e9ff4e4091d32613c1f8f7b41952b8e4057e2aed75102586da3915d90f7"
+    },
+    {
+      "path": "raw/quick/N2/208-10-2026-212-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "588cf558a0dac98a6a63ba3754ddef209e714c7b3012bd098a9d3e7832e2a386"
+    },
+    {
+      "path": "raw/quick/N2/263-05-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 40970,
+      "sha256": "8ea6f403498f7b856c594009aaa01ad2d6bc83dac54fec817fabd3c0043a910d"
+    },
+    {
+      "path": "raw/quick/N2/263-05-2026-211-identity.json",
+      "bytes": 18632,
+      "sha256": "697c666ac3ec2030f86356938cb164d527bb08973c5c42b686b0defd1f6006f9"
+    },
+    {
+      "path": "raw/quick/N2/263-05-2026-211-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "17ce350a81faa5dee7475aaaca1ec3962b8f58209aafffd4ca0229fad346423a"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 7091,
+      "sha256": "a99f601d29a14661bdfab837e22070543a47c422c1eccc97d292667b91e22037"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/184-02/cities.csv",
+      "bytes": 310674,
+      "sha256": "02b18524ae9557753e868320928da922027470d80cc1019094156c05c380d6d4"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/184-02/factions.csv",
+      "bytes": 83202,
+      "sha256": "9799d026de945bc32d21a7a3f8f66fe8f3572f882f1f5e77bf69e876ce2a7ef3"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 10632,
+      "sha256": "eb6daf8334153b16bb350a6d916410fa8c4abdbae39b16100f6833de92073dd9"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/184-02/run.json",
+      "bytes": 1942,
+      "sha256": "8833aecacab04efabdebaa3232f2a45d0da968c63abd11282b19cb9954a2f3a8"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1435,
+      "sha256": "2a79854b01dd0cca1854639056d7afba977a3b1f12f9ba5434ff90b675d841f7"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/capacity.jsonl.gz",
+      "bytes": 58653,
+      "sha256": "703dcda10166804adba0221f083ba94bee6de24f784dbab5ab8f5f4c97aa5744"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/coordination.jsonl.gz",
+      "bytes": 258351,
+      "sha256": "e94f58f48065b72edbe3e31dde5bf9ae1ed4235037945899cd6f61ad21125227"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/events.jsonl.gz",
+      "bytes": 356192,
+      "sha256": "8b22c3aac054d00c596752a38794f8699e3cdc532a3f6179ff82b5fdb71d50f8"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/run-v231.json",
+      "bytes": 13006,
+      "sha256": "8c3fb050a415d85cbd9c01742ef61bb1c11a3e1bec1e8a77bb5ac2e382c51a5e"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/run-v3041.json",
+      "bytes": 17700,
+      "sha256": "de54258ce5a807075d0c0fb1394f3fd7cb44baf169d8ff8b193b52fbdd88a914"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 14440,
+      "sha256": "6d51292d0d69ef7f8f6681125bbbf098d25914866bba87cd97f7df3745b3e2d2"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 92254,
+      "sha256": "0fbd9d622bf986f0b918a3b956c595cf8aad05561f8062323339f154f6a0fe3f"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 3409,
+      "sha256": "2980c36823f42431d37e602795df726b15d3e794463099c8137c9d63e1a33f77"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/208-10/cities.csv",
+      "bytes": 340279,
+      "sha256": "8fa45aeb396b2fd98f06b09af6330d78f3f3e8ea062a590c7a74a27f236fd901"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/208-10/factions.csv",
+      "bytes": 104776,
+      "sha256": "91da7c930f634202a13b68dc9dac084da7ae23e6e7e091b8d3aa94277f210cd2"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 10802,
+      "sha256": "592f205be896aed080810df34e2c3919aaed8d8fdd0477b1a532cf6e810c1eca"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/208-10/run.json",
+      "bytes": 5387,
+      "sha256": "96b9cf79b8218b73da5876ee742cebb70ffb595f7195004d81053513e7281f5d"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1563,
+      "sha256": "2b7cf943e61babac7a4ad10889ba2a47d190e4f7f3790931008e2807b5e7813c"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/capacity.jsonl.gz",
+      "bytes": 180684,
+      "sha256": "cda86390cb08bb59d6c1683f7123c2c61a2b53843ee0fad0e383e832ce336457"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/coordination.jsonl.gz",
+      "bytes": 418685,
+      "sha256": "b0f269968c0531b3cbbace0b04762392746c118e9f3e6a76cb526c19e6448094"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/events.jsonl.gz",
+      "bytes": 1502012,
+      "sha256": "a2c22e36840566855df311d30af3f2ae35bffcbbd0bb6d350c41c4d2fabde7fe"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/run-v231.json",
+      "bytes": 17354,
+      "sha256": "48d6011cb918c4ccb60bcf76e2ed48d6ade16dc54c20dbba30c5e123d3be0d92"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/run-v3041.json",
+      "bytes": 22430,
+      "sha256": "1158a964e8fbbfeb4c139c74a876b635b10d0f396061901e3f83d73a84e333dd"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 47668,
+      "sha256": "887f0f35cf0e3e7695a4e10f773d942047da558d228b3b86ef909c03cbef9223"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 152704,
+      "sha256": "997191d1828e09325468e5c0df6920d012e0d7c81231e284e46ca6c01bfd58d7"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 3824,
+      "sha256": "9fb352fb093aed2efab53f8bfe37416127dc6da417fe19019f9d3df9e54d3675"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/208-10/cities.csv",
+      "bytes": 341170,
+      "sha256": "ec7a14b6c2be99c0d1bb2684c511a3de35801e189c2fc872c5e214d8ec58b334"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/208-10/factions.csv",
+      "bytes": 102906,
+      "sha256": "834bb777b08a84977b5ba8794de0f17ec04c74a99ac7e89f42705262d1a54cb0"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 10584,
+      "sha256": "a1a5a5a98f43dec4b095acec3ee97186e25526d29baeab4b55065e84e3676713"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/208-10/run.json",
+      "bytes": 4952,
+      "sha256": "1e2f4000d18d51277d0da021f96ba59d14dd8369edb06a33430b54a19b8f6b61"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/actual-consumption-by-month.json.gz",
+      "bytes": 1430,
+      "sha256": "dcb9345ec85239a6a09cced9395d32946f99e2944ab9e9eb148728bf20425f45"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/capacity.jsonl.gz",
+      "bytes": 139032,
+      "sha256": "06fa13c4af2079684ee6dec647940317abfe8c19e14b93a9dfd5393544be16d7"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/coordination.jsonl.gz",
+      "bytes": 331864,
+      "sha256": "b795b5a3553c2d5027142f01d39b9f3b63632eab52efc03a5aa9ea293007527f"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/events.jsonl.gz",
+      "bytes": 720836,
+      "sha256": "1746b9496ff727f685b256de8a86e953ecd072072941da2d71a782ab0a942a3a"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/run-v231.json",
+      "bytes": 17031,
+      "sha256": "0338bfdb4a6477caccd94217783c9287bc7d7f96001bd595d3b8b9fd13ea9f31"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/run-v3041.json",
+      "bytes": 22104,
+      "sha256": "3d2ed48a8b1623358db7ef503ec767c9a3cc3b02f1ca206aa52ed55ccff0b84f"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 30588,
+      "sha256": "a95aa582d0061ec3970e7e1c120aa75ce0eb0d6ef55da2a66e420d761a9b83c5"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 149616,
+      "sha256": "db4fb875025e48574416687044c13962e589a09a9789412d82bc7c5a14165193"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/263-05/capture-recovery.csv",
+      "bytes": 3798,
+      "sha256": "4bb712e804e4e4aa8bf3bbddd284249a73442965d2e3b25870d4a5ef005938df"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/263-05/cities.csv",
+      "bytes": 366993,
+      "sha256": "b324a2eb76152261dd053fdadf6dcd611fd560ca24a74c7a5639746c762d9590"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/263-05/factions.csv",
+      "bytes": 43249,
+      "sha256": "e9f0d38d0673f57e0f33d5a6be5fbc2c89363f7e36cf44f498a0dcd15671f875"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/263-05/monthly.csv",
+      "bytes": 10800,
+      "sha256": "86ffdde9b2d0a49758aeba24adfd6d238ba23b5fe82c04fa868936b9cbcccd1c"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/263-05/run.json",
+      "bytes": 2157,
+      "sha256": "755f7ef3a60042a8764f415f4fbf9b78edab5139329f8d616313856f85792125"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1489,
+      "sha256": "c40b810012a1773bb45194702a323c28d0749255a637cb2892f2d352eea0607f"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/capacity.jsonl.gz",
+      "bytes": 90202,
+      "sha256": "98bbc5726615e41ed65c68b8362b33206b471cbdf11756d1f6edcbdb9a847227"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/coordination.jsonl.gz",
+      "bytes": 252027,
+      "sha256": "58bc2ed300018a0344a65b6a0ffea71a04d294913a3f0f91f923c458c5d9a66b"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/events.jsonl.gz",
+      "bytes": 646723,
+      "sha256": "1ff2ceff688b5e0724411de814fd330f563084857daadc1d55d3492416156bd4"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/run-v231.json",
+      "bytes": 13285,
+      "sha256": "b4a9c31b364e3bceb0e2683a9ef820674e3b17e4957508bf2265ae6ea799a4d7"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/run-v3041.json",
+      "bytes": 18022,
+      "sha256": "f558107f83a2a29953329f5e6b18ec24e92b64f1276b707cdd6b3fb065de988a"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 36972,
+      "sha256": "a649c6fd4d0e6b876869970ff2e917071600cdd134331b4c5e795a81d10fb8b9"
+    },
+    {
+      "path": "raw/quick/N2/L2/campaigns/quick/F4/263-05-2026-211/terminal-save.json.gz",
+      "bytes": 103351,
+      "sha256": "fc3f6481ec6cbb402cc6552f86e16c1a973231b23a332a41af2d5fea94a83ead"
+    }
+  ]
+}

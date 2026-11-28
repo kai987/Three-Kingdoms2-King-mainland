@@ -1,0 +1,177 @@
+{
+  "path": "bundles/v3042-profile.zip",
+  "bytes": 1199982,
+  "sha256": "20a945db2b794862bdf7de2134dd960cee76d7b3d9c8f4c231432fb1e89c6f70",
+  "members": [
+    {
+      "path": "raw/profile/N0/chibi-late-K0.prof",
+      "bytes": 307009,
+      "sha256": "f47e4bbf5bf5f0654a0e039f5f7e265e82dda44fe973289c47f1ee633e16740e"
+    },
+    {
+      "path": "raw/profile/N0/north-snow-K0.prof",
+      "bytes": 374707,
+      "sha256": "c0fbc119b489a00be67ef5a877464e2c1ddaa4a0f2239c7a741e31ac59ab7fa8"
+    },
+    {
+      "path": "raw/profile/N0/runs/chibi-late-K0-0.json",
+      "bytes": 2369,
+      "sha256": "aabb3152f1281135fc91c976b76923d36c46798d430988723b593332554bf0b6"
+    },
+    {
+      "path": "raw/profile/N0/runs/north-snow-K0-0.json",
+      "bytes": 2341,
+      "sha256": "99e8fe4e3caad851ceef50e8bd12ee0eb018694571e4b466c61185af73686d35"
+    },
+    {
+      "path": "raw/profile/N0/wharf/chibi-late-0.jsonl.gz",
+      "bytes": 44,
+      "sha256": "9678cca595183a5dd07655f741b828a53bc726103a8ae58ad1b64131ccc7e222"
+    },
+    {
+      "path": "raw/profile/N0/wharf/north-snow-0.jsonl.gz",
+      "bytes": 44,
+      "sha256": "916c4115d9c1aec53672dbdf9a79c8a787bddc6edccc6628e7ca118b4d91f62c"
+    },
+    {
+      "path": "raw/profile/N0/windows/chibi-late-0.json",
+      "bytes": 3921,
+      "sha256": "b99e7adcd6c4075b4f171d6ad44ee0232ed937e45778ff1fe05183db187556be"
+    },
+    {
+      "path": "raw/profile/N0/windows/north-snow-0.json",
+      "bytes": 3888,
+      "sha256": "3c0f1e2d8e56238f2f1130e98ae898ac205ecbcaba82679ae55b1bc061c6ef77"
+    },
+    {
+      "path": "raw/profile/N1/chibi-late-K0.prof",
+      "bytes": 287831,
+      "sha256": "6aab79add175c665d652a63804456e55e39e8cd8704793dea3971e7ff5b12ce7"
+    },
+    {
+      "path": "raw/profile/N1/north-snow-K0.prof",
+      "bytes": 366777,
+      "sha256": "7496dd99e0ca5d4c3cbc8f9f9c368bc7b4c5e9401eae5e5191dfbc30485eeb3a"
+    },
+    {
+      "path": "raw/profile/N1/runs/chibi-late-K0-0.json",
+      "bytes": 2341,
+      "sha256": "dd4ca1119db5e2672ff4055f00da38a0b046feeaadfd9ef3388abcfe882de9fd"
+    },
+    {
+      "path": "raw/profile/N1/runs/north-snow-K0-0.json",
+      "bytes": 2340,
+      "sha256": "ee5e9154de1714fe66b35e6bc6c7b485b3d33240babb0c8a3261d0427ef987d3"
+    },
+    {
+      "path": "raw/profile/N1/wharf/chibi-late-0.jsonl.gz",
+      "bytes": 44,
+      "sha256": "87ea5584373a7c770de2a7702d208200b287a80fbd5dea38813b6c754f72e9fe"
+    },
+    {
+      "path": "raw/profile/N1/wharf/north-snow-0.jsonl.gz",
+      "bytes": 44,
+      "sha256": "9e36a003ce7547ac06c05d390b2caeb4ca917e1f516034265500c4bc137fe1ae"
+    },
+    {
+      "path": "raw/profile/N1/windows/chibi-late-0.json",
+      "bytes": 3893,
+      "sha256": "859a1b181a239d65773309a2d8a043e0abf560204a9a5f1d0117046b82ebc436"
+    },
+    {
+      "path": "raw/profile/N1/windows/north-snow-0.json",
+      "bytes": 3887,
+      "sha256": "6fabea7f47591010610ce847b4fc4e7e8ab885727c6dc63b0ed4370fad904361"
+    },
+    {
+      "path": "raw/profile/N2/chibi-late-L2.prof",
+      "bytes": 298010,
+      "sha256": "b81f69c4f959a35e8a89b92e618948e31266aedc11360efda0a6b61dd4858873"
+    },
+    {
+      "path": "raw/profile/N2/north-snow-L2.prof",
+      "bytes": 350861,
+      "sha256": "1a20a5493fa2f84f988ca61e89fa471ab50be8bacb1808891204bea6615a0f52"
+    },
+    {
+      "path": "raw/profile/N2/runs/chibi-late-L2-0.json",
+      "bytes": 2551,
+      "sha256": "a63ca04d3048e70b79b91d479a2ad157e80e3839fdf791b84bf57eb0cfbc05e7"
+    },
+    {
+      "path": "raw/profile/N2/runs/north-snow-L2-0.json",
+      "bytes": 2528,
+      "sha256": "ab89b68d51696eaf6e61f49e5aafcac80b3ac426e86c3df5e45cdd5b9b67f1ee"
+    },
+    {
+      "path": "raw/profile/N2/wharf/chibi-late-0.jsonl.gz",
+      "bytes": 44,
+      "sha256": "0af324880c27e3f1ed574950d64423411cc879b76fc954d6e80466c0ba7865bf"
+    },
+    {
+      "path": "raw/profile/N2/wharf/north-snow-0.jsonl.gz",
+      "bytes": 44,
+      "sha256": "28fc9aaba35029438bbfb4758d8c92fc7dbd467dcc47697ca354da4f0731db93"
+    },
+    {
+      "path": "raw/profile/N2/windows/chibi-late-0.json",
+      "bytes": 4286,
+      "sha256": "6e03f4f8903077c4fe83e4f5823b0760f2d0617db69070803d662e45091aeeb9"
+    },
+    {
+      "path": "raw/profile/N2/windows/north-snow-0.json",
+      "bytes": 4260,
+      "sha256": "711236aad6fa87cd7c25c9de57707d67014b34298f73238536dd453e42f79edb"
+    },
+    {
+      "path": "raw/profile/N3/chibi-late-L2.prof",
+      "bytes": 301325,
+      "sha256": "2d01ea9dadb996b74695808346d56c5c7a56f0fcd748ef9817d7d3559ae11d71"
+    },
+    {
+      "path": "raw/profile/N3/north-snow-L2.prof",
+      "bytes": 354033,
+      "sha256": "deaede1eff3c94cfae994a4105dbff239fe3ecd27811fab265a909e28d172df3"
+    },
+    {
+      "path": "raw/profile/N3/runs/chibi-late-L2-0.json",
+      "bytes": 2550,
+      "sha256": "54c2d1e50c24e03f472429498d05403ece3183e8d54800f3f46584b93aa6a96a"
+    },
+    {
+      "path": "raw/profile/N3/runs/north-snow-L2-0.json",
+      "bytes": 2536,
+      "sha256": "b26a59869ed24ae2af4cf929d80f8cd03d4125e7783750606a316fb05898670e"
+    },
+    {
+      "path": "raw/profile/N3/wharf/chibi-late-0.jsonl.gz",
+      "bytes": 44,
+      "sha256": "36c85908afada36844aa3ab155c49da2ca4b60fb713239aa199f7621ed4d8b74"
+    },
+    {
+      "path": "raw/profile/N3/wharf/north-snow-0.jsonl.gz",
+      "bytes": 44,
+      "sha256": "1fd68346357f536d4fac54c6bac94368bae4e73a57ae5c960f890025984e175e"
+    },
+    {
+      "path": "raw/profile/N3/windows/chibi-late-0.json",
+      "bytes": 4285,
+      "sha256": "1d05c5a8edfd43400c1878ee847144188d991673bba12089094ed6d6d35b4376"
+    },
+    {
+      "path": "raw/profile/N3/windows/north-snow-0.json",
+      "bytes": 4268,
+      "sha256": "aabf1247c371b9701fdfacc71f48643143f3f288100e5d18d9c7fc9a54343698"
+    },
+    {
+      "path": "raw/profile/manifest.json",
+      "bytes": 2217,
+      "sha256": "b2b5f3e3908836082e33a2dc70770d244f5dff9cc58b1bca03f8b0d30c6828ba"
+    },
+    {
+      "path": "raw/profile/results.json.gz",
+      "bytes": 3534,
+      "sha256": "d234840ac0afbf4ea1e72174a8c22d743031dd1c84986c64b3df6fa3aa0ab9e8"
+    }
+  ]
+}

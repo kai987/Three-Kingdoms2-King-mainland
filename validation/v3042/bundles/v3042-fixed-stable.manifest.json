@@ -1,0 +1,117 @@
+{
+  "path": "bundles/v3042-fixed-stable.zip",
+  "bytes": 1408323,
+  "sha256": "81e1c7993be7327ef33585823b3b45c131715bc4e77b282b51cf4391e79f78b5",
+  "members": [
+    {
+      "path": "raw/fixed-stable/decision-traces/chibi-long.json-K0.jsonl.gz",
+      "bytes": 50,
+      "sha256": "1574ca235c73ae080f3cfd88a0752a0608ecfacfa70911008c363b74d534c1cd"
+    },
+    {
+      "path": "raw/fixed-stable/decision-traces/chibi-long.json-L2.jsonl.gz",
+      "bytes": 67713,
+      "sha256": "01042a5fe8a8473ff921e8bae1291bb93d4cc03ab16509f1414f7c47acda3799"
+    },
+    {
+      "path": "raw/fixed-stable/decision-traces/convoy-1228.json-K0.jsonl.gz",
+      "bytes": 51,
+      "sha256": "50088f8bf054abb8c8894887673d3e1c9e9a52249ef6b906602e3b8ed7a6fa02"
+    },
+    {
+      "path": "raw/fixed-stable/decision-traces/convoy-1228.json-L2.jsonl.gz",
+      "bytes": 89565,
+      "sha256": "0ffdaf1b0f043a4e10e76c10c5a5909fcb5477ce4aee0a5a98ac8032de7d72b8"
+    },
+    {
+      "path": "raw/fixed-stable/decision-traces/convoy-219.json-K0.jsonl.gz",
+      "bytes": 50,
+      "sha256": "15e9023a1b8e921eb64cd4907a473db651ca97547b6ee24a8ec6acd008120f9a"
+    },
+    {
+      "path": "raw/fixed-stable/decision-traces/convoy-219.json-L2.jsonl.gz",
+      "bytes": 66315,
+      "sha256": "5134fd7406aa974ddba67025133e5abdf55f68dd71900f288f29c4f82a6364d3"
+    },
+    {
+      "path": "raw/fixed-stable/decision-traces/yellow-212-winter.json-K0.jsonl.gz",
+      "bytes": 57,
+      "sha256": "a2d221f94bfe1dbdf0aebeb617599e18e85d349542ac5c275d04073cbe31fdba"
+    },
+    {
+      "path": "raw/fixed-stable/decision-traces/yellow-212-winter.json-L2.jsonl.gz",
+      "bytes": 6883,
+      "sha256": "bc1edbe2e194bde1d9707b44694aa64a5e50d3314ed4d94205a8556fcbbd02da"
+    },
+    {
+      "path": "raw/fixed-stable/decision-traces/yellow-long.json-K0.jsonl.gz",
+      "bytes": 51,
+      "sha256": "c9c7be988ef7ca76d4ca7d21e0913432aa4873c0e02f162324bff17fde395315"
+    },
+    {
+      "path": "raw/fixed-stable/decision-traces/yellow-long.json-L2.jsonl.gz",
+      "bytes": 127374,
+      "sha256": "8fe9a6cbe5cd5207693fb8e113f3f3fc4a69654962e748c0dec928cd2af34365"
+    },
+    {
+      "path": "raw/fixed-stable/manifest.json",
+      "bytes": 1054,
+      "sha256": "9c4d13ceaed444813f00e49c51c13bafda048f956528c6ba97f8968eed26d377"
+    },
+    {
+      "path": "raw/fixed-stable/results.json.gz",
+      "bytes": 535474,
+      "sha256": "4cd1d17c3438528062203f4262ee21428fb56514a2001e819aa95dd54d1a4365"
+    },
+    {
+      "path": "raw/fixed-stable/runs/chibi-long.json.gz-K0-0.json",
+      "bytes": 1492354,
+      "sha256": "8fe5b6eba0f0d2e1664181cf9f6352b1de62ae04cc9ca0207495a2b9b38a08cf"
+    },
+    {
+      "path": "raw/fixed-stable/runs/chibi-long.json.gz-L2-0.json",
+      "bytes": 1220673,
+      "sha256": "864beb1ac3e507c3d4e86fc65e32ed64bbc557cecf3c5d54c1ec4b5221a521ad"
+    },
+    {
+      "path": "raw/fixed-stable/runs/convoy-1228.json.gz-K0-0.json",
+      "bytes": 1086932,
+      "sha256": "adcdc56c930f81e540df5023d989e8c043218c3774949b31477c9a07fb5ff633"
+    },
+    {
+      "path": "raw/fixed-stable/runs/convoy-1228.json.gz-L2-0.json",
+      "bytes": 1335941,
+      "sha256": "00f756cf12a7ed4ad9742b90493a51ea2707e2daf1942d4decf365924858b994"
+    },
+    {
+      "path": "raw/fixed-stable/runs/convoy-219.json.gz-K0-0.json",
+      "bytes": 708573,
+      "sha256": "ca678a523ed4942b10dbce078b92a14f93f2ff2d6ed006cefe1f6397700c4dc1"
+    },
+    {
+      "path": "raw/fixed-stable/runs/convoy-219.json.gz-L2-0.json",
+      "bytes": 745472,
+      "sha256": "7c5e997c0fd4debc6a49447cbc3dd99c0fe7bb82771e393cd70a9879f7267ff6"
+    },
+    {
+      "path": "raw/fixed-stable/runs/yellow-212-winter.json.gz-K0-0.json",
+      "bytes": 152692,
+      "sha256": "282b939410488b8d9e1dedb22929978a4fffc7ad17a6825ce0adb2340e166052"
+    },
+    {
+      "path": "raw/fixed-stable/runs/yellow-212-winter.json.gz-L2-0.json",
+      "bytes": 141186,
+      "sha256": "31a20715831438bca84dcbcf90454bc8f0f461598a8e8241d52c6807973f89dd"
+    },
+    {
+      "path": "raw/fixed-stable/runs/yellow-long.json.gz-K0-0.json",
+      "bytes": 1076193,
+      "sha256": "be7aca084cfd2876b023616e53996ec0b95962074730b3cd3d227a3f14af0e4a"
+    },
+    {
+      "path": "raw/fixed-stable/runs/yellow-long.json.gz-L2-0.json",
+      "bytes": 1229280,
+      "sha256": "fcbb89ca0b64b7d3eab3b5aac3060d229223ea035edb79a099e20689037e65fa"
+    }
+  ]
+}

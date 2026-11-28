@@ -1,0 +1,48 @@
+{
+  "G0": {
+    "status": "pass"
+  },
+  "G1": {
+    "status": "pass",
+    "github_ci": 46127526260
+  },
+  "G2": {
+    "status": "pass",
+    "fixed_demands_per_group": 89,
+    "return_slots_per_group": 23,
+    "historical_original_capacity_exception": "3634"
+  },
+  "G3": {
+    "status": "fail",
+    "campaigns": 18,
+    "pairs": 9,
+    "months": 24,
+    "facility_delivery": 0
+  },
+  "G4": {
+    "status": "not_run",
+    "months": [
+      60,
+      240
+    ],
+    "reason": "G3 not admitted"
+  },
+  "G5": {
+    "status": "not_run",
+    "seeds": [
+      2047,
+      2048
+    ],
+    "reason": "Candidate not frozen"
+  },
+  "sea_transfer": {
+    "status": "not_run",
+    "reason": "No implemented sea facility route"
+  },
+  "v305_development": {
+    "status": "pass",
+    "scope": "Independent development from stable base"
+  },
+  "official_economic_freeze": false,
+  "default_infrastructure": 0
+}

@@ -1,0 +1,7 @@
+scenario,route,origin,target,river_ids,mode,capacity,stages,declared_fixed_point_work,authored_access,internal_location,legal_split_at_shore
+209-06,liaodong:donglai:sea,liaodong,donglai,[],sea,50000,"[[""plain"",5975,""leading""],[""embark"",2000,""embark""],[""sea"",47000,""sea""],[""plain"",1025,""trailing""]]",56000,0,false,false
+209-06,jiangyang:bajun:river,jiangyang,bajun,"[""yangtze""]",river,50000,"[[""plain"",2886,""leading""],[""embark"",1000,""embark""],[""river_downstream"",3000,""yangtze:jiangyang:bajun""],[""plain"",1114,""trailing""]]",8000,4,false,false
+209-06,yulin:cangwu:river,yulin,cangwu,"[""pearl""]",river,100000,"[[""embark"",1000,""embark""],[""river_downstream"",4000,""pearl:yulin:cangwu""]]",5000,0,false,false
+209-06,yulin:cangwu:river,cangwu,yulin,"[""pearl""]",river,100000,"[[""embark"",1000,""embark""],[""river_upstream"",10000,""pearl:yulin:cangwu""]]",11000,0,false,false
+209-06,cangwu:nanhai:river,cangwu,nanhai,"[""pearl""]",river,50000,"[[""plain"",579,""leading""],[""embark"",1000,""embark""],[""river_downstream"",5000,""pearl:cangwu:nanhai""],[""plain"",421,""trailing""]]",7000,1,false,false
+209-06,jincheng:shuofang:river,jincheng,shuofang,"[""yellow""]",river,50000,"[[""plain"",565,""leading""],[""embark"",1000,""embark""],[""river_downstream"",13000,""yellow:jincheng:shuofang""],[""plain"",435,""trailing""]]",15000,1,false,false

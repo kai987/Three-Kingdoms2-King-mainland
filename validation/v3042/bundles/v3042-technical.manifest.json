@@ -1,0 +1,187 @@
+{
+  "path": "bundles/v3042-technical.zip",
+  "bytes": 42739,
+  "sha256": "63291a875770188465c50184f3fc7dcc85b28099cd2e635b4eff04d7f03e7078",
+  "members": [
+    {
+      "path": "raw/technical/logs/catalogs.log",
+      "bytes": 609,
+      "sha256": "034453508ba3e0a25d36e546f3c16226291a05a5ca54bb34a1e47ff2294afc1c"
+    },
+    {
+      "path": "raw/technical/logs/ci-source-and-browser-failure.log",
+      "bytes": 32356,
+      "sha256": "5e0b4d7b8f02750512167dfa80540d0d4660d153280014b66f8e4f7261b598e3"
+    },
+    {
+      "path": "raw/technical/logs/fixed-gap-corrected.log",
+      "bytes": 1608,
+      "sha256": "525e3d491ab5e7c6bf844d97035ac97dc2e22821ac19aa900763b58c58f760b2"
+    },
+    {
+      "path": "raw/technical/logs/full-browser.log",
+      "bytes": 23505,
+      "sha256": "cfa3c57793903c09e60fd7d5d646e6f8f15051cf16b2baaa758fb0ee18312672"
+    },
+    {
+      "path": "raw/technical/logs/historical-gap-corrected.log",
+      "bytes": 1696,
+      "sha256": "f4c61340f7cdc84583574c28928bd54143faab82a54567392ff8e0757d1c176b"
+    },
+    {
+      "path": "raw/technical/logs/historical-rerun.log",
+      "bytes": 537,
+      "sha256": "9efe16aed11a38e8049049ad451eff0f25ff94a04d7ef02fb7d0aa818ef2a04e"
+    },
+    {
+      "path": "raw/technical/logs/historical.log",
+      "bytes": 6586,
+      "sha256": "baa7f7a709e85113fb6c4a5be297caae25c9b154d0284a8fb8eec85180eb9edf"
+    },
+    {
+      "path": "raw/technical/logs/infrastructure-gap-python.log",
+      "bytes": 2075,
+      "sha256": "4d64be030f476fff67f0197dc5eb97fdee97538125950022cba2452b319fa294"
+    },
+    {
+      "path": "raw/technical/logs/infrastructure-gap-rust.log",
+      "bytes": 2075,
+      "sha256": "ba584060a411d2a8749ac35ed3112d76de89fc81002233cc96b2a5e4fd908473"
+    },
+    {
+      "path": "raw/technical/logs/locale-build.log",
+      "bytes": 58,
+      "sha256": "c4db58021bd92552c5e1a635aa0779a5e1515e59452cd6252653fcc094340513"
+    },
+    {
+      "path": "raw/technical/logs/locale-original.log",
+      "bytes": 1655,
+      "sha256": "61c70a69ecf067ba092b6468b06738e50931f4f0ba878232454d3d478f2fa964"
+    },
+    {
+      "path": "raw/technical/logs/locale-rerun.log",
+      "bytes": 783,
+      "sha256": "fea1f24630147e8dc59290e81746c5ed710cdef6f9a2b153201b030e8d6cf2ba"
+    },
+    {
+      "path": "raw/technical/logs/mechanism-gap-corrected.log",
+      "bytes": 56,
+      "sha256": "6cc983ca912f14a2fbe3838bc205129cade4e7ac1ee17a7885c0473f001ff7db"
+    },
+    {
+      "path": "raw/technical/logs/native-wasm.log",
+      "bytes": 1322,
+      "sha256": "4af557ffc2692c4ae365ac49cff9ae966a17772fa9d578c54f622a96afec5012"
+    },
+    {
+      "path": "raw/technical/logs/node-final.log",
+      "bytes": 17252,
+      "sha256": "3e229d8ef7e406ab5096d822a71dde4784e484e0f3febfd1443fbc2079069ebc"
+    },
+    {
+      "path": "raw/technical/logs/node-rerun.log",
+      "bytes": 16398,
+      "sha256": "9463d0ae9e82fcea45b0375176f5fb60f4f4926145399299942927ea055c2860"
+    },
+    {
+      "path": "raw/technical/logs/profile-gap-corrected.log",
+      "bytes": 208,
+      "sha256": "46d6b53017ff32a85e0d0af21095f4e14e18671a10f63dc18ce23dfd91149ab1"
+    },
+    {
+      "path": "raw/technical/logs/python.log",
+      "bytes": 4987,
+      "sha256": "51de02e035cb2f67750225e78e8f85017caa07a8db8b6030db7c3603e6414c40"
+    },
+    {
+      "path": "raw/technical/logs/quick-exact-rerun.log",
+      "bytes": 680,
+      "sha256": "83665d9adb0d19f8e209a18dd7e1da2689fda4f107b5f6984c2478e15b48cc49"
+    },
+    {
+      "path": "raw/technical/logs/quick-gap-corrected.log",
+      "bytes": 1224,
+      "sha256": "e3fa7280b73e97c4698315e02ce7576590d82b214fe28b5ad208ea9686e35fdd"
+    },
+    {
+      "path": "raw/technical/logs/quick.log",
+      "bytes": 3488,
+      "sha256": "ed74b69fea72ebcca81f6e531f828d42b6e86d2dc460ec872b7f3f3475817c40"
+    },
+    {
+      "path": "raw/technical/logs/related-python.log",
+      "bytes": 99,
+      "sha256": "fa7258aca296139f249061d583cf2ad253dbf6bb101e10f626584f242b78729b"
+    },
+    {
+      "path": "raw/technical/logs/related-rust.log",
+      "bytes": 99,
+      "sha256": "d5e7c61e92b27a58ffe7a84a24cd067d4516a7ebab88fdd9eb89169276b44295"
+    },
+    {
+      "path": "raw/technical/logs/resupply-browser.log",
+      "bytes": 1333,
+      "sha256": "8720a9292bd644b642fb65e06fde92852c25b380a6a47ac452f59565398c15da"
+    },
+    {
+      "path": "raw/technical/logs/retainer-recheck.log",
+      "bytes": 146,
+      "sha256": "8d1c6853dcfd3de309a7844dc652a82ac64511e3b477b397f07b0ac7b5eca1b1"
+    },
+    {
+      "path": "raw/technical/logs/ruler-archive-recheck.log",
+      "bytes": 153,
+      "sha256": "6e995b114ac2bae2d5e43a6f785817ed9c580b7d6394277d9e21050c4b72fa27"
+    },
+    {
+      "path": "raw/technical/logs/rust-crate.log",
+      "bytes": 2670,
+      "sha256": "b8a16d5a4c3100a4481bb086e0b1260ab89e6c990b66d329d92273a5dc57e7f6"
+    },
+    {
+      "path": "raw/technical/logs/rust-rules.log",
+      "bytes": 4106,
+      "sha256": "822486c98f9acf01dc0bd4f47403df667546c367924f26b8294d459277912327"
+    },
+    {
+      "path": "raw/technical/logs/south-gap-corrected.log",
+      "bytes": 1120,
+      "sha256": "7fe3ddffa9f2aa306ec505c7967a46272daf3100c258943397aab87560cc5e0f"
+    },
+    {
+      "path": "raw/technical/logs/wasm-final.log",
+      "bytes": 101,
+      "sha256": "3f627da366df1f5c5c4d6992d945c92b70222cc9695b1894bc3f954e322a3f5a"
+    },
+    {
+      "path": "raw/technical/logs/web-gap-corrected.log",
+      "bytes": 307,
+      "sha256": "5bd1497d634c6f637281fcbd1d1319ab7bdeca92f9482060e42397773d17f7ac"
+    },
+    {
+      "path": "raw/technical/logs/wharf-browser-exact.log",
+      "bytes": 879,
+      "sha256": "0141f5b9aae5b59baf18251169aea6dff339feadc2a92e856d33ec820c301589"
+    },
+    {
+      "path": "raw/technical/logs/wharf-browser-rerun.log",
+      "bytes": 879,
+      "sha256": "6813e249bab5ee59da87ff00b4b9a709f07f73fc93e938d20948cd59467203f0"
+    },
+    {
+      "path": "raw/technical/logs/wharf-browser.log",
+      "bytes": 8522,
+      "sha256": "0a91d95652d8d3de6ceed1a48eaaeef3a6414a7ebf64ec000a6bec07b41e947b"
+    },
+    {
+      "path": "raw/technical/logs/worker-gap-corrected.log",
+      "bytes": 946,
+      "sha256": "c62d1e3e8c018fbebf0b87e2689bfc36170d2eb230f8fa48df9aaa0e370aa8ab"
+    },
+    {
+      "path": "raw/technical/logs/worker-memory-pairs-server.log",
+      "bytes": 76,
+      "sha256": "c483fea0db60e4e58bff1ee0b52a08fdc0831cfb75c4caee8e3dba74dc2aa450"
+    }
+  ]
+}

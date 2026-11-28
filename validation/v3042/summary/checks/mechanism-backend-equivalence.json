@@ -1,0 +1,41 @@
+{
+  "python_and_rust_identical": true,
+  "streams": [
+    {
+      "stream": "R01-N0.jsonl.gz",
+      "uncompressed_sha256": "ad5a1bf1e2ee8a389b7b7bf0a0cbed5b053a4e8b61668d28840ee59ba048eb13"
+    },
+    {
+      "stream": "R01-N1.jsonl.gz",
+      "uncompressed_sha256": "3eedf9a9a8f782756b2a8426e87e3b64be949a99625dc1d09631902d8ee04d42"
+    },
+    {
+      "stream": "R01-N2.jsonl.gz",
+      "uncompressed_sha256": "ad5a1bf1e2ee8a389b7b7bf0a0cbed5b053a4e8b61668d28840ee59ba048eb13"
+    },
+    {
+      "stream": "R01-N3.jsonl.gz",
+      "uncompressed_sha256": "3eedf9a9a8f782756b2a8426e87e3b64be949a99625dc1d09631902d8ee04d42"
+    },
+    {
+      "stream": "R02-N0.jsonl.gz",
+      "uncompressed_sha256": "f4bd05671c1797ab9db25862e29df9136bd9883515bc4c3d665290cc616fca5c"
+    },
+    {
+      "stream": "R02-N1.jsonl.gz",
+      "uncompressed_sha256": "0eef0bc154911789210f7989e747df097942b7c3ada2fb0f2962816b8f795b3e"
+    },
+    {
+      "stream": "R02-N2.jsonl.gz",
+      "uncompressed_sha256": "a138c561cf139aceb83c5007dbafec61b0a13c37c944af9d2b3eb7ddcfab4f76"
+    },
+    {
+      "stream": "R02-N3.jsonl.gz",
+      "uncompressed_sha256": "029477ff8f2c2261cb6767079eb5092673fac3364943ab7d6fb9e2225f719901"
+    },
+    {
+      "stream": "R03-wharf.jsonl.gz",
+      "uncompressed_sha256": "1a1515e93ece2195fe71e5e10ec1eb27ddc7223952b0615867bc7813b8023cda"
+    }
+  ]
+}

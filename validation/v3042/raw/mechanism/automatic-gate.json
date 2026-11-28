@@ -1,0 +1,153 @@
+{
+  "proof": "R03",
+  "scenario": "227-02",
+  "seed": 2026,
+  "fixture_changes": "Existing stock moved between Badong and Fuling; Fuling transport explicitly authorized",
+  "opening_sha256": "957500df72fdefb465be7b69d05fb92d1ef1855a91a8ce89570e668a006e06d6",
+  "opening_rng": {
+    "state": 2026,
+    "draws": 0
+  },
+  "showing": [
+    {
+      "event": "choice",
+      "turn": 1,
+      "tick": 0,
+      "owner": "shu",
+      "source": "fuling",
+      "target": "badong",
+      "route": "fuling:badong:river",
+      "selected": true,
+      "relay": {
+        "blocked": null,
+        "escort": 632,
+        "escorts": [
+          632,
+          963,
+          135,
+          531,
+          354,
+          776,
+          683,
+          855,
+          248,
+          903
+        ],
+        "route": "fuling:badong:river",
+        "source": "fuling",
+        "target": "badong",
+        "banks": [
+          "wharf-fuling",
+          "wharf-badong"
+        ],
+        "sections": [
+          {
+            "start": "fuling",
+            "end": "wharf-fuling",
+            "mode": "land",
+            "work": 1610000,
+            "work_ticks": 2500,
+            "days": 3,
+            "capacity": 50000
+          },
+          {
+            "start": "wharf-fuling",
+            "end": "wharf-badong",
+            "mode": "river",
+            "work": 4508000,
+            "work_ticks": 7000,
+            "days": 7,
+            "capacity": 50000
+          },
+          {
+            "start": "wharf-badong",
+            "end": "badong",
+            "mode": "land",
+            "work": 1610000,
+            "work_ticks": 2500,
+            "days": 3,
+            "capacity": 50000
+          }
+        ],
+        "queue_days": 0,
+        "handling_days": 4,
+        "eta": 17,
+        "return_eta": 37,
+        "original_deadline": 20,
+        "requested": 810,
+        "net": 787,
+        "rations": 784,
+        "command_books": 3,
+        "officer_days": 37,
+        "slot_days": 37,
+        "gold": 0
+      },
+      "direct": {
+        "mode": "fastest",
+        "path": [
+          "fuling",
+          "badong"
+        ],
+        "net": 786,
+        "eta": 20,
+        "books": 1,
+        "rations": 672,
+        "officer_days": 39
+      },
+      "reason": "timely_additional_grain"
+    },
+    {
+      "event": "delivery",
+      "turn": 2,
+      "tick": 17,
+      "chain": 1,
+      "owner": "shu",
+      "city": "badong",
+      "grain": 786,
+      "original_deadline": 20,
+      "timely": true
+    },
+    {
+      "event": "terminal",
+      "turn": 4,
+      "tick": 37,
+      "chain": 1,
+      "owner": "shu",
+      "receipt": {
+        "tick": 37,
+        "city": "fuling",
+        "reason": "returned"
+      },
+      "balances": {
+        "input": 1594,
+        "cargo": 0,
+        "bank0": 0,
+        "bank1": 0,
+        "rations": 0,
+        "delivery": 786,
+        "meals": 784,
+        "route_loss": 24,
+        "weather_loss": 0,
+        "returned": 0,
+        "captured": 0,
+        "warehoused": 0,
+        "abandoned": 0
+      },
+      "books": 3,
+      "metrics": {
+        "travel": 33,
+        "handling": 4,
+        "waiting": 0,
+        "return_days": 20,
+        "hunger_days": 0,
+        "hunger_losses": 0
+      },
+      "original_deadline": 20,
+      "actual_arrival": 17,
+      "quoted_net": 787,
+      "quoted_arrival": 17
+    }
+  ],
+  "evidence": "R03-wharf.jsonl.gz",
+  "evidence_sha256": "aa066b898098d26e53d85200e549d03751264d64dc5be33216853ee5105ce956"
+}

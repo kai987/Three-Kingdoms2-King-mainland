@@ -1,0 +1,61 @@
+{
+  "status": "pass",
+  "exact_source": "e21704834237279a962ee2109aef505e8f53ffc9",
+  "ci": {
+    "status": "success",
+    "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46127526260",
+    "event": "workflow_dispatch",
+    "successful_jobs": 33,
+    "configured_skips": [
+      "verify / docs-check",
+      "verify / scoped-tests"
+    ]
+  },
+  "local": {
+    "infrastructure_python": 12,
+    "infrastructure_rust": 12,
+    "wasm_reference_vectors": 24689,
+    "rust_crate": 16,
+    "node": 66,
+    "browsers_full_prescheduler_fix": 116,
+    "browsers_exact": 2,
+    "default_resupply_pass": 4,
+    "default_resupply_opt_in_skips": 2,
+    "full_rust_before_scheduler_fix": {
+      "passed": 2018
+    },
+    "first_full_python": {
+      "total": 2018,
+      "failed": 1,
+      "skipped": 1,
+      "corrected_retest": "test_remake_locales",
+      "corrected_retest_pass": 4
+    },
+    "final_worker": {
+      "ok": true,
+      "pyodide": "314.0.7",
+      "previews": 29,
+      "catalogs": 4,
+      "requests": 81,
+      "ai_turns": 1,
+      "battle_settlements": 0,
+      "logistics_route_parity": true,
+      "save_sha256": "a069bc55d8a6edbc6f81220a27f79a16e48c1ee17142c6a4606f79c393e4531e",
+      "rng": {
+        "state": 1161157403,
+        "draws": 69
+      },
+      "cpu_save_bytes_equal": true,
+      "v212_observer_turns": 0,
+      "weather_observer_turns": 3,
+      "weather_save_sha256": "3fba830537eed22f5ac7ba3107b93d80d669908c2cc7e39f57b8fede2e4764cf",
+      "regional_market_roundtrip": null,
+      "granary_convoy_roundtrip": null,
+      "transport_capacity_roundtrip": 0,
+      "transshipment_batch_roundtrip": null,
+      "wharf_partial_custody": 839,
+      "wharf_compact_bytes": 87234,
+      "node_max_rss_bytes": 1606746112
+    }
+  }
+}

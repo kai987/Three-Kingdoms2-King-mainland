@@ -1,0 +1,350 @@
+[
+  {
+    "scenario": "184-02",
+    "catalog_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "baseline_state_sha256": "161d32294ae10312a622f595262aa8319370a00f2507b1b01186ff5ed57baff3",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "188-06",
+    "catalog_sha256": "47a2befe11315e84474a90ec3f7b4412b6c12efe2ad257bc7f46bf9c06e2ddbc",
+    "baseline_state_sha256": "c34c1ff1302d79f94bded3e68b91f2cd1f0ae531ad13b941d08609847f85f424",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "190-01",
+    "catalog_sha256": "5b79c8dcca15cb542b823eeae2a4b4c2699068b6d41a5c261477ee0389bb5610",
+    "baseline_state_sha256": "71d4dad85153d624225b89387f96b9d043d43783dddc7490ad6ff8f66072420d",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "191-10",
+    "catalog_sha256": "160d8833a76c70883a6e719300fe3c80fc44aa3d3d130323b9278072da9b7026",
+    "baseline_state_sha256": "8fd26414218e5ec5b7ab5208edd98bfecec7fe6888fe2ad065374bf6addc2e71",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "194-06",
+    "catalog_sha256": "fe3a6a48bbeaf4b8cc32045dadbd2e3e8b062a23f546afc79bc2d9b704d804b7",
+    "baseline_state_sha256": "d6a20e41a0408b1db90bb022e2d556a3055fea60dbb661a80cdf9b65f24d08f5",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "196-06",
+    "catalog_sha256": "35966476dfce77d0b2cd6f06de126f0acdf57c6c0da45fd6519b06be306c2882",
+    "baseline_state_sha256": "2347ca9d917bfebd53bcc0c2728b8c78571f27f0eef75f0c30335eef80b5f715",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "197-07",
+    "catalog_sha256": "a236a3bde6107980bf24a5fdf6d5df28fe6d0a183bfd95ec8b76c74f74a407bf",
+    "baseline_state_sha256": "3fcd44640a2abae78703ef44b413daf5c6dc9c9d53462e8af16b6f25e208d2c1",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "198-03",
+    "catalog_sha256": "04b91b99b34b9a2bd131425a56f2be87cc202adc4b4010968713496987bb4541",
+    "baseline_state_sha256": "891d781dccd24aa32fe99dad1b33d2f6a3dd99efd796c00cde058420b08b1b66",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "200-01",
+    "catalog_sha256": "6c6ba7f2dafb4b6dec0922383456b33231baf8bdbeb8f9ffeded1beed428ea60",
+    "baseline_state_sha256": "b85ff84eafdb5e852f35f0675c2e43fec33baf3321f280501559510dd5660174",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "201-05",
+    "catalog_sha256": "d3e3b0deae1bf3f5cc382abd1339ad4ee62b62481a8f70b29a027bc3ecde4dd0",
+    "baseline_state_sha256": "22da08d9f6e83fd673562f9e42d205e029adb8a5e7c85be376ef5642acf0d0f2",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "202-06",
+    "catalog_sha256": "4455518219a681bfda2833da75ad90025eb9217ec2e96f8378a03a0c00a0a783",
+    "baseline_state_sha256": "23a5fc783098d3746d28cb45c4a88f507f748585e93d41086a8e3747bf7da7b2",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "207-09",
+    "catalog_sha256": "d1fbce9fa0a630bccf91f0a7808e19f1ec1f8e214195ad6af42d57bb5ce0605e",
+    "baseline_state_sha256": "e019a9641f1f1d7223e94638438edb76ccf2337ff97462827135495fb9d6fd44",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "208-10",
+    "catalog_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "baseline_state_sha256": "48cc12c4c709e1f409a4ab12ed79f5dce78e2b27bbba1cc2095e156595976081",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "209-06",
+    "catalog_sha256": "e92c1ea1c50e4036d01b4c138643df565023c195758cfa820322ce9ae5d3f3fb",
+    "baseline_state_sha256": "7d0fd5906be9df4770817c312d3865f0a30ad32ddd37f3d1ea5eb2664703c402",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "210-11",
+    "catalog_sha256": "7272fe2fcaa911d4cc444c7d19ffc450e789902bfa78a08c7474b43c5d330762",
+    "baseline_state_sha256": "5f23100f2656beb5d5e103ae46f480da1fcc6abda371104410a0c1ed88e78612",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "211-07-tongguan",
+    "catalog_sha256": "195dac335055509ffb36ea8b78841f6cb9ace4f034a19761a455bfa834073b9c",
+    "baseline_state_sha256": "ca624b0ba65f03bc0071395e03b7c34e7bf0817df1edcb521b7175a7325a91e2",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "212-06",
+    "catalog_sha256": "20d6f7c5589432a3b3c7d9252e343f51c57ee38e48e48b32d46c59f429f6f148",
+    "baseline_state_sha256": "bbc6446f48b260a9f7e57c066daf334bffb4c0e8b67750a4b4b9753724652145",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "212-12",
+    "catalog_sha256": "4cf23d78c069376236abdd71ad6555ad3145ea2ae53c628960dee6881c180f23",
+    "baseline_state_sha256": "e09422491cac64bcace1640edf55cbba23fc73edbaf2f975ae116bf794a7c034",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "215-08",
+    "catalog_sha256": "8b51331cebd069a756803d79408663ccdcc7008d58b69bfe54737dcc3f60686a",
+    "baseline_state_sha256": "a258b07ce38a6264aba887ed1334e0bcb8346f2eaa77ad6aecb6d9fec64b2e48",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "217-07",
+    "catalog_sha256": "f09ec6459b1f11ee1d979ba0abf63b1807d604f2a17e6b9ccf8d6891bffd01eb",
+    "baseline_state_sha256": "429adcf263ff569ca0fe9a34963627edfa1738fc0412e576d9105a9cf404fbb9",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "219-07",
+    "catalog_sha256": "6562a758571aad5d285758be5d732f77c896049eb6d02e02e711348a0a5b1be6",
+    "baseline_state_sha256": "0e4eb1c0e117180febda3314fe8543ea64e3502c95e2295bff8548ccfa67053e",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "221-07",
+    "catalog_sha256": "b2c57117aed0744898419336bf02bf9e49884ea0ba7947a0635e5de51e044f62",
+    "baseline_state_sha256": "1e0ef285b3f82c61bc810001479b85bdb54e620a30e744ac3f1e36c7a7bd40ec",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "225-07",
+    "catalog_sha256": "09678281bce9c669fb0968aba165f659eb23a7a6273b2568eb2ffff3954d0d6e",
+    "baseline_state_sha256": "6e59a530756ba21e12e1044b5835ebbd8fe2e85de94c3a0de5906a749435d066",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "227-02",
+    "catalog_sha256": "f74801b000dba443e84a965af69979899f7e53497872b661996eaddbac75f1e8",
+    "baseline_state_sha256": "56e57ee8de23dfd57f2e6fdf26dc593496570e61a1f2b7304e50e2ddebbb6f83",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "234-02",
+    "catalog_sha256": "1e2fe4d33f641459b8911f0d1f77f7f8e80031cd4ca289d8dfdb41fb6cd3f598",
+    "baseline_state_sha256": "6a4f533d4a121d6193db036748c977fe70346a1d5037391de1b2c025c498fb91",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "235-01",
+    "catalog_sha256": "8e150191a9957296c4bccf3d33bd8a3acf2f1ca2c37183e8d9743c7725c5dba8",
+    "baseline_state_sha256": "7580bbf5203257cd0f2e36078998ba34b964e73abdf521731d8d78f4765901d6",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "238-01",
+    "catalog_sha256": "35a2b26d69eb44dc7afff7f62ec69ebfac42167e84884dfc9b101f11c39010e6",
+    "baseline_state_sha256": "e38299f1ad61222c319128acb299b8dab27d0cceed0559d0429bcbfe10ebe5eb",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "249-01",
+    "catalog_sha256": "24c2385c8f739fb463190dff95f9b3e98f76de8c83ca450ad7b95ecce2cdf6e9",
+    "baseline_state_sha256": "ce89bb331adb77b72896295c60a8653657ad49a14edd5f7230f4fc5f6832dd5a",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  },
+  {
+    "scenario": "263-05",
+    "catalog_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "baseline_state_sha256": "39759f691624481900aadaf65aa252cd01b81b97cf2acc30b7d5f14bc78844e9",
+    "rng": {
+      "state": 2026,
+      "draws": 0
+    },
+    "independent_wharves": 6,
+    "reserve_storage": 0,
+    "initial_staff": 0
+  }
+]

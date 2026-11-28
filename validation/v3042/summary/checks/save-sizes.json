@@ -1,0 +1,18 @@
+{
+  "scenario": "227-02",
+  "seed": 2026,
+  "opening": {
+    "disabled": {
+      "ordinary_bytes": 527924,
+      "compact_bytes": 64480
+    },
+    "enabled": {
+      "ordinary_bytes": 528446,
+      "compact_bytes": 64734
+    }
+  },
+  "partially_held_13000_grain": {
+    "ordinary_bytes": 533394,
+    "compact_bytes": 67243
+  }
+}

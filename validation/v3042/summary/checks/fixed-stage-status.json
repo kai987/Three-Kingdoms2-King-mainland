@@ -1,0 +1,307 @@
+{
+  "stage": "fixed",
+  "status": "pass",
+  "admitted_backgrounds": [
+    "D0",
+    "D2"
+  ],
+  "baseline_states_and_rng_exact": true,
+  "sample_counts": {
+    "N0": {
+      "windows": 5,
+      "demands": 89,
+      "return_slots": 23
+    },
+    "N1": {
+      "windows": 5,
+      "demands": 89,
+      "return_slots": 23
+    },
+    "N2": {
+      "windows": 5,
+      "demands": 89,
+      "return_slots": 23
+    },
+    "N3": {
+      "windows": 5,
+      "demands": 89,
+      "return_slots": 23
+    }
+  },
+  "hard_errors": {
+    "transport_position_overruns": 0,
+    "repeated_origin_dispatches": 0,
+    "simultaneous_escort_overlaps": 0,
+    "dispatch_book_deviation": 0,
+    "duplicate_receipts": 0,
+    "invalid_receipt_credits": 0,
+    "duplicate_books": 0,
+    "book_posting_errors": 0,
+    "city_resource_mismatches": 0
+  },
+  "pairs": [
+    {
+      "baseline": "N0",
+      "candidate": "N1",
+      "checkpoint": "chibi-long.json.gz",
+      "input_sha256": "76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9",
+      "equal_non_facility_states": true,
+      "new_missing_grain": 0,
+      "paired": 17,
+      "unpaired": 0,
+      "missing_in_control": [],
+      "missing_in_candidate": [],
+      "original_targets_without_observed_bill": [
+        [
+          "wei",
+          "fufeng",
+          402
+        ]
+      ],
+      "control_required": 12652,
+      "candidate_required": 12652,
+      "control_paid": 12652,
+      "candidate_paid": 12652,
+      "control_missing": 0,
+      "candidate_missing": 0
+    },
+    {
+      "baseline": "N0",
+      "candidate": "N1",
+      "checkpoint": "convoy-1228.json.gz",
+      "input_sha256": "96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50",
+      "equal_non_facility_states": true,
+      "new_missing_grain": 0,
+      "paired": 25,
+      "unpaired": 0,
+      "missing_in_control": [],
+      "missing_in_candidate": [],
+      "original_targets_without_observed_bill": [],
+      "control_required": 23267,
+      "candidate_required": 23267,
+      "control_paid": 21117,
+      "candidate_paid": 21117,
+      "control_missing": 2150,
+      "candidate_missing": 2150
+    },
+    {
+      "baseline": "N0",
+      "candidate": "N1",
+      "checkpoint": "convoy-219.json.gz",
+      "input_sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "equal_non_facility_states": true,
+      "new_missing_grain": 0,
+      "paired": 14,
+      "unpaired": 0,
+      "missing_in_control": [],
+      "missing_in_candidate": [],
+      "original_targets_without_observed_bill": [],
+      "control_required": 22543,
+      "candidate_required": 22543,
+      "control_paid": 22073,
+      "candidate_paid": 22073,
+      "control_missing": 470,
+      "candidate_missing": 470
+    },
+    {
+      "baseline": "N0",
+      "candidate": "N1",
+      "checkpoint": "yellow-212-winter.json.gz",
+      "input_sha256": "7a23d58373770c32fb021ddc25bf734e6847598ac6694192342d39edffa33a85",
+      "equal_non_facility_states": true,
+      "new_missing_grain": 0,
+      "paired": 1,
+      "unpaired": 0,
+      "missing_in_control": [],
+      "missing_in_candidate": [],
+      "original_targets_without_observed_bill": [],
+      "control_required": 1922,
+      "candidate_required": 1922,
+      "control_paid": 1922,
+      "candidate_paid": 1922,
+      "control_missing": 0,
+      "candidate_missing": 0
+    },
+    {
+      "baseline": "N0",
+      "candidate": "N1",
+      "checkpoint": "yellow-long.json.gz",
+      "input_sha256": "90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837",
+      "equal_non_facility_states": true,
+      "new_missing_grain": 0,
+      "paired": 31,
+      "unpaired": 0,
+      "missing_in_control": [],
+      "missing_in_candidate": [],
+      "original_targets_without_observed_bill": [],
+      "control_required": 35588,
+      "candidate_required": 35588,
+      "control_paid": 33066,
+      "candidate_paid": 33066,
+      "control_missing": 2522,
+      "candidate_missing": 2522
+    },
+    {
+      "baseline": "N2",
+      "candidate": "N3",
+      "checkpoint": "chibi-long.json.gz",
+      "input_sha256": "76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9",
+      "equal_non_facility_states": true,
+      "new_missing_grain": 0,
+      "paired": 18,
+      "unpaired": 0,
+      "missing_in_control": [],
+      "missing_in_candidate": [],
+      "original_targets_without_observed_bill": [],
+      "control_required": 13732,
+      "candidate_required": 13732,
+      "control_paid": 13732,
+      "candidate_paid": 13732,
+      "control_missing": 0,
+      "candidate_missing": 0
+    },
+    {
+      "baseline": "N2",
+      "candidate": "N3",
+      "checkpoint": "convoy-1228.json.gz",
+      "input_sha256": "96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50",
+      "equal_non_facility_states": true,
+      "new_missing_grain": 0,
+      "paired": 25,
+      "unpaired": 0,
+      "missing_in_control": [],
+      "missing_in_candidate": [],
+      "original_targets_without_observed_bill": [],
+      "control_required": 23610,
+      "candidate_required": 23610,
+      "control_paid": 22260,
+      "candidate_paid": 22260,
+      "control_missing": 1350,
+      "candidate_missing": 1350
+    },
+    {
+      "baseline": "N2",
+      "candidate": "N3",
+      "checkpoint": "convoy-219.json.gz",
+      "input_sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "equal_non_facility_states": true,
+      "new_missing_grain": 0,
+      "paired": 14,
+      "unpaired": 0,
+      "missing_in_control": [],
+      "missing_in_candidate": [],
+      "original_targets_without_observed_bill": [],
+      "control_required": 22543,
+      "candidate_required": 22543,
+      "control_paid": 22543,
+      "candidate_paid": 22543,
+      "control_missing": 0,
+      "candidate_missing": 0
+    },
+    {
+      "baseline": "N2",
+      "candidate": "N3",
+      "checkpoint": "yellow-212-winter.json.gz",
+      "input_sha256": "7a23d58373770c32fb021ddc25bf734e6847598ac6694192342d39edffa33a85",
+      "equal_non_facility_states": true,
+      "new_missing_grain": 0,
+      "paired": 1,
+      "unpaired": 0,
+      "missing_in_control": [],
+      "missing_in_candidate": [],
+      "original_targets_without_observed_bill": [],
+      "control_required": 1922,
+      "candidate_required": 1922,
+      "control_paid": 1922,
+      "candidate_paid": 1922,
+      "control_missing": 0,
+      "candidate_missing": 0
+    },
+    {
+      "baseline": "N2",
+      "candidate": "N3",
+      "checkpoint": "yellow-long.json.gz",
+      "input_sha256": "90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837",
+      "equal_non_facility_states": true,
+      "new_missing_grain": 0,
+      "paired": 31,
+      "unpaired": 0,
+      "missing_in_control": [],
+      "missing_in_candidate": [],
+      "original_targets_without_observed_bill": [],
+      "control_required": 36180,
+      "candidate_required": 36180,
+      "control_paid": 35629,
+      "candidate_paid": 35629,
+      "control_missing": 551,
+      "candidate_missing": 551
+    }
+  ],
+  "base": "d8b507ec813cc50f890c74bafbdc9a1586738621",
+  "head_at_run": "e21704834237279a962ee2109aef505e8f53ffc9",
+  "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+  "protocol_sha256": "3d2b04381ec1ab1c5c78e551634ec589918a7e47fdd512885c0292ac3bf2dda6",
+  "runner_sha256": "921df5e18e0c5b0f7cb51f5dd4336cd779da12cc5aeacb921a7d41a83446a508",
+  "host": {
+    "os": "Darwin",
+    "arch": "arm64",
+    "python": "3.13.16"
+  },
+  "groups": {
+    "N0": {},
+    "N1": {
+      "transport_infrastructure_rules_version": 3042
+    },
+    "N2": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      }
+    },
+    "N3": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      },
+      "transport_infrastructure_rules_version": 3042
+    }
+  }
+}

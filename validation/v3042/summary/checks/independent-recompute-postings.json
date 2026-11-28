@@ -1,0 +1,130 @@
+{
+  "controlled_lines": [
+    {
+      "proof": "R01",
+      "group": "N0",
+      "delivery": 12603,
+      "cargo": {
+        "cargo_dispatched": 13000,
+        "cargo_received": 0,
+        "cargo_rations": 0,
+        "cargo_route_loss": 397,
+        "cargo_weather_loss": 0,
+        "cargo_delivered": 12603,
+        "cargo_returned": 0,
+        "cargo_abandoned": 0,
+        "cargo_remaining": 0,
+        "cargo_loss_remainder": 5890000,
+        "escort_base_grain": 582,
+        "escort_extra_grain": 90
+      },
+      "rations": {
+        "loaded": 255,
+        "received": 417,
+        "consumed": 672,
+        "to_cargo": 0,
+        "remaining": 0
+      },
+      "target_transport_net": 12186
+    },
+    {
+      "proof": "R01",
+      "group": "N1",
+      "input": 14008,
+      "delivery": 12603,
+      "timely_grain": 12603,
+      "delivery_tick": 29,
+      "command_books": 3,
+      "escort_days": 49,
+      "wharf_throughput": 25601,
+      "open": false,
+      "posting_count": 81,
+      "accounts": {
+        "input": 14008,
+        "cargo": 0,
+        "rations": 0,
+        "meals": 1008,
+        "route_loss": 397,
+        "bank0": 0,
+        "bank1": 0,
+        "delivery": 12603
+      },
+      "target_transport_net": 12603
+    },
+    {
+      "proof": "R01",
+      "group": "N2",
+      "delivery": 12603,
+      "cargo": {
+        "cargo_dispatched": 13000,
+        "cargo_received": 0,
+        "cargo_rations": 0,
+        "cargo_route_loss": 397,
+        "cargo_weather_loss": 0,
+        "cargo_delivered": 12603,
+        "cargo_returned": 0,
+        "cargo_abandoned": 0,
+        "cargo_remaining": 0,
+        "cargo_loss_remainder": 5890000,
+        "escort_base_grain": 582,
+        "escort_extra_grain": 90
+      },
+      "rations": {
+        "loaded": 255,
+        "received": 417,
+        "consumed": 672,
+        "to_cargo": 0,
+        "remaining": 0
+      },
+      "target_transport_net": 12186
+    },
+    {
+      "proof": "R01",
+      "group": "N3",
+      "input": 14008,
+      "delivery": 12603,
+      "timely_grain": 12603,
+      "delivery_tick": 29,
+      "command_books": 3,
+      "escort_days": 49,
+      "wharf_throughput": 25601,
+      "open": false,
+      "posting_count": 81,
+      "accounts": {
+        "input": 14008,
+        "cargo": 0,
+        "rations": 0,
+        "meals": 1008,
+        "route_loss": 397,
+        "bank0": 0,
+        "bank1": 0,
+        "delivery": 12603
+      },
+      "target_transport_net": 12603
+    },
+    {
+      "proof": "R02",
+      "group": "N0",
+      "status": "blocked",
+      "reason": "staff"
+    },
+    {
+      "proof": "R02",
+      "group": "N1",
+      "status": "blocked",
+      "reason": "staff"
+    },
+    {
+      "proof": "R02",
+      "group": "N2",
+      "status": "blocked",
+      "reason": "staff"
+    },
+    {
+      "proof": "R02",
+      "group": "N3",
+      "status": "blocked",
+      "reason": "staff"
+    }
+  ]
+}

@@ -1,0 +1,1477 @@
+{
+  "path": "bundles/v3042-preliminary.zip",
+  "bytes": 23858126,
+  "sha256": "341547fc30bba9fd2f88cabb814bd10f5f56cc9de5194896f92968652987349b",
+  "members": [
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/184-02-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 48905,
+      "sha256": "34c54cb15b4585af2f7ecd772017ade5c7d53dae8daa189c3dddab1cee562fb5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/184-02-2026-211-identity.json",
+      "bytes": 18341,
+      "sha256": "23cb1a9249c612c963e6ef17f35e0fd135895d77ab5219f4c9a6f7f567f429bf"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/184-02-2026-211-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "4956da252815184e4aa465237730a2706be759fda988ea53d0417b6d9ea461c8"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/207-09-2034-211-actual-and-opening.jsonl.gz",
+      "bytes": 27226,
+      "sha256": "e114b33db5c46a08e8d2412343271313a0974f4ffff66b5457f3b212430f7dc1"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/207-09-2034-211-identity.json",
+      "bytes": 20561,
+      "sha256": "43e0212698e41f8dd3656afb6f5f25605237cbefe60eb98e6fc03dfb174864d9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/207-09-2034-211-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "eb297aa45b81f311024672fb7298a33cd507ecd32411a0386c2a185324b3cae4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/208-10-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 30619,
+      "sha256": "15f4c6c38cc2de726f41b34dc09a67fb0ab5de8dd50e1789069eda1439aec0c0"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/208-10-2026-211-identity.json",
+      "bytes": 21772,
+      "sha256": "60edf8d6ee0ab14bace5b09fa6ed3a884de3d1421eca80fcc1f9df3ef925681a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/208-10-2026-211-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "b587239ac25cd8761d7ff152d10721dba0a8e4f5e31a6d1daea677e02bf82314"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/208-10-2026-212-actual-and-opening.jsonl.gz",
+      "bytes": 53968,
+      "sha256": "367a330c61420178fb952f42d716b6f549d2993da493f26ad944c9df15cd655f"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/208-10-2026-212-identity.json",
+      "bytes": 20764,
+      "sha256": "b16de3e34d7baf8f31a805797b316a8a6bea98588a549f4e09e17cc69febc6ed"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/208-10-2026-212-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "2290c23896181c70b0d1b4325de83555c8964cc4db9424d150ae92a77e2bb312"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/263-05-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 40562,
+      "sha256": "498f95306a4f08c0a6b6f70981b94631d6650466ee56916cd26f20e0ef95497a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/263-05-2026-211-identity.json",
+      "bytes": 20696,
+      "sha256": "28dbf86d85e07c3985ec6f7d2afc704895794849256898befdabbae16f242ec5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/263-05-2026-211-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "a71a93c0cabadaba4eb3e3553ced62143f201a9d21de93134ad69d398735313a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 5325,
+      "sha256": "d68db7afa93d87552dbc87b08ed6188f42f8e56237c2c9a4a68fb13c908db320"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/184-02/cities.csv",
+      "bytes": 309196,
+      "sha256": "3100d0abf00b1166203a6e89254f4875dc1711ba0e4106c8e52560e83e09c4d2"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/184-02/factions.csv",
+      "bytes": 82996,
+      "sha256": "ce2a8be6da125b7bac67892bfa7625e62071191c42836f1cfe994a75be8bb35c"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 10616,
+      "sha256": "b61361ade64c22c3d9249d46be8800bb2ec30068887b3be190112f0aa5fb228a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/184-02/run.json",
+      "bytes": 2368,
+      "sha256": "5a2ddbac9f7030f75f051b8003fe9f01408c535a5be1eb7811de36eef7a5608c"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1350,
+      "sha256": "8eff191037a5c66145e2fa340c0a864ce22f03e02adb3446367be61fbf550cca"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/capacity.jsonl.gz",
+      "bytes": 39079,
+      "sha256": "47bc0f627705da244f12dd3980b12f964fc960f33310918c55b3da74d6dd6364"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/coordination.jsonl.gz",
+      "bytes": 44,
+      "sha256": "9a902822dcab52ddb77b97888051c834c4e38907138ed43f0301665012742a60"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/events.jsonl.gz",
+      "bytes": 393779,
+      "sha256": "47c672476416804118b45443f50e2a5aad308e308d4e2fcccb356e8965aab7b4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/run-v231.json",
+      "bytes": 13407,
+      "sha256": "f3240a8c542094dab33832217b2b944bfc443c940b8ab3f901d2fc550df7c820"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/run-v3041.json",
+      "bytes": 17214,
+      "sha256": "d6c1017e9aeb785937113227855aedb63d3d8154fa445de5f0bc17147db6c07b"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 14078,
+      "sha256": "270129d2e99e2985ce4df960a87e66090b5d5a6b8a4497ef553941ff1d6d3a48"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 105785,
+      "sha256": "cc4b98af5134bc20392ba9eb33c1b7f79f580be7364044e891220b6282b023d9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/207-09/capture-recovery.csv",
+      "bytes": 3596,
+      "sha256": "b7799fb23e0f3faf2117b9a5ef693ed0543cd2728baf026e17a5de7c1fab17d9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/207-09/cities.csv",
+      "bytes": 340663,
+      "sha256": "a92aa283ddb769c9e8caae892e28b3e4790fbf6e1f66a16f5658053efcb6a337"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/207-09/factions.csv",
+      "bytes": 91425,
+      "sha256": "54c3a75e1fd15f1122031b83cda6a54b3d3ae40076376eccdc81fabad567283a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/207-09/monthly.csv",
+      "bytes": 10931,
+      "sha256": "0aa2b5424dfaca9450d522526bdcfc50ce42ea26486952a0f1a4fa10ae294573"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/207-09/run.json",
+      "bytes": 3368,
+      "sha256": "f60c774a21b2ac1ef4f2b343459f3c2c2fafd05a46ff7ada2393fe8bb01b88d0"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/actual-consumption-by-month.json.gz",
+      "bytes": 1473,
+      "sha256": "b4e39773207c113437a00b41a40d0c476fc94ab8d7a61f18ffac7673a4029416"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/capacity.jsonl.gz",
+      "bytes": 63267,
+      "sha256": "23551494239ce1499de2080bfefaa7b88d17916d6564b8d96ed638c9a62e4338"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/coordination.jsonl.gz",
+      "bytes": 44,
+      "sha256": "9a902822dcab52ddb77b97888051c834c4e38907138ed43f0301665012742a60"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/events.jsonl.gz",
+      "bytes": 731509,
+      "sha256": "64743c6ef781d770a3b81e80aaeaa518f2871abf0f571b1efac923ba23f03de3"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/run-v231.json",
+      "bytes": 15476,
+      "sha256": "13cd4582b5695cbe07bdd316ee81d141023ee45268301521cebecbe7251a1ce4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/run-v3041.json",
+      "bytes": 19434,
+      "sha256": "386138aa4f33ba663701ac52fa961efdabfe8aaf743fb37c9724ef234175663e"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/supply-episodes-weather-aware.csv",
+      "bytes": 36213,
+      "sha256": "bc96f8dbf8ca0da6ad9bab1dc4e38b3dc4a4265c94d661db55c469ded3070f93"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/207-09-2034-211/terminal-save.json.gz",
+      "bytes": 130319,
+      "sha256": "094958496221494ef6eeb0284c61035c396c2f7130ddeb6407a0ca0cc7debe07"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 3476,
+      "sha256": "b6e4493f7ebb054b7fa15053d208a5312e9b59b2042aa617a6561951eace77b4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/208-10/cities.csv",
+      "bytes": 341273,
+      "sha256": "e5ab24546b9f57497a62c0668e553513f4d326a402ea05be29b25cce383fabb4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/208-10/factions.csv",
+      "bytes": 107274,
+      "sha256": "320db2a8d06a16b411d7cc25ac19da6656edcfe2f82e4c842ed4f6472ac4b78a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 11092,
+      "sha256": "e1f0b074a337eb3fe056a5eee5df57114a51eb967707dcffc0e26e06ae843726"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/208-10/run.json",
+      "bytes": 4189,
+      "sha256": "d430666fab2f893957ae390de1a8a5851bad58c09b9578a8d9581b709d0738bc"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1403,
+      "sha256": "d9c75bf4aa1fe3b728457cb5f60426499f5a6249257964409a516d615524ea96"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/capacity.jsonl.gz",
+      "bytes": 63192,
+      "sha256": "6e5dbfae0f1c3fc20b0ad3772991308bc91c9a52c59bcf9a9d22642b52fd36af"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/coordination.jsonl.gz",
+      "bytes": 44,
+      "sha256": "4ba0002b8cb6e0b4dd8ed71f837af6b130df4f249bb7b60dd0b59a96166247a8"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/events.jsonl.gz",
+      "bytes": 1532428,
+      "sha256": "bc13c328e4f5f09b9e049847db59dfeba009708b3e85cd68c7d0e41d0674f1d8"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/run-v231.json",
+      "bytes": 16580,
+      "sha256": "aacafcef1c9ca96eefce76dab76985cd692970af3165f5ec6e2076f6463ed5f2"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/run-v3041.json",
+      "bytes": 20645,
+      "sha256": "93dab5c45aa5c2f7a285856ae1a3f443403e3687576d0656df89475a79ceefa3"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 43422,
+      "sha256": "1d97965f03c57f211e74e63c5bc33da249192746a5bfe78fc6f16e64ae1f7c35"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 138282,
+      "sha256": "7de62e60cae34fb6595679475ce453170731140ea4ccabf07cd2319cc3634f21"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 5740,
+      "sha256": "ef001b5a4095e11d4ff264de76f89b1ad691c1b2487ea6178ce869f1aa9eaf18"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/208-10/cities.csv",
+      "bytes": 342332,
+      "sha256": "17cdc67a7a5ef5003009e058ba84c18486338b9f95b9f4aedc7643608decec3e"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/208-10/factions.csv",
+      "bytes": 105315,
+      "sha256": "fa34336b4819cf0201e3426577527e5ec2c563c5682971492fd74106e197b882"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 10997,
+      "sha256": "d86c3916aecea313d855bcb3e11fd71eb13f6c74c2c8e59716866fddec3829ce"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/208-10/run.json",
+      "bytes": 3612,
+      "sha256": "3f536b5ef91e7c65e9d01158830afc9b7bb3cfbffc371042bfbbef02edd27712"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/actual-consumption-by-month.json.gz",
+      "bytes": 1362,
+      "sha256": "98cddb1bd5ed6d8beeaa1211e92ffea21d408b439da7d96948cd4870a0722e83"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/capacity.jsonl.gz",
+      "bytes": 48271,
+      "sha256": "0f606944ce281c05b70c4a631b3b96ba94f839d1bc2b636d09314ca7d46560de"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/coordination.jsonl.gz",
+      "bytes": 44,
+      "sha256": "6aa4c20a74ccedf10a04155bc258c33caf9eb533d55b210038247e7965038391"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/events.jsonl.gz",
+      "bytes": 757260,
+      "sha256": "7d5b7d83252b7955f5752bd710bdaedb99e676f24e989f976995200b936f42cb"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/run-v231.json",
+      "bytes": 15663,
+      "sha256": "644a0f409567827405306c88e57ba2f476d643aa7345ea760958751a93179fbf"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/run-v3041.json",
+      "bytes": 19637,
+      "sha256": "85179a98ae18c0eab122a0aca6f9ff6324f91f7013f3dc4bc8eae63c9b51c07b"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 34828,
+      "sha256": "228b2db33378f111fd004871f85e73aee068ded1a7a5d57d1126df3fde1b2ed4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 133621,
+      "sha256": "38430e9b4724c3c4dd49aea2a0157835788b578051096f3079baf9715b5df996"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/263-05/capture-recovery.csv",
+      "bytes": 3071,
+      "sha256": "c48cc60c3a8efbc241064a616b28abed51242f5ae68b2e038d7d28f5de800591"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/263-05/cities.csv",
+      "bytes": 367260,
+      "sha256": "6fbf3d5d5dd205a17c315405dc239522ec8af8760788267841a8b00469d1c554"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/263-05/factions.csv",
+      "bytes": 44129,
+      "sha256": "e37e1d3ffabd45cbeb6c4c42bc844e0adc6a0619b1ec9278d920dd083901c253"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/263-05/monthly.csv",
+      "bytes": 11095,
+      "sha256": "5ade585411a0da8e078d62861ffc6037ba3e8738127551b4bf3d958f9e5a4f35"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/263-05/run.json",
+      "bytes": 3950,
+      "sha256": "35ce2dc0d88ff3e7775615c0a15a0f9206e08117330d229eeda9c80454bdce7b"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1533,
+      "sha256": "460981b8faeeff0b0a356b9a8d6e21449c1bcf1cd546ca04c6233a4790b3327a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/capacity.jsonl.gz",
+      "bytes": 77614,
+      "sha256": "18daf9796a8ecafcf2a5c9dfb22a18f1bf62ab08f97582c4ac4f8ff061a34c15"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/coordination.jsonl.gz",
+      "bytes": 44,
+      "sha256": "e2b51e9d556202af105fa6a28fc5e3d89476f2da1e3e97ae88d7a8b2fa91973a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/events.jsonl.gz",
+      "bytes": 769981,
+      "sha256": "4c63673076a8483cc5827e635e911e438acb0167dbfdd85dd492b4804e6cdefe"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/run-v231.json",
+      "bytes": 15585,
+      "sha256": "8cab278412340f74f8173a21229ff25835a7a9b7af3969a3d509ae6ed665b24d"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/run-v3041.json",
+      "bytes": 19569,
+      "sha256": "4580d61842b2f6095b76d94ac9409c2e66bcc0481bc71ec9ad11495f5ee0ad68"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 41983,
+      "sha256": "8878c418e81a56d862a77d06ab63cdf0b81a0ae88b3600b1d5e2f1553e619b9a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N0/K0/campaigns/quick/F4/263-05-2026-211/terminal-save.json.gz",
+      "bytes": 124169,
+      "sha256": "db2dca33ecc5109c2a5573f5a5abc454be296c4ea0f32f0d6fa6a187b93e914c"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/184-02-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 48905,
+      "sha256": "34c54cb15b4585af2f7ecd772017ade5c7d53dae8daa189c3dddab1cee562fb5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/184-02-2026-211-identity.json",
+      "bytes": 18344,
+      "sha256": "af004a80551062ac6df59ca1e59489be192aaa34f64d9e35a64ea8f0be212914"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/184-02-2026-211-wharf.jsonl.gz",
+      "bytes": 189,
+      "sha256": "8953894d2490ee48d386e6883baac6be1ef00930bca649e851cd0f2b5a8a85cf"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/207-09-2034-211-actual-and-opening.jsonl.gz",
+      "bytes": 27226,
+      "sha256": "e114b33db5c46a08e8d2412343271313a0974f4ffff66b5457f3b212430f7dc1"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/207-09-2034-211-identity.json",
+      "bytes": 20564,
+      "sha256": "7a7aac97d1de5ba619d5a4e8a20f828b47f1ef9a7060f24ef677908a1b3ee7a5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/207-09-2034-211-wharf.jsonl.gz",
+      "bytes": 228,
+      "sha256": "be941ec617532e0fd57bceb4cbb35dd0508080fea254d0f692ae06d3e37ad8f7"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/208-10-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 30619,
+      "sha256": "065864894b17b15f6af258e96fd269a17765b066037038861469759009116538"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/208-10-2026-211-identity.json",
+      "bytes": 21776,
+      "sha256": "f2b9fe37f27d5ade4d57592b521e22409985d1a060c784b18982a76b6c411799"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/208-10-2026-211-wharf.jsonl.gz",
+      "bytes": 146,
+      "sha256": "2b10f64753787309d78e5552be5fb6bbd389d65677f5ff6027cf8be4de0af08c"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/208-10-2026-212-actual-and-opening.jsonl.gz",
+      "bytes": 53968,
+      "sha256": "94c3d309c91d627aa6b828a515c2f4187519d1b7d9c8890748d2d2e887b1df1c"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/208-10-2026-212-identity.json",
+      "bytes": 20768,
+      "sha256": "629b1db4c266beeda2231fbee5ced2b00161c93e4cd06648243c8cd3cc05eddc"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/208-10-2026-212-wharf.jsonl.gz",
+      "bytes": 192,
+      "sha256": "00227db7cf641c65e70f9db99a5c58d03aea1be54b20914d67120b10f06cf427"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/263-05-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 40562,
+      "sha256": "498f95306a4f08c0a6b6f70981b94631d6650466ee56916cd26f20e0ef95497a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/263-05-2026-211-identity.json",
+      "bytes": 20701,
+      "sha256": "57c1cebae5d841c2f1c65e50a392ce8672fea66449622cc152a3a2e94b77efc5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/263-05-2026-211-wharf.jsonl.gz",
+      "bytes": 165,
+      "sha256": "21fdd12d4cffdb841efe5d3a233dc891c9c994c12e50a1a8fab03962c42f8ba9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 5325,
+      "sha256": "d68db7afa93d87552dbc87b08ed6188f42f8e56237c2c9a4a68fb13c908db320"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/184-02/cities.csv",
+      "bytes": 309196,
+      "sha256": "3100d0abf00b1166203a6e89254f4875dc1711ba0e4106c8e52560e83e09c4d2"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/184-02/factions.csv",
+      "bytes": 82996,
+      "sha256": "ce2a8be6da125b7bac67892bfa7625e62071191c42836f1cfe994a75be8bb35c"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 10616,
+      "sha256": "b61361ade64c22c3d9249d46be8800bb2ec30068887b3be190112f0aa5fb228a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/184-02/run.json",
+      "bytes": 2368,
+      "sha256": "435fc014333e4aa5a71181518dfa808a3a94864731b20e107e576c02a0ba634b"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1350,
+      "sha256": "2e5f9481d57c082aac201416ec6e6062c86b5e361f42e8b5a59a8ab411ca6f1c"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/capacity.jsonl.gz",
+      "bytes": 39079,
+      "sha256": "47bc0f627705da244f12dd3980b12f964fc960f33310918c55b3da74d6dd6364"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/coordination.jsonl.gz",
+      "bytes": 44,
+      "sha256": "9a902822dcab52ddb77b97888051c834c4e38907138ed43f0301665012742a60"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/events.jsonl.gz",
+      "bytes": 393779,
+      "sha256": "47c672476416804118b45443f50e2a5aad308e308d4e2fcccb356e8965aab7b4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/run-v231.json",
+      "bytes": 13407,
+      "sha256": "cd9a617f665a8da4f204a8586c27b6d414e33a2db7f7ed20acdc00cf38d0714e"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/run-v3041.json",
+      "bytes": 17272,
+      "sha256": "dc6eb9bf173b79c192fdfa7319a50e3479743e1a88f131f84dcb797174bf3a12"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 14078,
+      "sha256": "270129d2e99e2985ce4df960a87e66090b5d5a6b8a4497ef553941ff1d6d3a48"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 105946,
+      "sha256": "1801d55922812d38b3ca6beb88fac702da3b445ec372fba4a7659a629e7f23b3"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/207-09/capture-recovery.csv",
+      "bytes": 3596,
+      "sha256": "b7799fb23e0f3faf2117b9a5ef693ed0543cd2728baf026e17a5de7c1fab17d9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/207-09/cities.csv",
+      "bytes": 340663,
+      "sha256": "a92aa283ddb769c9e8caae892e28b3e4790fbf6e1f66a16f5658053efcb6a337"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/207-09/factions.csv",
+      "bytes": 91425,
+      "sha256": "54c3a75e1fd15f1122031b83cda6a54b3d3ae40076376eccdc81fabad567283a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/207-09/monthly.csv",
+      "bytes": 10931,
+      "sha256": "0aa2b5424dfaca9450d522526bdcfc50ce42ea26486952a0f1a4fa10ae294573"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/207-09/run.json",
+      "bytes": 3368,
+      "sha256": "91c897a1bf58d497645fe66809caa4f489e4043595dcd67edd381db8299bb7c8"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/actual-consumption-by-month.json.gz",
+      "bytes": 1473,
+      "sha256": "84e741f1bca0b643bfa5197bcf10e52bdd7e3f2785e99c55977916ed71d0b4d3"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/capacity.jsonl.gz",
+      "bytes": 63271,
+      "sha256": "b2717a90f2155b8e259c4a2bcfadf6bd371f6cb7a0794964e1bde7a39eb4444e"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/coordination.jsonl.gz",
+      "bytes": 44,
+      "sha256": "9a902822dcab52ddb77b97888051c834c4e38907138ed43f0301665012742a60"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/events.jsonl.gz",
+      "bytes": 731509,
+      "sha256": "64743c6ef781d770a3b81e80aaeaa518f2871abf0f571b1efac923ba23f03de3"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/run-v231.json",
+      "bytes": 15476,
+      "sha256": "d8a2e7ac91acce752268045bebc2c6deaa3f671baffc6248e4698b8e96b07a38"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/run-v3041.json",
+      "bytes": 19492,
+      "sha256": "994ddca41bf4175fe501a0ab67ed8ced6f3f370a9134e397f3e265c239ebbf01"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/supply-episodes-weather-aware.csv",
+      "bytes": 36213,
+      "sha256": "bc96f8dbf8ca0da6ad9bab1dc4e38b3dc4a4265c94d661db55c469ded3070f93"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/207-09-2034-211/terminal-save.json.gz",
+      "bytes": 130473,
+      "sha256": "d48226a0f83d66891dfa92278cc72a1444182da045432c36ed886c9b3f635487"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 3476,
+      "sha256": "b6e4493f7ebb054b7fa15053d208a5312e9b59b2042aa617a6561951eace77b4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/208-10/cities.csv",
+      "bytes": 341273,
+      "sha256": "e5ab24546b9f57497a62c0668e553513f4d326a402ea05be29b25cce383fabb4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/208-10/factions.csv",
+      "bytes": 107274,
+      "sha256": "320db2a8d06a16b411d7cc25ac19da6656edcfe2f82e4c842ed4f6472ac4b78a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 11092,
+      "sha256": "e1f0b074a337eb3fe056a5eee5df57114a51eb967707dcffc0e26e06ae843726"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/208-10/run.json",
+      "bytes": 4190,
+      "sha256": "25ad85508622dfb1ca6f3629e175bcf15adb099279cb24d86ef720d3a915a995"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1403,
+      "sha256": "1687b50b57f83ca138f26c6c581b9aa7f760de419781291f816259cb5cf45c93"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/capacity.jsonl.gz",
+      "bytes": 63172,
+      "sha256": "c62a626d979a61e746bec9e91468f7c0625ec55b871ac2bdf33934d9f8f10e5d"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/coordination.jsonl.gz",
+      "bytes": 44,
+      "sha256": "8f4cde42e6f78a0fc32294d09ceab3f6cfed000b0dd00da0d706f13768eab9a8"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/events.jsonl.gz",
+      "bytes": 1532428,
+      "sha256": "132aa3bd46b0c458e867c432be0c95d13a3e3207c167249ef4dccfcb952d5f57"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/run-v231.json",
+      "bytes": 16581,
+      "sha256": "05ea4fb0d7d68725234cce27c6ba8088ed2fefecfce803ac33bb93afc2424cb8"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/run-v3041.json",
+      "bytes": 20704,
+      "sha256": "d1780c69dbdf83a45f0706c93d41e3fb34a848ce36fd3e2da7c1f63fa2073508"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 43422,
+      "sha256": "1d97965f03c57f211e74e63c5bc33da249192746a5bfe78fc6f16e64ae1f7c35"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 138463,
+      "sha256": "dc69e7690e060e659c7e37155a51a3e47da8c7ef4c4675855435fd75d7453d4a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 5740,
+      "sha256": "ef001b5a4095e11d4ff264de76f89b1ad691c1b2487ea6178ce869f1aa9eaf18"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/208-10/cities.csv",
+      "bytes": 342332,
+      "sha256": "17cdc67a7a5ef5003009e058ba84c18486338b9f95b9f4aedc7643608decec3e"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/208-10/factions.csv",
+      "bytes": 105315,
+      "sha256": "fa34336b4819cf0201e3426577527e5ec2c563c5682971492fd74106e197b882"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 10997,
+      "sha256": "d86c3916aecea313d855bcb3e11fd71eb13f6c74c2c8e59716866fddec3829ce"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/208-10/run.json",
+      "bytes": 3613,
+      "sha256": "5f4b80dca3b643c63fd5bb5714608bb62ee3630a9db8bd59cd5248d476d32f99"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/actual-consumption-by-month.json.gz",
+      "bytes": 1362,
+      "sha256": "36e873fd887b97117e2f0203fb88e5faa9dc5097f78c6440dca596349bd0597a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/capacity.jsonl.gz",
+      "bytes": 48271,
+      "sha256": "66d5b55010729ff1ef0e95eff67ea3ade062fb02b8d0cb2540f670625013a91d"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/coordination.jsonl.gz",
+      "bytes": 44,
+      "sha256": "77a992733e1791df8649d1794789d0bec1719f92db01e77e12f96ee56bed88d5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/events.jsonl.gz",
+      "bytes": 757260,
+      "sha256": "8a3726d09c6481d554399805f582062bf6090a039e87f3e6714f5283edae88a5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/run-v231.json",
+      "bytes": 15664,
+      "sha256": "acf8d6c3fe35302006c7f08af2f90fb8fb257ad8fa1f13f965a76f3a2afb5cbd"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/run-v3041.json",
+      "bytes": 19696,
+      "sha256": "72f7befaea582c4dc5f65ce56be15330e483ecc0088fff6c5acbb1d0d439632b"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 34828,
+      "sha256": "228b2db33378f111fd004871f85e73aee068ded1a7a5d57d1126df3fde1b2ed4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 133807,
+      "sha256": "581887646b448591ea514d24191c202a0f69c5719f0ce5e0b946c6fdec535a6b"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/263-05/capture-recovery.csv",
+      "bytes": 3071,
+      "sha256": "c48cc60c3a8efbc241064a616b28abed51242f5ae68b2e038d7d28f5de800591"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/263-05/cities.csv",
+      "bytes": 367260,
+      "sha256": "6fbf3d5d5dd205a17c315405dc239522ec8af8760788267841a8b00469d1c554"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/263-05/factions.csv",
+      "bytes": 44129,
+      "sha256": "e37e1d3ffabd45cbeb6c4c42bc844e0adc6a0619b1ec9278d920dd083901c253"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/263-05/monthly.csv",
+      "bytes": 11095,
+      "sha256": "5ade585411a0da8e078d62861ffc6037ba3e8738127551b4bf3d958f9e5a4f35"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/263-05/run.json",
+      "bytes": 3952,
+      "sha256": "5eb68a92e05f85037640b9cc655d65fdd944279774259e476163be2b5cea861d"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1533,
+      "sha256": "460981b8faeeff0b0a356b9a8d6e21449c1bcf1cd546ca04c6233a4790b3327a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/capacity.jsonl.gz",
+      "bytes": 77640,
+      "sha256": "8d9f4986a5732392dba0352d0982e104631f5fcca4c41afbb58fc9202cf201f7"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/coordination.jsonl.gz",
+      "bytes": 44,
+      "sha256": "e2b51e9d556202af105fa6a28fc5e3d89476f2da1e3e97ae88d7a8b2fa91973a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/events.jsonl.gz",
+      "bytes": 769981,
+      "sha256": "4c63673076a8483cc5827e635e911e438acb0167dbfdd85dd492b4804e6cdefe"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/run-v231.json",
+      "bytes": 15587,
+      "sha256": "bd6fdda97d14281e475340dac9195ad5d66f6c1c097f981da8aa1494e02169d3"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/run-v3041.json",
+      "bytes": 19629,
+      "sha256": "20e04dc9cfb7e27ff0e4311473c61f0661ac899d8566adead6c47dc4a57fba4d"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 41983,
+      "sha256": "8878c418e81a56d862a77d06ab63cdf0b81a0ae88b3600b1d5e2f1553e619b9a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N1/K0/campaigns/quick/F4/263-05-2026-211/terminal-save.json.gz",
+      "bytes": 124352,
+      "sha256": "d92d3fda6123c37dfae9f1a601743b85236287de189dd9420e594961195898c3"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/184-02-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 58177,
+      "sha256": "76a6e540143bba510aac917d45ab0c0873afff8a43cfd7dbaa8bc49ffe838875"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/184-02-2026-211-identity.json",
+      "bytes": 18312,
+      "sha256": "bf53b2f75d90bfb749695ff78e807d2107eb1b125b2cd12cbf251586c21f3410"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/184-02-2026-211-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "44342a424f63766e4ba530c930408059f1fe6488d6783a95a14bd541e4a198e9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/208-10-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 34072,
+      "sha256": "188ef53b6095ac83765d7cf28fa8e5e659e72fb3d8d0d64f782b16a70c0dda1a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/208-10-2026-211-identity.json",
+      "bytes": 23043,
+      "sha256": "c2ba6e485f2df605db0c7f3e298254d93d5c8fa658e6479454371fffac9db25f"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/208-10-2026-211-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "caae7831b789ef0bf69b80da73e0fee2fdda18e910a1607ca9e1c10f1f0fb64d"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/208-10-2026-212-actual-and-opening.jsonl.gz",
+      "bytes": 48416,
+      "sha256": "d238d59820d3ccdeb4ad4281fe6ad5a1ff8e207bdf1d8e38d4b8b5496606c6e5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/208-10-2026-212-identity.json",
+      "bytes": 22716,
+      "sha256": "cdb560bd5d3ec2a001af82e5d34f4a1c1ae07e570dd418b5ef30b89cebe77557"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/208-10-2026-212-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "6f57c45be66e3b8adb97a7eae225969709c38eb10a8eb9158da12b8d55ba4845"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/263-05-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 40970,
+      "sha256": "e14191b053e12f9259ba4b90e6f20bb472e58a29d572cb46c6a75af505ed8ce9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/263-05-2026-211-identity.json",
+      "bytes": 18635,
+      "sha256": "6f8085e02dfc9e17dff16f65b8ef1cbf9e3d5333dfdd16c1274f376e3e85b599"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/263-05-2026-211-wharf.jsonl.gz",
+      "bytes": 53,
+      "sha256": "79c4ab65fbbdd847320c164a44c32f58b616847153d0a851a338a181a15b9384"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 7091,
+      "sha256": "a99f601d29a14661bdfab837e22070543a47c422c1eccc97d292667b91e22037"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/184-02/cities.csv",
+      "bytes": 310674,
+      "sha256": "02b18524ae9557753e868320928da922027470d80cc1019094156c05c380d6d4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/184-02/factions.csv",
+      "bytes": 83202,
+      "sha256": "9799d026de945bc32d21a7a3f8f66fe8f3572f882f1f5e77bf69e876ce2a7ef3"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 10632,
+      "sha256": "eb6daf8334153b16bb350a6d916410fa8c4abdbae39b16100f6833de92073dd9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/184-02/run.json",
+      "bytes": 1944,
+      "sha256": "33a69867420354221bd6ec3432b83705e005c734718f11cea111a6cd37d185be"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1435,
+      "sha256": "589fa28cc6c74e362a27e26499e13cf532476c3c7b51cb47bcdee6a556d553bd"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/capacity.jsonl.gz",
+      "bytes": 58653,
+      "sha256": "4e0446627f2f16d65a6520be4ea69d894970fc5bed2534fea2a6b68952fee2d8"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/coordination.jsonl.gz",
+      "bytes": 257354,
+      "sha256": "2884e0540e72128629e5601943eccafb1052f92a838b246bdbff5c19de07232f"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/events.jsonl.gz",
+      "bytes": 356192,
+      "sha256": "d549a53853678e85faf274152324712b67bd903c1829a7c47e55daafb33ee8dc"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/run-v231.json",
+      "bytes": 13008,
+      "sha256": "584a86a2d8adfcca0cd5d416a80020336e63a076fd0e6f31fdd87593c5edb4c9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/run-v3041.json",
+      "bytes": 17702,
+      "sha256": "811770096e75b3f8a0af54eff64e60aed13772dccc3afec0e0c16a8e02c67b60"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 14440,
+      "sha256": "6d51292d0d69ef7f8f6681125bbbf098d25914866bba87cd97f7df3745b3e2d2"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 92254,
+      "sha256": "7a289fc2de66121437309a3935fd93e73395592b2572a29ccc2d8c95acf27b84"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 3409,
+      "sha256": "2980c36823f42431d37e602795df726b15d3e794463099c8137c9d63e1a33f77"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/208-10/cities.csv",
+      "bytes": 340279,
+      "sha256": "8fa45aeb396b2fd98f06b09af6330d78f3f3e8ea062a590c7a74a27f236fd901"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/208-10/factions.csv",
+      "bytes": 104776,
+      "sha256": "91da7c930f634202a13b68dc9dac084da7ae23e6e7e091b8d3aa94277f210cd2"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 10802,
+      "sha256": "592f205be896aed080810df34e2c3919aaed8d8fdd0477b1a532cf6e810c1eca"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/208-10/run.json",
+      "bytes": 5390,
+      "sha256": "56f064d4737f654ade556ac016c85884db8bc2688cec55f468b2fb23957ff74d"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1563,
+      "sha256": "a3f8e6c9704136cc999b869491859dfb2eb85d34b20a9bb249deadcaffb2ef56"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/capacity.jsonl.gz",
+      "bytes": 180684,
+      "sha256": "455b0d0827d23022a1d2e0a26836e44a1d01d5a285c8ab739c7fbfc61cd80600"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/coordination.jsonl.gz",
+      "bytes": 417886,
+      "sha256": "469954bdadcd7dd72fe6ae18cb2616d734f900ee9d355cbcab198f92cf7c2ffe"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/events.jsonl.gz",
+      "bytes": 1502012,
+      "sha256": "aa378d334fe54e3ffed1487fa2b3d25aa78dd5ff64c3e43e9c5ef2ebd11371fe"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/run-v231.json",
+      "bytes": 17357,
+      "sha256": "941d323dab7dfc9256537b03be4990f3fa53166cc7b7b6235203b15f62e93819"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/run-v3041.json",
+      "bytes": 22433,
+      "sha256": "d3f46a4c3af213ef5d3f443c2df94c8f52a0ebae1358a14151aedcf8566f10fd"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 47668,
+      "sha256": "887f0f35cf0e3e7695a4e10f773d942047da558d228b3b86ef909c03cbef9223"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 152704,
+      "sha256": "8e5eff81a259d4a8eea08a677dcd246e70e06fdbdbbdd2c78b2c87e01d313929"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 3824,
+      "sha256": "9fb352fb093aed2efab53f8bfe37416127dc6da417fe19019f9d3df9e54d3675"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/208-10/cities.csv",
+      "bytes": 341170,
+      "sha256": "ec7a14b6c2be99c0d1bb2684c511a3de35801e189c2fc872c5e214d8ec58b334"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/208-10/factions.csv",
+      "bytes": 102906,
+      "sha256": "834bb777b08a84977b5ba8794de0f17ec04c74a99ac7e89f42705262d1a54cb0"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 10584,
+      "sha256": "a1a5a5a98f43dec4b095acec3ee97186e25526d29baeab4b55065e84e3676713"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/208-10/run.json",
+      "bytes": 4954,
+      "sha256": "5d4613f96c4cc58ff8072f2f79dcfdf50a7477134cbbe818bf816982585a2868"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/actual-consumption-by-month.json.gz",
+      "bytes": 1430,
+      "sha256": "15216432417909dc2f02e280e4eef4847252de2d20b655232e1999293e594b9a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/capacity.jsonl.gz",
+      "bytes": 139032,
+      "sha256": "e83c763dab162226ef20f976af3e1e7dbf7c4b4aacba6059871fdaacd2004a95"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/coordination.jsonl.gz",
+      "bytes": 331658,
+      "sha256": "108024235f543c91e10cc71b4a0c63e692e81b4dd46c6ecb9614f5fedfe19c67"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/events.jsonl.gz",
+      "bytes": 720836,
+      "sha256": "c445826d5991567fc3dfb1b17bc02ebdc868e129f00681120a4bf20d49878b4c"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/run-v231.json",
+      "bytes": 17033,
+      "sha256": "c4201dad3685de96afb17f66d0a4fb3470f7ada1a76d20e00ec549ceb97893f2"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/run-v3041.json",
+      "bytes": 22106,
+      "sha256": "835513a3cc331d3fc67fd977eba515c2a463e305f40c9ad6b123c1b67e0ff0c9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 30588,
+      "sha256": "a95aa582d0061ec3970e7e1c120aa75ce0eb0d6ef55da2a66e420d761a9b83c5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 149616,
+      "sha256": "e18c7f36550be467bec8b1afe7f449b3d21a0a070c7da723faf3151095b5fdbf"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/263-05/capture-recovery.csv",
+      "bytes": 3798,
+      "sha256": "4bb712e804e4e4aa8bf3bbddd284249a73442965d2e3b25870d4a5ef005938df"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/263-05/cities.csv",
+      "bytes": 366993,
+      "sha256": "b324a2eb76152261dd053fdadf6dcd611fd560ca24a74c7a5639746c762d9590"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/263-05/factions.csv",
+      "bytes": 43249,
+      "sha256": "e9f0d38d0673f57e0f33d5a6be5fbc2c89363f7e36cf44f498a0dcd15671f875"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/263-05/monthly.csv",
+      "bytes": 10800,
+      "sha256": "86ffdde9b2d0a49758aeba24adfd6d238ba23b5fe82c04fa868936b9cbcccd1c"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/263-05/run.json",
+      "bytes": 2160,
+      "sha256": "a2258254b4fba9739bf1fafd9bef1711ad06ca38699ab8e9b89e84acde821924"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1489,
+      "sha256": "66ddac7517e568dc2e87a06eb99990f0715a76fe84565777223ddabde604ed0d"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/capacity.jsonl.gz",
+      "bytes": 90202,
+      "sha256": "a9a5cb2782a4002a9dd085b82f83f57559ec64a85e5e86e7eab9041d26163ae7"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/coordination.jsonl.gz",
+      "bytes": 251809,
+      "sha256": "71aa2bf7007795b067fa1b64f231467561a95c6072a56546bb4a8df0f3f64b26"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/events.jsonl.gz",
+      "bytes": 646723,
+      "sha256": "f9f776048ba1c459c6c531b78417cb8148451a3879675a88fb294d9845257602"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/run-v231.json",
+      "bytes": 13288,
+      "sha256": "ae313b3dfa78a3522ab8c1ab445195fc5b9a02f3eb8cdd45d54efcc2b0464c04"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/run-v3041.json",
+      "bytes": 18025,
+      "sha256": "5a7b1f612f9712a50cd3259a68ba61bc60c0de552a160dff0e7526233763a3fc"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 36972,
+      "sha256": "a649c6fd4d0e6b876869970ff2e917071600cdd134331b4c5e795a81d10fb8b9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N2/L2/campaigns/quick/F4/263-05-2026-211/terminal-save.json.gz",
+      "bytes": 103351,
+      "sha256": "efbabda51f89c6d8d23dd626babec0f51f9008e8f43abb41659af62b6c5fcbe1"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/184-02-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 58177,
+      "sha256": "76a6e540143bba510aac917d45ab0c0873afff8a43cfd7dbaa8bc49ffe838875"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/184-02-2026-211-identity.json",
+      "bytes": 18313,
+      "sha256": "fe46ab6c40005b888efe8d2d39c7e07681c2fdb9e61c171d2b9bf5a1e43c165b"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/184-02-2026-211-wharf.jsonl.gz",
+      "bytes": 202,
+      "sha256": "9efdc283341a104fc592819a8113a3d547f7432f62b12ffa1e3af9a0541318af"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/208-10-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 34072,
+      "sha256": "489bdb3752c8ecf5980230618fb044a237ce624a20f318e5eb45a2a38fe00e81"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/208-10-2026-211-identity.json",
+      "bytes": 23047,
+      "sha256": "9a0e4fe577e6ed3dbbf8e939eac99fb1ff912587f1b2b2d7075a0b4811393329"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/208-10-2026-211-wharf.jsonl.gz",
+      "bytes": 211,
+      "sha256": "7c94ce7b190a3dd429d2dc8b53fc471b048d5ee64a44e5191accade9448710c0"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/208-10-2026-212-actual-and-opening.jsonl.gz",
+      "bytes": 48416,
+      "sha256": "d238d59820d3ccdeb4ad4281fe6ad5a1ff8e207bdf1d8e38d4b8b5496606c6e5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/208-10-2026-212-identity.json",
+      "bytes": 22718,
+      "sha256": "462fd30232d8a0954ed1bebcfd605dec5e1b62e724d97b516f2a19fb9d685ff5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/208-10-2026-212-wharf.jsonl.gz",
+      "bytes": 210,
+      "sha256": "70ab690c7c018acc6b2cd3afddc1eff7467f7c413c48e246e9e73fe32b212cbb"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/263-05-2026-211-actual-and-opening.jsonl.gz",
+      "bytes": 40970,
+      "sha256": "5f5b898ecdf3eef9d8df89d301979a2aff45b560e9ead4dc02db80eeac211d7b"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/263-05-2026-211-identity.json",
+      "bytes": 18637,
+      "sha256": "310823c3a32da12dedf127131d9f09aadade738d46fc8db492dd1342f4925a93"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/263-05-2026-211-wharf.jsonl.gz",
+      "bytes": 188,
+      "sha256": "d7a988f53f16c582f769865ef138edea5e093fc8d40d4dac4bb6a90aec5293c8"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/184-02/capture-recovery.csv",
+      "bytes": 7091,
+      "sha256": "a99f601d29a14661bdfab837e22070543a47c422c1eccc97d292667b91e22037"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/184-02/cities.csv",
+      "bytes": 310674,
+      "sha256": "02b18524ae9557753e868320928da922027470d80cc1019094156c05c380d6d4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/184-02/factions.csv",
+      "bytes": 83202,
+      "sha256": "9799d026de945bc32d21a7a3f8f66fe8f3572f882f1f5e77bf69e876ce2a7ef3"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/184-02/monthly.csv",
+      "bytes": 10632,
+      "sha256": "eb6daf8334153b16bb350a6d916410fa8c4abdbae39b16100f6833de92073dd9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/184-02/run.json",
+      "bytes": 1942,
+      "sha256": "275b41252d5e14a2421535a79124e002c608648f417f4dac88f131ce8a1dea16"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1435,
+      "sha256": "b4556a67f6f20e5b17b2e431f326687b2ebdd7ebc6eb51850b0538af641b0754"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/capacity.jsonl.gz",
+      "bytes": 58653,
+      "sha256": "4e0446627f2f16d65a6520be4ea69d894970fc5bed2534fea2a6b68952fee2d8"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/coordination.jsonl.gz",
+      "bytes": 257229,
+      "sha256": "ede2e33aba64c1a10e5acbcfe222ca98636e4148b8d1c2427478c4522f5ffff4"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/events.jsonl.gz",
+      "bytes": 356192,
+      "sha256": "d549a53853678e85faf274152324712b67bd903c1829a7c47e55daafb33ee8dc"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/run-v231.json",
+      "bytes": 13006,
+      "sha256": "3e420213ebe834ecd1215812ea252581d0b8d44e9593a98eda794a9cc0cd098e"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/run-v3041.json",
+      "bytes": 17754,
+      "sha256": "db0ceb9ded8f5f45a522ecfd352d9ed5c53e2bfd290f12786c43bfe9ca77cafa"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 14440,
+      "sha256": "6d51292d0d69ef7f8f6681125bbbf098d25914866bba87cd97f7df3745b3e2d2"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/184-02-2026-211/terminal-save.json.gz",
+      "bytes": 92439,
+      "sha256": "8a2e29ff38d8a65f01d6ac1d37af53a66d54b52555373e99929b7bc8172dca13"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/208-10/capture-recovery.csv",
+      "bytes": 3409,
+      "sha256": "2980c36823f42431d37e602795df726b15d3e794463099c8137c9d63e1a33f77"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/208-10/cities.csv",
+      "bytes": 340279,
+      "sha256": "8fa45aeb396b2fd98f06b09af6330d78f3f3e8ea062a590c7a74a27f236fd901"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/208-10/factions.csv",
+      "bytes": 104776,
+      "sha256": "91da7c930f634202a13b68dc9dac084da7ae23e6e7e091b8d3aa94277f210cd2"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/208-10/monthly.csv",
+      "bytes": 10802,
+      "sha256": "592f205be896aed080810df34e2c3919aaed8d8fdd0477b1a532cf6e810c1eca"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/208-10/run.json",
+      "bytes": 5391,
+      "sha256": "a744dc25002d9a72a3889584c381e524c33e2fcd943bfd301701f553dd73bea0"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1563,
+      "sha256": "e1d3c741c339016a8dbae316d9ae5379cbbd524fea345a6aa43d46568d9c7096"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/capacity.jsonl.gz",
+      "bytes": 180684,
+      "sha256": "447e4b793b01bf411ebdf24fd67f42a6f077eb1c490eb0d73412fffdf827b1f1"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/coordination.jsonl.gz",
+      "bytes": 418168,
+      "sha256": "7a748ddb05a1afedf11e1dadb9a301ae38a427cf81488d0d7d7b48041fc96f40"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/events.jsonl.gz",
+      "bytes": 1502012,
+      "sha256": "63af277e25c55d22388dfca51ae25fb8f8ad37e207a4ab7475ac038cc48637fd"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/run-v231.json",
+      "bytes": 17358,
+      "sha256": "e4784b3df98bad1b4014992179db7bd7565f52e8abc082e8adc20bc37962e8dd"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/run-v3041.json",
+      "bytes": 22488,
+      "sha256": "7933d12f4cf3b55dbc42c64cb0c221d479fe18678bb0de1c0adccd8c945c5b72"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 47668,
+      "sha256": "887f0f35cf0e3e7695a4e10f773d942047da558d228b3b86ef909c03cbef9223"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-211/terminal-save.json.gz",
+      "bytes": 152868,
+      "sha256": "30b624f60e8324a3bfc9c902ace9694c3ed77ba4c3ba23d50c86601b9aaea439"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/208-10/capture-recovery.csv",
+      "bytes": 3824,
+      "sha256": "9fb352fb093aed2efab53f8bfe37416127dc6da417fe19019f9d3df9e54d3675"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/208-10/cities.csv",
+      "bytes": 341170,
+      "sha256": "ec7a14b6c2be99c0d1bb2684c511a3de35801e189c2fc872c5e214d8ec58b334"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/208-10/factions.csv",
+      "bytes": 102906,
+      "sha256": "834bb777b08a84977b5ba8794de0f17ec04c74a99ac7e89f42705262d1a54cb0"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/208-10/monthly.csv",
+      "bytes": 10584,
+      "sha256": "a1a5a5a98f43dec4b095acec3ee97186e25526d29baeab4b55065e84e3676713"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/208-10/run.json",
+      "bytes": 4953,
+      "sha256": "e8563615cfb3dbb8b8e30c601779e408290daf4429171270ee41d1a404a4a020"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/actual-consumption-by-month.json.gz",
+      "bytes": 1430,
+      "sha256": "15216432417909dc2f02e280e4eef4847252de2d20b655232e1999293e594b9a"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/capacity.jsonl.gz",
+      "bytes": 139032,
+      "sha256": "e83c763dab162226ef20f976af3e1e7dbf7c4b4aacba6059871fdaacd2004a95"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/coordination.jsonl.gz",
+      "bytes": 331509,
+      "sha256": "c79c4651533dd661f0becb746a92b80c54073d10330995f76e849a53f9680f39"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/events.jsonl.gz",
+      "bytes": 720836,
+      "sha256": "c445826d5991567fc3dfb1b17bc02ebdc868e129f00681120a4bf20d49878b4c"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/run-v231.json",
+      "bytes": 17032,
+      "sha256": "eae253363cce1e4bd191d595d7ff1902eca71d917054e9a0e5e3006d71af38b9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/run-v3041.json",
+      "bytes": 22159,
+      "sha256": "54ada3873196aa691fdf79735c89fee39bc170006b5cc3aa9ece78f0d0175051"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/supply-episodes-weather-aware.csv",
+      "bytes": 30588,
+      "sha256": "a95aa582d0061ec3970e7e1c120aa75ce0eb0d6ef55da2a66e420d761a9b83c5"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/208-10-2026-212/terminal-save.json.gz",
+      "bytes": 149771,
+      "sha256": "9ed8b5a3620f481ace7bc58ae017201d93ae51c1c11023f0e1b9fcfcd4ff3060"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/263-05/capture-recovery.csv",
+      "bytes": 3798,
+      "sha256": "4bb712e804e4e4aa8bf3bbddd284249a73442965d2e3b25870d4a5ef005938df"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/263-05/cities.csv",
+      "bytes": 366993,
+      "sha256": "b324a2eb76152261dd053fdadf6dcd611fd560ca24a74c7a5639746c762d9590"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/263-05/factions.csv",
+      "bytes": 43249,
+      "sha256": "e9f0d38d0673f57e0f33d5a6be5fbc2c89363f7e36cf44f498a0dcd15671f875"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/263-05/monthly.csv",
+      "bytes": 10800,
+      "sha256": "86ffdde9b2d0a49758aeba24adfd6d238ba23b5fe82c04fa868936b9cbcccd1c"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/263-05/run.json",
+      "bytes": 2159,
+      "sha256": "f4076c90073492682434585e2542c0c633e528cc7a3e65e9e9c3332d561a5d91"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/actual-consumption-by-month.json.gz",
+      "bytes": 1489,
+      "sha256": "4a87749f9ca10f7aa74f068e6177d380128072f5e6a95e9eb9b15358806a90f9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/capacity.jsonl.gz",
+      "bytes": 90202,
+      "sha256": "df53ca80fc844b2aa47620496fd3cfca04b9a128f4fb6fd090607fe02a5d3ec0"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/coordination.jsonl.gz",
+      "bytes": 252155,
+      "sha256": "47f11126ac92a85ed8a38d8d272323ba58fa36cb36c7427ebda6c74d43ac2aee"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/events.jsonl.gz",
+      "bytes": 646723,
+      "sha256": "544e16cdc445710aa4f6dca35fc23c47aef43f9687dcc6fe1d9af3e2cf8683f8"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/run-v231.json",
+      "bytes": 13287,
+      "sha256": "15d9389d60c068ee998f464323465ba2f458d2c2410e141ae4116ed9da6aa618"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/run-v3041.json",
+      "bytes": 18078,
+      "sha256": "a9e762236500614754a4730929698129b2a2dd72286bc8711e0feb04ccf35fc6"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/supply-episodes-weather-aware.csv",
+      "bytes": 36972,
+      "sha256": "a649c6fd4d0e6b876869970ff2e917071600cdd134331b4c5e795a81d10fb8b9"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/N3/L2/campaigns/quick/F4/263-05-2026-211/terminal-save.json.gz",
+      "bytes": 103512,
+      "sha256": "88e6471bbf60c0031c46edda425703e75661d3c7e2b6a5f39ef4449bd7ac9a2d"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/balance-alerts.csv",
+      "bytes": 2549,
+      "sha256": "751e0b571f8e42cfd1c8796ebe3e5ce5a2a62eef21acf6569ea78bfa774c0d5e"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/economic-stage-status.json",
+      "bytes": 11818,
+      "sha256": "0e10aaa18f0a1a2d8383c4f19cf18fae5187acda707567645d13b6e9fa4d2e56"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/pairwise.csv",
+      "bytes": 49717,
+      "sha256": "034918593deb6c9ca9cb169b32204658b2699de9bbcec3ba1de9cadc15aa6680"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/quick-completed.json",
+      "bytes": 397185,
+      "sha256": "9d41ecdfea85f78c0ae0dc79a17ba462744ee485fae44adc814994ddf47604c6"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/quick-plan.json",
+      "bytes": 10555,
+      "sha256": "61d749f74bc1ce1169db41ce59f95eeccc7d907c6d1c297423dea3b96b947c2d"
+    },
+    {
+      "path": "raw/preliminary-before-gap-fix/scenario-scores.csv",
+      "bytes": 20233,
+      "sha256": "7c39232c04f0662dc70fa4c51355234387cbcfb01d146366602464b45687c71c"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+variant,convoy,input_sha256,active,status,reason,hunger_losses,troops,lawful_receiver,capacity,original_capacity_blocker,before_owner,end_tick,inbound_warehouse
+N0,1860,1b96cbb042a1e6c3a5f6ca9b88a3f90be58b52a35cdd054a286df14dee3e07f4,true,waiting,unsafe_return,5417,4583,false,,,liu_zhang,633,
+N0,2,8140a2448baa2890588412e70d47ab73eeb859244606d638e0123026e20de8dc,false,returned_home,,27,1280,,,,wei,39,henan
+N0,2170,c58315282ba2dff76da32b2a0715d13167b97894304b7ba5bec9364e3131f063,false,returned_home,,298,9702,,,,han,577,hanzhong
+N0,3634,90bb976774a85656ba6f25d35eb6b02de5c8c387f34f52e573456571589589fd,false,returned_home,,0,10000,,original_versioned_capacity,blocked: original journeys created with physical capacity,liu_zhang,723,wudu
+N0,45,71dded8925c589d3a8a313c3a1be6e36a1e4aee9bd50bc1d2c9c7fa33e3feee8,true,waiting,unsafe_return,524,0,false,,,ma_teng,107,
+N0,77,0fc3ac2d3ec1d9cd2eac57d73f620fca177b615aab7e9e907334a0ce7c75ff7e,true,waiting,no_return_route,0,10000,false,,,liu_zhang,101,
+N0,1228,96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50,false,received_elsewhere,,396,9604,,,,wei,414,chenliu
+N0,219,b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960,false,returned_home,,199,9801,,,,wei,130,wei
+N1,1860,1b96cbb042a1e6c3a5f6ca9b88a3f90be58b52a35cdd054a286df14dee3e07f4,true,waiting,unsafe_return,5417,4583,false,,,liu_zhang,633,
+N1,2,8140a2448baa2890588412e70d47ab73eeb859244606d638e0123026e20de8dc,false,returned_home,,27,1280,,,,wei,39,henan
+N1,2170,c58315282ba2dff76da32b2a0715d13167b97894304b7ba5bec9364e3131f063,false,returned_home,,298,9702,,,,han,577,hanzhong
+N1,3634,90bb976774a85656ba6f25d35eb6b02de5c8c387f34f52e573456571589589fd,false,returned_home,,0,10000,,original_versioned_capacity,blocked: original journeys created with physical capacity,liu_zhang,723,wudu
+N1,45,71dded8925c589d3a8a313c3a1be6e36a1e4aee9bd50bc1d2c9c7fa33e3feee8,true,waiting,unsafe_return,524,0,false,,,ma_teng,107,
+N1,77,0fc3ac2d3ec1d9cd2eac57d73f620fca177b615aab7e9e907334a0ce7c75ff7e,true,waiting,no_return_route,0,10000,false,,,liu_zhang,101,
+N1,1228,96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50,false,received_elsewhere,,396,9604,,,,wei,414,chenliu
+N1,219,b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960,false,returned_home,,199,9801,,,,wei,130,wei
+N2,1860,1b96cbb042a1e6c3a5f6ca9b88a3f90be58b52a35cdd054a286df14dee3e07f4,true,waiting,unsafe_return,5417,4583,false,,,liu_zhang,633,
+N2,2,8140a2448baa2890588412e70d47ab73eeb859244606d638e0123026e20de8dc,false,returned_home,,27,1280,,,,wei,39,henan
+N2,2170,c58315282ba2dff76da32b2a0715d13167b97894304b7ba5bec9364e3131f063,false,returned_home,,298,9702,,,,han,577,hanzhong
+N2,3634,90bb976774a85656ba6f25d35eb6b02de5c8c387f34f52e573456571589589fd,false,returned_home,,0,10000,,original_versioned_capacity,blocked: original journeys created with physical capacity,liu_zhang,723,wudu
+N2,45,71dded8925c589d3a8a313c3a1be6e36a1e4aee9bd50bc1d2c9c7fa33e3feee8,true,waiting,unsafe_return,524,0,false,,,ma_teng,107,
+N2,77,0fc3ac2d3ec1d9cd2eac57d73f620fca177b615aab7e9e907334a0ce7c75ff7e,true,waiting,no_return_route,0,10000,false,,,liu_zhang,101,
+N2,1228,96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50,false,received_elsewhere,,396,9604,,,,wei,414,chenliu
+N2,219,b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960,false,returned_home,,199,9801,,,,wei,130,wei
+N3,1860,1b96cbb042a1e6c3a5f6ca9b88a3f90be58b52a35cdd054a286df14dee3e07f4,true,waiting,unsafe_return,5417,4583,false,,,liu_zhang,633,
+N3,2,8140a2448baa2890588412e70d47ab73eeb859244606d638e0123026e20de8dc,false,returned_home,,27,1280,,,,wei,39,henan
+N3,2170,c58315282ba2dff76da32b2a0715d13167b97894304b7ba5bec9364e3131f063,false,returned_home,,298,9702,,,,han,577,hanzhong
+N3,3634,90bb976774a85656ba6f25d35eb6b02de5c8c387f34f52e573456571589589fd,false,returned_home,,0,10000,,original_versioned_capacity,blocked: original journeys created with physical capacity,liu_zhang,723,wudu
+N3,45,71dded8925c589d3a8a313c3a1be6e36a1e4aee9bd50bc1d2c9c7fa33e3feee8,true,waiting,unsafe_return,524,0,false,,,ma_teng,107,
+N3,77,0fc3ac2d3ec1d9cd2eac57d73f620fca177b615aab7e9e907334a0ce7c75ff7e,true,waiting,no_return_route,0,10000,false,,,liu_zhang,101,
+N3,1228,96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50,false,received_elsewhere,,396,9604,,,,wei,414,chenliu
+N3,219,b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960,false,returned_home,,199,9801,,,,wei,130,wei

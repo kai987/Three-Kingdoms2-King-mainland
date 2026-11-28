@@ -1,0 +1,2128 @@
+[
+  {
+    "wave": "quick",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N0",
+    "output": "K0/campaigns/quick/F4/184-02-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 48567,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "ee62ef9b32409bd3dbc7e3387465673b79297a5e406bfedc27b60cf543efb045",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "b61361ade64c22c3d9249d46be8800bb2ec30068887b3be190112f0aa5fb228a",
+      "factions": "ce2a8be6da125b7bac67892bfa7625e62071191c42836f1cfe994a75be8bb35c",
+      "cities": "3100d0abf00b1166203a6e89254f4875dc1711ba0e4106c8e52560e83e09c4d2"
+    },
+    "rng": {
+      "state": 1567963248,
+      "draws": 2198
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N0",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N0/K0/campaigns/quick/F4/184-02-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "348e33e30db5aa15e2dfacea2f92f9d1639f81f08de3c596b9a6d5f6e159b130",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 0,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 0,
+        "effective_capacity_options": null,
+        "transport_infrastructure_rules_version": 0
+      }
+    },
+    "final_normalized": {
+      "digest": "6c9bb043590bf63ebd0e1edd0939715253e43885ec60263ff6abb824d6dee1d8",
+      "rng": {
+        "state": 1567963248,
+        "draws": 2198
+      },
+      "products": {
+        "monthly": "b61361ade64c22c3d9249d46be8800bb2ec30068887b3be190112f0aa5fb228a",
+        "factions": "ce2a8be6da125b7bac67892bfa7625e62071191c42836f1cfe994a75be8bb35c",
+        "cities": "3100d0abf00b1166203a6e89254f4875dc1711ba0e4106c8e52560e83e09c4d2"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N0/184-02-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N0/184-02-2026-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N1",
+    "output": "K0/campaigns/quick/F4/184-02-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 48567,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_infrastructure_rules_version": 3042
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "6cf22458659d09c7605a826fc118fcf94e51935ce814702e7a75ea25b7c3aff8",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "b61361ade64c22c3d9249d46be8800bb2ec30068887b3be190112f0aa5fb228a",
+      "factions": "ce2a8be6da125b7bac67892bfa7625e62071191c42836f1cfe994a75be8bb35c",
+      "cities": "3100d0abf00b1166203a6e89254f4875dc1711ba0e4106c8e52560e83e09c4d2"
+    },
+    "rng": {
+      "state": 1567963248,
+      "draws": 2198
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N1",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N1/K0/campaigns/quick/F4/184-02-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "348e33e30db5aa15e2dfacea2f92f9d1639f81f08de3c596b9a6d5f6e159b130",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 0,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 0,
+        "effective_capacity_options": null,
+        "transport_infrastructure_rules_version": 3042
+      }
+    },
+    "final_normalized": {
+      "digest": "6c9bb043590bf63ebd0e1edd0939715253e43885ec60263ff6abb824d6dee1d8",
+      "rng": {
+        "state": 1567963248,
+        "draws": 2198
+      },
+      "products": {
+        "monthly": "b61361ade64c22c3d9249d46be8800bb2ec30068887b3be190112f0aa5fb228a",
+        "factions": "ce2a8be6da125b7bac67892bfa7625e62071191c42836f1cfe994a75be8bb35c",
+        "cities": "3100d0abf00b1166203a6e89254f4875dc1711ba0e4106c8e52560e83e09c4d2"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N1/184-02-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N1/184-02-2026-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "207-09",
+    "seed": 2034,
+    "strategy": 211,
+    "variant": "N0",
+    "output": "K0/campaigns/quick/F4/207-09-2034-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "d1fbce9fa0a630bccf91f0a7808e19f1ec1f8e214195ad6af42d57bb5ce0605e",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 79417,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "a227297c5251e6e4ceacce29e9ac77f82630a97aa5cae61833425bae082124a4",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "0aa2b5424dfaca9450d522526bdcfc50ce42ea26486952a0f1a4fa10ae294573",
+      "factions": "54c3a75e1fd15f1122031b83cda6a54b3d3ae40076376eccdc81fabad567283a",
+      "cities": "a92aa283ddb769c9e8caae892e28b3e4790fbf6e1f66a16f5658053efcb6a337"
+    },
+    "rng": {
+      "state": 3202678639,
+      "draws": 4137
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "207-09",
+      "seed": 2034,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N0",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N0/K0/campaigns/quick/F4/207-09-2034-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "39aec60bf6fd5e2f59f298b7941911fcdf0929b62004fa3005d61cbc732d8be5",
+      "rng": {
+        "state": 2034,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 0,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 0,
+        "effective_capacity_options": null,
+        "transport_infrastructure_rules_version": 0
+      }
+    },
+    "final_normalized": {
+      "digest": "1084234ecaebb3e227bab606414d4948679d0d3311e1fa6ea7885ff6cd90d5f5",
+      "rng": {
+        "state": 3202678639,
+        "draws": 4137
+      },
+      "products": {
+        "monthly": "0aa2b5424dfaca9450d522526bdcfc50ce42ea26486952a0f1a4fa10ae294573",
+        "factions": "54c3a75e1fd15f1122031b83cda6a54b3d3ae40076376eccdc81fabad567283a",
+        "cities": "a92aa283ddb769c9e8caae892e28b3e4790fbf6e1f66a16f5658053efcb6a337"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N0/207-09-2034-211-wharf.jsonl.gz",
+    "city_and_army_events": "N0/207-09-2034-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "207-09",
+    "seed": 2034,
+    "strategy": 211,
+    "variant": "N1",
+    "output": "K0/campaigns/quick/F4/207-09-2034-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "d1fbce9fa0a630bccf91f0a7808e19f1ec1f8e214195ad6af42d57bb5ce0605e",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 79417,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_infrastructure_rules_version": 3042
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "d3e26356441fddf73305eb1014acb3f782016b6f906567e3a8f0554eb1abe078",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "0aa2b5424dfaca9450d522526bdcfc50ce42ea26486952a0f1a4fa10ae294573",
+      "factions": "54c3a75e1fd15f1122031b83cda6a54b3d3ae40076376eccdc81fabad567283a",
+      "cities": "a92aa283ddb769c9e8caae892e28b3e4790fbf6e1f66a16f5658053efcb6a337"
+    },
+    "rng": {
+      "state": 3202678639,
+      "draws": 4137
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "207-09",
+      "seed": 2034,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N1",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N1/K0/campaigns/quick/F4/207-09-2034-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "39aec60bf6fd5e2f59f298b7941911fcdf0929b62004fa3005d61cbc732d8be5",
+      "rng": {
+        "state": 2034,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 0,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 0,
+        "effective_capacity_options": null,
+        "transport_infrastructure_rules_version": 3042
+      }
+    },
+    "final_normalized": {
+      "digest": "1084234ecaebb3e227bab606414d4948679d0d3311e1fa6ea7885ff6cd90d5f5",
+      "rng": {
+        "state": 3202678639,
+        "draws": 4137
+      },
+      "products": {
+        "monthly": "0aa2b5424dfaca9450d522526bdcfc50ce42ea26486952a0f1a4fa10ae294573",
+        "factions": "54c3a75e1fd15f1122031b83cda6a54b3d3ae40076376eccdc81fabad567283a",
+        "cities": "a92aa283ddb769c9e8caae892e28b3e4790fbf6e1f66a16f5658053efcb6a337"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N1/207-09-2034-211-wharf.jsonl.gz",
+    "city_and_army_events": "N1/207-09-2034-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N0",
+    "output": "K0/campaigns/quick/F4/208-10-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 138114,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "25fc4abc618df712c1a3e1d1771073dd549454e232569649b0998d680e2bd75e",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "e1f0b074a337eb3fe056a5eee5df57114a51eb967707dcffc0e26e06ae843726",
+      "factions": "320db2a8d06a16b411d7cc25ac19da6656edcfe2f82e4c842ed4f6472ac4b78a",
+      "cities": "e5ab24546b9f57497a62c0668e553513f4d326a402ea05be29b25cce383fabb4"
+    },
+    "rng": {
+      "state": 3237318497,
+      "draws": 4440
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N0",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N0/K0/campaigns/quick/F4/208-10-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "7b5cb45ee4372c22e39b44f46da9e90e47b63fac8ac1605f1fad45b3e0745cf3",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 0,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 0,
+        "effective_capacity_options": null,
+        "transport_infrastructure_rules_version": 0
+      }
+    },
+    "final_normalized": {
+      "digest": "e0c15d88b355c8ed52db1a557c12a7208f3f081e67a7411e7e1b7ad4d962bc1c",
+      "rng": {
+        "state": 3237318497,
+        "draws": 4440
+      },
+      "products": {
+        "monthly": "e1f0b074a337eb3fe056a5eee5df57114a51eb967707dcffc0e26e06ae843726",
+        "factions": "320db2a8d06a16b411d7cc25ac19da6656edcfe2f82e4c842ed4f6472ac4b78a",
+        "cities": "e5ab24546b9f57497a62c0668e553513f4d326a402ea05be29b25cce383fabb4"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N0/208-10-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N0/208-10-2026-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N1",
+    "output": "K0/campaigns/quick/F4/208-10-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 138114,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_infrastructure_rules_version": 3042
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "48aeb9e444b26e1f71afe42f55c6d54f65721c828728d82e8503a738da52dc68",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "e1f0b074a337eb3fe056a5eee5df57114a51eb967707dcffc0e26e06ae843726",
+      "factions": "320db2a8d06a16b411d7cc25ac19da6656edcfe2f82e4c842ed4f6472ac4b78a",
+      "cities": "e5ab24546b9f57497a62c0668e553513f4d326a402ea05be29b25cce383fabb4"
+    },
+    "rng": {
+      "state": 3237318497,
+      "draws": 4440
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N1",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N1/K0/campaigns/quick/F4/208-10-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "7b5cb45ee4372c22e39b44f46da9e90e47b63fac8ac1605f1fad45b3e0745cf3",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 0,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 0,
+        "effective_capacity_options": null,
+        "transport_infrastructure_rules_version": 3042
+      }
+    },
+    "final_normalized": {
+      "digest": "e0c15d88b355c8ed52db1a557c12a7208f3f081e67a7411e7e1b7ad4d962bc1c",
+      "rng": {
+        "state": 3237318497,
+        "draws": 4440
+      },
+      "products": {
+        "monthly": "e1f0b074a337eb3fe056a5eee5df57114a51eb967707dcffc0e26e06ae843726",
+        "factions": "320db2a8d06a16b411d7cc25ac19da6656edcfe2f82e4c842ed4f6472ac4b78a",
+        "cities": "e5ab24546b9f57497a62c0668e553513f4d326a402ea05be29b25cce383fabb4"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N1/208-10-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N1/208-10-2026-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "N0",
+    "output": "K0/campaigns/quick/F4/208-10-2026-212",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 169979,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "6d070b42e1887099d995230666d143a73ffcfefd15591f2aa0608b479fc88a93",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "d86c3916aecea313d855bcb3e11fd71eb13f6c74c2c8e59716866fddec3829ce",
+      "factions": "fa34336b4819cf0201e3426577527e5ec2c563c5682971492fd74106e197b882",
+      "cities": "17cdc67a7a5ef5003009e058ba84c18486338b9f95b9f4aedc7643608decec3e"
+    },
+    "rng": {
+      "state": 718290270,
+      "draws": 5145
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "months": 24,
+      "study_group": "N0",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N0/K0/campaigns/quick/F4/208-10-2026-212/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "3a9080d8eea3ada7066f5935731e3439cb3e52bc972d8a8d83f1763638905ec6",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 0,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 0,
+        "effective_capacity_options": null,
+        "transport_infrastructure_rules_version": 0
+      }
+    },
+    "final_normalized": {
+      "digest": "d61bcd4ce3da1b4ee5ed8520dba09588e17dc4117e3c819bac2a43b74affd0f0",
+      "rng": {
+        "state": 718290270,
+        "draws": 5145
+      },
+      "products": {
+        "monthly": "d86c3916aecea313d855bcb3e11fd71eb13f6c74c2c8e59716866fddec3829ce",
+        "factions": "fa34336b4819cf0201e3426577527e5ec2c563c5682971492fd74106e197b882",
+        "cities": "17cdc67a7a5ef5003009e058ba84c18486338b9f95b9f4aedc7643608decec3e"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N0/208-10-2026-212-wharf.jsonl.gz",
+    "city_and_army_events": "N0/208-10-2026-212-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "N1",
+    "output": "K0/campaigns/quick/F4/208-10-2026-212",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 169979,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_infrastructure_rules_version": 3042
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "e836387f50cdae0bd4dfbe2ededaed489487e3c2475b34a4ed752c747e6f5484",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "d86c3916aecea313d855bcb3e11fd71eb13f6c74c2c8e59716866fddec3829ce",
+      "factions": "fa34336b4819cf0201e3426577527e5ec2c563c5682971492fd74106e197b882",
+      "cities": "17cdc67a7a5ef5003009e058ba84c18486338b9f95b9f4aedc7643608decec3e"
+    },
+    "rng": {
+      "state": 718290270,
+      "draws": 5145
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "months": 24,
+      "study_group": "N1",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N1/K0/campaigns/quick/F4/208-10-2026-212/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "3a9080d8eea3ada7066f5935731e3439cb3e52bc972d8a8d83f1763638905ec6",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 0,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 0,
+        "effective_capacity_options": null,
+        "transport_infrastructure_rules_version": 3042
+      }
+    },
+    "final_normalized": {
+      "digest": "d61bcd4ce3da1b4ee5ed8520dba09588e17dc4117e3c819bac2a43b74affd0f0",
+      "rng": {
+        "state": 718290270,
+        "draws": 5145
+      },
+      "products": {
+        "monthly": "d86c3916aecea313d855bcb3e11fd71eb13f6c74c2c8e59716866fddec3829ce",
+        "factions": "fa34336b4819cf0201e3426577527e5ec2c563c5682971492fd74106e197b882",
+        "cities": "17cdc67a7a5ef5003009e058ba84c18486338b9f95b9f4aedc7643608decec3e"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N1/208-10-2026-212-wharf.jsonl.gz",
+    "city_and_army_events": "N1/208-10-2026-212-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "263-05",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N0",
+    "output": "K0/campaigns/quick/F4/263-05-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 282985,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {},
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "f0463f02e81f842c61637ede471ca1bf14d96c064542bfc62d4fede4b7a337ff",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "5ade585411a0da8e078d62861ffc6037ba3e8738127551b4bf3d958f9e5a4f35",
+      "factions": "e37e1d3ffabd45cbeb6c4c42bc844e0adc6a0619b1ec9278d920dd083901c253",
+      "cities": "6fbf3d5d5dd205a17c315405dc239522ec8af8760788267841a8b00469d1c554"
+    },
+    "rng": {
+      "state": 2197207659,
+      "draws": 4047
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "263-05",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N0",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N0/K0/campaigns/quick/F4/263-05-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "ac1ec5d81c59539e79098bd2b2b30498293fc642bc6ce60dfac48702091b0993",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 0,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 0,
+        "effective_capacity_options": null,
+        "transport_infrastructure_rules_version": 0
+      }
+    },
+    "final_normalized": {
+      "digest": "577630774afbbc5f2d27c16f70123838347d7415cfa6715df5c8fc6ad83d0257",
+      "rng": {
+        "state": 2197207659,
+        "draws": 4047
+      },
+      "products": {
+        "monthly": "5ade585411a0da8e078d62861ffc6037ba3e8738127551b4bf3d958f9e5a4f35",
+        "factions": "e37e1d3ffabd45cbeb6c4c42bc844e0adc6a0619b1ec9278d920dd083901c253",
+        "cities": "6fbf3d5d5dd205a17c315405dc239522ec8af8760788267841a8b00469d1c554"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N0/263-05-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N0/263-05-2026-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "263-05",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N1",
+    "output": "K0/campaigns/quick/F4/263-05-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 282985,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_infrastructure_rules_version": 3042
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "60bf6b1840c51594ef5d875e260538b2883f2ea4c62b11ee840be406b07b8702",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "5ade585411a0da8e078d62861ffc6037ba3e8738127551b4bf3d958f9e5a4f35",
+      "factions": "e37e1d3ffabd45cbeb6c4c42bc844e0adc6a0619b1ec9278d920dd083901c253",
+      "cities": "6fbf3d5d5dd205a17c315405dc239522ec8af8760788267841a8b00469d1c554"
+    },
+    "rng": {
+      "state": 2197207659,
+      "draws": 4047
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "263-05",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N1",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N1/K0/campaigns/quick/F4/263-05-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "ac1ec5d81c59539e79098bd2b2b30498293fc642bc6ce60dfac48702091b0993",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 0,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 0,
+        "effective_capacity_options": null,
+        "transport_infrastructure_rules_version": 3042
+      }
+    },
+    "final_normalized": {
+      "digest": "577630774afbbc5f2d27c16f70123838347d7415cfa6715df5c8fc6ad83d0257",
+      "rng": {
+        "state": 2197207659,
+        "draws": 4047
+      },
+      "products": {
+        "monthly": "5ade585411a0da8e078d62861ffc6037ba3e8738127551b4bf3d958f9e5a4f35",
+        "factions": "e37e1d3ffabd45cbeb6c4c42bc844e0adc6a0619b1ec9278d920dd083901c253",
+        "cities": "6fbf3d5d5dd205a17c315405dc239522ec8af8760788267841a8b00469d1c554"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N1/263-05-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N1/263-05-2026-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N2",
+    "output": "L2/campaigns/quick/F4/184-02-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 219676,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "db8876d03d1e1ed0da4c14835f3cee99fefa32197307a0ef126b6fe457068428",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "eb6daf8334153b16bb350a6d916410fa8c4abdbae39b16100f6833de92073dd9",
+      "factions": "9799d026de945bc32d21a7a3f8f66fe8f3572f882f1f5e77bf69e876ce2a7ef3",
+      "cities": "02b18524ae9557753e868320928da922027470d80cc1019094156c05c380d6d4"
+    },
+    "rng": {
+      "state": 1226903147,
+      "draws": 2384
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N2",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N2/L2/campaigns/quick/F4/184-02-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "167c74eb8ece846981011fe4b327196d1842dca1e72dadf66316b0d4ce9e82a8",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 303,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 30412,
+        "effective_capacity_options": {
+          "concurrency": true,
+          "physical_capacity": false,
+          "mode_aware_ai_policy": false,
+          "throughput_ranking": false,
+          "double_dispatch": false
+        },
+        "transport_infrastructure_rules_version": 0
+      }
+    },
+    "final_normalized": {
+      "digest": "3e95870c677e633d38ff7a0c069648afdfbe3646c4e27578673bb1449963501d",
+      "rng": {
+        "state": 1226903147,
+        "draws": 2384
+      },
+      "products": {
+        "monthly": "eb6daf8334153b16bb350a6d916410fa8c4abdbae39b16100f6833de92073dd9",
+        "factions": "9799d026de945bc32d21a7a3f8f66fe8f3572f882f1f5e77bf69e876ce2a7ef3",
+        "cities": "02b18524ae9557753e868320928da922027470d80cc1019094156c05c380d6d4"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N2/184-02-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N2/184-02-2026-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "184-02",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N3",
+    "output": "L2/campaigns/quick/F4/184-02-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 219676,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      },
+      "transport_infrastructure_rules_version": 3042
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "0cd3686a6150200d01346e69db978d4506caf7a0d1f308b61d0a33048f4fa68a",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "eb6daf8334153b16bb350a6d916410fa8c4abdbae39b16100f6833de92073dd9",
+      "factions": "9799d026de945bc32d21a7a3f8f66fe8f3572f882f1f5e77bf69e876ce2a7ef3",
+      "cities": "02b18524ae9557753e868320928da922027470d80cc1019094156c05c380d6d4"
+    },
+    "rng": {
+      "state": 1226903147,
+      "draws": 2384
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N3",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N3/L2/campaigns/quick/F4/184-02-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "167c74eb8ece846981011fe4b327196d1842dca1e72dadf66316b0d4ce9e82a8",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 303,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 30412,
+        "effective_capacity_options": {
+          "concurrency": true,
+          "physical_capacity": false,
+          "mode_aware_ai_policy": false,
+          "throughput_ranking": false,
+          "double_dispatch": false
+        },
+        "transport_infrastructure_rules_version": 3042
+      }
+    },
+    "final_normalized": {
+      "digest": "3e95870c677e633d38ff7a0c069648afdfbe3646c4e27578673bb1449963501d",
+      "rng": {
+        "state": 1226903147,
+        "draws": 2384
+      },
+      "products": {
+        "monthly": "eb6daf8334153b16bb350a6d916410fa8c4abdbae39b16100f6833de92073dd9",
+        "factions": "9799d026de945bc32d21a7a3f8f66fe8f3572f882f1f5e77bf69e876ce2a7ef3",
+        "cities": "02b18524ae9557753e868320928da922027470d80cc1019094156c05c380d6d4"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N3/184-02-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N3/184-02-2026-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N2",
+    "output": "L2/campaigns/quick/F4/208-10-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 297855,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "5fd6822361c7aa2c89acf694306075c40764a606a34505cbcf911309adc473c4",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "592f205be896aed080810df34e2c3919aaed8d8fdd0477b1a532cf6e810c1eca",
+      "factions": "91da7c930f634202a13b68dc9dac084da7ae23e6e7e091b8d3aa94277f210cd2",
+      "cities": "8fa45aeb396b2fd98f06b09af6330d78f3f3e8ea062a590c7a74a27f236fd901"
+    },
+    "rng": {
+      "state": 1118078000,
+      "draws": 4475
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N2",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N2/L2/campaigns/quick/F4/208-10-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "ed5e27138def88f3992e1d873d4b911c25f385f1b6f254e49cc31101efa5a9ea",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 303,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 30412,
+        "effective_capacity_options": {
+          "concurrency": true,
+          "physical_capacity": false,
+          "mode_aware_ai_policy": false,
+          "throughput_ranking": false,
+          "double_dispatch": false
+        },
+        "transport_infrastructure_rules_version": 0
+      }
+    },
+    "final_normalized": {
+      "digest": "58a317cebad2a6feb330dcd714195a86be610311308b8a60fc71f9ff603d1089",
+      "rng": {
+        "state": 1118078000,
+        "draws": 4475
+      },
+      "products": {
+        "monthly": "592f205be896aed080810df34e2c3919aaed8d8fdd0477b1a532cf6e810c1eca",
+        "factions": "91da7c930f634202a13b68dc9dac084da7ae23e6e7e091b8d3aa94277f210cd2",
+        "cities": "8fa45aeb396b2fd98f06b09af6330d78f3f3e8ea062a590c7a74a27f236fd901"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N2/208-10-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N2/208-10-2026-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N3",
+    "output": "L2/campaigns/quick/F4/208-10-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 297855,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      },
+      "transport_infrastructure_rules_version": 3042
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "adf7947bb44aee200d548dfc181d7ab054c812a93ca98addaed29874808dbf3e",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "592f205be896aed080810df34e2c3919aaed8d8fdd0477b1a532cf6e810c1eca",
+      "factions": "91da7c930f634202a13b68dc9dac084da7ae23e6e7e091b8d3aa94277f210cd2",
+      "cities": "8fa45aeb396b2fd98f06b09af6330d78f3f3e8ea062a590c7a74a27f236fd901"
+    },
+    "rng": {
+      "state": 1118078000,
+      "draws": 4475
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N3",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N3/L2/campaigns/quick/F4/208-10-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "ed5e27138def88f3992e1d873d4b911c25f385f1b6f254e49cc31101efa5a9ea",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 303,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 30412,
+        "effective_capacity_options": {
+          "concurrency": true,
+          "physical_capacity": false,
+          "mode_aware_ai_policy": false,
+          "throughput_ranking": false,
+          "double_dispatch": false
+        },
+        "transport_infrastructure_rules_version": 3042
+      }
+    },
+    "final_normalized": {
+      "digest": "58a317cebad2a6feb330dcd714195a86be610311308b8a60fc71f9ff603d1089",
+      "rng": {
+        "state": 1118078000,
+        "draws": 4475
+      },
+      "products": {
+        "monthly": "592f205be896aed080810df34e2c3919aaed8d8fdd0477b1a532cf6e810c1eca",
+        "factions": "91da7c930f634202a13b68dc9dac084da7ae23e6e7e091b8d3aa94277f210cd2",
+        "cities": "8fa45aeb396b2fd98f06b09af6330d78f3f3e8ea062a590c7a74a27f236fd901"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N3/208-10-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N3/208-10-2026-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "N2",
+    "output": "L2/campaigns/quick/F4/208-10-2026-212",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 359774,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "b571d59bfff556bb198d299e43538e5fa55b52a01536a434b0be2ef5812dd169",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "a1a5a5a98f43dec4b095acec3ee97186e25526d29baeab4b55065e84e3676713",
+      "factions": "834bb777b08a84977b5ba8794de0f17ec04c74a99ac7e89f42705262d1a54cb0",
+      "cities": "ec7a14b6c2be99c0d1bb2684c511a3de35801e189c2fc872c5e214d8ec58b334"
+    },
+    "rng": {
+      "state": 399526852,
+      "draws": 4285
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "months": 24,
+      "study_group": "N2",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N2/L2/campaigns/quick/F4/208-10-2026-212/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "b91c6feb3ddae8a88d3172a2550653b3bbccb830b0ef375ed081a22412e07e5f",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 303,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 30412,
+        "effective_capacity_options": {
+          "concurrency": true,
+          "physical_capacity": false,
+          "mode_aware_ai_policy": false,
+          "throughput_ranking": false,
+          "double_dispatch": false
+        },
+        "transport_infrastructure_rules_version": 0
+      }
+    },
+    "final_normalized": {
+      "digest": "79b2bead5ba1164e403d5356a4dc23e05cbc74e201ea6c3873c7bc2d4e646a41",
+      "rng": {
+        "state": 399526852,
+        "draws": 4285
+      },
+      "products": {
+        "monthly": "a1a5a5a98f43dec4b095acec3ee97186e25526d29baeab4b55065e84e3676713",
+        "factions": "834bb777b08a84977b5ba8794de0f17ec04c74a99ac7e89f42705262d1a54cb0",
+        "cities": "ec7a14b6c2be99c0d1bb2684c511a3de35801e189c2fc872c5e214d8ec58b334"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N2/208-10-2026-212-wharf.jsonl.gz",
+    "city_and_army_events": "N2/208-10-2026-212-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "208-10",
+    "seed": 2026,
+    "strategy": 212,
+    "variant": "N3",
+    "output": "L2/campaigns/quick/F4/208-10-2026-212",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 359774,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      },
+      "transport_infrastructure_rules_version": 3042
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 212
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "ae30c30d6357bcadb8c9e8513d19b42cc3fe17f2cf3ebc23d79e3c65c8dbf684",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "a1a5a5a98f43dec4b095acec3ee97186e25526d29baeab4b55065e84e3676713",
+      "factions": "834bb777b08a84977b5ba8794de0f17ec04c74a99ac7e89f42705262d1a54cb0",
+      "cities": "ec7a14b6c2be99c0d1bb2684c511a3de35801e189c2fc872c5e214d8ec58b334"
+    },
+    "rng": {
+      "state": 399526852,
+      "draws": 4285
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "months": 24,
+      "study_group": "N3",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N3/L2/campaigns/quick/F4/208-10-2026-212/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "b91c6feb3ddae8a88d3172a2550653b3bbccb830b0ef375ed081a22412e07e5f",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 303,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 30412,
+        "effective_capacity_options": {
+          "concurrency": true,
+          "physical_capacity": false,
+          "mode_aware_ai_policy": false,
+          "throughput_ranking": false,
+          "double_dispatch": false
+        },
+        "transport_infrastructure_rules_version": 3042
+      }
+    },
+    "final_normalized": {
+      "digest": "79b2bead5ba1164e403d5356a4dc23e05cbc74e201ea6c3873c7bc2d4e646a41",
+      "rng": {
+        "state": 399526852,
+        "draws": 4285
+      },
+      "products": {
+        "monthly": "a1a5a5a98f43dec4b095acec3ee97186e25526d29baeab4b55065e84e3676713",
+        "factions": "834bb777b08a84977b5ba8794de0f17ec04c74a99ac7e89f42705262d1a54cb0",
+        "cities": "ec7a14b6c2be99c0d1bb2684c511a3de35801e189c2fc872c5e214d8ec58b334"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N3/208-10-2026-212-wharf.jsonl.gz",
+    "city_and_army_events": "N3/208-10-2026-212-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "263-05",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N2",
+    "output": "L2/campaigns/quick/F4/263-05-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 374311,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      }
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "3106923a3b60c9eeb3d3f931749af1bbc5687600d0cdb170c9a330d468d7c821",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "86ffdde9b2d0a49758aeba24adfd6d238ba23b5fe82c04fa868936b9cbcccd1c",
+      "factions": "e9f0d38d0673f57e0f33d5a6be5fbc2c89363f7e36cf44f498a0dcd15671f875",
+      "cities": "b324a2eb76152261dd053fdadf6dcd611fd560ca24a74c7a5639746c762d9590"
+    },
+    "rng": {
+      "state": 4171218084,
+      "draws": 4121
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "263-05",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N2",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N2/L2/campaigns/quick/F4/263-05-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "2996a1be1d1769235f615ea6e499aa617a516b5d9cb9cb5936c2c225aeb89885",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 303,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 30412,
+        "effective_capacity_options": {
+          "concurrency": true,
+          "physical_capacity": false,
+          "mode_aware_ai_policy": false,
+          "throughput_ranking": false,
+          "double_dispatch": false
+        },
+        "transport_infrastructure_rules_version": 0
+      }
+    },
+    "final_normalized": {
+      "digest": "d063fb82f23f3003455ceed3d5b873d7b10013360b6e7257f13323470d7b6e00",
+      "rng": {
+        "state": 4171218084,
+        "draws": 4121
+      },
+      "products": {
+        "monthly": "86ffdde9b2d0a49758aeba24adfd6d238ba23b5fe82c04fa868936b9cbcccd1c",
+        "factions": "e9f0d38d0673f57e0f33d5a6be5fbc2c89363f7e36cf44f498a0dcd15671f875",
+        "cities": "b324a2eb76152261dd053fdadf6dcd611fd560ca24a74c7a5639746c762d9590"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N2/263-05-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N2/263-05-2026-211-actual-and-opening.jsonl.gz"
+  },
+  {
+    "wave": "quick",
+    "scenario": "263-05",
+    "seed": 2026,
+    "strategy": 211,
+    "variant": "N3",
+    "output": "L2/campaigns/quick/F4/263-05-2026-211",
+    "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scenario_sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f",
+    "engine_worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "map_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "backend": {
+      "engine": "rust",
+      "abi": 1,
+      "calls": 374311,
+      "contexts": 128
+    },
+    "completed_turns": 72,
+    "full_months": 24,
+    "requested_months": 24,
+    "outcome": "complete",
+    "options": {
+      "transport_capacity_rules_version": 303,
+      "transport_capacity_options": {
+        "concurrency": true,
+        "physical_capacity": false,
+        "mode_aware_ai_policy": false,
+        "throughput_ranking": false,
+        "double_dispatch": false
+      },
+      "transport_coordination_rules_version": 30412,
+      "transport_coordination_options": {
+        "features": {
+          "diversity": true,
+          "economics": true,
+          "incremental": true,
+          "meal_priority": true,
+          "pagination": true,
+          "preparation": true,
+          "requote": true,
+          "reserve": true,
+          "route_reuse": true,
+          "transit": true
+        }
+      },
+      "transport_infrastructure_rules_version": 3042
+    },
+    "input_rule_versions": {
+      "economy": 2,
+      "market": 2,
+      "logistics": 2,
+      "ai_strategy": 211
+    },
+    "launch_weather_221": false,
+    "terminal_checksum": "062a198e428bd841bc3228afb3bfa1a0d0418689b0cd68ac042cfb06d3bcc246",
+    "failure": null,
+    "table_sha256": {
+      "monthly": "86ffdde9b2d0a49758aeba24adfd6d238ba23b5fe82c04fa868936b9cbcccd1c",
+      "factions": "e9f0d38d0673f57e0f33d5a6be5fbc2c89363f7e36cf44f498a0dcd15671f875",
+      "cities": "b324a2eb76152261dd053fdadf6dcd611fd560ca24a74c7a5639746c762d9590"
+    },
+    "rng": {
+      "state": 4171218084,
+      "draws": 4121
+    },
+    "source_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "observed_options": {
+      "wave": "quick",
+      "scenario": "263-05",
+      "seed": 2026,
+      "strategy": 211,
+      "months": 24,
+      "study_group": "N3",
+      "source": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "engine_sha": "e21704834237279a962ee2109aef505e8f53ffc9",
+      "source_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909"
+    },
+    "proof": "N3/L2/campaigns/quick/F4/263-05-2026-211/run-v3041.json",
+    "normalized_opening": {
+      "domain_sha256": "2996a1be1d1769235f615ea6e499aa617a516b5d9cb9cb5936c2c225aeb89885",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "rules": {
+        "economy_rules_version": 2,
+        "logistics_rules_version": 2,
+        "weather_rules_version": 23,
+        "winter_weather": {
+          "monthly_snow_probability": true,
+          "regional_snow_severity": true,
+          "regional_snow_depth": true,
+          "revised_cold_profile": true,
+          "exceptional_cold_wave": false,
+          "spring_cold_exposure": true,
+          "agricultural_climate": true,
+          "agricultural_risk_planning": true
+        },
+        "winter_forecast_version": 0,
+        "weather_forecast_version": 231,
+        "transport_emergency_rules_version": 222,
+        "regional_market_rules_version": 301,
+        "strategic_granary_rules_version": 302,
+        "transport_capacity_rules_version": 303,
+        "transport_capacity_options": 0,
+        "transshipment_rules_version": 0,
+        "transport_coordination_rules_version": 30412,
+        "effective_capacity_options": {
+          "concurrency": true,
+          "physical_capacity": false,
+          "mode_aware_ai_policy": false,
+          "throughput_ranking": false,
+          "double_dispatch": false
+        },
+        "transport_infrastructure_rules_version": 3042
+      }
+    },
+    "final_normalized": {
+      "digest": "d063fb82f23f3003455ceed3d5b873d7b10013360b6e7257f13323470d7b6e00",
+      "rng": {
+        "state": 4171218084,
+        "draws": 4121
+      },
+      "products": {
+        "monthly": "86ffdde9b2d0a49758aeba24adfd6d238ba23b5fe82c04fa868936b9cbcccd1c",
+        "factions": "e9f0d38d0673f57e0f33d5a6be5fbc2c89363f7e36cf44f498a0dcd15671f875",
+        "cities": "b324a2eb76152261dd053fdadf6dcd611fd560ca24a74c7a5639746c762d9590"
+      },
+      "wharf_active": 0
+    },
+    "facility_events": "N3/263-05-2026-211-wharf.jsonl.gz",
+    "city_and_army_events": "N3/263-05-2026-211-actual-and-opening.jsonl.gz"
+  }
+]

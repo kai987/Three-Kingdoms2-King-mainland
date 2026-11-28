@@ -1,0 +1,86 @@
+[
+  {
+    "path": "bundles/v3042-fixed-final.zip",
+    "bytes": 3862769,
+    "sha256": "f16b5dfa8c28b576a04a855f9bbaaecf9fb6d1cbdce395a01252a5c9e998ed7d",
+    "members": 85,
+    "index": "bundles/v3042-fixed-final.manifest.json"
+  },
+  {
+    "path": "bundles/v3042-fixed-stable.zip",
+    "bytes": 1408323,
+    "sha256": "81e1c7993be7327ef33585823b3b45c131715bc4e77b282b51cf4391e79f78b5",
+    "members": 22,
+    "index": "bundles/v3042-fixed-stable.manifest.json"
+  },
+  {
+    "path": "bundles/v3042-historical.zip",
+    "bytes": 275595,
+    "sha256": "61b0223af10a4adf668dd6f1b288a28c4df08c9c8abef012104bcf006b4418bb",
+    "members": 130,
+    "index": "bundles/v3042-historical.manifest.json"
+  },
+  {
+    "path": "bundles/v3042-performance.zip",
+    "bytes": 204355,
+    "sha256": "744c635b9fe523bc21c80fb69edc348f82b77d7f08adaf5d4398d24a1244d0b3",
+    "members": 165,
+    "index": "bundles/v3042-performance.manifest.json"
+  },
+  {
+    "path": "bundles/v3042-preliminary.zip",
+    "bytes": 23858126,
+    "sha256": "341547fc30bba9fd2f88cabb814bd10f5f56cc9de5194896f92968652987349b",
+    "members": 294,
+    "index": "bundles/v3042-preliminary.manifest.json"
+  },
+  {
+    "path": "bundles/v3042-profile.zip",
+    "bytes": 1199982,
+    "sha256": "20a945db2b794862bdf7de2134dd960cee76d7b3d9c8f4c231432fb1e89c6f70",
+    "members": 34,
+    "index": "bundles/v3042-profile.manifest.json"
+  },
+  {
+    "path": "bundles/v3042-quick-N0.zip",
+    "bytes": 5847247,
+    "sha256": "79bcfa8d751b9fda2ab295f1d8a3925b30f642409166fe87fcb23d3d5f736506",
+    "members": 80,
+    "index": "bundles/v3042-quick-N0.manifest.json"
+  },
+  {
+    "path": "bundles/v3042-quick-N1.zip",
+    "bytes": 5848852,
+    "sha256": "1ade07bcdb8b8d997c2b57ee17c5c619b208184e69946dac927ea53c2fd1cff6",
+    "members": 80,
+    "index": "bundles/v3042-quick-N1.manifest.json"
+  },
+  {
+    "path": "bundles/v3042-quick-N2.zip",
+    "bytes": 6057711,
+    "sha256": "4e8d134b87b5e6044df4d8b61fee3477cc5ccc95ccdbb2df9adf38832d6bc06c",
+    "members": 64,
+    "index": "bundles/v3042-quick-N2.manifest.json"
+  },
+  {
+    "path": "bundles/v3042-quick-N3.zip",
+    "bytes": 6059853,
+    "sha256": "8b3d2953adc6f581790adeee9a1b54d005b9890ca176ccb59c4a27c3e06e3f15",
+    "members": 64,
+    "index": "bundles/v3042-quick-N3.manifest.json"
+  },
+  {
+    "path": "bundles/v3042-south.zip",
+    "bytes": 3111783,
+    "sha256": "e43a211bf52f3adba92509f66387b2e68c87aaa59e46d63c2440fb30a2cbdcf2",
+    "members": 162,
+    "index": "bundles/v3042-south.manifest.json"
+  },
+  {
+    "path": "bundles/v3042-technical.zip",
+    "bytes": 42739,
+    "sha256": "63291a875770188465c50184f3fc7dcc85b28099cd2e635b4eff04d7f03e7078",
+    "members": 36,
+    "index": "bundles/v3042-technical.manifest.json"
+  }
+]

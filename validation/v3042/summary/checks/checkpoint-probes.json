@@ -1,0 +1,3141 @@
+{
+  "provenance": {
+    "base": "d8b507ec813cc50f890c74bafbdc9a1586738621",
+    "head_at_run": "e21704834237279a962ee2109aef505e8f53ffc9",
+    "runtime_patch_sha256": "a057827820ecbd342df1a0c3e79c49330c38c892e335e4786ad2723e60435909",
+    "protocol_sha256": "3d2b04381ec1ab1c5c78e551634ec589918a7e47fdd512885c0292ac3bf2dda6",
+    "runner_sha256": "921df5e18e0c5b0f7cb51f5dd4336cd779da12cc5aeacb921a7d41a83446a508",
+    "host": {
+      "os": "Darwin",
+      "arch": "arm64",
+      "python": "3.13.16"
+    },
+    "groups": {
+      "N0": {},
+      "N1": {
+        "transport_infrastructure_rules_version": 3042
+      },
+      "N2": {
+        "transport_capacity_rules_version": 303,
+        "transport_capacity_options": {
+          "concurrency": true,
+          "physical_capacity": false,
+          "mode_aware_ai_policy": false,
+          "throughput_ranking": false,
+          "double_dispatch": false
+        },
+        "transport_coordination_rules_version": 30412,
+        "transport_coordination_options": {
+          "features": {
+            "diversity": true,
+            "economics": true,
+            "incremental": true,
+            "meal_priority": true,
+            "pagination": true,
+            "preparation": true,
+            "requote": true,
+            "reserve": true,
+            "route_reuse": true,
+            "transit": true
+          }
+        }
+      },
+      "N3": {
+        "transport_capacity_rules_version": 303,
+        "transport_capacity_options": {
+          "concurrency": true,
+          "physical_capacity": false,
+          "mode_aware_ai_policy": false,
+          "throughput_ranking": false,
+          "double_dispatch": false
+        },
+        "transport_coordination_rules_version": 30412,
+        "transport_coordination_options": {
+          "features": {
+            "diversity": true,
+            "economics": true,
+            "incremental": true,
+            "meal_priority": true,
+            "pagination": true,
+            "preparation": true,
+            "requote": true,
+            "reserve": true,
+            "route_reuse": true,
+            "transit": true
+          }
+        },
+        "transport_infrastructure_rules_version": 3042
+      }
+    }
+  },
+  "results": [
+    {
+      "label": "xuantu",
+      "mode": "control",
+      "scenario": "208-10",
+      "city": "xuantu",
+      "army": null,
+      "background": "D2",
+      "turns": 3,
+      "start_turn": 44,
+      "initial_rng": {
+        "state": 2971821042,
+        "draws": 2464
+      },
+      "input_sha256": "883f111f82ab274b9209faaf0430aabb0e94da243f5efdbad0c874f50e3ea04c",
+      "loaded_save_checksum": "1f90730b288df8e5f24f836c03dc2c76222637a1b9f1f55b6b437d49a9c23d84",
+      "market": {
+        "grain": 0,
+        "rate": 15,
+        "batches": 0,
+        "gold": 0,
+        "market_stock": 0,
+        "limiting_reason": "market_empty",
+        "blocked_reason": "market_empty"
+      },
+      "donors": [],
+      "donor_exclusion": {
+        "xuantu": "source_policy",
+        "guonei": "no_eligible_escort"
+      },
+      "facility_corridors": [],
+      "meal_totals": {
+        "city_due": 4829,
+        "city_paid": 3717,
+        "city_missing": 1112
+      },
+      "real_courier_handoffs": [],
+      "demand_marks": [
+        {
+          "turn": 44,
+          "year": 209,
+          "month": 12,
+          "day": 11,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 1,
+          "original_deadline": 340,
+          "deadline": 440,
+          "requested": 9980,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9980,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 36421,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 44,
+          "year": 209,
+          "month": 12,
+          "day": 11,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 1,
+          "original_deadline": 340,
+          "deadline": 440,
+          "requested": 9980,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9980,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 36421,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 44,
+          "year": 209,
+          "month": 12,
+          "day": 11,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 1,
+          "original_deadline": 340,
+          "deadline": 440,
+          "requested": 9450,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9450,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 36229,
+          "blockers": {}
+        },
+        {
+          "turn": 45,
+          "year": 209,
+          "month": 12,
+          "day": 21,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 460,
+          "requested": 9794,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9794,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 35066,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 45,
+          "year": 209,
+          "month": 12,
+          "day": 21,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 460,
+          "requested": 9794,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9794,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 35066,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 45,
+          "year": 209,
+          "month": 12,
+          "day": 21,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 460,
+          "requested": 9794,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9794,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 35066,
+          "blockers": {}
+        },
+        {
+          "turn": 46,
+          "year": 210,
+          "month": 1,
+          "day": 1,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 1,
+          "original_deadline": 340,
+          "deadline": 460,
+          "requested": 9851,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9851,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "urgent",
+          "outcome": "has_offer",
+          "donor_stock": 36987,
+          "blockers": {
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 46,
+          "year": 210,
+          "month": 1,
+          "day": 1,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 470,
+          "requested": 8274,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 8274,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 38564,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 46,
+          "year": 210,
+          "month": 1,
+          "day": 1,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 470,
+          "requested": 8274,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 8274,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 38564,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 46,
+          "year": 210,
+          "month": 1,
+          "day": 1,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 470,
+          "requested": 8274,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 8274,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 37562,
+          "blockers": {}
+        }
+      ],
+      "checkpoints": [
+        {
+          "turn": 45,
+          "domain_sha256": "e914bfdbd1e1e4b6849f8f9206f6604578b92f29bdea9588ea300cce7b0a7948",
+          "rng": {
+            "state": 1034307443,
+            "draws": 2499
+          }
+        },
+        {
+          "turn": 46,
+          "domain_sha256": "4ee7978f752580ff06c4c2022af10910440d184103cdff780cda978f6726ff17",
+          "rng": {
+            "state": 4018306320,
+            "draws": 2540
+          }
+        },
+        {
+          "turn": 47,
+          "domain_sha256": "fd96df37eefa8719b5164e9bb45ac30b25929948e5eba91a35caee09eeab7a9d",
+          "rng": {
+            "state": 393535431,
+            "draws": 2577
+          }
+        }
+      ],
+      "events": "xuantu-control.jsonl.gz",
+      "events_sha256": "440f98d2658f44e56b9de74f676f7a2436f7fc08a7a512194494cc8855d156a5"
+    },
+    {
+      "label": "xuantu",
+      "mode": "with-wharves",
+      "scenario": "208-10",
+      "city": "xuantu",
+      "army": null,
+      "background": "D2",
+      "turns": 3,
+      "start_turn": 44,
+      "initial_rng": {
+        "state": 2971821042,
+        "draws": 2464
+      },
+      "input_sha256": "883f111f82ab274b9209faaf0430aabb0e94da243f5efdbad0c874f50e3ea04c",
+      "loaded_save_checksum": "1f90730b288df8e5f24f836c03dc2c76222637a1b9f1f55b6b437d49a9c23d84",
+      "market": {
+        "grain": 0,
+        "rate": 15,
+        "batches": 0,
+        "gold": 0,
+        "market_stock": 0,
+        "limiting_reason": "market_empty",
+        "blocked_reason": "market_empty"
+      },
+      "donors": [],
+      "donor_exclusion": {
+        "xuantu": "source_policy",
+        "guonei": "no_eligible_escort"
+      },
+      "facility_corridors": [],
+      "meal_totals": {
+        "city_due": 4829,
+        "city_paid": 3717,
+        "city_missing": 1112
+      },
+      "real_courier_handoffs": [],
+      "demand_marks": [
+        {
+          "turn": 44,
+          "year": 209,
+          "month": 12,
+          "day": 11,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 1,
+          "original_deadline": 340,
+          "deadline": 440,
+          "requested": 9980,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9980,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 36421,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 44,
+          "year": 209,
+          "month": 12,
+          "day": 11,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 1,
+          "original_deadline": 340,
+          "deadline": 440,
+          "requested": 9980,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9980,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 36421,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 44,
+          "year": 209,
+          "month": 12,
+          "day": 11,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 1,
+          "original_deadline": 340,
+          "deadline": 440,
+          "requested": 9450,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9450,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 36229,
+          "blockers": {}
+        },
+        {
+          "turn": 45,
+          "year": 209,
+          "month": 12,
+          "day": 21,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 460,
+          "requested": 9794,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9794,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 35066,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 45,
+          "year": 209,
+          "month": 12,
+          "day": 21,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 460,
+          "requested": 9794,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9794,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 35066,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 45,
+          "year": 209,
+          "month": 12,
+          "day": 21,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 460,
+          "requested": 9794,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9794,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 35066,
+          "blockers": {}
+        },
+        {
+          "turn": 46,
+          "year": 210,
+          "month": 1,
+          "day": 1,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 1,
+          "original_deadline": 340,
+          "deadline": 460,
+          "requested": 9851,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9851,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "urgent",
+          "outcome": "has_offer",
+          "donor_stock": 36987,
+          "blockers": {
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 46,
+          "year": 210,
+          "month": 1,
+          "day": 1,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 470,
+          "requested": 8274,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 8274,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 38564,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 46,
+          "year": 210,
+          "month": 1,
+          "day": 1,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 470,
+          "requested": 8274,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 8274,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 38564,
+          "blockers": {
+            "market_empty": 1,
+            "no_eligible_escort": 2,
+            "no_escorts": 1
+          }
+        },
+        {
+          "turn": 46,
+          "year": 210,
+          "month": 1,
+          "day": 1,
+          "demand_id": "goguryeo/city/xuantu/26",
+          "owner": "goguryeo",
+          "target_kind": "city",
+          "target": "xuantu",
+          "priority": 2,
+          "original_deadline": 340,
+          "deadline": 470,
+          "requested": 8274,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 8274,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 26,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 37562,
+          "blockers": {}
+        }
+      ],
+      "checkpoints": [
+        {
+          "turn": 45,
+          "domain_sha256": "e914bfdbd1e1e4b6849f8f9206f6604578b92f29bdea9588ea300cce7b0a7948",
+          "rng": {
+            "state": 1034307443,
+            "draws": 2499
+          }
+        },
+        {
+          "turn": 46,
+          "domain_sha256": "4ee7978f752580ff06c4c2022af10910440d184103cdff780cda978f6726ff17",
+          "rng": {
+            "state": 4018306320,
+            "draws": 2540
+          }
+        },
+        {
+          "turn": 47,
+          "domain_sha256": "fd96df37eefa8719b5164e9bb45ac30b25929948e5eba91a35caee09eeab7a9d",
+          "rng": {
+            "state": 393535431,
+            "draws": 2577
+          }
+        }
+      ],
+      "events": "xuantu-with-wharves.jsonl.gz",
+      "events_sha256": "54296d08381f314fc0bf8daf6e4a6e597e85338efd680f4511eee6f6dd8bf7e2"
+    },
+    {
+      "label": "weimieshu",
+      "mode": "control",
+      "scenario": "263-05",
+      "city": "jiameng",
+      "army": 111,
+      "background": "D0+30412",
+      "turns": 7,
+      "start_turn": 60,
+      "initial_rng": {
+        "state": 3586410307,
+        "draws": 3121
+      },
+      "input_sha256": "7dbdbdc2286583b30a52208ce424c8c70e102a035ed9e7c6726e5196057c8472",
+      "loaded_save_checksum": "94307aa70749f2268639840fa7ca0dfca190adbb36c7cb419024b2cbf202eb1a",
+      "market": {
+        "grain": 2362,
+        "rate": 9,
+        "batches": 3,
+        "gold": 22,
+        "market_stock": 4473,
+        "limiting_reason": "trade_limit",
+        "blocked_reason": null
+      },
+      "donors": [],
+      "donor_exclusion": {
+        "jiaozhi": "source_policy",
+        "shujun": "no_eligible_escort",
+        "bajun": "no_eligible_escort",
+        "yunnan": "no_eligible_escort",
+        "yongchang": "no_eligible_escort",
+        "badong": "source_convoy_limit",
+        "zitong": "source_minimum_reserve",
+        "guanghan": "no_eligible_escort",
+        "wenshan": "no_eligible_escort",
+        "baxi": "source_policy",
+        "qianwei": "no_eligible_escort",
+        "jiangyang": "no_eligible_escort",
+        "hanjia": "no_eligible_escort",
+        "zhuti": "no_eligible_escort",
+        "yuexi": "no_eligible_escort",
+        "zangke": "source_minimum_reserve",
+        "jianning": "no_eligible_escort",
+        "xinggu": "no_eligible_escort",
+        "yinping": "source_policy",
+        "fuling": "source_minimum_reserve",
+        "jiameng": "source_policy",
+        "fuxian": "no_eligible_escort",
+        "dangqu": "no_eligible_escort",
+        "nanguang": "no_eligible_escort"
+      },
+      "facility_corridors": [],
+      "meal_totals": {
+        "required": 27892,
+        "paid": 12472,
+        "missing": 15420,
+        "hunger_days": 41,
+        "losses": 6792,
+        "city_refill": 2794,
+        "city_due": 2730,
+        "city_paid": 2730,
+        "city_missing": 0
+      },
+      "real_courier_handoffs": [],
+      "demand_marks": [
+        {
+          "turn": 60,
+          "year": 264,
+          "month": 12,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 5169,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 5169,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 550932,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 60,
+          "year": 264,
+          "month": 12,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 5169,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 5169,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 550932,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 60,
+          "year": 264,
+          "month": 12,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 5169,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 5169,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 552047,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 60,
+          "year": 264,
+          "month": 12,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 5169,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 5169,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 552047,
+          "blockers": {}
+        },
+        {
+          "turn": 60,
+          "year": 264,
+          "month": 12,
+          "day": 21,
+          "demand_id": "shu/front_reserve/jiameng/60:front_reserve:jiameng/60",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 680,
+          "deadline": 680,
+          "requested": 30000,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 30000,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1134,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 552047,
+          "blockers": {}
+        },
+        {
+          "turn": 61,
+          "year": 265,
+          "month": 1,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 9269,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9269,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 602832,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 61,
+          "year": 265,
+          "month": 1,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 9269,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9269,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 602832,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 61,
+          "year": 265,
+          "month": 1,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 9269,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9269,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 598572,
+          "blockers": {}
+        },
+        {
+          "turn": 61,
+          "year": 265,
+          "month": 1,
+          "day": 1,
+          "demand_id": "shu/front_reserve/jiameng/61:front_reserve:jiameng/61",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 690,
+          "deadline": 690,
+          "requested": 28966,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 28966,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1232,
+          "created": 61,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 598572,
+          "blockers": {}
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 615,
+          "requested": 12907,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12907,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 579262,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/city/jiameng/62",
+          "owner": "shu",
+          "target_kind": "city",
+          "target": "jiameng",
+          "priority": 0,
+          "original_deadline": 620,
+          "deadline": 620,
+          "requested": 389,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 389,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 62,
+          "phase": "urgent",
+          "outcome": "has_offer",
+          "donor_stock": 579262,
+          "blockers": {
+            "no_eligible_escort": 35,
+            "source_convoy_limit": 2,
+            "source_minimum_reserve": 3,
+            "source_policy": 3,
+            "too_late_or_already_covered": 4,
+            "source_safety": 2,
+            "no_escorts": 18,
+            "source_transport_busy": 1,
+            "source_demand": 1,
+            "source_gold": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 615,
+          "requested": 12907,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12907,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 579791,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/city/jiameng/62",
+          "owner": "shu",
+          "target_kind": "city",
+          "target": "jiameng",
+          "priority": 0,
+          "original_deadline": 620,
+          "deadline": 620,
+          "requested": 389,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 389,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 62,
+          "phase": "urgent",
+          "outcome": "has_offer",
+          "donor_stock": 579791,
+          "blockers": {
+            "no_eligible_escort": 35,
+            "source_convoy_limit": 2,
+            "source_minimum_reserve": 3,
+            "source_policy": 3,
+            "too_late_or_already_covered": 4,
+            "source_safety": 2,
+            "no_escorts": 19,
+            "source_transport_busy": 1,
+            "source_gold": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 615,
+          "requested": 12907,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12907,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 580180,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 615,
+          "requested": 12907,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12907,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 580180,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 615,
+          "requested": 12907,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12907,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 575653,
+          "blockers": {}
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/front_reserve/jiameng/62:front_reserve:jiameng/62",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 700,
+          "deadline": 700,
+          "requested": 29611,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 29611,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1236,
+          "created": 62,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 575653,
+          "blockers": {}
+        },
+        {
+          "turn": 63,
+          "year": 265,
+          "month": 1,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 620,
+          "requested": 13982,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 13982,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 560485,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 63,
+          "year": 265,
+          "month": 1,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 620,
+          "requested": 13982,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 13982,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 560485,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 63,
+          "year": 265,
+          "month": 1,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 620,
+          "requested": 13982,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 13982,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 556417,
+          "blockers": {}
+        },
+        {
+          "turn": 63,
+          "year": 265,
+          "month": 1,
+          "day": 21,
+          "demand_id": "shu/front_reserve/jiameng/63:front_reserve:jiameng/63",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 710,
+          "deadline": 710,
+          "requested": 28749,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 28749,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1380,
+          "created": 63,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 556417,
+          "blockers": {}
+        },
+        {
+          "turn": 64,
+          "year": 265,
+          "month": 2,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 630,
+          "requested": 12906,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12906,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 606905,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 64,
+          "year": 265,
+          "month": 2,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 630,
+          "requested": 12906,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12906,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 606905,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 64,
+          "year": 265,
+          "month": 2,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 630,
+          "requested": 12906,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12906,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 599432,
+          "blockers": {}
+        },
+        {
+          "turn": 64,
+          "year": 265,
+          "month": 2,
+          "day": 1,
+          "demand_id": "shu/front_reserve/jiameng/64:front_reserve:jiameng/64",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 720,
+          "deadline": 720,
+          "requested": 28321,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 28321,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1356,
+          "created": 64,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 599432,
+          "blockers": {}
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 640,
+          "requested": 12034,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12034,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 579331,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 2
+          }
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/city/jiameng/65",
+          "owner": "shu",
+          "target_kind": "city",
+          "target": "jiameng",
+          "priority": 0,
+          "original_deadline": 650,
+          "deadline": 650,
+          "requested": 391,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 391,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 65,
+          "phase": "urgent",
+          "outcome": "has_offer",
+          "donor_stock": 579331,
+          "blockers": {
+            "no_eligible_escort": 34,
+            "source_policy": 5,
+            "source_minimum_reserve": 2,
+            "too_late_or_already_covered": 6,
+            "source_safety": 2,
+            "no_escorts": 18,
+            "source_gold": 1
+          }
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 640,
+          "requested": 12034,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12034,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 579722,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 2
+          }
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 640,
+          "requested": 12034,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12034,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 579722,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 2
+          }
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 640,
+          "requested": 12034,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12034,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 574100,
+          "blockers": {}
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/front_reserve/jiameng/65:front_reserve:jiameng/65",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 730,
+          "deadline": 730,
+          "requested": 29609,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 29609,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1380,
+          "created": 65,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 574100,
+          "blockers": {}
+        },
+        {
+          "turn": 66,
+          "year": 265,
+          "month": 2,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 650,
+          "requested": 6653,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 6653,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 556070,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 2
+          }
+        },
+        {
+          "turn": 66,
+          "year": 265,
+          "month": 2,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 650,
+          "requested": 6653,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 6653,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 556070,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 2
+          }
+        },
+        {
+          "turn": 66,
+          "year": 265,
+          "month": 2,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 650,
+          "requested": 6653,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 6653,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 548393,
+          "blockers": {}
+        },
+        {
+          "turn": 66,
+          "year": 265,
+          "month": 2,
+          "day": 21,
+          "demand_id": "shu/front_reserve/jiameng/66:front_reserve:jiameng/66",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 740,
+          "deadline": 740,
+          "requested": 30000,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 30000,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1380,
+          "created": 66,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 548393,
+          "blockers": {}
+        }
+      ],
+      "checkpoints": [
+        {
+          "turn": 61,
+          "domain_sha256": "c8c7b10ff84743019f17a27a130a7cbc252f14580746b60d327d52427a593a40",
+          "rng": {
+            "state": 3047216798,
+            "draws": 3208
+          }
+        },
+        {
+          "turn": 62,
+          "domain_sha256": "9f58acda53ac104db14155b36a0b97b3f18e7fdb6023cbbca5754af4aef7fba5",
+          "rng": {
+            "state": 2238286717,
+            "draws": 3240
+          }
+        },
+        {
+          "turn": 63,
+          "domain_sha256": "28c044a96e3924588e5c7b3e1480f0b6de193fca0fca98c9ab2d17a94b8df96c",
+          "rng": {
+            "state": 3961320433,
+            "draws": 3277
+          }
+        },
+        {
+          "turn": 64,
+          "domain_sha256": "0b09445206ed7e24cd1a3247782ce08e389a3cd52373e0f31e0bd34a94a7a1b9",
+          "rng": {
+            "state": 398429560,
+            "draws": 3323
+          }
+        },
+        {
+          "turn": 65,
+          "domain_sha256": "2766f117bf568974bead82229b5be729cfe076e4a6f6665132a0d269945f6a9b",
+          "rng": {
+            "state": 2697296984,
+            "draws": 3332
+          }
+        },
+        {
+          "turn": 66,
+          "domain_sha256": "66fe9d80a04cbac884eb8e006f788da95d7b6a9f69501b28390c743bbe7df4c4",
+          "rng": {
+            "state": 1997547167,
+            "draws": 3353
+          }
+        },
+        {
+          "turn": 67,
+          "domain_sha256": "06bf3de268b0274a960cbc7f1315d4125ebe6b5cbd3fcf01ef5cd0ff16089cdc",
+          "rng": {
+            "state": 1859542482,
+            "draws": 3449
+          }
+        }
+      ],
+      "events": "weimieshu-control.jsonl.gz",
+      "events_sha256": "3cbef35dd669bc4542a94d4e07e6c1132c74d9b6fe660f3ce0d4aa07bfef7b62"
+    },
+    {
+      "label": "weimieshu",
+      "mode": "with-wharves",
+      "scenario": "263-05",
+      "city": "jiameng",
+      "army": 111,
+      "background": "D0+30412",
+      "turns": 7,
+      "start_turn": 60,
+      "initial_rng": {
+        "state": 3586410307,
+        "draws": 3121
+      },
+      "input_sha256": "7dbdbdc2286583b30a52208ce424c8c70e102a035ed9e7c6726e5196057c8472",
+      "loaded_save_checksum": "94307aa70749f2268639840fa7ca0dfca190adbb36c7cb419024b2cbf202eb1a",
+      "market": {
+        "grain": 2362,
+        "rate": 9,
+        "batches": 3,
+        "gold": 22,
+        "market_stock": 4473,
+        "limiting_reason": "trade_limit",
+        "blocked_reason": null
+      },
+      "donors": [],
+      "donor_exclusion": {
+        "jiaozhi": "source_policy",
+        "shujun": "no_eligible_escort",
+        "bajun": "no_eligible_escort",
+        "yunnan": "no_eligible_escort",
+        "yongchang": "no_eligible_escort",
+        "badong": "source_convoy_limit",
+        "zitong": "source_minimum_reserve",
+        "guanghan": "no_eligible_escort",
+        "wenshan": "no_eligible_escort",
+        "baxi": "source_policy",
+        "qianwei": "no_eligible_escort",
+        "jiangyang": "no_eligible_escort",
+        "hanjia": "no_eligible_escort",
+        "zhuti": "no_eligible_escort",
+        "yuexi": "no_eligible_escort",
+        "zangke": "source_minimum_reserve",
+        "jianning": "no_eligible_escort",
+        "xinggu": "no_eligible_escort",
+        "yinping": "source_policy",
+        "fuling": "source_minimum_reserve",
+        "jiameng": "source_policy",
+        "fuxian": "no_eligible_escort",
+        "dangqu": "no_eligible_escort",
+        "nanguang": "no_eligible_escort"
+      },
+      "facility_corridors": [],
+      "meal_totals": {
+        "required": 27892,
+        "paid": 12472,
+        "missing": 15420,
+        "hunger_days": 41,
+        "losses": 6792,
+        "city_refill": 2794,
+        "city_due": 2730,
+        "city_paid": 2730,
+        "city_missing": 0
+      },
+      "real_courier_handoffs": [],
+      "demand_marks": [
+        {
+          "turn": 60,
+          "year": 264,
+          "month": 12,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 5169,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 5169,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 550932,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 60,
+          "year": 264,
+          "month": 12,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 5169,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 5169,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 550932,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 60,
+          "year": 264,
+          "month": 12,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 5169,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 5169,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 552047,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 60,
+          "year": 264,
+          "month": 12,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 5169,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 5169,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 552047,
+          "blockers": {}
+        },
+        {
+          "turn": 60,
+          "year": 264,
+          "month": 12,
+          "day": 21,
+          "demand_id": "shu/front_reserve/jiameng/60:front_reserve:jiameng/60",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 680,
+          "deadline": 680,
+          "requested": 30000,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 30000,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1134,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 552047,
+          "blockers": {}
+        },
+        {
+          "turn": 61,
+          "year": 265,
+          "month": 1,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 9269,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9269,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 602832,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 61,
+          "year": 265,
+          "month": 1,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 9269,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9269,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 602832,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 61,
+          "year": 265,
+          "month": 1,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 614,
+          "requested": 9269,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 9269,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 598572,
+          "blockers": {}
+        },
+        {
+          "turn": 61,
+          "year": 265,
+          "month": 1,
+          "day": 1,
+          "demand_id": "shu/front_reserve/jiameng/61:front_reserve:jiameng/61",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 690,
+          "deadline": 690,
+          "requested": 28966,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 28966,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1232,
+          "created": 61,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 598572,
+          "blockers": {}
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 615,
+          "requested": 12907,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12907,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 579262,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/city/jiameng/62",
+          "owner": "shu",
+          "target_kind": "city",
+          "target": "jiameng",
+          "priority": 0,
+          "original_deadline": 620,
+          "deadline": 620,
+          "requested": 389,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 389,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 62,
+          "phase": "urgent",
+          "outcome": "has_offer",
+          "donor_stock": 579262,
+          "blockers": {
+            "no_eligible_escort": 35,
+            "source_convoy_limit": 2,
+            "source_minimum_reserve": 3,
+            "source_policy": 3,
+            "too_late_or_already_covered": 4,
+            "source_safety": 2,
+            "no_escorts": 18,
+            "source_transport_busy": 1,
+            "source_demand": 1,
+            "source_gold": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 615,
+          "requested": 12907,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12907,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 579791,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/city/jiameng/62",
+          "owner": "shu",
+          "target_kind": "city",
+          "target": "jiameng",
+          "priority": 0,
+          "original_deadline": 620,
+          "deadline": 620,
+          "requested": 389,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 389,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 62,
+          "phase": "urgent",
+          "outcome": "has_offer",
+          "donor_stock": 579791,
+          "blockers": {
+            "no_eligible_escort": 35,
+            "source_convoy_limit": 2,
+            "source_minimum_reserve": 3,
+            "source_policy": 3,
+            "too_late_or_already_covered": 4,
+            "source_safety": 2,
+            "no_escorts": 19,
+            "source_transport_busy": 1,
+            "source_gold": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 615,
+          "requested": 12907,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12907,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 580180,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 615,
+          "requested": 12907,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12907,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 580180,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 615,
+          "requested": 12907,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12907,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 575653,
+          "blockers": {}
+        },
+        {
+          "turn": 62,
+          "year": 265,
+          "month": 1,
+          "day": 11,
+          "demand_id": "shu/front_reserve/jiameng/62:front_reserve:jiameng/62",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 700,
+          "deadline": 700,
+          "requested": 29611,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 29611,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1236,
+          "created": 62,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 575653,
+          "blockers": {}
+        },
+        {
+          "turn": 63,
+          "year": 265,
+          "month": 1,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 620,
+          "requested": 13982,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 13982,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 560485,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 63,
+          "year": 265,
+          "month": 1,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 620,
+          "requested": 13982,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 13982,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 560485,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 63,
+          "year": 265,
+          "month": 1,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 620,
+          "requested": 13982,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 13982,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 556417,
+          "blockers": {}
+        },
+        {
+          "turn": 63,
+          "year": 265,
+          "month": 1,
+          "day": 21,
+          "demand_id": "shu/front_reserve/jiameng/63:front_reserve:jiameng/63",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 710,
+          "deadline": 710,
+          "requested": 28749,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 28749,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1380,
+          "created": 63,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 556417,
+          "blockers": {}
+        },
+        {
+          "turn": 64,
+          "year": 265,
+          "month": 2,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 630,
+          "requested": 12906,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12906,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 606905,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 64,
+          "year": 265,
+          "month": 2,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 630,
+          "requested": 12906,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12906,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 606905,
+          "blockers": {
+            "no_spare_officer": 19,
+            "no_route": 1
+          }
+        },
+        {
+          "turn": 64,
+          "year": 265,
+          "month": 2,
+          "day": 1,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 630,
+          "requested": 12906,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12906,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 599432,
+          "blockers": {}
+        },
+        {
+          "turn": 64,
+          "year": 265,
+          "month": 2,
+          "day": 1,
+          "demand_id": "shu/front_reserve/jiameng/64:front_reserve:jiameng/64",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 720,
+          "deadline": 720,
+          "requested": 28321,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 28321,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1356,
+          "created": 64,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 599432,
+          "blockers": {}
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 640,
+          "requested": 12034,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12034,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 579331,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 2
+          }
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/city/jiameng/65",
+          "owner": "shu",
+          "target_kind": "city",
+          "target": "jiameng",
+          "priority": 0,
+          "original_deadline": 650,
+          "deadline": 650,
+          "requested": 391,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 391,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 0,
+          "created": 65,
+          "phase": "urgent",
+          "outcome": "has_offer",
+          "donor_stock": 579331,
+          "blockers": {
+            "no_eligible_escort": 34,
+            "source_policy": 5,
+            "source_minimum_reserve": 2,
+            "too_late_or_already_covered": 6,
+            "source_safety": 2,
+            "no_escorts": 18,
+            "source_gold": 1
+          }
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 640,
+          "requested": 12034,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12034,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 579722,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 2
+          }
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 640,
+          "requested": 12034,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12034,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 579722,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 2
+          }
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 640,
+          "requested": 12034,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 12034,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 574100,
+          "blockers": {}
+        },
+        {
+          "turn": 65,
+          "year": 265,
+          "month": 2,
+          "day": 11,
+          "demand_id": "shu/front_reserve/jiameng/65:front_reserve:jiameng/65",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 730,
+          "deadline": 730,
+          "requested": 29609,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 29609,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1380,
+          "created": 65,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 574100,
+          "blockers": {}
+        },
+        {
+          "turn": 66,
+          "year": 265,
+          "month": 2,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 650,
+          "requested": 6653,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 6653,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "urgent",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 556070,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 2
+          }
+        },
+        {
+          "turn": 66,
+          "year": 265,
+          "month": 2,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 650,
+          "requested": 6653,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 6653,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "followup",
+          "outcome": "checked_no_executable_quote",
+          "donor_stock": 556070,
+          "blockers": {
+            "no_spare_officer": 18,
+            "no_route": 2
+          }
+        },
+        {
+          "turn": 66,
+          "year": 265,
+          "month": 2,
+          "day": 21,
+          "demand_id": "shu/march/111/60",
+          "owner": "shu",
+          "target_kind": "march",
+          "target": 111,
+          "priority": 0,
+          "original_deadline": 614,
+          "deadline": 650,
+          "requested": 6653,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 6653,
+          "channels": [
+            "army"
+          ],
+          "gold": 0,
+          "created": 60,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 548393,
+          "blockers": {}
+        },
+        {
+          "turn": 66,
+          "year": 265,
+          "month": 2,
+          "day": 21,
+          "demand_id": "shu/front_reserve/jiameng/66:front_reserve:jiameng/66",
+          "owner": "shu",
+          "target_kind": "front_reserve",
+          "target": "jiameng",
+          "priority": 6,
+          "original_deadline": 740,
+          "deadline": 740,
+          "requested": 30000,
+          "reliable": 0,
+          "conditional": 0,
+          "unresolved": 30000,
+          "channels": [
+            "local",
+            "ordinary",
+            "granary",
+            "regional"
+          ],
+          "gold": 1380,
+          "created": 66,
+          "phase": "elective",
+          "outcome": "command_books",
+          "donor_stock": 548393,
+          "blockers": {}
+        }
+      ],
+      "checkpoints": [
+        {
+          "turn": 61,
+          "domain_sha256": "c8c7b10ff84743019f17a27a130a7cbc252f14580746b60d327d52427a593a40",
+          "rng": {
+            "state": 3047216798,
+            "draws": 3208
+          }
+        },
+        {
+          "turn": 62,
+          "domain_sha256": "9f58acda53ac104db14155b36a0b97b3f18e7fdb6023cbbca5754af4aef7fba5",
+          "rng": {
+            "state": 2238286717,
+            "draws": 3240
+          }
+        },
+        {
+          "turn": 63,
+          "domain_sha256": "28c044a96e3924588e5c7b3e1480f0b6de193fca0fca98c9ab2d17a94b8df96c",
+          "rng": {
+            "state": 3961320433,
+            "draws": 3277
+          }
+        },
+        {
+          "turn": 64,
+          "domain_sha256": "0b09445206ed7e24cd1a3247782ce08e389a3cd52373e0f31e0bd34a94a7a1b9",
+          "rng": {
+            "state": 398429560,
+            "draws": 3323
+          }
+        },
+        {
+          "turn": 65,
+          "domain_sha256": "2766f117bf568974bead82229b5be729cfe076e4a6f6665132a0d269945f6a9b",
+          "rng": {
+            "state": 2697296984,
+            "draws": 3332
+          }
+        },
+        {
+          "turn": 66,
+          "domain_sha256": "66fe9d80a04cbac884eb8e006f788da95d7b6a9f69501b28390c743bbe7df4c4",
+          "rng": {
+            "state": 1997547167,
+            "draws": 3353
+          }
+        },
+        {
+          "turn": 67,
+          "domain_sha256": "06bf3de268b0274a960cbc7f1315d4125ebe6b5cbd3fcf01ef5cd0ff16089cdc",
+          "rng": {
+            "state": 1859542482,
+            "draws": 3449
+          }
+        }
+      ],
+      "events": "weimieshu-with-wharves.jsonl.gz",
+      "events_sha256": "5685a568177556101d06835f1c807ad121e7a95c5fff3852f3f05569dbda04e7"
+    }
+  ]
+}

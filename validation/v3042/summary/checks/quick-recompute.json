@@ -1,0 +1,9 @@
+{
+  "byte_identical": true,
+  "sha256": {
+    "scenario-scores.csv": "917b4b14229f720bf71a4c7f5c77670aafb8c7d032fcd55da69fff6f095a4577",
+    "pairwise.csv": "1152faeb4c35c7f6a22159755d4d814ff287f31b3db5c850b1f23bc3b120319d",
+    "balance-alerts.csv": "223b6ca243f34cd6f187b11a0981d9cf1a9d3d769286b299d1e3f22bffbf737b",
+    "economic-stage-status.json": "8150786f12f5790187b0fb2aa55cc373e05345a96e7d3315fe1c7937d351ee7d"
+  }
+}
