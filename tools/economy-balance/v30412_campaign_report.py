@@ -34,7 +34,8 @@ def main():
             score.update(run['observed_actual_grain'])
             score.update(grain_security_books=run['whole_grain_security_books']['total'],
                 urban_food_payment_rate=rate(score['city_food_paid'], score['city_food_required']),
-                approved_military_grain=run['military_preparation_requested'].get('approved_sortie', 0),
+                approved_military_grain=run['military_preparation_requested'].get('approved_sortie', 0)
+                    if case['variant'] in ('K2','L2') else None,
                 p95_turn_cpu=run['performance'].get('p95_turn_cpu_seconds'),
                 grain_market_volume=run['whole_grain_market_volume'])
             scores.append(score)

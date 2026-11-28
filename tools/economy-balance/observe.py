@@ -4,6 +4,7 @@ from collections import Counter, defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from contextlib import ExitStack
 from copy import deepcopy
+from math import ceil
 from pathlib import Path
 from time import monotonic, process_time
 import resource
@@ -613,6 +614,7 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
         max_turn_seconds=round(max(timings),6) if timings else None,
         total_turn_cpu_seconds=round(sum(cpu_times),6),
         mean_turn_cpu_seconds=round(sum(cpu_times)/len(cpu_times),6) if cpu_times else None,
+        p95_turn_cpu_seconds=round(sorted(cpu_times)[ceil(.95*len(cpu_times))-1],6) if cpu_times else None,
         max_turn_cpu_seconds=round(max(cpu_times),6) if cpu_times else None,
         worker_peak_rss_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss *
         (1 if sys.platform == 'darwin' else 1024))

@@ -193,6 +193,11 @@ def inspection(task):
             stack.enter_context(coordination.observing(capture))
             stack.enter_context(transport_capacity.observing(
                 lambda kind, row: postings.append(dict(event=kind, **row))))
+        elif phase == 'south':
+            def capture_receipt(kind, row):
+                if row.get('target') == city or row.get('source') == city:
+                    postings.append(dict(event=kind, **row))
+            stack.enter_context(transport_capacity.observing(capture_receipt))
         rules.append(rule_snapshot(game))
 
     def trace(game, action, payload, revision):
@@ -228,6 +233,7 @@ def inspection(task):
     result.update(label=item['label'], recorded_rules=rules[0], repeat=repeat)
     if phase == 'south':
         result['actual_ledger'] = str((prefix/f'{name}.jsonl.gz').relative_to(output))
+        result['local_physical_receipts'] = postings
     if phase == 'equivalence':
         result['hashes'] = hashes
         result['formal_candidate_sequence'] = digest(selections)

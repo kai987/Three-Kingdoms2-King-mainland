@@ -88,7 +88,8 @@ def play(path,scene,strategy,group,turns,*,city=None,observe=True):
         if city.grain>opening:
             channel=('regional_market' if 'regional' in row else 'strategic_granary'
                      if 'strategic' in row else 'ordinary')
-            receipts.append(dict(turn=state.turn,city=city.id,convoy=row['id'],channel=channel,
+            receipts.append(dict(turn=state.turn, city=city.id, convoy=row['id'], channel=channel,
+                                 source=row['source'], sent_turn=row.get('sent_turn'),
                                  grain=city.grain-opening))
         return result
 

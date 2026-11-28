@@ -12,7 +12,7 @@ from common import ROOT, git, sha256, to_json
 from observe import RecordedCampaign
 from remake import command_books, grain_market, logistics_strategy, transport_capacity, transport_coordination
 from v231_observe import FIVE, LONG, QUICK, run
-from v30412_replays import quantiles, rule_snapshot, settings
+from v30412_replays import rule_snapshot, settings
 
 
 HOLDOUT = ((2047, '184-02', 211), (2048, '208-10', 212))
@@ -66,6 +66,7 @@ def run_pair_side(task):
     preparation = Counter()
     coverage_marks = set()
     intervals = defaultdict(Counter)
+    previous_city_meals = {}
 
     def command(game, action, payload, revision):
         if action != 'new':
@@ -73,10 +74,12 @@ def run_pair_side(task):
         result = original(game, action, dict(payload, **settings(variant)), revision)
         rules.append(rule_snapshot(game))
         state = game.state
-        if (rules[-1]['weather_rules_version'] != 23 or rules[-1]['weather_forecast_version'] != 231
+        if (rules[-1]['economy_rules_version'] != 2 or rules[-1]['weather_rules_version'] != 23
+                or rules[-1]['weather_forecast_version'] != 231 or rules[-1]['transport_emergency_rules_version'] != 222
                 or rules[-1]['regional_market_rules_version'] != 301
                 or rules[-1]['strategic_granary_rules_version'] != 302
                 or rules[-1]['transshipment_rules_version']
+                or rules[-1]['winter_weather'].get('exceptional_cold_wave')
                 or ('L' == variant[0]) != transport_capacity.enabled(state, 'concurrency')):
             raise ValueError(f'Unexpected experimental background for {variant}: {rules[-1]}')
         return result
@@ -103,6 +106,10 @@ def run_pair_side(task):
                 city_food_missing=row['missing_grain'], resident_due=row['resident_due'],
                 garrison_due=row['garrison_due'], shortage_city_turns=int(row['missing_grain'] > 0))
             key = row['owner'], row['city']
+            prior = previous_city_meals.get(row['city'])
+            if prior != (row['owner'], row['settlement_tick']-10):
+                intervals[key]['current'] = 0
+            previous_city_meals[row['city']] = (row['owner'], row['settlement_tick'])
             intervals[key]['current'] = intervals[key]['current'] + 1 if row['missing_grain'] else 0
             intervals[key]['maximum'] = max(intervals[key]['maximum'], intervals[key]['current'])
         elif kind == 'unit_meal_settled':
@@ -131,12 +138,17 @@ def run_pair_side(task):
             if key not in coverage_marks:
                 preparation[row['purpose']] += row['requested']
                 coverage_marks.add(key)
+        elif kind == 'demand' and row['priority'] == 3 and row['target_kind'] == 'mobilization':
+            key = row['owner'], row['demand_id']
+            if key not in coverage_marks:
+                preparation['approved_sortie'] += row['requested']
+                coverage_marks.add(key)
         track(scheduler, kind, row)
 
     with ExitStack() as stack:
         scheduler = stack.enter_context(gzip.open(path/'coordination.jsonl.gz', 'wt', compresslevel=2, encoding='utf-8'))
         convoys = stack.enter_context(gzip.open(path/'capacity.jsonl.gz', 'wt', compresslevel=2, encoding='utf-8'))
-        stack.enter_context(transport_coordination.observing(coordination, shadow=variant in ('K0', 'L0')))
+        stack.enter_context(transport_coordination.observing(coordination))
         stack.enter_context(transport_capacity.observing(capacity))
         stack.enter_context(logistics_strategy.observing(actual))
         stack.enter_context(patch.object(command_books, 'spend', spend))
@@ -151,6 +163,9 @@ def run_pair_side(task):
     result['whole_grain_market_volume'] = dict(grain_market_volume)
     result['military_preparation_requested'] = dict(preparation)
     result['runtime_setup_options'] = rules[0]
+    if result['observed_actual_grain']['city_food_missing'] != (
+            result['observed_actual_grain']['city_food_required'] - result['observed_actual_grain']['city_food_paid']):
+        raise ValueError(f'Actual city food does not reconcile for {identity}')
     with gzip.open(path/'actual-consumption-by-month.json.gz', 'wt', encoding='utf-8') as stream:
         json.dump([dict(year=year, month=month, **totals) for (year, month), totals in sorted(monthly.items())], stream)
     summary = dict(case=identity, result=result, scenario_sha256=sha256(
