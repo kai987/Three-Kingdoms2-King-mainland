@@ -285,7 +285,7 @@ def history_report(directory, out):
 
 def supply_report(root, out):
     results = latest_json(root/'south')
-    compact, denied, safety, commitments = [], [], [], []
+    compact, denied, safety, commitments, baxi = [], [], [], [], []
     for case in results:
         opening, final = case['initial'], case['final']
         city, specs = case['city'], case['recorded_rules']
@@ -334,7 +334,19 @@ def supply_report(root, out):
                     actual_hunger_losses=row['losses'], **receipt_here))
         for ident, counts in army_totals.items():
             safety.append(dict(case_id, march_id=ident, **counts, **outcomes[ident]))
+        if city == 'baxi':
+            posting_grain = sum(post['delta'] for post in case['observed_postings']
+                if post['resource']=='grain' and post['site']=='facilities._settle_grain_trade' and post['delta'] > 0)
+            for army, counts in army_totals.items():
+                courier = [row for row in rows if row['event']=='relief_handoff' and row['army']==army]
+                baxi.append(dict(case_id, march_id=army, local_grain_bought=posting_grain,
+                    actual_city_due=sum(row['required_grain'] for row in bills),
+                    actual_city_paid=sum(row['paid_grain'] for row in bills), city_missing=actual,
+                    physical_courier_grain=sum(row['grain'] for row in courier),
+                    actual_courier_ticks=[row['tick'] for row in courier],
+                    **counts, **outcomes[army]))
     for name, rows in (('southern-checkpoint-results', compact), ('transit-march-safety-comparison', safety),
+                       ('baxi-city-and-army-balance', baxi),
                        ('transit-refill-denial-ledger', denied), ('transit-commitment-settlement', commitments)):
         if rows:
             fields = tuple(dict.fromkeys(key for row in rows for key in row))
