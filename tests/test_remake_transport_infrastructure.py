@@ -10,8 +10,9 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'source'))
 
-from remake import (civil_staff, command_books, domestic, grain_units, logistics, route_network,
-                    transport_capacity, transport_infrastructure as wharf, winter_weather)
+from remake import (civil_staff, command_books, domestic, faction_economy, grain_units,
+                    granary_demand, logistics, route_network, transport_capacity,
+                    transport_infrastructure as wharf, winter_weather)
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
 
@@ -69,6 +70,21 @@ def restore(game, compact):
     restored.load_save(data,0)
     assert restored.to_dict()==game.to_dict()
     return restored
+
+
+def automatic_opening():
+    game=world(faction='observer')
+    state=game.state
+    origin,target=state.cities[SOURCE],state.cities[TARGET]
+    # Deliberately reserve the opening surplus at origin to create a known
+    # future bill. Use only the actual faction's existing grain and roster.
+    origin.grain+=target.grain-900
+    target.grain=900
+    with grain_units.using(state):
+        logistics.prepare_ai(game,state,'shu')
+        logistics._pool(state)['cities'][SOURCE]['policy']['enabled']=True
+    state.phase='ai'
+    return game
 
 
 class InfrastructureTests(unittest.TestCase):
@@ -210,6 +226,23 @@ class InfrastructureTests(unittest.TestCase):
                 data['checksum']=digest({k:v for k,v in data.items() if k!='checksum'})
                 with self.assertRaises(GameError):
                     g.load_save(data,g.revision)
+
+    def test_ai_uses_first_nonzero_grain_deadline(self):
+        game=automatic_opening()
+        state=game.state
+        events=[]
+        with grain_units.using(state), wharf.observing(lambda kind,row: events.append((kind,row))):
+            plan=faction_economy.plan(game,state,'shu',granary=True)
+            demand=granary_demand.for_city(game,state,plan,TARGET)
+            self.assertEqual(demand.remaining[:2],[(1,0),(2,810)])
+            self.assertTrue(wharf.consider_ai(game,state,'shu'))
+            self.assertEqual(current(game)['deadline'],20)
+            self.assertTrue(events[0][1]['selected'])
+            self.assertEqual(events[0][1]['direct']['eta'],20)
+            advance(game,4)
+        paid=[row for kind,row in events if kind=='delivery']
+        self.assertEqual([(row['tick'],row['grain'],row['timely']) for row in paid],[(17,786,True)])
+        self.assertEqual(game.state.extension[wharf.POOL]['history'][0]['terminal']['city'],SOURCE)
 
     def test_parallel_chains_share_bank_reservations_and_real_escorts(self):
         game=world(transport_capacity_rules_version=303,transport_capacity_options=D2)

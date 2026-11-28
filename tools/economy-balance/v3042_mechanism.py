@@ -14,7 +14,7 @@ from remake.campaign import digest
 from v302_audit import Audit
 
 sys.path.insert(0, str(ROOT/'tests'))
-from test_remake_transport_infrastructure import advance, restore, world, D2
+from test_remake_transport_infrastructure import advance, automatic_opening, restore, world, D2
 
 
 def maps(output):
@@ -169,6 +169,25 @@ def direct_metrics(events):
                 hunger_losses=end.get('hunger_losses',0))
 
 
+def automatic(output):
+    game=automatic_opening()
+    opening=game.to_dict()
+    received=[]
+    path=output/'R03-wharf.jsonl.gz'
+    with gzip.open(path,'wt',encoding='utf-8',compresslevel=4) as stream:
+        def record(kind,row):
+            append(kind,row,stream)
+            if kind in ('choice','delivery','terminal'):
+                received.append(dict(event=kind,**row))
+        with grain_units.using(game.state),wharf.observing(record):
+            assert wharf.consider_ai(game,game.state,'shu')
+            advance(game,4)
+    to_json(output/'automatic-gate.json',dict(proof='R03',scenario='227-02',seed=2026,
+            fixture_changes='Existing stock moved between Badong and Fuling; Fuling transport explicitly authorized',
+            opening_sha256=digest(opening),opening_rng=opening['rng'],showing=received,
+            evidence=path.name,evidence_sha256=sha256(path.read_bytes())))
+
+
 def controls(output):
     controls=[]
     for id,(origin,dest,owner,amount) in {'R01':('fuling','badong','shu',13000),
@@ -196,6 +215,7 @@ def main():
         maps(args.output)
     if args.phase in ('lines','all'):
         controls(args.output)
+        automatic(args.output)
 
 
 if __name__=='__main__':

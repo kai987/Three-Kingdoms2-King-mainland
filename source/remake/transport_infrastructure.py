@@ -764,9 +764,10 @@ def consider_ai(game,state,owner):
     now=(state.turn-1)*10
     for route,source,target in owned:
         demand=granary_demand.for_city(game,state,plan,target)
-        if not demand.remaining:
+        first_gap=next(((ahead,need) for ahead,need in demand.remaining if need>0),None)
+        if first_gap is None:
             continue
-        first,need=demand.remaining[0]
+        first,need=first_gap
         amount=min(need,grain_units.amount(STORAGE))
         deadline=now+10*first
         offer=quote(game,state,owner,route,source,[amount],deadline,absent=absent,automatic=True)
