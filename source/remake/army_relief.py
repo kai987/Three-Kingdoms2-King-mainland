@@ -53,6 +53,7 @@ class Need:
     required: int
     urgent: bool
     stopped: bool = False
+    funded_wait_until: int | None = None
 
     @property
     def key(self):
@@ -73,7 +74,7 @@ def projected_state(state, tick):
     return future
 
 
-def windows(state, army, *, stopped=False, game=None):
+def windows(state, army, *, stopped=False, game=None, funded_wait_until=None):
     book, route = army['supply'], army['quote']
     if book['retreat_requested'] or army.get('retreating') or army.get('returning'):
         return ()
@@ -111,6 +112,8 @@ def windows(state, army, *, stopped=False, game=None):
         if elapsed == progress and (book['waiting'] or stopped):
             end = max(end, clock + (max(0, MAX_LATE_DAYS-book['shortage_streak'])
                                    if book['shortage_streak'] or stopped else WAIT_DAYS))
+            if funded_wait_until is not None:
+                end = max(end, funded_wait_until)
             places.append(Window(city, start, end))
             # A stopped column has no dependable date for later nodes.
             break
@@ -118,7 +121,7 @@ def windows(state, army, *, stopped=False, game=None):
     return tuple(places)
 
 
-def requirement(game, state, army, *, published=None):
+def requirement(game, state, army, *, published=None, meal_floors=None):
     book, quote = army['supply'], army['quote']
     now, progress = book['clock_tick'], book['route_days']
     left = quote['days']-progress
@@ -152,8 +155,31 @@ def requirement(game, state, army, *, published=None):
 
     required = max(0, rules.ceil_div(units*weight(horizon)-funded, march_supply.book_denominator(book)))
     node=march_supply.current_city(army)
-    stopped=(bool(required and node and state.cities[node].owner==army['owner']
-                  and state.cities[node].grain<required and left>0))
+    stopped = False
+    if required and node and left > 0 and state.cities[node].owner == army['owner']:
+        from . import staging_supply, transport_coordination
+        city = state.cities[node]
+        protected = transport_coordination.dated_transit_protection(state, army['owner'])
+        local = city.grain
+        if protected and local:
+            available = staging_supply.available(state, city, army=army['id'])
+            local, _, _ = staging_supply.refill_budget(game, state, city, army['id'], progress, available,
+                {} if meal_floors is None else meal_floors, next_calendar=True)
+        stopped = local < required
+        if stopped and protected and funded and units and not book['shortage_streak'] and not book['retreat_requested']:
+            # A column can wait for an actual courier while its own bag still
+            # pays meals. A missed departure is not yet a missed meal.
+            region = game.catalog.climate.cities[node]['climate_region_id'] if dynamic else None
+            rate = (winter_travel.wait_rate(state, region) if dynamic else
+                    rules.RATION_SCALE if march_supply.book_version(book) == rules.CURRENT else 1)
+            due = now + funded // (units * rate) + 1
+            if dynamic and winter_climate.forecast_enabled(state):
+                from . import winter_forecast
+                outlook = winter_forecast.estimate(game, state, quote, position=position, stop=stop, conservative=True)
+                if not outlook['bounded']:
+                    required = max(required, rules.ceil_div(units*outlook['total_ration_weight'] - funded,
+                                                            march_supply.book_denominator(book)))
+            return Need(army['id'], due, required, True, True, due)
     urgent |= stopped
     # A waiting column consumes its next ration now and may use a same-day
     # delivery before its next scheduled meal.
@@ -295,9 +321,12 @@ class Planner:
         self.coordinated = coordinated
         self.armies = {row['id']:row for row in state.extension['travel']['marches']
                        if row['owner']==owner and row['officers']}
-        self.demands = {ident:requirement(game,state,row) for ident,row in self.armies.items()}
-        self.windows = {ident:windows(state,row,stopped=self.demands[ident].stopped,game=game) for ident,row in self.armies.items()
-                        if self.demands[ident].required}
+        meal_floors = {}
+        self.demands = {ident: requirement(game, state, row, meal_floors=meal_floors)
+                        for ident, row in self.armies.items()}
+        self.windows = {ident: windows(state, row, stopped=need.stopped,
+                                       game=game, funded_wait_until=need.funded_wait_until)
+                        for ident, row in self.armies.items() if (need := self.demands[ident]).required}
         self.convoys = defaultdict(list)
         for row in logistics._pool(state)['convoys']:
             if row['owner']==owner and row['target_march'] is not None:

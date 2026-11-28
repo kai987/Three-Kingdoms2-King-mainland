@@ -46,6 +46,10 @@ def transit_protection(state, owner):
     return feature(state, 'transit') and (state.extension[FIELD] != CONSUMPTION or owner != state.player)
 
 
+def dated_transit_protection(state, owner):
+    return state.extension.get(FIELD) == CONSUMPTION and transit_protection(state, owner)
+
+
 def _features(options, names):
     return (isinstance(options, dict) and set(options) <= names
             and all(type(value) is bool for value in options.values()))

@@ -245,7 +245,7 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
     has_staging=staging_supply.FIELD in getattr(state,'extension',{})
     shared_meals = (unit_kind == 'march' and hasattr(state, 'extension')
                     and transport_coordination.transit_protection(state, unit['owner']))
-    next_calendar = shared_meals and state.extension.get(transport_coordination.FIELD) == transport_coordination.CONSUMPTION
+    next_calendar = shared_meals and transport_coordination.dated_transit_protection(state, unit['owner'])
     measured = logistics_strategy.observed()
     meal_floors = {}
     spent=0

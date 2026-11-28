@@ -12,7 +12,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'source'))
 
-from remake import city_economy, command_books, domestic, faction_economy, grain_dispatch, grain_units, logistics
+from remake import army_relief, city_economy, command_books, domestic, faction_economy, grain_dispatch, grain_units, logistics
 from remake import logistics_strategy, march_supply, staging_supply
 from remake import logistics_rules
 from remake import regional_market, transport_candidates, transport_coordination as coordination
@@ -630,3 +630,35 @@ class CoordinationTests(TestCase):
         city.owner = 'neutral'
         staging_supply.synchronize(state)
         self.assertNotIn(staging_supply.FIELD, state.extension)
+
+    def test_funded_wait_keeps_a_legal_rendezvous_before_the_first_unfunded_day(self):
+        from browser_resupply_fixture import resupply_catalog
+
+        engine = Headless(resupply_catalog(), record_journal=False)
+        engine.command('new', dict(faction='shu', seed=2026, **{coordination.FIELD: 30412}), 0)
+        state = engine.state
+        source, city, target = (state.cities[key] for key in ('nanyang', 'nanjun', 'bajun'))
+        ident = source.roster.officer_ids[1]
+        city.grain = 3000
+        with grain_units.using(state):
+            engine._queue_march(state, source, target, [ident], 'transfer', 'land')
+            unit, = state.extension['travel']['marches']
+            march_supply.advance_unit(engine, state, unit, unit, absolute_tick=10)
+            self.assertEqual(march_supply.current_city(unit), city.id)
+            book = unit['supply']
+            ration_units = march_supply.ration_units(state, unit['officers'])
+            carried = logistics_rules.ceil_div(12*ration_units*logistics_rules.RATION_SCALE,
+                                               march_supply.book_denominator(book))
+            march_supply.receive(book, carried, 'city', city.id, state.turn)
+            city.grain = 0
+            manual = army_relief.requirement(engine, state, unit)
+            state.player = 'observer'
+            before = engine.to_dict()
+            planner = army_relief.Planner(engine, state, source.owner, coordinated=True)
+            self.assertEqual(before, engine.to_dict())
+            need = planner.demands[unit['id']]
+            self.assertTrue(need.urgent and need.stopped)
+            self.assertEqual(manual.deadline, 10)
+            self.assertEqual(need.deadline, 23)
+            [window] = planner.windows[unit['id']]
+            self.assertEqual((window.city, window.start, window.end), (city.id, 10, 23))
