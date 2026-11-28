@@ -163,6 +163,14 @@ def line_evidence(root):
             assert grain == cargo['cargo_delivered'] == case['delivery']
             assert (log['delivery']['turn']-1)*10 == case['last_delivery_day']
             values = dict(delivery=grain, cargo=cargo, rations=ration)
+        if case['status']=='complete' and 'target_transport_net' in case:
+            refill=-sum(row['delta'] for row in events(raw) if row['event']=='city_posting'
+                        and row['city']==case['to_city'] and row['resource']=='grain'
+                        and row['site'] in ('logistics._begin_journey','transport_emergency._take_local')
+                        and row['delta']<0)
+            assert refill==case['target_return_provisions']
+            assert values['delivery']-refill==case['target_transport_net']
+            values['target_transport_net']=case['target_transport_net']
         results.append(dict(proof=case['proof'], group=case['group'], **values))
     return results
 

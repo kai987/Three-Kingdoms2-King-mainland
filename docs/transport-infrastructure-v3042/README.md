@@ -34,7 +34,7 @@
 
 ## 讀法與復放
 
-`controlled-lines.csv` 的到貨日採劇本開始後的日偏移，原期限以 `actual_day < original_deadline` 判定。武將日由實際發運至返抵，`officer_reuse_days` 另計入原運輸規則的接收冷卻。運位日由發運至運隊完成。相同糧食在兩個河埠分別卸入，累計作業量可以大於最終交付量。失敗報價的實績留空。無來源或無合格武將的樣本保留真實原因。
+`controlled-lines.csv` 的到貨日採劇本開始後的日偏移，原期限以 `actual_day < original_deadline` 判定。武將日由實際發運至返抵，`officer_reuse_days` 另計入原運輸規則的接收冷卻。運位日由發運至運隊完成。相同糧食在兩個河埠分別卸入，累計作業量可以大於最終交付量。`target_transport_net` 另扣除從目的城實際領走的返程口糧，由倉庫扣帳獨立復算。失敗報價的實績留空。無來源或無合格武將的樣本保留真實原因。
 
 ```sh
 MARCH_CORE_BACKEND=rust python3 -B tools/economy-balance/v3042_mechanism.py all build/v3042/mechanism

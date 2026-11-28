@@ -1,6 +1,7 @@
 """Map, custody, and paired controlled replay evidence for the wharf pilot."""
 
 from argparse import ArgumentParser
+from copy import deepcopy
 import gzip
 import json
 from pathlib import Path
@@ -10,6 +11,7 @@ from common import ROOT, catalog_paths, sha256, to_csv, to_json
 from remake import grain_units, logistics, transport_capacity, transport_infrastructure as wharf
 from remake import transport_coordination
 from remake.campaign import digest
+from v302_audit import Audit
 
 sys.path.insert(0, str(ROOT/'tests'))
 from test_remake_transport_infrastructure import advance, restore, world, D2
@@ -52,6 +54,10 @@ def append(kind,row,stream):
     stream.write(json.dumps(dict(event=kind,**row),ensure_ascii=False,separators=(',',':'))+'\n')
 
 
+class PostingRows(list):
+    writerow = list.append
+
+
 def line(output, group, proof, origin, dest, faction, amount, *, options):
     relay=group in ('N1','N3')
     g=world(enabled=relay,faction=faction,**options)
@@ -90,17 +96,26 @@ def line(output, group, proof, origin, dest, faction, amount, *, options):
             append('opening_refusal',row,f)
         return dict(row,evidence_sha256=sha256(evidence.read_bytes()))
 
+    postings=PostingRows()
+    audit=Audit(postings)
     with (wharf.observing(lambda kind,row:stream.append((kind,row))),
-          transport_capacity.observing(lambda kind,row:convoy.append((kind,row)))):
-        g.command(wharf.COMMAND if relay else 'dispatch_transport',payload,g.revision)
+          transport_capacity.observing(lambda kind,row:convoy.append((kind,row))),audit.install()):
+        with audit.command(g,'dispatch'):
+            g.command(wharf.COMMAND if relay else 'dispatch_transport',payload,g.revision)
         g=restore(g,True)
         for _ in range(12):
             if (not list(wharf.jobs(g.state)) if relay else not logistics._pool(g.state)['convoys']):
                 break
-            advance(g)
+            with audit.command(g,'settlement'):
+                g.state=deepcopy(g.state)
+                advance(g)
+    assert audit.errors==0
     with gzip.open(evidence,'wt',encoding='utf-8',compresslevel=4) as f:
         for kind,row in stream if relay else convoy:
             append(kind,row,f)
+        for row in postings:
+            if row['city'] in (origin,dest):
+                append('city_posting',row,f)
     if relay:
         done=g.state.extension[wharf.POOL]['history'][-1]
         grain=done['balances']
@@ -122,7 +137,12 @@ def line(output, group, proof, origin, dest, faction, amount, *, options):
     else:
         events={kind:row for kind,row in convoy if kind in ('departure','delivery','terminal')}
         metrics=direct_metrics(events)
-    metrics.update(timely_grain=(metrics['delivery'] if metrics['last_delivery_day']<90 else 0),
+    ledger_sites={'logistics._begin_journey','transport_emergency._take_local'}
+    target_refill=-sum(row['delta'] for row in postings if row['city']==dest and row['resource']=='grain'
+                       and row['site'] in ledger_sites and row['delta']<0)
+    assert target_refill==metrics['external_ration_refill'], (target_refill,metrics['external_ration_refill'])
+    metrics.update(target_return_provisions=target_refill,target_transport_net=metrics['delivery']-target_refill,
+                   city_resource_mismatches=audit.errors,timely_grain=(metrics['delivery'] if metrics['last_delivery_day']<90 else 0),
                    original_deadline=90, officer_reuse_days=metrics['reusable_tick'],
                    net_per_book=metrics['delivery']/metrics['books'],
                    net_per_officer_day=metrics['delivery']/metrics['officer_days'])
