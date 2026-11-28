@@ -40,8 +40,9 @@ def _totals(state):
 
 
 class Audit:
-    def __init__(self, writes):
+    def __init__(self, writes, *, channels=False):
         self.writes = writes
+        self.channels = channels
         self.summary = Counter()
         self.errors = 0
         self.writes_seen = self.writes_verified = 0
@@ -68,8 +69,20 @@ class Audit:
                     category = CATEGORIES.get((module, function), f'{module}.{function}')
                     if module == 'facilities' and ('trade' in function or 'transaction' in function):
                         category = 'market_exchange'
+                    extra = {}
+                    if observed.channels and field == 'grain' and value > previous:
+                        if module == 'facilities' and function == '_settle_grain_trade':
+                            extra['supply_channel'] = 'local_market'
+                        elif module == 'logistics' and function in ('_unload', '_dock'):
+                            convoy = frame.f_locals['row']
+                            extra['supply_channel'] = ('regional_market' if 'regional' in convoy else
+                                'strategic_granary' if 'strategic' in convoy else 'ordinary_transport')
+                            extra['convoy_id'] = convoy['id']
+                        else:
+                            extra['supply_channel'] = ('production' if category in
+                                ('regular_income', 'harvest_bonus', 'civil_bonus') else 'other_credit')
                     watch.append((city.id, getattr(city, 'owner', None), field, previous, value,
-                                  category, f'{module}.{function}'))
+                                  category, f'{module}.{function}', extra))
             original(city, field, value)
 
         with patch.object(City, '__setattr__', observe):
@@ -91,7 +104,7 @@ class Audit:
         stamp = dict(command=action, turn=(previous or state).turn,
                      year=(previous or state).year, month=(previous or state).month, day=(previous or state).day)
         after, posted = _totals(state), Counter()
-        for city, owner, field, balance_before, balance_after, category, site in pending:
+        for city, owner, field, balance_before, balance_after, category, site, extra in pending:
             if field == 'owner':
                 if balance_before is not None:
                     self.writes.writerow(dict(stamp, city=city, owner=owner, resource='ownership',
@@ -104,7 +117,7 @@ class Audit:
             self.writes_seen += 1
             self.writes.writerow(dict(stamp, city=city, owner=owner, resource=field,
                 balance_before=balance_before, balance_after=balance_after, delta=delta,
-                category=category, site=site))
+                category=category, site=site, **extra))
         for city, field in before.keys() | after.keys() | posted.keys():
             expected = before.get((city, field), 0) + posted[city, field]
             actual = after.get((city, field), 0)

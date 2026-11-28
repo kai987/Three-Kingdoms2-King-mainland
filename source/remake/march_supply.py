@@ -212,6 +212,20 @@ def _completion_tick(supply,days):
     return None
 
 
+def _next_legal_refill(state, quote, owner, progress):
+    distance = 0
+    for leg in quote['routes']:
+        distance += leg['days']
+        if distance <= progress:
+            continue
+        holder = state.cities[leg['to']].owner
+        if holder == owner:
+            return leg['to']
+        if not transit_allowed(state, owner, holder):
+            break
+    return None
+
+
 def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',cargo=None,
                  on_cargo_change=None,on_cargo_day=None,absolute_tick=None,parts=None,self_funded=False,
                  weather_parts=None):
@@ -225,10 +239,15 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
     if dynamic is not None and weather_parts is None:
         weather_parts=winter_travel.plan(game,quote)
     divisor=book_denominator(supply)
-    from . import staging_supply, transport_emergency, winter_transport
+    from . import logistics_strategy, staging_supply, transport_coordination, transport_emergency, winter_transport
     emergency = unit_kind=='convoy' and transport_emergency.stage(state)
     convoy_safety=(unit_kind=='convoy' and not self_funded and (winter_transport.enabled(state) or emergency))
     has_staging=staging_supply.FIELD in getattr(state,'extension',{})
+    shared_meals = (unit_kind == 'march' and hasattr(state, 'extension')
+                    and transport_coordination.transit_protection(state, unit['owner']))
+    next_calendar = shared_meals and transport_coordination.dated_transit_protection(state, unit['owner'])
+    measured = logistics_strategy.observed()
+    meal_floors = {}
     spent=0
     for tick in range(supply['clock_tick']+1,target+1):
         if supply['route_days']>=quote['days'] and not supply['waiting']:
@@ -293,6 +312,7 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
             leg_budget=distance
             budget=10 if progress>=quote['days'] else max(1,distance)
         wanted=max(0,rules.ceil_div(units*budget-supply['credit_units'],divisor)-supply['remaining'])
+        refill = None
         if wanted and not self_funded and city_id and state.cities[city_id].owner==unit['owner']:
             city=state.cities[city_id]
             army=unit['id'] if unit_kind=='march' else None
@@ -301,11 +321,31 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
                 stock=transport_emergency.stock(game,state,city)
             elif convoy_safety:
                 stock=winter_transport.city_stock(game,state,city,stock)
+            if shared_meals:
+                allowed, committed, essential = staging_supply.refill_budget(
+                    game, state, city, army, progress, stock, meal_floors, next_calendar=next_calendar)
+                transport_coordination.observe('transit_refill_budget', state, owner=unit['owner'], city=city_id,
+                    army=army, tick=tick, stock=city.grain, reserved_for_army=committed, city_rations=essential,
+                    requested=wanted, allowed=min(wanted, allowed, LIMIT-supply['remaining']))
+                stock = allowed
             amount=min(wanted,stock,LIMIT-supply['remaining'])
             if unit_kind=='convoy' and cargo is not None and transport_capacity.enabled(state,'physical_capacity'):
                 amount=min(amount,transport_capacity.refill_room(game,state,unit,city_id,cargo_grain=cargo['grain']))
+            if measured:
+                same, other = 0, 0
+                for booking in staging_supply.active(state):
+                    if booking['city'] != city_id:
+                        continue
+                    if booking['army'] == army and booking['route_day'] == progress:
+                        same += booking['reserved']
+                    else:
+                        other += booking['reserved']
+                refill = dict(requested_refill=wanted, own_reserved_grain=same, other_reserved_grain=other,
+                              city_essential_rations=essential if shared_meals else 0, actual_allowed_refill=amount,
+                              warehouse_before=city.grain, warehouse_after=city.grain-amount,
+                              actual_received_grain=amount)
             if army is not None and has_staging:
-                staging_supply.settle(state,unit,city_id,amount,tick)
+                staging_supply.settle(state,unit,city_id,amount,tick,keep_undrawn=next_calendar)
             if amount:
                 city.grain-=amount;receive(supply,amount,'city',city_id,state.turn);wanted-=amount
                 # At most one combined city receipt event per unit/city/turn.
@@ -345,6 +385,7 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
         used,missing=_meal(supply,units,rate);spent+=used
         supply['waiting']=(not moved and supply['route_days']<quote['days']) or (
             supply['waiting'] and supply['route_days']>=quote['days'])
+        lost = 0
         if missing:
             before={str(i):state.officers[i].troops for i in ids}
             after={key:max(0,n-(n+99)//100) for key,n in before.items()}
@@ -362,6 +403,17 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
                 from . import war_recovery
                 war_recovery.record(state,unit['owner'],unit.get('source',journey['source']),
                                     'convoy' if unit_kind=='convoy' else 'march',lost)
+        if measured:
+            charge = units if rate is None else units*rate
+            required = rules.ceil_div(max(0, charge-previous_credit), divisor)
+            logistics_strategy.observe('unit_meal_settled', state, tick=tick, unit_kind=unit_kind,
+                unit_id=unit['id'], owner=unit['owner'], current_city=city_id, source=journey['source'],
+                target=journey['target'], route=tuple(quote['path']),
+                next_legal_supply_node=_next_legal_refill(state, quote, unit['owner'], progress) if refill else None,
+                refill=refill, remaining_rations=supply['remaining'], required_grain=required, paid_grain=used,
+                missing_grain=required-used, unserved_scaled=missing, hunger_day=bool(missing), losses=lost,
+                reached_route_endpoint=bool(moved and supply['route_days'] >= quote['days']),
+                retreat_requested=supply['retreat_requested'], unit_status=unit.get('status'))
         meal=[units,used,moved,missing]
         if dynamic is not None:
             meal.extend((rate,cargo_weight))

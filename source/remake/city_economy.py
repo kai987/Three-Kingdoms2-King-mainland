@@ -264,10 +264,12 @@ def turn_rations(monthly, installment):
 
 
 def settle_turn_grain(game, state):
-    from . import strategic_granary
+    from . import logistics_strategy, strategic_granary
     strategic = strategic_granary.enabled(state)
     absent = absent_troops(game, state)
-    garrisons = garrison_grain(game, state, absent)
+    stationed_before = stationed_troops(game, state, absent)
+    garrisons = garrison_grain(game, state, stationed=stationed_before)
+    observed = logistics_strategy.observed()
     cities = state.extension.get('city_development', {}).get('cities', {})
     names = None
     installment = {11: 1, 21: 2, 1: 3}[state.day]
@@ -275,14 +277,21 @@ def settle_turn_grain(game, state):
         if city.owner == 'neutral':
             continue
         development = cities.get(key)
-        monthly = garrisons[key] + civilian_grain(development['population'] if development else 0,
-                                               town_level(game, state, key), state=state)
-        required = turn_rations(monthly, installment)
+        population = development['population'] if development else 0
+        residents = civilian_grain(population, town_level(game, state, key), state=state)
+        required = turn_rations(garrisons[key] + residents, installment)
         paid = min(required, city.grain)
         if strategic:
             strategic_granary.spending(state,city,paid,'civilian_and_garrison')
         city.grain -= paid
         missing = required - paid
+        if observed:
+            resident_due = turn_rations(residents, installment)
+            logistics_strategy.observe('city_meal_settled', state, owner=city.owner, city=key,
+                settlement_tick=state.turn*10, population=population, active_garrison=stationed_before[key],
+                reserve_troops=city.reserves, resident_due=resident_due, garrison_due=required-resident_due,
+                required_grain=required, paid_grain=paid, missing_grain=missing,
+                grain_before_settlement=city.grain+paid, grain_after_settlement=city.grain)
         if not missing:
             continue
 

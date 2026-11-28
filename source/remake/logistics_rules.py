@@ -1,4 +1,6 @@
 """Integer logistics profiles for the already quoted physical routes."""
+from contextlib import contextmanager
+from contextvars import ContextVar
 from fractions import Fraction
 from math import ceil
 from types import MappingProxyType
@@ -11,6 +13,7 @@ CURRENT = 2
 DAY_TICKS = 1_000
 RATION_SCALE = 100 * DAY_TICKS
 LOSS_SCALE = 10_000 * DAY_TICKS
+_quote_profiles = ContextVar('cargo_quote_profiles', default=None)
 MARCH_SUPPLY_PERCENT = MappingProxyType({
     'plain': 125, 'mountain': 150, 'desert': 150,
     'river_downstream': 105, 'river_still': 110, 'river_upstream': 115,
@@ -161,9 +164,29 @@ def reverse_prefix(parts, travelled_days):
     return list(reversed(traversed))
 
 
+@contextmanager
+def reuse_cargo_profiles(profiles):
+    token = _quote_profiles.set(profiles)
+    try:
+        yield
+    finally:
+        _quote_profiles.reset(token)
+
+
 def estimate_cargo(grain, parts, days, *, start=0, remainder=0, rates=CARGO_GRAIN_LOSS_BPS):
-    for day in range(start, start + days):
-        lost, remainder = cargo_loss(grain, weight(parts, day, 1, rates=rates), remainder)
+    turn_weights = range(start, start + days)
+    cache = _quote_profiles.get()
+    weights = None
+    if cache is not None and rates is CARGO_GRAIN_LOSS_BPS:
+        key = tuple(tuple(part) for part in parts), start, days
+        weights = cache.get(key)
+        if weights is None:
+            weights = tuple(weight(key[0], day, 1, rates=rates) for day in turn_weights)
+            cache[key] = weights
+    if weights is None:
+        weights = (weight(parts, day, 1, rates=rates) for day in turn_weights)
+    for weighted_bps in weights:
+        lost, remainder = cargo_loss(grain, weighted_bps, remainder)
         grain -= lost
     return grain, remainder
 

@@ -10,6 +10,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.errors import INVALID_SAVE_MESSAGE
+from remake.transport_coordination import INVALID as INVALID_TRANSPORT_COORDINATION
 
 
 def translate(text, data):
@@ -70,6 +71,8 @@ class MessageLocaleTests(unittest.TestCase):
         self.assertGreaterEqual(len(checked), 50)
         self.assertTrue({'存档无效，当前进度未改变。','请选择有效的战役。',
                          '请选择本城健康的武将。','当前不是待处理的电脑回合。'}<=checked)
+        self.assertIn(INVALID_TRANSPORT_COORDINATION, self.data['exact'])
+        self.assertRegex(translate(INVALID_TRANSPORT_COORDINATION, self.data), '[ぁ-ゖァ-ヶ]')
 
     def test_diplomacy_log_preserves_date_envoy_target_and_outcome(self):
         for command, japanese in [('親善', '親善'), ('同盟', '同盟'), ('歸還俘虜', '捕虜返還'),

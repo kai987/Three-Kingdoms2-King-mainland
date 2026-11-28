@@ -188,14 +188,15 @@ class TravelCampaign:
         allowed = None if adjacent else {}
         return self._python_path_search(state, graph, source, {target}, owner, mode, allowed).get(target)
 
-    def _python_supply_paths(self, state, owner, pairs):
+    def _python_supply_paths(self, state, owner, pairs, *, prepared_directions=None):
         """One search per origin and mode over a snapshot scoped to this read."""
         targets = {}
         for source, target in pairs:
             if (source != target and source in state.cities and target in state.cities
                     and state.cities[target].owner == owner):
                 targets.setdefault(source, set()).add(target)
-        graph = self._python_route_graph(state, scoped=({}, {}))
+        directions = {} if prepared_directions is None else prepared_directions
+        graph = self._python_route_graph(state, scoped=(directions, {}))
         allowed = {}
         answers = {(source, mode): self._python_path_search(state, graph, source, cities, owner, mode, allowed)
                    for source, cities in targets.items() for mode in ('land', 'fastest')}

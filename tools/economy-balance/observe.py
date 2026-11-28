@@ -608,11 +608,13 @@ def _run_scenario(scenario, seed, months, output, group, settings, *, hash_turns
                                escort_bag=row['journeys'][-1]['supply']['remaining'])
                           for row in state.extension.get('logistics',{}).get('convoys',())],
             monthly_garrison_grain=sum(economy.garrison_grain(game,state).values()))
+    percentile_index = (95*len(cpu_times)+99)//100-1
     result['performance'] = dict(measured_turns=len(timings),
         mean_turn_seconds=round(sum(timings)/len(timings),6) if timings else None,
         max_turn_seconds=round(max(timings),6) if timings else None,
         total_turn_cpu_seconds=round(sum(cpu_times),6),
         mean_turn_cpu_seconds=round(sum(cpu_times)/len(cpu_times),6) if cpu_times else None,
+        p95_turn_cpu_seconds=round(sorted(cpu_times)[percentile_index],6) if cpu_times else None,
         max_turn_cpu_seconds=round(max(cpu_times),6) if cpu_times else None,
         worker_peak_rss_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss *
         (1 if sys.platform == 'darwin' else 1024))

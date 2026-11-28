@@ -1,6 +1,6 @@
 """Read-only budgets, dated city forecasts and command-local resource commitments."""
 from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 from . import city_economy, domestic, facilities, historical_campaigns
 from . import logistics, logistics_rules, logistics_strategy, military_budget
@@ -283,7 +283,10 @@ class FactionEconomyPlan:
 
 
 def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=HORIZON,
-         granary=False, except_order=None):
+         granary=False, except_order=None, coordinated=False, forecast_memo=None):
+    # The scheduler owns the memo for a single AI phase. Its commands do not
+    # advance the calendar or change development, facilities, weather or owners.
+    # Rebuild wallet, garrison and commitment inputs after every resource debit.
     projected_convoys = {} if granary else None
     budgets = (military_budget.budgets(game,state,owner,stationed=stationed,incomes=incomes,
                                       inbound_cache=projected_convoys) if base is None else base)
@@ -293,18 +296,25 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
     candidate = granary and strategic_granary.candidate(state)
     winter_reserves=winter_strategy.planned_reserves(game,state,owner)
     shipments, due = defaultdict(lambda: defaultdict(int)), defaultdict(int)
-    uncertain = defaultdict(lambda: defaultdict(int)) if granary else None
+    uncertain = defaultdict(lambda: defaultdict(int)) if granary or coordinated else None
     conditional, convoy_rows = defaultdict(lambda: defaultdict(int)), defaultdict(list)
     book = pending(state, owner, granary=granary, except_id=except_order)
     away = set()
+    intermediate = set()
+    if coordinated:
+        from . import transshipment
+        intermediate = {batch['convoy'] for plan in transshipment._plans(state).values()
+                        for batch in plan['batches'] if batch['target'] != plan['target']}
     for row in state.extension.get('logistics', {}).get('convoys', ()):
         if row['owner'] == owner:
             away.update(row['officers'])
-        if (candidate and row['owner'] == owner and not row['delivery_done']
+        if coordinated and (row['id'] in intermediate or 'convoy_relief' in row):
+            continue
+        if ((candidate or coordinated) and row['owner'] == owner and not row['delivery_done']
                 and row['status'] != 'returning' and row['target_march'] is None
                 and 'convoy_relief' not in row and row['target'] in budgets):
             from . import granary_demand
-            projected = projected_convoys.get(row['id'])
+            projected = projected_convoys.get(row['id']) if projected_convoys is not None else None
             if projected is None:
                 projected = logistics.inbound_grain(game,row,state)
             fact = granary_demand.inbound(game, state, row, projected)
@@ -343,19 +353,23 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
             away.update(march['officers'])
     away.update(ident for ident in city_economy.absent_troops(game, state)
                 if state.officers[ident].faction_id == owner and state.officers[ident].alive)
-    staged = defaultdict(int)
+    staged, held_grain = defaultdict(int), defaultdict(int)
     for item in book.held.values():
         if item.plan_id.startswith('march:'):
             staged[item.source_city_id] += item.amount
+        if item.resource_type == 'grain':
+            held_grain[item.source_city_id] += item.amount
     forecast = {}
     next_date = (state.year + (state.month == 12), state.month % 12 + 1)
     for key, row in budgets.items():
         city = state.cities[key]
         minimum = row['fixed']
         safety = minimum * (3 if row['front'] else 2)
-        next_income = city_economy.monthly_income(game, key, state, date=next_date)
+        cached = forecast_memo.get(key) if forecast_memo is not None else None
+        next_income = cached[0] if cached is not None else city_economy.monthly_income(
+            game, key, state, date=next_date)
         natural = next_income['reserves']
-        held = book.amount(key)
+        held = held_grain[key]
         if key in winter_reserves:
             premium=winter_reserves[key][1]
             row.update(target=row['target']+premium,winter_reserve_extra=premium)
@@ -363,10 +377,19 @@ def plan(game, state, owner, *, stationed=None, incomes=None, base=None, turns=H
                    safety_reserve=safety, reserved_grain=held, next_natural_reserves=natural)
         if staged:
             row['staging_grain'] = staged[key]
-        projected = _forecast(game, state, city, row, shipments[key], held, turns, next_income)
-        if granary:
+        if forecast_memo is None:
+            projected = _forecast(game, state, city, row, shipments[key], held, turns, next_income)
+        else:
+            inputs = (city.grain, city.reserves, held, row['active'], row['residents'], row['garrison'],
+                      row['wage_grain'], minimum, safety, tuple(sorted(shipments[key].items())))
+            if cached is None or cached[1] != inputs:
+                cached = next_income, inputs, _forecast(game, state, city, row, shipments[key], held,
+                                                       turns, next_income)
+                forecast_memo[key] = cached
+            projected = replace(cached[2])
+        if granary or coordinated:
             projected.risky_receipts = dict(uncertain[key])
-        if candidate:
+        if candidate or coordinated:
             projected.conditional_receipts = dict(conditional[key])
             projected.convoy_receipts = convoy_rows[key]
         forecast[key] = projected

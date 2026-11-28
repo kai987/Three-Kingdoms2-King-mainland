@@ -14,6 +14,7 @@ import re
 from threading import RLock
 from types import SimpleNamespace
 
+from . import transport_coordination
 from .errors import GameError, INVALID_SAVE_MESSAGE
 from . import diplomacy, grain_relief, grain_units, historical_campaigns, observer, runan_campaign, southern_mission, three_visits
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
@@ -456,6 +457,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'facilities':facilities.view(self,state),
                                 **({'strategic_granary':granary_planning.view(self,state)}
                                    if strategic_granary.enabled(state) and state.player != observer.SEAT else {}),
+                                **({'transport_coordination':transport_coordination.view(state)}
+                                   if transport_coordination.enabled(state) else {}),
                                 **({'transshipment':transshipment.view(self,state,state.player)}
                                    if transshipment.enabled(state) and state.player != observer.SEAT else {}),
                                 **({'regional_market':regional_market.view(self,state)}
@@ -541,6 +544,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     if transport_capacity.FIELD in payload or transport_capacity.OPTIONS in payload:
                         transport_capacity.initialize(candidate,payload.get(transport_capacity.FIELD,0),
                                                       payload.get(transport_capacity.OPTIONS))
+                    if transport_coordination.FIELD in payload or transport_coordination.OPTIONS in payload:
+                        transport_coordination.initialize(candidate,payload.get(transport_coordination.FIELD,0),
+                                                          payload.get(transport_coordination.OPTIONS))
                     if transshipment.FIELD in payload:
                         transshipment.initialize(candidate,payload[transshipment.FIELD])
                     if campaign_id is not None:
@@ -1061,6 +1067,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         domestic.validate(self,state)
         transport_capacity.validate(state)
         transshipment.validate(self,state)
+        transport_coordination.validate(state)
         logistics.validate(self,state)
         regional_market.validate(self,state)
         strategic_granary.validate(state)

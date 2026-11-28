@@ -378,7 +378,7 @@ def _safe_path(game, state, source, target, owner, mode, policy, **load):
     return _safe_engine(game,policy)._travel_path(state,source,target,owner,mode,**load)
 
 
-def _supply_routes(game, state, owner, pairs, policy):
+def _supply_routes(game, state, owner, pairs, policy, *, prepared_directions=None):
     from . import ai_core
     direct_water=transport_capacity.enabled(state,'mode_aware_ai_policy')
     if direct_water:
@@ -387,10 +387,14 @@ def _supply_routes(game, state, owner, pairs, policy):
         data = game.catalog.data
         excluded = [r['id'] for key in ('travel_routes', 'exploration_routes') for r in data.get(key, ())
                     if not _permitted_route(game, policy, r)]
-        result=ai_core.routes(game, state, owner, pairs, excluded=excluded)
+        extra = {} if prepared_directions is None else {'prepared_directions': prepared_directions}
+        result=ai_core.routes(game, state, owner, pairs, excluded=excluded, **extra)
     else:
         engine = _safe_engine(game, policy)
-        result=engine._python_supply_paths(state, owner, pairs)
+        if prepared_directions is None:
+            result=engine._python_supply_paths(state, owner, pairs)
+        else:
+            result=engine._python_supply_paths(state, owner, pairs, prepared_directions=prepared_directions)
     if direct_water:
         # One scan of active direct links per batch. The normal G2 land and
         # fastest searches also remain available, including mixed paths.
@@ -893,7 +897,7 @@ def valid_grain_receipt(values):
                  'cargo_returned','cargo_abandoned','cargo_remaining')))
 
 
-def _event(game, state, kind, row, *, lost=0, reason='outbound',amounts=None):
+def _event(game, state, kind, row, *, lost=0, reason='outbound',amounts=None,receipt_tick=None):
     reports = _pool(state)['reports']
     values=row['cargo'] if amounts is None else amounts
     details = dict(convoy_id=row['id'], gold=values['gold'], grain=values['grain'],
@@ -909,6 +913,8 @@ def _event(game, state, kind, row, *, lost=0, reason='outbound',amounts=None):
     reports.append(dict(turn=state.turn, owner=row['owner'], source=row['source'], target=row['target'],
                         kind=kind, details=details))
     reports[:] = reports[-100:]
+    from . import transport_coordination
+    transport_coordination.transport_event(state,kind,row,values['grain'],tick=receipt_tick)
     if 'strategic' in row:
         from . import strategic_granary
         strategic_granary.transport_event(state,row,kind,values)
@@ -935,7 +941,7 @@ def _journey(game, state, source, target, mode, quote, ids, reserves, *, from_ca
 
 def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planner=None, donor_budget=None, allocation=None,
              convoy_relief_quote=None, regional_order=None, strategic_order=None, strategic_path=None,
-             strategic_floor=None, transshipment_quote=None):
+             strategic_floor=None, transshipment_quote=None, coordination_offer=None):
     from . import transport_emergency, transshipment
     if (not isinstance(payload, dict) or set(payload) - {'source', 'target', 'officers', 'cargo', 'route_mode','target_march','target_convoy'}
             or not isinstance(payload.get('source'), str) or not isinstance(payload.get('target'), str)
@@ -1023,6 +1029,11 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
                         officers=ids,cargo=cargo['grain'],reserves=cargo['reserves']))
     if quote is None or _dangerous(quote, policy) or not safe_capacity_route(game,state,quote):
         raise GameError('没有符合方针的安全运输路线。')
+    if coordination_offer is not None:
+        back = convoy_return(game, state, source, target, policy)
+        if (quote['path'] != coordination_offer['path'] or back is None or
+                escort_rations(game, state, ids, quote, back[1]) > emergency_grain):
+            raise GameError('輸送路線或回程口糧已變更。')
     if strategic_order is not None and quote['path'] != strategic_path:
         from . import strategic_granary
         raise GameError(strategic_granary.STALE)
@@ -1140,18 +1151,18 @@ def dispatch(game, state, payload, owner, *, emergency_grain=None, relief_planne
     return row
 
 
-def auto_dispatch_city(game,state,city_id,*,plans=None,relief_planner=None):
+def auto_dispatch_city(game,state,city_id,*,plans=None,relief_planner=None,non_grain=False):
     from . import transport_emergency
     if (not _pool(state)['cities'][city_id]['policy']['enabled']
             or historical_campaigns.hold_longyou_garrison(game, state, state.cities[city_id])):
         return False
-    if logistics_strategy.staging(state):
+    if not non_grain and logistics_strategy.staging(state):
         from . import army_relief, escort_planning
         city=state.cities[city_id]
         planner=relief_planner or army_relief.Planner(game,state,city.owner)
         if escort_planning.send(game,state,city,planner,(plans or {}).get(city_id)):
             return True
-    elif logistics_strategy.army_relief(state):
+    elif not non_grain and logistics_strategy.army_relief(state):
         from . import army_relief
         city=state.cities[city_id]
         planner=relief_planner or army_relief.Planner(game,state,city.owner)
@@ -1166,7 +1177,7 @@ def auto_dispatch_city(game,state,city_id,*,plans=None,relief_planner=None):
                     officers=proposed['officers'],cargo=dict(gold=0,grain=proposed['max_grain'],reserves=0),
                     route_mode=proposed['route_mode']),city.owner,relief_planner=planner,donor_budget=donor)
                 return True
-    else:
+    elif not non_grain:
         from .march_supply import remaining_requirement
         rescues=[]
         for proposed in rescue_targets(game,state,city_id):
@@ -1195,6 +1206,12 @@ def auto_dispatch_city(game,state,city_id,*,plans=None,relief_planner=None):
     managed = logistics_strategy.enabled(state) and city.owner!=state.player
     mode=proposed['route_mode']
     cargo=proposed['cargo']
+    if non_grain:
+        cargo = dict(cargo,grain=0)
+        if not any(cargo.values()):
+            return _auto_transfer_city(game,state,city_id)
+        if not all(ident in _eligible(game,state,city,capacity_checks=True) for ident in proposed['officers']):
+            return False
     if military_budget.enabled(state) and city.owner!=state.player and cargo['grain']:
         plans=military_budget.budgets(game,state,city.owner) if plans is None else plans
         donor=plans[city_id]
@@ -1612,6 +1629,9 @@ def _trace_terminal(game, state, row, outcome, city=None, *, terminal_tick=None)
          initial_reserves=row['initial_cargo']['reserves'],delivered=row['delivery_done'],
          remaining_gold=row['cargo']['gold'],remaining_treasure=row['cargo']['treasure'],
          event_tick=terminal_tick,actual_terminal_tick=(state.turn-1)*10 if terminal_tick is None else terminal_tick)
+    if city is None:
+        from . import transport_coordination
+        transport_coordination.transport_event(state,'transport_terminal',row,0,tick=end)
 
 
 def settle_surrender(game, state, owner, holdings):
@@ -1722,7 +1742,7 @@ def rendezvous(game, state, *, tick=None):
         game._supply_event(state,'march_resupplied',unit_kind='march',unit_id=army['id'],
             city=city,owner=row['owner'],grain=amount,reason='convoy')
         _event(game,state,'transport_arrived',row,reason='delivered',
-               amounts=dict(gold=0,grain=amount,reserves=0))
+               amounts=dict(gold=0,grain=amount,reserves=0),receipt_tick=tick)
     from . import transport_emergency
     if transport_emergency.stage(state)>=transport_emergency.EXTERNAL_RELIEF:
         from . import convoy_relief

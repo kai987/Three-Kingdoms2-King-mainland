@@ -610,6 +610,63 @@ test('faction resources show current allies and large factions receive 40 comman
  expect(errors.get(page)).toEqual([]);
 });
 
+test('transport coordination is opt-in and its observer ledger follows the selected language',async({page})=>{
+ await opening(page);
+ const option=page.locator('#transport-coordination-option');
+ const recovery=page.locator('#transport-coordination-recovery-option');
+ const consumption=page.locator('#transport-coordination-consumption-option');
+ await expect(option).not.toBeChecked();
+ await expect(recovery).not.toBeChecked();
+ await expect(consumption).not.toBeChecked();
+ await expect(option).toHaveAccessibleName(/AI 輸送統籌 V3\.0\.4\.1/);
+ await option.check();
+ await recovery.check();
+ await expect(option).not.toBeChecked();
+ await expect(recovery).toBeChecked();
+ await expect(consumption).toHaveAccessibleName(/AI 輸送統籌 V3\.0\.4\.1\.2/);
+ await consumption.check();
+ await expect(recovery).not.toBeChecked();
+ await expect(consumption).toBeChecked();
+ for(const id of ['#transport-capacity-option','#transshipment-option','#winter-forecast-option']){
+  await expect(page.locator(id)).not.toBeChecked();
+ }
+ await page.locator('#begin-observation').click();
+ await expect(page.locator('#observer-status')).toHaveAttribute('data-observer-state','playing');
+ await page.locator('#observer-toggle').click();
+ await expect(page.locator('#observer-status')).toHaveAttribute('data-observer-state','paused');
+ const ledger=page.locator('#inspector [data-transport-coordination]');
+ await expect(ledger.locator('summary')).toHaveText('輸送統籌',{useInnerText:true});
+ if(!await ledger.locator('tbody tr').count()){
+  await page.locator('#observer-step').click();
+  await tacticalDismiss(page);
+ }
+ await expect(ledger.locator('tbody tr')).not.toHaveCount(0,{timeout:120_000});
+ const saved=await tacticalSave(page);
+ expect(saved.state.extension.transport_coordination_rules_version).toBe(30412);
+ expect(saved.state.extension.transport_coordination.features.pagination).toBe(true);
+ expect(saved.state.extension.transport_coordination.features.meal_priority).toBe(true);
+ expect(saved.state.extension.transport_coordination.features.route_reuse).toBe(true);
+ if(await ledger.getAttribute('open')===null)await ledger.locator('summary').click();
+ await expect(ledger.getByRole('columnheader',{name:'未覆蓋糧'})).toBeVisible();
+ await ledger.screenshot({path:test.info().outputPath('coordination-zh-Hant.png')});
+ await page.locator('#utility-menu summary').click();
+ await page.locator('#language').selectOption('ja');
+ await expect(ledger.locator('summary')).toHaveText('輸送調整',{useInnerText:true});
+ if(await ledger.getAttribute('open')===null)await ledger.locator('summary').click();
+ await expect(ledger.getByRole('columnheader',{name:'未充足糧'})).toBeVisible();
+ await ledger.screenshot({path:test.info().outputPath('coordination-ja.png')});
+ const rightmostVisible=await ledger.locator('.faction-ledger-scroll').evaluate(scroller=>{
+  scroller.scrollLeft=scroller.scrollWidth;
+  const tableEdge=scroller.querySelector('thead th:last-child').getBoundingClientRect().right;
+  return tableEdge<=scroller.getBoundingClientRect().right+2;
+ });
+ expect(rightmostVisible).toBe(true);
+ await expect(ledger.getByRole('columnheader',{name:'主な制約'})).toBeVisible();
+ await ledger.screenshot({path:test.info().outputPath('coordination-ja-last-columns.png')});
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2)).toBe(true);
+ expect(errors.get(page)).toEqual([]);
+});
+
 test('city intelligence shows the development figures and uses the map name for headquarters',async({page},testInfo)=>{
  await opening(page);
  await page.locator('#scenario').selectOption('mainland200-01');

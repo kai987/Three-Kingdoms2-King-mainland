@@ -123,8 +123,12 @@ class CampaignObservation(Record):
             self.observe_transport(state,kind,row,values)
             return event(game,state,kind,row,**values)
 
-        def planner_init(planner,game,state,owner):
-            create_planner(planner,game,state,owner)
+        def planner_init(planner,game,state,owner,**kwargs):
+            create_planner(planner,game,state,owner,**kwargs)
+            if kwargs.get('coordinated'):
+                from remake import transport_coordination
+                if transport_coordination.shadowing(state):
+                    return
             for ident,need in planner.demands.items():
                 key=(state.turn,ident,need.deadline,need.required)
                 if need.required and key not in self.planning_seen:
@@ -135,6 +139,10 @@ class CampaignObservation(Record):
 
         def published_estimates(planner,ident,**values):
             found=list(estimates(planner,ident,**values))
+            if getattr(planner, 'coordinated', False):
+                from remake import transport_coordination
+                if transport_coordination.shadowing(planner.state):
+                    return found
             need=planner.demands.get(ident)
             if need is not None and need.required and values.get('exclude') is None and found:
                 covered=sum(grain for eta,grain in found if eta<=need.deadline)

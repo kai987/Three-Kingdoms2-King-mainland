@@ -97,8 +97,9 @@ def _return_quote(review, owner, source, city, policy):
 
 class Planner:
     """One dispatch pass for a faction. Stock, books and ownership are rechecked."""
-    def __init__(self, game, state, owner):
+    def __init__(self, game, state, owner, *, coordinated=False):
         self.game, self.state, self.owner = game, state, owner
+        self.coordinated = coordinated
         self.review = emergency.Review(game, state)
         self.targets = {row['id']:row for row in logistics._pool(state)['convoys']
                         if row['owner']==owner and row.get('emergency',{}).get('status') in
@@ -130,7 +131,7 @@ class Planner:
             # There is at most one in-flight commitment. A late mission is
             # cancelled by settlement; until then it never funds a move.
             return None, 'already_assigned' if timely else 'active_late'
-        ids = logistics._eligible(game,state,source)
+        ids = logistics._eligible(game,state,source,capacity_checks=self.coordinated)
         teams=[selected['ids']] if selected is not None else [[i] for i in sorted(ids,key=lambda i:army_relief.escort_rank(state,i))]
         if not teams or logistics._present_count(game,state,source)-len(teams[0])<policy['reserve_officers']:
             return None, 'no_spare_officer'
@@ -199,6 +200,8 @@ class Planner:
                     net=net,return_city=source.id,return_weight=back.weight,
                     outbound=bag.outbound,waiting=bag.wait,returning=bag.returning,safety=bag.safety)
                 choice=dict(quote=out.route,mode=out.mode,officers=team,grain=room,rations=bag.total,relief=facts)
+                if self.coordinated:
+                    choice['return_quote']=back.route
                 if physical:
                     choice['capacity']=loading
                 priority=(eta, -min(net,needed), efficiency<army_relief.EFFICIENCY_PREFERRED,
@@ -355,7 +358,7 @@ def rendezvous(game,state,tick):
         game._supply_event(state,'march_resupplied',unit_kind='convoy',unit_id=recipient['id'],
                            city=here,owner=row['owner'],grain=amount,reason='convoy')
         logistics._event(game,state,'transport_arrived',row,reason='delivered',
-                         amounts=dict(gold=0,grain=amount,reserves=0))
+                         amounts=dict(gold=0,grain=amount,reserves=0),receipt_tick=tick)
         emergency.note(game,state,'convoy_relief_delivery',recipient,at=here,root_relief_request_id=room['root'],
                        sender=row['id'],actual_relief=amount,protected_return=protected,decision='handed_off')
 
