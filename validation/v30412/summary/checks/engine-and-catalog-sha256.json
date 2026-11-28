@@ -1,0 +1,137 @@
+{
+  "engine_commit": "749967c2a7292b0d4c426216bdcfbcd67ba6f4a6",
+  "acceptance_tool_commit": "39a368f11b1785b36a6845b181fc0473cec086c3",
+  "base_commit": "d32815756b0aaaef9c633c158ea87102cd4b8c93",
+  "previous_fixed_engine": "f2f442adea78785a3b9af654587442d6134b23e5",
+  "previous_integrated_baseline": "3ec93fbd8abe42b4c17e36f1b7e8e9b56c13501a",
+  "origin_main": "3d6194c14167d076b3d79553ee0db80d3ef552ca",
+  "files": [
+    {
+      "file": "game/assets/map-campaign.png",
+      "sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7"
+    },
+    {
+      "file": "game/data/campaigns/184-02.json",
+      "sha256": "030006538c86d5630cb8e2c95e35580184c4050d43da9e5bf983d638f20ec1f5"
+    },
+    {
+      "file": "game/data/campaigns/188-06.json",
+      "sha256": "47a2befe11315e84474a90ec3f7b4412b6c12efe2ad257bc7f46bf9c06e2ddbc"
+    },
+    {
+      "file": "game/data/campaigns/190-01.json",
+      "sha256": "5b79c8dcca15cb542b823eeae2a4b4c2699068b6d41a5c261477ee0389bb5610"
+    },
+    {
+      "file": "game/data/campaigns/191-10.json",
+      "sha256": "160d8833a76c70883a6e719300fe3c80fc44aa3d3d130323b9278072da9b7026"
+    },
+    {
+      "file": "game/data/campaigns/194-06.json",
+      "sha256": "fe3a6a48bbeaf4b8cc32045dadbd2e3e8b062a23f546afc79bc2d9b704d804b7"
+    },
+    {
+      "file": "game/data/campaigns/196-06.json",
+      "sha256": "35966476dfce77d0b2cd6f06de126f0acdf57c6c0da45fd6519b06be306c2882"
+    },
+    {
+      "file": "game/data/campaigns/197-07.json",
+      "sha256": "a236a3bde6107980bf24a5fdf6d5df28fe6d0a183bfd95ec8b76c74f74a407bf"
+    },
+    {
+      "file": "game/data/campaigns/198-03.json",
+      "sha256": "04b91b99b34b9a2bd131425a56f2be87cc202adc4b4010968713496987bb4541"
+    },
+    {
+      "file": "game/data/campaigns/200-01.json",
+      "sha256": "6c6ba7f2dafb4b6dec0922383456b33231baf8bdbeb8f9ffeded1beed428ea60"
+    },
+    {
+      "file": "game/data/campaigns/201-05.json",
+      "sha256": "d3e3b0deae1bf3f5cc382abd1339ad4ee62b62481a8f70b29a027bc3ecde4dd0"
+    },
+    {
+      "file": "game/data/campaigns/202-06.json",
+      "sha256": "4455518219a681bfda2833da75ad90025eb9217ec2e96f8378a03a0c00a0a783"
+    },
+    {
+      "file": "game/data/campaigns/207-09.json",
+      "sha256": "d1fbce9fa0a630bccf91f0a7808e19f1ec1f8e214195ad6af42d57bb5ce0605e"
+    },
+    {
+      "file": "game/data/campaigns/208-10.json",
+      "sha256": "844a3a08bc6a1111c09c9ee1a2e6906d67011c17660e812dd29b70412e85ca9c"
+    },
+    {
+      "file": "game/data/campaigns/209-06.json",
+      "sha256": "e92c1ea1c50e4036d01b4c138643df565023c195758cfa820322ce9ae5d3f3fb"
+    },
+    {
+      "file": "game/data/campaigns/210-11.json",
+      "sha256": "7272fe2fcaa911d4cc444c7d19ffc450e789902bfa78a08c7474b43c5d330762"
+    },
+    {
+      "file": "game/data/campaigns/211-07-tongguan.json",
+      "sha256": "195dac335055509ffb36ea8b78841f6cb9ace4f034a19761a455bfa834073b9c"
+    },
+    {
+      "file": "game/data/campaigns/212-06.json",
+      "sha256": "20d6f7c5589432a3b3c7d9252e343f51c57ee38e48e48b32d46c59f429f6f148"
+    },
+    {
+      "file": "game/data/campaigns/212-12.json",
+      "sha256": "4cf23d78c069376236abdd71ad6555ad3145ea2ae53c628960dee6881c180f23"
+    },
+    {
+      "file": "game/data/campaigns/215-08.json",
+      "sha256": "8b51331cebd069a756803d79408663ccdcc7008d58b69bfe54737dcc3f60686a"
+    },
+    {
+      "file": "game/data/campaigns/217-07.json",
+      "sha256": "f09ec6459b1f11ee1d979ba0abf63b1807d604f2a17e6b9ccf8d6891bffd01eb"
+    },
+    {
+      "file": "game/data/campaigns/219-07.json",
+      "sha256": "6562a758571aad5d285758be5d732f77c896049eb6d02e02e711348a0a5b1be6"
+    },
+    {
+      "file": "game/data/campaigns/221-07.json",
+      "sha256": "b2c57117aed0744898419336bf02bf9e49884ea0ba7947a0635e5de51e044f62"
+    },
+    {
+      "file": "game/data/campaigns/225-07.json",
+      "sha256": "09678281bce9c669fb0968aba165f659eb23a7a6273b2568eb2ffff3954d0d6e"
+    },
+    {
+      "file": "game/data/campaigns/227-02.json",
+      "sha256": "f74801b000dba443e84a965af69979899f7e53497872b661996eaddbac75f1e8"
+    },
+    {
+      "file": "game/data/campaigns/234-02.json",
+      "sha256": "1e2fe4d33f641459b8911f0d1f77f7f8e80031cd4ca289d8dfdb41fb6cd3f598"
+    },
+    {
+      "file": "game/data/campaigns/235-01.json",
+      "sha256": "8e150191a9957296c4bccf3d33bd8a3acf2f1ca2c37183e8d9743c7725c5dba8"
+    },
+    {
+      "file": "game/data/campaigns/238-01.json",
+      "sha256": "35a2b26d69eb44dc7afff7f62ec69ebfac42167e84884dfc9b101f11c39010e6"
+    },
+    {
+      "file": "game/data/campaigns/249-01.json",
+      "sha256": "24c2385c8f739fb463190dff95f9b3e98f76de8c83ca450ad7b95ecce2cdf6e9"
+    },
+    {
+      "file": "game/data/campaigns/263-05.json",
+      "sha256": "eb74cb3561cf21bb9434301445d78f5eb6ade1d5f8df34177f790dc0b40f0a3f"
+    },
+    {
+      "file": "game/data/campaigns/index.json",
+      "sha256": "ffccb51d4bda7742230f9928a2e3c28f8c337dcd55ad1fa6ef985cb6503f516d"
+    }
+  ],
+  "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.16",
+  "rust_toolchain": "1.93.0"
+}

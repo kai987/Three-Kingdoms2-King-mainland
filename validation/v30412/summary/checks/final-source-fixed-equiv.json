@@ -1,0 +1,223 @@
+{
+  "earlier_source": "e6dd4f3b59bf6d5e0675515b7903852ef108111b",
+  "clean_source": "39a368f11b1785b36a6845b181fc0473cec086c3",
+  "clean_engine_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "ignored_performance_and_new_observation_fields": [
+    "cpu",
+    "wall",
+    "reached_route_endpoint"
+  ],
+  "execution_equal": true,
+  "runs": [
+    {
+      "fixture": "chibi-long.json.gz",
+      "group": "K0",
+      "checkpoint_sha256": "76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9",
+      "turns": 9,
+      "actual_events": 806
+    },
+    {
+      "fixture": "chibi-long.json.gz",
+      "group": "K1",
+      "checkpoint_sha256": "76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9",
+      "turns": 9,
+      "actual_events": 207
+    },
+    {
+      "fixture": "chibi-long.json.gz",
+      "group": "K2",
+      "checkpoint_sha256": "76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9",
+      "turns": 9,
+      "actual_events": 292
+    },
+    {
+      "fixture": "chibi-long.json.gz",
+      "group": "L0",
+      "checkpoint_sha256": "76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9",
+      "turns": 9,
+      "actual_events": 802
+    },
+    {
+      "fixture": "chibi-long.json.gz",
+      "group": "L1",
+      "checkpoint_sha256": "76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9",
+      "turns": 9,
+      "actual_events": 540
+    },
+    {
+      "fixture": "chibi-long.json.gz",
+      "group": "L2",
+      "checkpoint_sha256": "76457d77d4e7487f96f28e88aa90ac3e7d5e857e2a95beedf3a6ce87dd2f41c9",
+      "turns": 9,
+      "actual_events": 500
+    },
+    {
+      "fixture": "convoy-1228.json.gz",
+      "group": "K0",
+      "checkpoint_sha256": "96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50",
+      "turns": 9,
+      "actual_events": 389
+    },
+    {
+      "fixture": "convoy-1228.json.gz",
+      "group": "K1",
+      "checkpoint_sha256": "96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50",
+      "turns": 9,
+      "actual_events": 523
+    },
+    {
+      "fixture": "convoy-1228.json.gz",
+      "group": "K2",
+      "checkpoint_sha256": "96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50",
+      "turns": 9,
+      "actual_events": 536
+    },
+    {
+      "fixture": "convoy-1228.json.gz",
+      "group": "L0",
+      "checkpoint_sha256": "96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50",
+      "turns": 9,
+      "actual_events": 410
+    },
+    {
+      "fixture": "convoy-1228.json.gz",
+      "group": "L1",
+      "checkpoint_sha256": "96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50",
+      "turns": 9,
+      "actual_events": 533
+    },
+    {
+      "fixture": "convoy-1228.json.gz",
+      "group": "L2",
+      "checkpoint_sha256": "96a1a8301dca45a1fcf946623ba2a86a9c094b5a53e057a2063824495cf2ad50",
+      "turns": 9,
+      "actual_events": 543
+    },
+    {
+      "fixture": "convoy-219.json.gz",
+      "group": "K0",
+      "checkpoint_sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "turns": 9,
+      "actual_events": 186
+    },
+    {
+      "fixture": "convoy-219.json.gz",
+      "group": "K1",
+      "checkpoint_sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "turns": 9,
+      "actual_events": 179
+    },
+    {
+      "fixture": "convoy-219.json.gz",
+      "group": "K2",
+      "checkpoint_sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "turns": 9,
+      "actual_events": 179
+    },
+    {
+      "fixture": "convoy-219.json.gz",
+      "group": "L0",
+      "checkpoint_sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "turns": 9,
+      "actual_events": 161
+    },
+    {
+      "fixture": "convoy-219.json.gz",
+      "group": "L1",
+      "checkpoint_sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "turns": 9,
+      "actual_events": 179
+    },
+    {
+      "fixture": "convoy-219.json.gz",
+      "group": "L2",
+      "checkpoint_sha256": "b42c78f15b337fc62ad9c78d5ab73e9a5b99a5a7c89a4269b10937597667f960",
+      "turns": 9,
+      "actual_events": 179
+    },
+    {
+      "fixture": "yellow-212-winter.json.gz",
+      "group": "K0",
+      "checkpoint_sha256": "7a23d58373770c32fb021ddc25bf734e6847598ac6694192342d39edffa33a85",
+      "turns": 9,
+      "actual_events": 12
+    },
+    {
+      "fixture": "yellow-212-winter.json.gz",
+      "group": "K1",
+      "checkpoint_sha256": "7a23d58373770c32fb021ddc25bf734e6847598ac6694192342d39edffa33a85",
+      "turns": 9,
+      "actual_events": 12
+    },
+    {
+      "fixture": "yellow-212-winter.json.gz",
+      "group": "K2",
+      "checkpoint_sha256": "7a23d58373770c32fb021ddc25bf734e6847598ac6694192342d39edffa33a85",
+      "turns": 9,
+      "actual_events": 12
+    },
+    {
+      "fixture": "yellow-212-winter.json.gz",
+      "group": "L0",
+      "checkpoint_sha256": "7a23d58373770c32fb021ddc25bf734e6847598ac6694192342d39edffa33a85",
+      "turns": 9,
+      "actual_events": 12
+    },
+    {
+      "fixture": "yellow-212-winter.json.gz",
+      "group": "L1",
+      "checkpoint_sha256": "7a23d58373770c32fb021ddc25bf734e6847598ac6694192342d39edffa33a85",
+      "turns": 9,
+      "actual_events": 12
+    },
+    {
+      "fixture": "yellow-212-winter.json.gz",
+      "group": "L2",
+      "checkpoint_sha256": "7a23d58373770c32fb021ddc25bf734e6847598ac6694192342d39edffa33a85",
+      "turns": 9,
+      "actual_events": 12
+    },
+    {
+      "fixture": "yellow-long.json.gz",
+      "group": "K0",
+      "checkpoint_sha256": "90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837",
+      "turns": 9,
+      "actual_events": 310
+    },
+    {
+      "fixture": "yellow-long.json.gz",
+      "group": "K1",
+      "checkpoint_sha256": "90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837",
+      "turns": 9,
+      "actual_events": 281
+    },
+    {
+      "fixture": "yellow-long.json.gz",
+      "group": "K2",
+      "checkpoint_sha256": "90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837",
+      "turns": 9,
+      "actual_events": 281
+    },
+    {
+      "fixture": "yellow-long.json.gz",
+      "group": "L0",
+      "checkpoint_sha256": "90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837",
+      "turns": 9,
+      "actual_events": 330
+    },
+    {
+      "fixture": "yellow-long.json.gz",
+      "group": "L1",
+      "checkpoint_sha256": "90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837",
+      "turns": 9,
+      "actual_events": 281
+    },
+    {
+      "fixture": "yellow-long.json.gz",
+      "group": "L2",
+      "checkpoint_sha256": "90a26b2663246c03d7bc413c3c12bed5f8e0d19dee739f2fb3e85c3dd6a41837",
+      "turns": 9,
+      "actual_events": 281
+    }
+  ]
+}

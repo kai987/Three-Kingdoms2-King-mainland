@@ -1,0 +1,11 @@
+checkpoint,group,checkpoint_sha256,hashes,formal_candidate_sequence,transport_receipts,route_queries_with_cache,route_queries_without_cache,actual_communication_records,actual_resource_records
+chibi-late,K2,e4512c6d59b4c927cf65f4183cfe6f1e31b6cf3ebdc928fb5ddcfb747eb3f264,true,true,true,127,128,1022,6219
+chibi-late,L2,e4512c6d59b4c927cf65f4183cfe6f1e31b6cf3ebdc928fb5ddcfb747eb3f264,true,true,true,152,168,1491,7606
+convoys-in-transit,K2,db7fcf972800fe7cd143c6ceed66051c9e3a49ba104a9b302ae974bf68b096f6,true,true,true,0,0,43,3
+convoys-in-transit,L2,db7fcf972800fe7cd143c6ceed66051c9e3a49ba104a9b302ae974bf68b096f6,true,true,true,0,0,43,3
+multiple-shortages,K2,9cd2f5f7c5f3bf64472a51bb5b36c9f64476b65b572272f8f4b1139adaee3e06,true,true,true,46,46,607,4970
+multiple-shortages,L2,9cd2f5f7c5f3bf64472a51bb5b36c9f64476b65b572272f8f4b1139adaee3e06,true,true,true,74,74,1077,5564
+north-snow,K2,c0b4aab4f16744e9110e2d1a87ea2d36f31510964bbdff0d68c0a3723618639c,true,true,true,15,19,93,156
+north-snow,L2,c0b4aab4f16744e9110e2d1a87ea2d36f31510964bbdff0d68c0a3723618639c,true,true,true,17,22,94,158
+yellow-late,K2,d47168e01cba4ad71e9bdd4769f2d9c52f2a3e8fbace6cedf540c0178985baa3,true,true,true,146,212,970,3119
+yellow-late,L2,d47168e01cba4ad71e9bdd4769f2d9c52f2a3e8fbace6cedf540c0178985baa3,true,true,true,182,319,1357,3509

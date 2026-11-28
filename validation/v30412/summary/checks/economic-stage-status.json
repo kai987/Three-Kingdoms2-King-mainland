@@ -1,0 +1,197 @@
+{
+  "stage": "quick",
+  "engine_sha": "749967c2a7292b0d4c426216bdcfbcd67ba6f4a6",
+  "admitted_backgrounds": [],
+  "fixed": {
+    "status": "passed_for_quick",
+    "admitted_backgrounds": [
+      "D0",
+      "D2"
+    ],
+    "windows": 30,
+    "unique_input_checkpoints": 5,
+    "targets_per_group": 89,
+    "returning_slot_samples_per_group": 23,
+    "south_checkpoints": 8,
+    "historical_replayed_checkpoints": 8,
+    "performance_checkpoints": 5
+  },
+  "quick": {
+    "status": "complete_not_admitted",
+    "formal_runs": 16,
+    "supplemental_runs": 5,
+    "runs_with_24_months": 21,
+    "alerts": {
+      "D2": [
+        {
+          "scenario": "184-02",
+          "strategy": 211,
+          "seed": 2026,
+          "metric": "timely_grain_rate",
+          "baseline": 80.89231714613756,
+          "candidate": 59.37243401759531,
+          "delta": -21.519883128542247,
+          "threshold": -5,
+          "unit": "percentage_points"
+        },
+        {
+          "scenario": "184-02",
+          "strategy": 211,
+          "seed": 2026,
+          "metric": "original_deadline_grain_rate",
+          "baseline": 77.48831643461246,
+          "candidate": 54.929618768328446,
+          "delta": -22.55869766628401,
+          "threshold": -5,
+          "unit": "percentage_points"
+        },
+        {
+          "scenario": "208-10",
+          "strategy": 211,
+          "seed": 2026,
+          "metric": "unpaid_city_turns",
+          "baseline": 1.0,
+          "candidate": 8.0,
+          "delta": 7.0,
+          "threshold": 20,
+          "unit": "percent"
+        },
+        {
+          "scenario": "208-10",
+          "strategy": 211,
+          "seed": 2026,
+          "metric": "rations_missing",
+          "baseline": 185.0,
+          "candidate": 6891.0,
+          "delta": 6706.0,
+          "threshold": 20,
+          "unit": "percent"
+        }
+      ],
+      "D0": [
+        {
+          "scenario": "207-09",
+          "strategy": 211,
+          "seed": 2034,
+          "metric": "small_faction_survival_rate",
+          "baseline": 50.0,
+          "candidate": 33.333333333333336,
+          "delta": -16.666666666666664,
+          "threshold": -10,
+          "unit": "percentage_points"
+        },
+        {
+          "scenario": "208-10",
+          "strategy": 211,
+          "seed": 2026,
+          "metric": "unpaid_city_turns",
+          "baseline": 1.0,
+          "candidate": 12.0,
+          "delta": 11.0,
+          "threshold": 20,
+          "unit": "percent"
+        },
+        {
+          "scenario": "208-10",
+          "strategy": 211,
+          "seed": 2026,
+          "metric": "rations_missing",
+          "baseline": 467.0,
+          "candidate": 12730.0,
+          "delta": 12263.0,
+          "threshold": 20,
+          "unit": "percent"
+        },
+        {
+          "scenario": "208-10",
+          "strategy": 211,
+          "seed": 2026,
+          "metric": "timely_grain_rate",
+          "baseline": 89.37995580397764,
+          "candidate": 76.26675556179381,
+          "delta": -13.113200242183822,
+          "threshold": -5,
+          "unit": "percentage_points"
+        },
+        {
+          "scenario": "208-10",
+          "strategy": 211,
+          "seed": 2026,
+          "metric": "original_deadline_grain_rate",
+          "baseline": 89.37995580397764,
+          "candidate": 76.26675556179381,
+          "delta": -13.113200242183822,
+          "threshold": -5,
+          "unit": "percentage_points"
+        },
+        {
+          "scenario": "208-10",
+          "strategy": 211,
+          "seed": 2026,
+          "metric": "timely_order_rate",
+          "baseline": 100.0,
+          "candidate": 66.66666666666667,
+          "delta": -33.33333333333333,
+          "threshold": -5,
+          "unit": "percentage_points"
+        },
+        {
+          "scenario": "263-05",
+          "strategy": 211,
+          "seed": 2026,
+          "metric": "timely_grain_rate",
+          "baseline": 89.66719591544472,
+          "candidate": 52.32856586143723,
+          "delta": -37.338630054007496,
+          "threshold": -5,
+          "unit": "percentage_points"
+        },
+        {
+          "scenario": "263-05",
+          "strategy": 211,
+          "seed": 2026,
+          "metric": "original_deadline_grain_rate",
+          "baseline": 89.66719591544472,
+          "candidate": 53.02778511885832,
+          "delta": -36.639410796586404,
+          "threshold": -5,
+          "unit": "percentage_points"
+        }
+      ]
+    },
+    "reason_by_background": {
+      "D0": "208-10 AI 211 acute city food regression; 263-05 AI 211 severe first-deadline and march hunger regression",
+      "D2": "184-02 AI 211 first-deadline regression; 208-10 AI 211 city food and march hunger regression"
+    }
+  },
+  "five": {
+    "status": "not_run",
+    "reason": "quick_gate_not_met",
+    "planned_runs": {
+      "D0": 14,
+      "D2": 8
+    }
+  },
+  "long": {
+    "status": "not_run",
+    "reason": "five_year_gate_not_met",
+    "planned_runs": {
+      "D0": 6,
+      "D2": 2
+    }
+  },
+  "holdout": {
+    "status": "not_run",
+    "reason": "economic_candidate_not_frozen",
+    "protected_seeds": [
+      2047,
+      2048
+    ]
+  },
+  "candidate": {
+    "engineering_sha": "749967c2a7292b0d4c426216bdcfbcd67ba6f4a6",
+    "economic_frozen": false,
+    "experimental_version": 30412,
+    "enabled_by_default": false
+  }
+}

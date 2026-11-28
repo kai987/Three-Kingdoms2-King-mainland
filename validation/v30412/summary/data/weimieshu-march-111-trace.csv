@@ -1,0 +1,110 @@
+event,turn,year,month,day,owner,city,army,tick,stock,reserved_for_army,city_rations,requested,allowed,blockers,demand_id,target_kind,target,priority,original_deadline,deadline,reliable,conditional,unresolved,channels,gold,created,phase,outcome,donor_stock
+transit_refill_budget,58,264,12,1,shu,baxi,111,577,5399,0,558,3773,3773,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,59,264,12,11,shu,jiameng,111,585,12611,0,387,17074,12224,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,59,264,12,11,shu,jiameng,111,586,387,0,387,5315,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,59,264,12,11,shu,jiameng,111,587,387,0,387,3553,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,59,264,12,11,shu,jiameng,111,588,387,0,387,3957,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,59,264,12,11,shu,jiameng,111,589,387,0,387,4361,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,59,264,12,11,shu,jiameng,111,590,387,0,387,4765,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+demand,60,264,12,21,shu,null,null,null,null,null,null,5169,null,"{""no_route"": 1, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,614,0,0,5169,['army'],0,60,urgent,checked_no_executable_quote,550932
+demand,60,264,12,21,shu,null,null,null,null,null,null,5169,null,"{""no_route"": 1, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,614,0,0,5169,['army'],0,60,followup,checked_no_executable_quote,550932
+demand,60,264,12,21,shu,null,null,null,null,null,null,5169,null,"{""no_route"": 1, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,614,0,0,5169,['army'],0,60,followup,checked_no_executable_quote,552047
+demand,60,264,12,21,shu,null,null,null,null,null,null,5169,null,{},shu/march/111/60,march,111,0,614,614,0,0,5169,['army'],0,60,elective,command_books,552047
+transit_refill_budget,60,264,12,21,shu,jiameng,111,591,0,0,388,5911,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,60,264,12,21,shu,jiameng,111,592,0,0,388,6335,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,60,264,12,21,shu,jiameng,111,593,0,0,388,6759,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,60,264,12,21,shu,jiameng,111,594,0,0,388,6441,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,60,264,12,21,shu,jiameng,111,595,0,0,388,6845,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,60,264,12,21,shu,jiameng,111,596,0,0,388,7249,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,60,264,12,21,shu,jiameng,111,597,0,0,388,7653,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,60,264,12,21,shu,jiameng,111,598,0,0,388,8057,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,60,264,12,21,shu,jiameng,111,599,0,0,388,8461,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,60,264,12,21,shu,jiameng,111,600,0,0,388,8865,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+demand,61,265,1,1,shu,null,null,null,null,null,null,9269,null,"{""no_route"": 1, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,614,0,0,9269,['army'],0,60,urgent,checked_no_executable_quote,602832
+demand,61,265,1,1,shu,null,null,null,null,null,null,9269,null,"{""no_route"": 1, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,614,0,0,9269,['army'],0,60,followup,checked_no_executable_quote,602832
+demand,61,265,1,1,shu,null,null,null,null,null,null,9269,null,{},shu/march/111/60,march,111,0,614,614,0,0,9269,['army'],0,60,elective,command_books,598572
+transit_refill_budget,61,265,1,1,shu,jiameng,111,601,1034,0,389,9269,645,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,61,265,1,1,shu,jiameng,111,602,389,0,389,9028,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,61,265,1,1,shu,jiameng,111,603,389,0,389,9432,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,61,265,1,1,shu,jiameng,111,604,389,0,389,9836,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,61,265,1,1,shu,jiameng,111,605,389,0,389,12467,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,61,265,1,1,shu,jiameng,111,606,389,0,389,12932,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,61,265,1,1,shu,jiameng,111,607,389,0,389,13396,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,61,265,1,1,shu,jiameng,111,608,389,0,389,13861,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,61,265,1,1,shu,jiameng,111,609,389,0,389,12099,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,61,265,1,1,shu,jiameng,111,610,389,0,389,12503,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+demand,62,265,1,11,shu,null,null,null,null,null,null,12907,null,"{""no_route"": 1, ""no_spare_officer"": 19}",shu/march/111/60,march,111,0,614,615,0,0,12907,['army'],0,60,urgent,checked_no_executable_quote,579262
+demand,62,265,1,11,shu,null,null,null,null,null,null,12907,null,"{""no_route"": 1, ""no_spare_officer"": 19}",shu/march/111/60,march,111,0,614,615,0,0,12907,['army'],0,60,urgent,checked_no_executable_quote,579791
+demand,62,265,1,11,shu,null,null,null,null,null,null,12907,null,"{""no_route"": 1, ""no_spare_officer"": 19}",shu/march/111/60,march,111,0,614,615,0,0,12907,['army'],0,60,urgent,checked_no_executable_quote,580180
+demand,62,265,1,11,shu,null,null,null,null,null,null,12907,null,"{""no_route"": 1, ""no_spare_officer"": 19}",shu/march/111/60,march,111,0,614,615,0,0,12907,['army'],0,60,followup,checked_no_executable_quote,580180
+demand,62,265,1,11,shu,null,null,null,null,null,null,12907,null,{},shu/march/111/60,march,111,0,614,615,0,0,12907,['army'],0,60,elective,command_books,575653
+transit_refill_budget,62,265,1,11,shu,jiameng,111,611,389,0,389,13649,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,62,265,1,11,shu,jiameng,111,612,389,0,389,14073,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,62,265,1,11,shu,jiameng,111,613,389,0,389,13755,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,62,265,1,11,shu,jiameng,111,614,389,0,389,14159,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,62,265,1,11,shu,jiameng,111,615,389,0,389,14563,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,62,265,1,11,shu,jiameng,111,616,389,0,389,14700,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,62,265,1,11,shu,jiameng,111,617,389,0,389,14555,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,62,265,1,11,shu,jiameng,111,618,389,0,389,14409,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,62,265,1,11,shu,jiameng,111,619,389,0,389,14265,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,62,265,1,11,shu,jiameng,111,620,389,0,389,14123,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+demand,63,265,1,21,shu,null,null,null,null,null,null,13982,null,"{""no_route"": 1, ""no_spare_officer"": 19}",shu/march/111/60,march,111,0,614,620,0,0,13982,['army'],0,60,urgent,checked_no_executable_quote,560485
+demand,63,265,1,21,shu,null,null,null,null,null,null,13982,null,"{""no_route"": 1, ""no_spare_officer"": 19}",shu/march/111/60,march,111,0,614,620,0,0,13982,['army'],0,60,followup,checked_no_executable_quote,560485
+demand,63,265,1,21,shu,null,null,null,null,null,null,13982,null,{},shu/march/111/60,march,111,0,614,620,0,0,13982,['army'],0,60,elective,command_books,556417
+transit_refill_budget,63,265,1,21,shu,jiameng,111,621,1251,0,390,13982,861,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,63,265,1,21,shu,jiameng,111,622,390,0,390,13501,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,63,265,1,21,shu,jiameng,111,623,390,0,390,14581,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,63,265,1,21,shu,jiameng,111,624,390,0,390,14534,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,63,265,1,21,shu,jiameng,111,625,390,0,390,14389,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,63,265,1,21,shu,jiameng,111,626,390,0,390,13567,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,63,265,1,21,shu,jiameng,111,627,390,0,390,13432,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,63,265,1,21,shu,jiameng,111,628,390,0,390,13298,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,63,265,1,21,shu,jiameng,111,629,390,0,390,13166,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,63,265,1,21,shu,jiameng,111,630,390,0,390,13035,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+demand,64,265,2,1,shu,null,null,null,null,null,null,12906,null,"{""no_route"": 1, ""no_spare_officer"": 19}",shu/march/111/60,march,111,0,614,630,0,0,12906,['army'],0,60,urgent,checked_no_executable_quote,606905
+demand,64,265,2,1,shu,null,null,null,null,null,null,12906,null,"{""no_route"": 1, ""no_spare_officer"": 19}",shu/march/111/60,march,111,0,614,630,0,0,12906,['army'],0,60,followup,checked_no_executable_quote,606905
+demand,64,265,2,1,shu,null,null,null,null,null,null,12906,null,{},shu/march/111/60,march,111,0,614,630,0,0,12906,['army'],0,60,elective,command_books,599432
+transit_refill_budget,64,265,2,1,shu,jiameng,111,631,1679,0,391,13551,1288,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,64,265,2,1,shu,jiameng,111,632,391,0,391,12632,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,64,265,2,1,shu,jiameng,111,633,391,0,391,12355,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,64,265,2,1,shu,jiameng,111,634,391,0,391,12706,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,64,265,2,1,shu,jiameng,111,635,391,0,391,12778,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,64,265,2,1,shu,jiameng,111,636,391,0,391,12651,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,64,265,2,1,shu,jiameng,111,637,391,0,391,12525,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,64,265,2,1,shu,jiameng,111,638,391,0,391,12400,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,64,265,2,1,shu,jiameng,111,639,391,0,391,12276,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,64,265,2,1,shu,jiameng,111,640,391,0,391,12154,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+demand,65,265,2,11,shu,null,null,null,null,null,null,12034,null,"{""no_route"": 2, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,640,0,0,12034,['army'],0,60,urgent,checked_no_executable_quote,579331
+demand,65,265,2,11,shu,null,null,null,null,null,null,12034,null,"{""no_route"": 2, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,640,0,0,12034,['army'],0,60,urgent,checked_no_executable_quote,579722
+demand,65,265,2,11,shu,null,null,null,null,null,null,12034,null,"{""no_route"": 2, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,640,0,0,12034,['army'],0,60,followup,checked_no_executable_quote,579722
+demand,65,265,2,11,shu,null,null,null,null,null,null,12034,null,{},shu/march/111/60,march,111,0,614,640,0,0,12034,['army'],0,60,elective,command_books,574100
+transit_refill_budget,65,265,2,11,shu,jiameng,111,641,391,0,391,12034,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,65,265,2,11,shu,jiameng,111,642,391,0,391,11915,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,65,265,2,11,shu,jiameng,111,643,391,0,391,9100,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,65,265,2,11,shu,jiameng,111,644,391,0,391,9009,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,65,265,2,11,shu,jiameng,111,645,391,0,391,8919,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,65,265,2,11,shu,jiameng,111,646,391,0,391,13164,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,65,265,2,11,shu,jiameng,111,647,391,0,391,13034,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,65,265,2,11,shu,jiameng,111,648,391,0,391,12904,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,65,265,2,11,shu,jiameng,111,649,391,0,391,12776,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,65,265,2,11,shu,jiameng,111,650,391,0,391,10999,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+demand,66,265,2,21,shu,null,null,null,null,null,null,6653,null,"{""no_route"": 2, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,650,0,0,6653,['army'],0,60,urgent,checked_no_executable_quote,556070
+demand,66,265,2,21,shu,null,null,null,null,null,null,6653,null,"{""no_route"": 2, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,650,0,0,6653,['army'],0,60,followup,checked_no_executable_quote,556070
+demand,66,265,2,21,shu,null,null,null,null,null,null,6653,null,{},shu/march/111/60,march,111,0,614,650,0,0,6653,['army'],0,60,elective,command_books,548393
+transit_refill_budget,66,265,2,21,shu,jiameng,111,651,0,0,392,6653,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+demand,67,265,3,1,shu,null,null,null,null,null,null,852,null,"{""no_route"": 2, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,660,0,0,852,['army'],0,60,urgent,checked_no_executable_quote,607224
+demand,67,265,3,1,shu,null,null,null,null,null,null,852,null,"{""no_route"": 2, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,660,0,0,852,['army'],0,60,followup,checked_no_executable_quote,607224
+demand,67,265,3,1,shu,null,null,null,null,null,null,852,null,{},shu/march/111/60,march,111,0,614,660,0,0,852,['army'],0,60,elective,command_books,602907
+transit_refill_budget,67,265,3,1,shu,zitong,111,663,1786,0,530,1972,1256,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+transit_refill_budget,67,265,3,1,shu,fuxian,111,668,4628,0,792,11208,3836,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+demand,68,265,3,11,shu,null,null,null,null,null,null,7372,null,{},shu/march/111/60,march,111,1,614,676,0,0,7372,['army'],0,60,urgent,not_checked,578662
+demand,68,265,3,11,shu,null,null,null,null,null,null,7372,null,{},shu/march/111/60,march,111,1,614,676,0,0,7372,['army'],0,60,urgent,not_checked,579491
+demand,68,265,3,11,shu,null,null,null,null,null,null,7372,null,"{""no_route"": 2, ""no_spare_officer"": 18}",shu/march/111/60,march,111,1,614,676,0,0,7372,['army'],0,60,urgent,checked_no_executable_quote,580021
+demand,68,265,3,11,shu,null,null,null,null,null,null,7372,null,"{""no_route"": 2, ""no_spare_officer"": 18}",shu/march/111/60,march,111,1,614,676,0,0,7372,['army'],0,60,followup,checked_no_executable_quote,580021
+demand,68,265,3,11,shu,null,null,null,null,null,null,7372,null,{},shu/march/111/60,march,111,1,614,676,0,0,7372,['army'],0,60,elective,command_books,580021
+demand,69,265,3,21,shu,null,null,null,null,null,null,5942,null,"{""no_route"": 1, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,680,0,0,5942,['army'],0,60,urgent,checked_no_executable_quote,534163
+demand,69,265,3,21,shu,null,null,null,null,null,null,5942,null,"{""no_route"": 1, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,680,0,0,5942,['army'],0,60,followup,checked_no_executable_quote,534163
+demand,69,265,3,21,shu,null,null,null,null,null,null,5942,null,{},shu/march/111/60,march,111,0,614,680,0,0,5942,['army'],0,60,elective,command_books,524764
+demand,70,265,4,1,shu,null,null,null,null,null,null,2017,null,"{""no_route"": 1, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,690,0,0,2017,['army'],0,60,urgent,checked_no_executable_quote,579781
+demand,70,265,4,1,shu,null,null,null,null,null,null,2017,null,"{""no_route"": 1, ""no_spare_officer"": 18}",shu/march/111/60,march,111,0,614,690,0,0,2017,['army'],0,60,followup,checked_no_executable_quote,579781
+demand,70,265,4,1,shu,null,null,null,null,null,null,2017,null,{},shu/march/111/60,march,111,0,614,690,0,0,2017,['army'],0,60,elective,command_books,572317

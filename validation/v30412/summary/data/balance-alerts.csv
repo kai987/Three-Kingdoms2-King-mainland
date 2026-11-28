@@ -1,0 +1,13 @@
+wave,scenario,seed,strategy,baseline,candidate,metric,baseline_value,candidate_value,delta,percent_change,comparable_months,comparable_turns,threshold,unit
+quick,184-02,2026,211,L0,L2,timely_grain_rate,80.89231714613756,59.37243401759531,-21.519883128542247,-26.603123618853804,true,true,-5,percentage_points
+quick,184-02,2026,211,L0,L2,original_deadline_grain_rate,77.48831643461246,54.929618768328446,-22.55869766628401,-29.1123858463487,true,true,-5,percentage_points
+quick,207-09,2034,211,K0,K2,small_faction_survival_rate,50.0,33.333333333333336,-16.666666666666664,-33.33333333333333,true,true,-10,percentage_points
+quick,208-10,2026,211,K0,K2,unpaid_city_turns,1,12,11,1100.0,true,true,20,percent
+quick,208-10,2026,211,K0,K2,rations_missing,467,12730,12263,2625.910064239829,true,true,20,percent
+quick,208-10,2026,211,K0,K2,timely_grain_rate,89.37995580397764,76.26675556179381,-13.113200242183822,-14.671298642105898,true,true,-5,percentage_points
+quick,208-10,2026,211,K0,K2,original_deadline_grain_rate,89.37995580397764,76.26675556179381,-13.113200242183822,-14.671298642105898,true,true,-5,percentage_points
+quick,208-10,2026,211,K0,K2,timely_order_rate,100.0,66.66666666666667,-33.33333333333333,-33.33333333333333,true,true,-5,percentage_points
+quick,208-10,2026,211,L0,L2,unpaid_city_turns,1,8,7,700.0,true,true,20,percent
+quick,208-10,2026,211,L0,L2,rations_missing,185,6891,6706,3624.864864864865,true,true,20,percent
+quick,263-05,2026,211,K0,K2,timely_grain_rate,89.66719591544472,52.32856586143723,-37.338630054007496,-41.64134907175803,true,true,-5,percentage_points
+quick,263-05,2026,211,K0,K2,original_deadline_grain_rate,89.66719591544472,53.02778511885832,-36.639410796586404,-40.861555246064576,true,true,-5,percentage_points

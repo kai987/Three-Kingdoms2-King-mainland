@@ -1,0 +1,175 @@
+{
+  "observed": 21,
+  "scored": 21,
+  "alerts": 12,
+  "outcomes": [
+    {
+      "wave": "quick",
+      "variant": "K0",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "K0",
+      "scenario": "207-09",
+      "seed": 2034,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "K0",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "K0",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "K0",
+      "scenario": "263-05",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "K1",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "K1",
+      "scenario": "263-05",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "K2",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "K2",
+      "scenario": "207-09",
+      "seed": 2034,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "K2",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "K2",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "K2",
+      "scenario": "263-05",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "L0",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "L0",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "L0",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "L1",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "L1",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "L1",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "L2",
+      "scenario": "184-02",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "L2",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 211,
+      "outcome": "complete"
+    },
+    {
+      "wave": "quick",
+      "variant": "L2",
+      "scenario": "208-10",
+      "seed": 2026,
+      "strategy": 212,
+      "outcome": "complete"
+    }
+  ]
+}

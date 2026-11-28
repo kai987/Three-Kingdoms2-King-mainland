@@ -1,0 +1,108 @@
+{
+  "python_full": {
+    "tests": 2009,
+    "skipped": 1,
+    "passed": 2008,
+    "wall_seconds": 3188.617
+  },
+  "rust_full": {
+    "tests": 2009,
+    "skipped": 0,
+    "passed": 2009,
+    "wall_seconds": 3903.081
+  },
+  "coordination": {
+    "tests": 28
+  },
+  "node": {
+    "tests": 66,
+    "passed": 66
+  },
+  "rust_crate": {
+    "passed": 16
+  },
+  "fixed_clean_runs": {
+    "completed": 30
+  },
+  "north_isolated_replays": 40,
+  "engine_sha": "749967c2a7292b0d4c426216bdcfbcd67ba6f4a6",
+  "wasm": {
+    "vectors": 24689,
+    "build_check": "pass"
+  },
+  "pyodide": {
+    "ok": true,
+    "pyodide": "314.0.7",
+    "previews": 29,
+    "catalogs": 3,
+    "requests": 69,
+    "ai_turns": 1,
+    "battle_settlements": 0,
+    "logistics_route_parity": true,
+    "save_sha256": "a069bc55d8a6edbc6f81220a27f79a16e48c1ee17142c6a4606f79c393e4531e",
+    "rng": {
+      "state": 1161157403,
+      "draws": 69
+    },
+    "cpu_save_bytes_equal": true,
+    "v212_observer_turns": 0,
+    "weather_observer_turns": 3,
+    "weather_save_sha256": "3fba830537eed22f5ac7ba3107b93d80d669908c2cc7e39f57b8fede2e4764cf",
+    "regional_market_roundtrip": null,
+    "granary_convoy_roundtrip": null,
+    "transport_capacity_roundtrip": 0,
+    "transshipment_batch_roundtrip": null
+  },
+  "browser": {
+    "first_pass": 113,
+    "first_failure": 1,
+    "retry_pass": 1,
+    "locales": [
+      "zh-Hant",
+      "ja"
+    ],
+    "shards": {
+      "desktop-chromium-1": {
+        "passed": 18,
+        "failure": 1,
+        "viewport": "1280x800"
+      },
+      "desktop-chromium-2": {
+        "passed": 19,
+        "failure": 0,
+        "viewport": "1280x800"
+      },
+      "desktop-chromium-3": {
+        "passed": 19,
+        "failure": 0,
+        "viewport": "1280x800"
+      },
+      "touch-chromium-1": {
+        "passed": 19,
+        "failure": 0,
+        "viewport": "390x844"
+      },
+      "touch-chromium-2": {
+        "passed": 19,
+        "failure": 0,
+        "viewport": "390x844"
+      },
+      "touch-chromium-3": {
+        "passed": 19,
+        "failure": 0,
+        "viewport": "390x844"
+      }
+    },
+    "manual_retry_reason": "fixture subprocess hit its original 90-second timeout",
+    "resupply": {
+      "default_profile": {
+        "passed": 4,
+        "profile_exclusions": 2
+      },
+      "v211_profile": {
+        "passed": 4,
+        "profile_exclusions": 2
+      }
+    }
+  }
+}

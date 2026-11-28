@@ -1,0 +1,188 @@
+{
+  "fixed_windows_observed": 30,
+  "fixed_quote_corrections": 0,
+  "other_replay_events": [
+    {
+      "phase": "baxi-final",
+      "channel": "granary",
+      "corrected_quotes": 201
+    },
+    {
+      "phase": "baxi-final",
+      "channel": "regional",
+      "corrected_quotes": 73
+    },
+    {
+      "phase": "south-final",
+      "channel": "granary",
+      "corrected_quotes": 2537
+    },
+    {
+      "phase": "south-final",
+      "channel": "regional",
+      "corrected_quotes": 3644
+    },
+    {
+      "phase": "transit-ablation",
+      "channel": "granary",
+      "corrected_quotes": 373
+    },
+    {
+      "phase": "transit-ablation",
+      "channel": "regional",
+      "corrected_quotes": 148
+    }
+  ],
+  "twenty_four_month_quotes": [
+    {
+      "variant": "K0",
+      "scenario": "184-02",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": null
+    },
+    {
+      "variant": "K0",
+      "scenario": "207-09",
+      "strategy": 211,
+      "seed": 2034,
+      "corrected_quotes": null
+    },
+    {
+      "variant": "K0",
+      "scenario": "208-10",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": null
+    },
+    {
+      "variant": "K0",
+      "scenario": "208-10",
+      "strategy": 212,
+      "seed": 2026,
+      "corrected_quotes": null
+    },
+    {
+      "variant": "K0",
+      "scenario": "263-05",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": null
+    },
+    {
+      "variant": "K1",
+      "scenario": "208-10",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": 60
+    },
+    {
+      "variant": "K1",
+      "scenario": "263-05",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": 60
+    },
+    {
+      "variant": "K2",
+      "scenario": "184-02",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": 9
+    },
+    {
+      "variant": "K2",
+      "scenario": "207-09",
+      "strategy": 211,
+      "seed": 2034,
+      "corrected_quotes": 118
+    },
+    {
+      "variant": "K2",
+      "scenario": "208-10",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": 102
+    },
+    {
+      "variant": "K2",
+      "scenario": "208-10",
+      "strategy": 212,
+      "seed": 2026,
+      "corrected_quotes": 29
+    },
+    {
+      "variant": "K2",
+      "scenario": "263-05",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": 83
+    },
+    {
+      "variant": "L0",
+      "scenario": "184-02",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": null
+    },
+    {
+      "variant": "L0",
+      "scenario": "208-10",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": null
+    },
+    {
+      "variant": "L0",
+      "scenario": "208-10",
+      "strategy": 212,
+      "seed": 2026,
+      "corrected_quotes": null
+    },
+    {
+      "variant": "L1",
+      "scenario": "184-02",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": 11
+    },
+    {
+      "variant": "L1",
+      "scenario": "208-10",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": 156
+    },
+    {
+      "variant": "L1",
+      "scenario": "208-10",
+      "strategy": 212,
+      "seed": 2026,
+      "corrected_quotes": 100
+    },
+    {
+      "variant": "L2",
+      "scenario": "184-02",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": 28
+    },
+    {
+      "variant": "L2",
+      "scenario": "208-10",
+      "strategy": 211,
+      "seed": 2026,
+      "corrected_quotes": 91
+    },
+    {
+      "variant": "L2",
+      "scenario": "208-10",
+      "strategy": 212,
+      "seed": 2026,
+      "corrected_quotes": 100
+    }
+  ],
+  "scope": "Corrected legal offers emitted by quote calculation. Counts include repeated evaluations and replay overlaps.",
+  "dispatched_or_delivered_from_requoted_offer": null,
+  "controlled_case": "test_requote_pays_higher_return_cost_with_a_smaller_legal_load"
+}

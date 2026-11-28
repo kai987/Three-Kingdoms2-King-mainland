@@ -1,0 +1,81 @@
+{
+  "stage": "fixed",
+  "engine_sha": "749967c2a7292b0d4c426216bdcfbcd67ba6f4a6",
+  "errors": {
+    "city_resource_mismatches": 0,
+    "market_transaction_errors": 0,
+    "market_account_errors": 0,
+    "transport_position_overruns": 0,
+    "repeated_origin_dispatches": 0,
+    "simultaneous_escort_overlaps": 0,
+    "dispatch_book_deviation": 0,
+    "duplicate_receipts": 0,
+    "invalid_receipt_credits": 0,
+    "duplicate_books": 0,
+    "book_posting_errors": 0
+  },
+  "exact_prior_runs_preserved": true,
+  "pure_cache_equivalence": true,
+  "admitted_backgrounds": [
+    "D0",
+    "D2"
+  ],
+  "evidence": {
+    "D0": {
+      "fixed_pair": {
+        "pair": "K0-K2",
+        "paired": "88",
+        "unmatched": "1",
+        "new_shortages": "0",
+        "worsened": "0",
+        "improved": "5",
+        "improved_with_lower_required": "0",
+        "before_required_grain": "95972",
+        "before_paid_grain": "90830",
+        "before_missing_grain": "5142",
+        "before_actual_payment_rate": "0.9464218730463052",
+        "after_required_grain": "96644",
+        "after_paid_grain": "94329",
+        "after_missing_grain": "2315",
+        "after_actual_payment_rate": "0.9760461073631058"
+      },
+      "southern_shortage_before": 15143,
+      "southern_shortage_after": 10361,
+      "exact_baxi_march_and_city_safe": true,
+      "north_snow_p95_ratio": 0.7912276198591166,
+      "performance_warnings": [],
+      "qualified_for_24_month_observation": true
+    },
+    "D2": {
+      "fixed_pair": {
+        "pair": "L0-L2",
+        "paired": "88",
+        "unmatched": "1",
+        "new_shortages": "0",
+        "worsened": "0",
+        "improved": "7",
+        "improved_with_lower_required": "1",
+        "before_required_grain": "99086",
+        "before_paid_grain": "93859",
+        "before_missing_grain": "5227",
+        "before_actual_payment_rate": "0.9472478453060977",
+        "after_required_grain": "97951",
+        "after_paid_grain": "96050",
+        "after_missing_grain": "1901",
+        "after_actual_payment_rate": "0.980592336984819"
+      },
+      "southern_shortage_before": 13201,
+      "southern_shortage_after": 9953,
+      "exact_baxi_march_and_city_safe": true,
+      "north_snow_p95_ratio": 0.8663355752340999,
+      "performance_warnings": [
+        {
+          "checkpoint": "chibi-late",
+          "p95_change_percent": 54.62434837415291
+        }
+      ],
+      "qualified_for_24_month_observation": true
+    }
+  },
+  "scope": "24-month matched observation; later balances require their own stage evidence"
+}

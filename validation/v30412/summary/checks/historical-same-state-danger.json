@@ -1,0 +1,677 @@
+[
+  {
+    "group": "K1",
+    "snapshot": {
+      "owner": "liu_zhang",
+      "source": "wudu",
+      "target": "xincheng",
+      "node": "wudu",
+      "status": "waiting",
+      "reason": "unsafe_return",
+      "delivered": 3052,
+      "initial_grain": 3598,
+      "original_bag": 19877,
+      "bag": 2818,
+      "cargo": 0,
+      "tick": 7140,
+      "path": [
+        "xincheng",
+        "hanzhong",
+        "wudu"
+      ],
+      "original_ids": [
+        "clerk-000085"
+      ],
+      "troops": 10000,
+      "hunger": 0,
+      "occupants": [
+        "clerk-000085"
+      ],
+      "reserved_until_turn": 715,
+      "turn": 715,
+      "city_owner": "ma_teng",
+      "city_stock": 145034,
+      "local_grain_legal": null,
+      "source_owner": "ma_teng",
+      "receives_here": false,
+      "relief_eligible": false,
+      "legal_relief_meeting": null,
+      "relief_grain_required": null,
+      "best_receiving_options": [
+        {
+          "city": "hanzhong",
+          "needed": 5000,
+          "days": 15,
+          "path": [
+            "wudu",
+            "hanzhong"
+          ],
+          "stock": 40429
+        },
+        {
+          "city": "yinping",
+          "needed": 5000,
+          "days": 15,
+          "path": [
+            "wudu",
+            "yinping"
+          ],
+          "stock": 101725
+        },
+        {
+          "city": "xicheng",
+          "needed": 6455,
+          "days": 21,
+          "path": [
+            "wudu",
+            "hanzhong",
+            "xicheng"
+          ],
+          "stock": 222791
+        },
+        {
+          "city": "xincheng",
+          "needed": 7622,
+          "days": 26,
+          "path": [
+            "wudu",
+            "hanzhong",
+            "xincheng"
+          ],
+          "stock": 5595
+        },
+        {
+          "city": "shangyong",
+          "needed": 8511,
+          "days": 29,
+          "path": [
+            "wudu",
+            "hanzhong",
+            "xicheng",
+            "shangyong"
+          ],
+          "stock": 10641
+        }
+      ],
+      "aboard_resources": {
+        "gold": 0,
+        "grain": 0,
+        "reserves": 0,
+        "treasure": 0
+      }
+    },
+    "state_sha256": "4d3c11f4d886f148b1abaa745b61f24f9dc41c38891e88de472edebecf6d4c02",
+    "relevant_geography_notes": [
+      "228年7月上旬　1将从南安出发，至武都约216.1公里、15日，2旬后到达（每旬10天），预装随军粮11555，按实际行军日数持续消耗。",
+      "228年7月下旬　南安向武都出征。",
+      "228年7月下旬　马岱攻占武都。",
+      "228年7月下旬　1将从陇西出发，至武都约243.4公里、17日，2旬后到达（每旬10天），预装随军粮606，按实际行军日数持续消耗。"
+    ],
+    "file": "individual/3634/K1/danger-state-3634.save.json.gz",
+    "save_sha256": "2371324e9a1d25631d5e80244ddeef8fa628b4d434a3fc4299268b18a2cc3d85",
+    "rejected_former_home": true,
+    "available_plans": [
+      {
+        "coordinated": false,
+        "city": "anding",
+        "available_grain": 0,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "yiyang",
+        "available_grain": 18662,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "jiaozhi",
+        "available_grain": 14248,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "jiangxia",
+        "available_grain": 26814,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "nanjun",
+        "available_grain": 32659,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "changsha",
+        "available_grain": 27929,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "hanzhong",
+        "available_grain": 40429,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "shujun",
+        "available_grain": 4511606,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "bajun",
+        "available_grain": 817797,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "yunnan",
+        "available_grain": 15451,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "yongchang",
+        "available_grain": 128353,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "xincheng",
+        "available_grain": 5595,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "badong",
+        "available_grain": 207,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "wuling",
+        "available_grain": 18285,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "zitong",
+        "available_grain": 15164,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "guanghan",
+        "available_grain": 37,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "wenshan",
+        "available_grain": 108146,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "baxi",
+        "available_grain": 45964,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "qianwei",
+        "available_grain": 496931,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "jiangyang",
+        "available_grain": 482973,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "hanjia",
+        "available_grain": 220246,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "zhuti",
+        "available_grain": 54747,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "yuexi",
+        "available_grain": 85917,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "zangke",
+        "available_grain": 7240,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "jianning",
+        "available_grain": 15153,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "xinggu",
+        "available_grain": 4847,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "yinping",
+        "available_grain": 101725,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "fuling",
+        "available_grain": 11,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "yidu",
+        "available_grain": 87612,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "jiuzhen",
+        "available_grain": 199868,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "rinan",
+        "available_grain": 165646,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "fufeng",
+        "available_grain": 494,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "jiameng",
+        "available_grain": 165,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "fuxian",
+        "available_grain": 393404,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "dangqu",
+        "available_grain": 234298,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "nanguang",
+        "available_grain": 114373,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "xicheng",
+        "available_grain": 222791,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "shangyong",
+        "available_grain": 10641,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "yiling",
+        "available_grain": 112503,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": false,
+        "city": "xinping",
+        "available_grain": 8107,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "anding",
+        "available_grain": 0,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "yiyang",
+        "available_grain": 18662,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "jiaozhi",
+        "available_grain": 14248,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "jiangxia",
+        "available_grain": 26814,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "nanjun",
+        "available_grain": 32659,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "changsha",
+        "available_grain": 27929,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "hanzhong",
+        "available_grain": 40429,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "shujun",
+        "available_grain": 4511606,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "bajun",
+        "available_grain": 817797,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "yunnan",
+        "available_grain": 15451,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "yongchang",
+        "available_grain": 128353,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "xincheng",
+        "available_grain": 5595,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "badong",
+        "available_grain": 207,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "wuling",
+        "available_grain": 18285,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "zitong",
+        "available_grain": 15164,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "guanghan",
+        "available_grain": 37,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "wenshan",
+        "available_grain": 108146,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "baxi",
+        "available_grain": 45964,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "qianwei",
+        "available_grain": 496931,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "jiangyang",
+        "available_grain": 482973,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "hanjia",
+        "available_grain": 220246,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "zhuti",
+        "available_grain": 54747,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "yuexi",
+        "available_grain": 85917,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "zangke",
+        "available_grain": 7240,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "jianning",
+        "available_grain": 15153,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "xinggu",
+        "available_grain": 4847,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "yinping",
+        "available_grain": 101725,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "fuling",
+        "available_grain": 11,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "yidu",
+        "available_grain": 87612,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "jiuzhen",
+        "available_grain": 199868,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "rinan",
+        "available_grain": 165646,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "fufeng",
+        "available_grain": 494,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "jiameng",
+        "available_grain": 165,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "fuxian",
+        "available_grain": 393404,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "dangqu",
+        "available_grain": 234298,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "nanguang",
+        "available_grain": 114373,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "xicheng",
+        "available_grain": 222791,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "shangyong",
+        "available_grain": 10641,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "yiling",
+        "available_grain": 112503,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      },
+      {
+        "coordinated": true,
+        "city": "xinping",
+        "available_grain": 8107,
+        "failure": "no_vacant_meeting",
+        "quote": null
+      }
+    ],
+    "container": "historical-3634-danger"
+  }
+]

@@ -1,0 +1,166 @@
+chibi-late-K0.prof
+Sat Nov 28 12:48:13 2026    build/v30412/profile/chibi-late-K0.prof
+
+         16910134 function calls (15255481 primitive calls) in 8.553 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1717 to 128 due to restriction <'transport_candidates.py|transport_coordination.py|faction_economy.py|strategic_ai.py|estimate_cargo|region.*procure'>
+   List reduced from 128 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        3    0.008    0.003    4.647    1.549 strategic_ai.py:971(run)
+      117    0.025    0.000    1.340    0.011 faction_economy.py:285(plan)
+      405    0.000    0.000    0.567    0.001 strategic_ai.py:60(economy_plan)
+       18    0.001    0.000    0.566    0.031 regional_market.py:259(procure)
+       91    0.014    0.000    0.544    0.006 regional_procurement.py:149(options)
+     3255    0.064    0.000    0.453    0.000 faction_economy.py:160(_forecast)
+      516    0.000    0.000    0.428    0.001 strategic_ai.py:54(grain_outlook)
+        3    0.001    0.000    0.386    0.129 strategic_ai.py:940(_open_ai_queue)
+       88    0.001    0.000    0.362    0.004 regional_procurement.py:129(_route_book)
+      444    0.012    0.000    0.218    0.000 strategic_ai.py:730(reinforce)
+      444    0.001    0.000    0.209    0.000 strategic_ai.py:538(plan)
+       18    0.001    0.000    0.208    0.012 strategic_ai.py:416(objective)
+       92    0.001    0.000    0.169    0.002 strategic_ai.py:328(attack_option)
+     1567    0.012    0.000    0.161    0.000 logistics_rules.py:164(estimate_cargo)
+     1122    0.002    0.000    0.161    0.000 winter_travel.py:493(estimate_cargo)
+      239    0.001    0.000    0.121    0.001 strategic_ai.py:201(reinforcement_quotes)
+      329    0.001    0.000    0.106    0.000 strategic_ai.py:187(quote)
+      444    0.001    0.000    0.084    0.000 strategic_ai.py:574(support_frontline)
+     3322    0.037    0.000    0.059    0.000 faction_economy.py:144(balance)
+      149    0.002    0.000    0.050    0.000 strategic_ai.py:279(war_budget)
+      133    0.000    0.000    0.050    0.000 strategic_ai.py:324(affordable_sortie)
+    14887    0.008    0.000    0.047    0.000 strategic_ai.py:128(neighbors)
+     3236    0.010    0.000    0.045    0.000 regional_procurement.py:64(_entity)
+     1567    0.001    0.000    0.034    0.000 strategic_ai.py:125(strength)
+     1658    0.002    0.000    0.033    0.000 strategic_ai.py:117(defenders)
+      448    0.003    0.000    0.029    0.000 strategic_ai.py:150(army)
+      394    0.001    0.000    0.026    0.000 regional_procurement.py:46(_meal)
+       18    0.001    0.000    0.024    0.001 strategic_ai.py:388(attack_approaches)
+      209    0.001    0.000    0.018    0.000 strategic_ai.py:238(provisioned)
+     3555    0.009    0.000    0.017    0.000 faction_economy.py:226(capacity)
+
+
+chibi-late-K2.prof
+Sat Nov 28 12:48:16 2026    build/v30412/profile/chibi-late-K2.prof
+
+         27063402 function calls (25459298 primitive calls) in 11.650 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1772 to 186 due to restriction <'transport_candidates.py|transport_coordination.py|faction_economy.py|strategic_ai.py|estimate_cargo|region.*procure'>
+   List reduced from 186 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        3    0.006    0.002    8.107    2.702 strategic_ai.py:971(run)
+      480    0.003    0.000    5.311    0.011 transport_coordination.py:231(run)
+       54    0.006    0.000    5.308    0.098 transport_coordination.py:348(_run_recovery)
+      115    0.003    0.000    4.092    0.036 transport_candidates.py:409(build)
+      554    0.011    0.000    4.005    0.007 transport_candidates.py:240(_city_routes)
+    10207    0.017    0.000    1.846    0.000 winter_travel.py:493(estimate_cargo)
+      432    0.073    0.000    1.749    0.004 regional_procurement.py:149(options)
+      180    0.048    0.000    1.699    0.009 faction_economy.py:285(plan)
+    10541    0.122    0.000    1.426    0.000 logistics_rules.py:164(estimate_cargo)
+      323    0.001    0.000    0.768    0.002 transport_candidates.py:213(_granary_quote)
+      262    0.003    0.000    0.619    0.002 transport_candidates.py:149(_ordinary)
+      124    0.000    0.000    0.569    0.005 transport_candidates.py:37(_search_routes)
+     3759    0.072    0.000    0.518    0.000 faction_economy.py:160(_forecast)
+      306    0.000    0.000    0.484    0.002 strategic_ai.py:60(economy_plan)
+      444    0.018    0.000    0.428    0.001 strategic_ai.py:730(reinforce)
+      496    0.000    0.000    0.327    0.001 strategic_ai.py:54(grain_outlook)
+        3    0.001    0.000    0.290    0.097 strategic_ai.py:940(_open_ai_queue)
+      429    0.003    0.000    0.289    0.001 regional_procurement.py:129(_route_book)
+     1646    0.009    0.000    0.227    0.000 transport_candidates.py:54(trip)
+      444    0.001    0.000    0.201    0.000 strategic_ai.py:538(plan)
+       18    0.001    0.000    0.200    0.011 strategic_ai.py:416(objective)
+    17009    0.053    0.000    0.199    0.000 regional_procurement.py:64(_entity)
+      116    0.000    0.000    0.187    0.002 transport_coordination.py:335(_try_recovery)
+       88    0.001    0.000    0.186    0.002 transport_coordination.py:129(_discover)
+       39    0.001    0.000    0.183    0.005 transport_coordination.py:185(_commit)
+       39    0.000    0.000    0.182    0.005 transport_candidates.py:458(commit)
+      922    0.002    0.000    0.176    0.000 transport_candidates.py:315(safety)
+       78    0.001    0.000    0.140    0.002 strategic_ai.py:328(attack_option)
+      238    0.001    0.000    0.139    0.001 strategic_ai.py:201(reinforcement_quotes)
+     7439    0.083    0.000    0.131    0.000 faction_economy.py:144(balance)
+
+
+chibi-late-L0.prof
+Sat Nov 28 12:48:22 2026    build/v30412/profile/chibi-late-L0.prof
+
+         19784824 function calls (18038331 primitive calls) in 9.295 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1568 to 128 due to restriction <'transport_candidates.py|transport_coordination.py|faction_economy.py|strategic_ai.py|estimate_cargo|region.*procure'>
+   List reduced from 128 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        3    0.020    0.007    5.253    1.751 strategic_ai.py:971(run)
+      116    0.026    0.000    1.241    0.011 faction_economy.py:285(plan)
+       18    0.001    0.000    0.676    0.038 regional_market.py:259(procure)
+       53    0.010    0.000    0.610    0.012 regional_procurement.py:149(options)
+     3389    0.004    0.000    0.586    0.000 winter_travel.py:493(estimate_cargo)
+     4202    0.043    0.000    0.536    0.000 logistics_rules.py:164(estimate_cargo)
+      401    0.000    0.000    0.478    0.001 strategic_ai.py:60(economy_plan)
+     3316    0.062    0.000    0.433    0.000 faction_economy.py:160(_forecast)
+      516    0.000    0.000    0.323    0.001 strategic_ai.py:54(grain_outlook)
+       51    0.001    0.000    0.300    0.006 regional_procurement.py:129(_route_book)
+        3    0.001    0.000    0.286    0.095 strategic_ai.py:940(_open_ai_queue)
+      445    0.010    0.000    0.218    0.000 strategic_ai.py:730(reinforce)
+      445    0.001    0.000    0.169    0.000 strategic_ai.py:538(plan)
+       18    0.001    0.000    0.168    0.009 strategic_ai.py:416(objective)
+       92    0.001    0.000    0.124    0.001 strategic_ai.py:328(attack_option)
+      238    0.000    0.000    0.094    0.000 strategic_ai.py:201(reinforcement_quotes)
+      329    0.001    0.000    0.082    0.000 strategic_ai.py:187(quote)
+      445    0.001    0.000    0.079    0.000 strategic_ai.py:574(support_frontline)
+     3371    0.039    0.000    0.060    0.000 faction_economy.py:144(balance)
+    14857    0.011    0.000    0.054    0.000 strategic_ai.py:128(neighbors)
+      660    0.002    0.000    0.049    0.000 regional_procurement.py:46(_meal)
+     1648    0.011    0.000    0.042    0.000 regional_procurement.py:64(_entity)
+     1566    0.002    0.000    0.036    0.000 strategic_ai.py:125(strength)
+      149    0.002    0.000    0.035    0.000 strategic_ai.py:279(war_budget)
+      133    0.000    0.000    0.035    0.000 strategic_ai.py:324(affordable_sortie)
+     1657    0.002    0.000    0.035    0.000 strategic_ai.py:117(defenders)
+      449    0.003    0.000    0.033    0.000 strategic_ai.py:150(army)
+       18    0.001    0.000    0.023    0.001 strategic_ai.py:388(attack_approaches)
+     3613    0.009    0.000    0.017    0.000 faction_economy.py:226(capacity)
+      894    0.002    0.000    0.014    0.000 strategic_ai.py:134(threat)
+
+
+chibi-late-L2.prof
+Sat Nov 28 12:48:37 2026    build/v30412/profile/chibi-late-L2.prof
+
+         53243656 function calls (51585726 primitive calls) in 20.217 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1631 to 186 due to restriction <'transport_candidates.py|transport_coordination.py|faction_economy.py|strategic_ai.py|estimate_cargo|region.*procure'>
+   List reduced from 186 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        3    0.007    0.002   16.441    5.480 strategic_ai.py:971(run)
+      480    0.003    0.000   13.622    0.028 transport_coordination.py:231(run)
+       54    0.007    0.000   13.618    0.252 transport_coordination.py:348(_run_recovery)
+      142    0.006    0.000   12.068    0.085 transport_candidates.py:409(build)
+     1221    0.025    0.000   11.954    0.010 transport_candidates.py:240(_city_routes)
+    34319    0.052    0.000    7.285    0.000 winter_travel.py:493(estimate_cargo)
+    35541    0.456    0.000    5.712    0.000 logistics_rules.py:164(estimate_cargo)
+      515    0.129    0.000    4.101    0.008 regional_procurement.py:149(options)
+     1134    0.005    0.000    2.930    0.003 transport_candidates.py:213(_granary_quote)
+     1079    0.015    0.000    2.763    0.003 transport_candidates.py:149(_ordinary)
+      195    0.058    0.000    1.908    0.010 faction_economy.py:285(plan)
+      147    0.000    0.000    0.842    0.006 transport_candidates.py:37(_search_routes)
+      306    0.001    0.000    0.551    0.002 strategic_ai.py:60(economy_plan)
+     3762    0.081    0.000    0.525    0.000 faction_economy.py:160(_forecast)
+      514    0.005    0.000    0.415    0.001 regional_procurement.py:129(_route_book)
+      444    0.013    0.000    0.394    0.001 strategic_ai.py:730(reinforce)
+      496    0.000    0.000    0.388    0.001 strategic_ai.py:54(grain_outlook)
+     4812    0.013    0.000    0.376    0.000 regional_procurement.py:46(_meal)
+        3    0.001    0.000    0.359    0.120 strategic_ai.py:940(_open_ai_queue)
+    20219    0.096    0.000    0.354    0.000 regional_procurement.py:64(_entity)
+     5103    0.032    0.000    0.311    0.000 transport_candidates.py:54(trip)
+      145    0.001    0.000    0.297    0.002 transport_coordination.py:335(_try_recovery)
+       50    0.001    0.000    0.291    0.006 transport_coordination.py:185(_commit)
+       50    0.000    0.000    0.289    0.006 transport_candidates.py:458(commit)
+      104    0.002    0.000    0.261    0.003 transport_coordination.py:129(_discover)
+      444    0.001    0.000    0.182    0.000 strategic_ai.py:538(plan)
+       18    0.001    0.000    0.180    0.010 strategic_ai.py:416(objective)
+     1044    0.002    0.000    0.173    0.000 transport_candidates.py:181(deliver)
+     2406    0.005    0.000    0.156    0.000 transport_candidates.py:315(safety)
+     8387    0.094    0.000    0.149    0.000 faction_economy.py:144(balance)

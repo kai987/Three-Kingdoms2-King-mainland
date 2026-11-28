@@ -1,0 +1,268 @@
+{
+  "original_terminal_matches": true,
+  "terminal_checksum": "5fd6822361c7aa2c89acf694306075c40764a606a34505cbcf911309adc473c4",
+  "exact_pre_debit_state": "1f90730b288df8e5f24f836c03dc2c76222637a1b9f1f55b6b437d49a9c23d84",
+  "exact_pre_debit_file": "xuantu-before-44.save.json.gz",
+  "saved_file_sha256": "883f111f82ab274b9209faaf0430aabb0e94da243f5efdbad0c874f50e3ea04c",
+  "start_turn": 44,
+  "cases": [
+    {
+      "variant": "L0",
+      "opening": {
+        "owner": "goguryeo",
+        "grain": 571,
+        "gold": 123,
+        "local_offer": {
+          "grain": 0,
+          "rate": 15,
+          "batches": 0,
+          "gold": 0,
+          "market_stock": 0,
+          "limiting_reason": "market_empty",
+          "blocked_reason": "market_empty"
+        },
+        "sources": [],
+        "excluded": {
+          "guonei": "no_eligible_escort"
+        }
+      },
+      "opening_rng": {
+        "state": 2971821042,
+        "draws": 2464
+      },
+      "settlements": [
+        {
+          "event_turn": 44,
+          "event_year": 209,
+          "event_month": 12,
+          "event_day": 21,
+          "owner": "goguryeo",
+          "city": "xuantu",
+          "settlement_tick": 440,
+          "population": 24700,
+          "active_garrison": 25325,
+          "reserve_troops": 507,
+          "resident_due": 148,
+          "garrison_due": 1535,
+          "required_grain": 1683,
+          "paid_grain": 571,
+          "missing_grain": 1112,
+          "grain_before_settlement": 571,
+          "grain_after_settlement": 0
+        },
+        {
+          "event_turn": 45,
+          "event_year": 210,
+          "event_month": 1,
+          "event_day": 1,
+          "owner": "goguryeo",
+          "city": "xuantu",
+          "settlement_tick": 450,
+          "population": 23100,
+          "active_garrison": 23654,
+          "reserve_troops": 498,
+          "resident_due": 139,
+          "garrison_due": 1434,
+          "required_grain": 1573,
+          "paid_grain": 1573,
+          "missing_grain": 0,
+          "grain_before_settlement": 1756,
+          "grain_after_settlement": 183
+        },
+        {
+          "event_turn": 46,
+          "event_year": 210,
+          "event_month": 1,
+          "event_day": 11,
+          "owner": "goguryeo",
+          "city": "xuantu",
+          "settlement_tick": 460,
+          "population": 23100,
+          "active_garrison": 23654,
+          "reserve_troops": 498,
+          "resident_due": 138,
+          "garrison_due": 1435,
+          "required_grain": 1573,
+          "paid_grain": 1573,
+          "missing_grain": 0,
+          "grain_before_settlement": 1710,
+          "grain_after_settlement": 137
+        }
+      ],
+      "actual_freight": [],
+      "result": "e96203eb798c79976ef8d877d910346461606cb0dcd277bfda7957cf86134d62"
+    },
+    {
+      "variant": "L1",
+      "opening": {
+        "owner": "goguryeo",
+        "grain": 571,
+        "gold": 123,
+        "local_offer": {
+          "grain": 0,
+          "rate": 15,
+          "batches": 0,
+          "gold": 0,
+          "market_stock": 0,
+          "limiting_reason": "market_empty",
+          "blocked_reason": "market_empty"
+        },
+        "sources": [],
+        "excluded": {
+          "guonei": "no_eligible_escort"
+        }
+      },
+      "opening_rng": {
+        "state": 2971821042,
+        "draws": 2464
+      },
+      "settlements": [
+        {
+          "event_turn": 44,
+          "event_year": 209,
+          "event_month": 12,
+          "event_day": 21,
+          "owner": "goguryeo",
+          "city": "xuantu",
+          "settlement_tick": 440,
+          "population": 24700,
+          "active_garrison": 25325,
+          "reserve_troops": 507,
+          "resident_due": 148,
+          "garrison_due": 1535,
+          "required_grain": 1683,
+          "paid_grain": 571,
+          "missing_grain": 1112,
+          "grain_before_settlement": 571,
+          "grain_after_settlement": 0
+        },
+        {
+          "event_turn": 45,
+          "event_year": 210,
+          "event_month": 1,
+          "event_day": 1,
+          "owner": "goguryeo",
+          "city": "xuantu",
+          "settlement_tick": 450,
+          "population": 23100,
+          "active_garrison": 23654,
+          "reserve_troops": 498,
+          "resident_due": 139,
+          "garrison_due": 1434,
+          "required_grain": 1573,
+          "paid_grain": 1573,
+          "missing_grain": 0,
+          "grain_before_settlement": 1756,
+          "grain_after_settlement": 183
+        },
+        {
+          "event_turn": 46,
+          "event_year": 210,
+          "event_month": 1,
+          "event_day": 11,
+          "owner": "goguryeo",
+          "city": "xuantu",
+          "settlement_tick": 460,
+          "population": 23100,
+          "active_garrison": 23654,
+          "reserve_troops": 498,
+          "resident_due": 138,
+          "garrison_due": 1435,
+          "required_grain": 1573,
+          "paid_grain": 1573,
+          "missing_grain": 0,
+          "grain_before_settlement": 1710,
+          "grain_after_settlement": 137
+        }
+      ],
+      "actual_freight": [],
+      "result": "49bc7faecf036a561d93a0428bcc44e2be4dc50dd9d9b55b008001459be0856c"
+    },
+    {
+      "variant": "L2",
+      "opening": {
+        "owner": "goguryeo",
+        "grain": 571,
+        "gold": 123,
+        "local_offer": {
+          "grain": 0,
+          "rate": 15,
+          "batches": 0,
+          "gold": 0,
+          "market_stock": 0,
+          "limiting_reason": "market_empty",
+          "blocked_reason": "market_empty"
+        },
+        "sources": [],
+        "excluded": {
+          "guonei": "no_eligible_escort"
+        }
+      },
+      "opening_rng": {
+        "state": 2971821042,
+        "draws": 2464
+      },
+      "settlements": [
+        {
+          "event_turn": 44,
+          "event_year": 209,
+          "event_month": 12,
+          "event_day": 21,
+          "owner": "goguryeo",
+          "city": "xuantu",
+          "settlement_tick": 440,
+          "population": 24700,
+          "active_garrison": 25325,
+          "reserve_troops": 507,
+          "resident_due": 148,
+          "garrison_due": 1535,
+          "required_grain": 1683,
+          "paid_grain": 571,
+          "missing_grain": 1112,
+          "grain_before_settlement": 571,
+          "grain_after_settlement": 0
+        },
+        {
+          "event_turn": 45,
+          "event_year": 210,
+          "event_month": 1,
+          "event_day": 1,
+          "owner": "goguryeo",
+          "city": "xuantu",
+          "settlement_tick": 450,
+          "population": 23100,
+          "active_garrison": 23654,
+          "reserve_troops": 498,
+          "resident_due": 139,
+          "garrison_due": 1434,
+          "required_grain": 1573,
+          "paid_grain": 1573,
+          "missing_grain": 0,
+          "grain_before_settlement": 1756,
+          "grain_after_settlement": 183
+        },
+        {
+          "event_turn": 46,
+          "event_year": 210,
+          "event_month": 1,
+          "event_day": 11,
+          "owner": "goguryeo",
+          "city": "xuantu",
+          "settlement_tick": 460,
+          "population": 23100,
+          "active_garrison": 23654,
+          "reserve_troops": 498,
+          "resident_due": 138,
+          "garrison_due": 1435,
+          "required_grain": 1573,
+          "paid_grain": 1573,
+          "missing_grain": 0,
+          "grain_before_settlement": 1710,
+          "grain_after_settlement": 137
+        }
+      ],
+      "actual_freight": [],
+      "result": "fd96df37eefa8719b5164e9bb45ac30b25929948e5eba91a35caee09eeab7a9d"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+checkpoint_sha256,scenario,group,city,from_turn,through_turn,march_id,local_grain_bought,actual_city_due,actual_city_paid,city_missing,physical_courier_grain,actual_courier_ticks,required,paid,shortage_days,losses,requested_at_city,received_at_city,actual_withdrawal_request_tick,actual_returning_tick,actual_route_arrival,actual_route_endpoint
+eb3ed64eb8e367540e23b4763cecfc08fb65a38332756c0aa2fa2ee333dce225,208-10,K0,baxi,268,277,282,4725,6616,5811,805,0,[],12006,11405,3,298,35406,4346,null,null,null,null
+eb3ed64eb8e367540e23b4763cecfc08fb65a38332756c0aa2fa2ee333dce225,208-10,K2,baxi,268,277,282,805,7257,7257,0,5149,[2686],13428,13428,0,0,78244,1541,null,null,2718,hanzhong
+eb3ed64eb8e367540e23b4763cecfc08fb65a38332756c0aa2fa2ee333dce225,208-10,L0,baxi,268,277,282,5735,6616,5811,805,0,[],12006,11405,3,298,35406,4346,null,null,null,null
+eb3ed64eb8e367540e23b4763cecfc08fb65a38332756c0aa2fa2ee333dce225,208-10,K1,baxi,268,277,282,2418,7257,7257,0,0,[],15478,11366,19,1749,426966,4307,2729,2731,null,null
+eb3ed64eb8e367540e23b4763cecfc08fb65a38332756c0aa2fa2ee333dce225,208-10,L2,baxi,268,277,282,805,7257,7257,0,5149,[2686],13428,13428,0,0,78244,1541,null,null,2718,hanzhong
+eb3ed64eb8e367540e23b4763cecfc08fb65a38332756c0aa2fa2ee333dce225,208-10,L1,baxi,268,277,282,2418,7257,7257,0,0,[],15457,11322,20,1832,426966,4263,2729,2731,null,null
