@@ -1,6 +1,6 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
-const scripts=['paths.js','browser-engine.js'].map(name=>fs.readFileSync(require('node:path').join(__dirname,'../game',name),'utf8'));
+const scripts=['paths.js','save-transfer.js','browser-engine.js'].map(name=>fs.readFileSync(require('node:path').join(__dirname,'../game',name),'utf8'));
 function fixture(prefix='/Three-Kingdoms2-King-mainland/',{paths=true,workerHash}={}){
  const requests=[],workers=[],timers=[],nodes=new Map(),events=[],listeners=new Map();
  function element(tag='p'){
@@ -15,9 +15,97 @@ function fixture(prefix='/Three-Kingdoms2-King-mainland/',{paths=true,workerHash
   respond(message){this.onmessage({data:message});}
  }
  const window={document,Worker,fetch:(...args)=>{requests.push(args);return Promise.resolve(new Response('{}'));}};
- const context={window,document,Worker,URL,Response,CustomEvent:class{constructor(type){this.type=type;}},setTimeout:(fn,ms)=>{const timer={fn,ms};timers.push(timer);return timer;},clearTimeout:timer=>{if(timer)timer.cancelled=true;},console};
+ const context={window,document,Worker,URL,Response,AbortController,TextEncoder,CustomEvent:class{constructor(type){this.type=type;}},setTimeout:(fn,ms)=>{const timer={fn,ms};timers.push(timer);return timer;},clearTimeout:timer=>{if(timer)timer.cancelled=true;},console};
  vm.createContext(context);for(const script of paths?scripts:scripts.slice(1))vm.runInContext(script,context);
  return{window,requests,worker:workers[0],workers,timers,node,nodes,events,document};
+}
+const build='b'.repeat(40), observerTurn=164;
+const observerHello={type:'ready',build_commit:build,shared_scenarios:true};
+const observeBody=JSON.stringify({kind:'observe_turn',payload:{},revision:166});
+const observeSettings={method:'POST',body:observeBody,tk2ViewCache:'original-cache',tk2ObserverTurn:observerTurn};
+function reply(worker,status,body){
+ const message=worker.messages.at(-1);
+ worker.respond({type:'response',id:message.id,status,body});
+}
+async function waitFor(check){
+ for(let step=0;step<40;step++){
+  const value=check();
+  if(value)return value;
+  await new Promise(setImmediate);
+ }
+ assert.fail('expected the next Worker operation');
+}
+function observerView(turn,phase,revision){
+ const game={player:'observer',turn,phase};
+ return JSON.stringify({transport:'tk2-view-v1',view:{revision,game}});
+}
+async function exerciseObserverRecovery({savedTurn=observerTurn,phase='city',mode='success'}={}){
+ const e=fixture();
+ e.worker.respond(observerHello);
+ const pending=e.window.fetch('/api/command',observeSettings);
+ assert.equal(e.worker.messages.at(-1).body,observeBody);
+ const failure='{"error":"observer failed"}';
+ reply(e.worker,500,failure);
+ await waitFor(()=>e.worker.messages.length===2);
+ assert.equal(e.worker.messages.at(-1).path,'/api/save?compact=1');
+ await assert.rejects(e.window.fetch('/api/state'),/操作中/);
+ if(mode==='timeout'){
+  e.timers.at(-1).fn();
+  assert.equal(await(await pending).text(),failure);
+  assert(!e.worker.stopped);
+  const read=e.window.fetch('/api/state');
+  reply(e.worker,200,'{}');
+  assert.equal((await read).status,200,'a timed-out export does not block future requests');
+  return;
+ }
+
+ const rawSave='{"version":3,"state":{"player":"observer","turn":'+savedTurn
+  +',"phase":"'+phase+'"},"legacy_number":315.0}';
+ reply(e.worker,200,rawSave);
+ const candidate=await waitFor(()=>e.workers[1]);
+ assert(!e.worker.stopped,'the old Worker is retained while verification runs');
+ candidate.respond(mode==='version' ? {...observerHello,build_commit:'c'.repeat(40)} : observerHello);
+ if(mode==='version'){
+  assert.equal(await(await pending).text(),failure);
+  assert(candidate.stopped);
+  assert(!e.worker.stopped);
+  assert.equal(candidate.messages.length,0,'a different build never receives the save');
+  return;
+ }
+
+ const load=await waitFor(()=>candidate.messages[0]);
+ assert.equal(load.path,'/api/load');
+ assert.equal(load.body,'{"save":'+rawSave+',"revision":0}','raw save spelling survives recovery');
+ assert.equal(load.view_cache,observeSettings.tk2ViewCache);
+ const needsAdvance=savedTurn===observerTurn&&phase==='city';
+ const restored=observerView(savedTurn,phase,1);
+ reply(candidate,200,restored);
+ let accepted=restored;
+ if(needsAdvance){
+  const retry=await waitFor(()=>candidate.messages[1]);
+  assert.equal(retry.path,'/api/command');
+  assert.equal(retry.view_cache,observeSettings.tk2ViewCache);
+  assert.deepEqual(JSON.parse(retry.body),{kind:'observe_turn',payload:{},revision:1});
+  if(mode==='retry-failed'){
+   reply(candidate,500,'{"error":"replacement failed"}');
+   assert.equal(await(await pending).text(),failure);
+   assert(candidate.stopped);
+   assert(!e.worker.stopped);
+   return;
+  }
+  accepted=observerView(observerTurn+1,'city',2);
+  reply(candidate,200,accepted);
+ }
+ assert.equal(await(await pending).text(),accepted);
+ assert.equal(candidate.messages.filter(row=>row.path==='/api/command').length,
+  needsAdvance?1:0,'a turn already settled by the original Worker is not replayed');
+ assert(e.worker.stopped);
+ assert(!candidate.stopped);
+ assert.equal(e.requests.length,0,'recovery snapshot remains inside the browser');
+ const read=e.window.fetch('/api/state');
+ assert.equal(candidate.messages.at(-1).path,'/api/state');
+ reply(candidate,200,accepted);
+ assert.equal((await read).status,200);
 }
 (async()=>{
  const versioned=fixture('/nested-game/',{workerHash:'a'.repeat(64)});
@@ -79,6 +167,18 @@ function fixture(prefix='/Three-Kingdoms2-King-mainland/',{paths=true,workerHash
  failed.workers[1].respond({type:'ready'});await failed.window.GameBrowserEngine.whenReady();assert(failed.window.GameBrowserEngine.ready);
  failed.workers[1].onerror();assert.equal(failed.window.GameBrowserEngine.canRetry,false);assert(failurePanel.children[1].hidden);assert.equal(failed.window.GameBrowserEngine.retry(),false);assert.equal(failed.workers.length,2,'An error after ready cannot destroy and replace a campaign');await assert.rejects(failed.window.GameBrowserEngine.whenReady());
  const timeout=fixture();timeout.timers[0].fn();assert(timeout.window.GameBrowserEngine.failed);assert.equal(timeout.window.GameBrowserEngine.canRetry,true);assert.equal(timeout.timers[0].ms,180000);
+ await exerciseObserverRecovery();
+ await exerciseObserverRecovery({savedTurn:observerTurn+1});
+ await exerciseObserverRecovery({phase:'finished'});
+ await exerciseObserverRecovery({mode:'version'});
+ await exerciseObserverRecovery({mode:'retry-failed'});
+ await exerciseObserverRecovery({mode:'timeout'});
+ const playerFailure=fixture();
+ playerFailure.worker.respond(observerHello);
+ const playerCommand=playerFailure.window.fetch('/api/command',{method:'POST',body:raw});
+ reply(playerFailure.worker,500,'{"error":"player operation failed"}');
+ assert.equal((await playerCommand).status,500);
+ assert.equal(playerFailure.workers.length,1,'ordinary commands are not replayed');
  const isolated=fixture();assert.equal(isolated.worker.messages.length,0,'Each window owns a separate campaign Worker');
- console.log('Browser client: prefix/Auth/raw JSON and opt-in compact-token contracts, real-byte bilingual boot feedback, bounded boot, explicit pre-ready retry, stale-worker isolation and no running-campaign reset passed');
+ console.log('Browser client: prefix/Auth/raw JSON and opt-in compact-token contracts, real-byte bilingual boot feedback, bounded boot, explicit pre-ready retry, stale-worker isolation and one safe observer recovery passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

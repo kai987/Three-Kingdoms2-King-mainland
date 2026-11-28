@@ -3,6 +3,7 @@
 (function(root){
  const entry=document.currentScript,base=new URL('.',entry.src),network=root.fetch.bind(root);
  const workerVersion=entry.dataset?.workerSha256;
+ const recoveryTimeout=30_000;
  // A cached HTML shell or interrupted optional helper must not prevent the
  // language fetches from starting. Keep the same public-asset-only boundary
  // as paths.js; Auth, private configuration and other project URLs pass through.
@@ -12,7 +13,7 @@
  }
 
  const pending=new Map();let worker,sequence=0,generation=0,failed=false,ready=false,everReady=false,bootTimer,phase='manifest',progress={},panel,label,retryButton,version='',versionLabel,sharedScenarios=false;
- let readyPromise,resolveReady,rejectReady;
+ let readyPromise,resolveReady,rejectReady,recovering=false;
  const copy={
   'zh-Hant':{manifest:'讀取遊戲版本清單……',loading:'下載遊戲資料並準備執行環境……',initializing:'初始化戰役規則……',failed:'遊戲載入失敗。請檢查連線，再重試載入。',stopped:'遊戲執行已中斷。請重新整理頁面，並讀取已儲存的進度。',retry:'重試載入',runtime:'執行環境',working:'準備中',done:'已就緒',bytes:'遊戲資料已讀取',excludes:'不含執行環境',retrying:'正在重試下載'},
   ja:{manifest:'ゲームのバージョン情報を確認しています……',loading:'ゲームデータのダウンロードと実行環境の準備中です……',initializing:'戦役ルールを初期化しています……',failed:'ゲームを読み込めません。接続を確認して、もう一度お試しください。',stopped:'ゲームの実行が中断されました。ページを再読み込みし、保存済みの進行状況を読み込んでください。',retry:'読み込みを再試行',runtime:'実行環境',working:'準備中',done:'準備完了',bytes:'ゲームデータの読み込み量',excludes:'実行環境を除く',retrying:'ダウンロードを再試行中'}
@@ -50,13 +51,38 @@
   if(token!==generation||failed)return;failed=true;ready=false;clearTimeout(bootTimer);worker?.terminate();status();rejectReady(unavailable());
   for(const row of pending.values())row.reject(unavailable());pending.clear();emit('game-engine-error');
  }
- function start(){
-  const token=++generation;failed=false;ready=false;phase='manifest';progress={};version='';sharedScenarios=false;
-  readyPromise=new Promise((resolve,reject)=>{resolveReady=resolve;rejectReady=reject;});readyPromise.catch(()=>{});
-  status();bootTimer=setTimeout(()=>fail(token),180000);
-  try{const address=new URL('browser-engine-worker.js',base);if(/^[a-f0-9]{64}$/.test(workerVersion||''))address.searchParams.set('v',workerVersion);worker=new Worker(address,{type:'module'});}catch{fail(token);return;}
-  worker.onerror=()=>fail(token);
-  worker.onmessage=event=>{
+ function newWorker(){
+  const address=new URL('browser-engine-worker.js',base);
+  if(/^[a-f0-9]{64}$/.test(workerVersion||''))address.searchParams.set('v',workerVersion);
+  return new Worker(address,{type:'module'});
+ }
+ function receiveResponse(requests,message){
+  if(message.type!=='response'||!requests.has(message.id))return;
+  const request=requests.get(message.id);
+  if(Number.isInteger(message.status)&&message.status>=200&&message.status<600&&typeof message.body==='string')
+   request.resolve(new Response(message.body,{status:message.status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'}}));
+  else request.reject(unavailable());
+ }
+ function sendRequest(target,requests,request,signal){
+  return new Promise((resolve,reject)=>{
+   if(signal?.aborted){reject(unavailable());return;}
+   const id=++sequence;
+   const cleanup=()=>{
+    requests.delete(id);
+    signal?.removeEventListener('abort',abort);
+   };
+   const abort=()=>{cleanup();reject(unavailable());};
+   requests.set(id,{
+    resolve:reply=>{cleanup();resolve(reply);},
+    reject:error=>{cleanup();reject(error);}
+   });
+   signal?.addEventListener('abort',abort,{once:true});
+   try{target.postMessage({type:'request',id,...request});}catch{abort();}
+  });
+ }
+ function listenActive(target,token){
+  target.onerror=()=>fail(token);
+  target.onmessage=event=>{
    if(token!==generation||failed)return;
    const message=event.data||{};
    if(message.type==='progress'&&!ready){
@@ -64,12 +90,89 @@
    }
    if(message.type==='ready'){ready=true;everReady=true;phase='ready';sharedScenarios=message.shared_scenarios===true;version=/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/.test(message.build_commit||'')?message.build_commit:'';clearTimeout(bootTimer);status();resolveReady();emit('game-engine-ready');return;}
    if(message.type==='fatal'){fail(token);return;}
-   if(message.type!=='response'||!pending.has(message.id))return;
-   const request=pending.get(message.id);pending.delete(message.id);
-   if(Number.isInteger(message.status)&&message.status>=200&&message.status<600&&typeof message.body==='string')
-    request.resolve(new Response(message.body,{status:message.status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'}}));
-   else request.reject(unavailable());
+   receiveResponse(pending,message);
   };
+ }
+ function start(){
+  const token=++generation;failed=false;ready=false;phase='manifest';progress={};version='';sharedScenarios=false;
+  readyPromise=new Promise((resolve,reject)=>{resolveReady=resolve;rejectReady=reject;});readyPromise.catch(()=>{});
+  status();bootTimer=setTimeout(()=>fail(token),180000);
+  try{worker=newWorker();listenActive(worker,token);}catch{fail(token);}
+ }
+ function waitForReplacement(target,requests,controller){
+  const signal=controller.signal;
+  return new Promise((resolve,reject)=>{
+   const abort=()=>reject(unavailable());
+   signal.addEventListener('abort',abort,{once:true});
+   target.onerror=()=>controller.abort();
+   target.onmessage=event=>{
+    const message=event.data||{};
+    if(message.type==='fatal'){controller.abort();return;}
+    if(message.type==='ready'){
+     signal.removeEventListener('abort',abort);
+     resolve(message);
+     return;
+    }
+    receiveResponse(requests,message);
+   };
+  });
+ }
+ function observerCheckpoint(game,turn){
+  return game?.player==='observer'&&(game.turn===turn||game.turn===turn+1)
+   &&(game.phase==='city'||game.phase==='finished');
+ }
+ async function recoverObserver(failure,active,request,turn){
+  if(!ready||failed||!version||recovering||pending.size||worker!==active)return failure;
+  recovering=true;
+  const controller=new AbortController();
+  const signal=controller.signal;
+  const timeout=setTimeout(()=>controller.abort(),recoveryTimeout);
+  const requests=new Map();
+  let replacement;
+  try{
+   const command=JSON.parse(request.body);
+   if(command?.kind!=='observe_turn')return failure;
+   const snapshot=await sendRequest(active,pending,{path:'/api/save?compact=1',method:'GET',body:null},signal);
+   if(!snapshot.ok)return failure;
+   const raw=await snapshot.text();
+   const save=JSON.parse(raw);
+   if(!observerCheckpoint(save.state,turn))return failure;
+
+   // Keep the current Worker alive until the same build has verified the save and the outcome.
+   replacement=newWorker();
+   const hello=await waitForReplacement(replacement,requests,controller);
+   if(hello.build_commit!==version||(hello.shared_scenarios===true)!==sharedScenarios)return failure;
+   const viewCache=typeof request.view_cache==='string'?{view_cache:request.view_cache}:{};
+   // A newly booted Worker has an empty session at revision zero.
+   const restored=await sendRequest(replacement,requests,{path:'/api/load',method:'POST',
+    body:root.SaveTransfer.loadBody(raw,0),...viewCache},signal);
+   if(!restored.ok)return failure;
+   const state=await restored.clone().json();
+   const view=state.view??state;
+   if(view.game?.turn!==save.state.turn||view.game.phase!==save.state.phase||
+      view.game.player!=='observer'||!Number.isSafeInteger(view.revision))return failure;
+
+   let result=restored;
+   if(save.state.turn===turn&&save.state.phase==='city'){
+    result=await sendRequest(replacement,requests,{...request,
+     body:JSON.stringify({...command,revision:view.revision})},signal);
+    if(!result.ok)return failure;
+    const data=await result.clone().json();
+    const game=(data.view??data).game;
+    if(!observerCheckpoint(game,turn)||(game.turn===turn&&game.phase!=='finished'))return failure;
+   }
+   if(signal.aborted||worker!==active||failed)return failure;
+   listenActive(replacement,++generation);
+   worker=replacement;
+   active.terminate();
+   return result;
+  }catch{
+   return failure;
+  }finally{
+   clearTimeout(timeout);
+   if(replacement&&replacement!==worker)replacement.terminate();
+   recovering=false;
+  }
  }
  function retry(){if(!failed||everReady)return false;start();return true;}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',status,{once:true});
@@ -84,12 +187,15 @@
   if(path==='/api/cloud-config')return network(new URL('cloud-config.json',base),settings);
   if(path){
    if(failed)return Promise.reject(unavailable());
-   if(pending.size>=16)return Promise.reject(new Error('操作中です。／請稍候。'));
-   const method=(settings.method||'GET').toUpperCase(),body=settings.body??null,id=++sequence;
-   return new Promise((resolve,reject)=>{
-    pending.set(id,{resolve,reject});
-    try{worker.postMessage({type:'request',id,path,method,body,...(typeof settings.tk2ViewCache==='string'?{view_cache:settings.tk2ViewCache}:{})});}catch{pending.delete(id);reject(unavailable());}
-   });
+   if(recovering||pending.size>=16)return Promise.reject(new Error('操作中です。／請稍候。'));
+   const method=(settings.method||'GET').toUpperCase(),body=settings.body??null;
+   const request={path,method,body,...(typeof settings.tk2ViewCache==='string'?{view_cache:settings.tk2ViewCache}:{})};
+   const active=worker;
+   const response=sendRequest(active,pending,request);
+   const turn=settings.tk2ObserverTurn;
+   if(path==='/api/command'&&method==='POST'&&Number.isSafeInteger(turn)&&turn>=1)
+    return response.then(reply=>reply.status===500?recoverObserver(reply,active,request,turn):reply);
+   return response;
   }
   return network(typeof input==='string'?root.GamePaths.asset(input):input,settings);
  };
