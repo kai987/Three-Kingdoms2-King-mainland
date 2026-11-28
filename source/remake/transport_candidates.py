@@ -28,6 +28,7 @@ class Pass:
         self.features = features or {}
         self.prepared_directions = {}
         self.route_query = self._search_routes if self.features.get('route_reuse') else None
+        self.cargo_profiles = {} if self.route_query else None
         self.next_plan()
 
     def next_plan(self):
@@ -416,10 +417,11 @@ class Pass:
         from itertools import chain
         possible = chain(self._city_routes(demands, plan), self._relief(demands, plan, army, convoys),
                          self._transshipment(demands, plan))
-        for row in possible:
-            self.work['candidate_count'] += 1
-            if row.key not in rejected:
-                results[row.demand.key].append(row)
+        with logistics_rules.reuse_cargo_profiles(self.cargo_profiles):
+            for row in possible:
+                self.work['candidate_count'] += 1
+                if row.key not in rejected:
+                    results[row.demand.key].append(row)
         selected = []
         for rows in results.values():
             rows.sort(key=lambda row: order(row, efficient=self.efficient))

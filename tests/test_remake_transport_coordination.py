@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT/'source'))
 
 from remake import city_economy, command_books, domestic, faction_economy, grain_dispatch, grain_units, logistics
 from remake import logistics_strategy, march_supply, staging_supply
+from remake import logistics_rules
 from remake import regional_market, transport_candidates, transport_coordination as coordination
 from remake.campaign import Campaign, Catalog, verified_save_content
 from remake.errors import GameError
@@ -538,6 +539,21 @@ class CoordinationTests(TestCase):
         self.assertFalse(coordination._defer_city_quote(local, 0))
         army = offer(replace(demand, kind='march', target=4), tick=31)
         self.assertFalse(coordination._defer_city_quote(army, 0))
+
+    def test_cargo_quote_profiles_share_daily_weights_and_preserve_each_remainder(self):
+        profiles = {}
+        parts = [('plain', 2500), ('river_upstream', 2500)]
+        loads = (1, 981, 3010, 34999)
+        expected = [logistics_rules.estimate_cargo(load, parts, 4, start=1, remainder=200_000)
+                    for load in loads]
+        with (logistics_rules.reuse_cargo_profiles(profiles),
+              patch.object(logistics_rules, 'weight', wraps=logistics_rules.weight) as compute):
+            actual = [logistics_rules.estimate_cargo(load, parts, 4, start=1, remainder=200_000)
+                      for load in loads]
+            self.assertEqual(actual, expected)
+            self.assertEqual(compute.call_count, 4)
+            logistics_rules.estimate_cargo(loads[-1], list(reversed(parts)), 4, start=1)
+            self.assertEqual(compute.call_count, 8)
 
     def test_actual_march_refills_keep_player_orders_and_protect_ai_city_meals(self):
         from browser_resupply_fixture import resupply_catalog
