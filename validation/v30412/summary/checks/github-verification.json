@@ -1,0 +1,498 @@
+{
+  "final_ci": {
+    "commit": "ee77813df2f156ed0522c343a76a8af271e1dcc3",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255",
+    "created_at": "2026-11-28T05:23:39Z",
+    "updated_at": "2026-11-28T05:49:53Z",
+    "jobs": {
+      "success": 33,
+      "skipped": 2
+    },
+    "completed_jobs": [
+      {
+        "name": "verify / scope",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877366313"
+      },
+      {
+        "name": "verify / resupply-ui",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877408543"
+      },
+      {
+        "name": "verify / native-rules",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877408555"
+      },
+      {
+        "name": "verify / source-and-browser",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877408574"
+      },
+      {
+        "name": "verify / web-build",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877408585"
+      },
+      {
+        "name": "verify / docs-check",
+        "conclusion": "skipped",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877409668"
+      },
+      {
+        "name": "verify / campaign-soak-replay (early, 2026, both)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774802"
+      },
+      {
+        "name": "verify / campaign-soak-replay (middle, 2026, python)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774830"
+      },
+      {
+        "name": "verify / campaign-soak-replay (middle, 3, python)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774836"
+      },
+      {
+        "name": "verify / campaign-soak-replay (middle, 2026, rust)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774839"
+      },
+      {
+        "name": "verify / campaign-soak-replay (late, 2026, both)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774845"
+      },
+      {
+        "name": "verify / campaign-soak-replay (early, 3, both)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774848"
+      },
+      {
+        "name": "verify / campaign-soak-replay (middle, 3, rust)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774849"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 6)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774856"
+      },
+      {
+        "name": "verify / campaign-rules (python, 1)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774866"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 1)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774873"
+      },
+      {
+        "name": "verify / campaign-soak-replay (late, 3, both)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774884"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 5)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774932"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 3)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774945"
+      },
+      {
+        "name": "verify / campaign-rules (python, 4)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774948"
+      },
+      {
+        "name": "verify / campaign-rules (python, 2)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774952"
+      },
+      {
+        "name": "verify / campaign-rules (python, 3)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774969"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 2)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774979"
+      },
+      {
+        "name": "verify / campaign-rules (python, 5)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877774992"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 4)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877775001"
+      },
+      {
+        "name": "verify / campaign-rules (python, 6)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877775029"
+      },
+      {
+        "name": "verify / scoped-tests",
+        "conclusion": "skipped",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140877776372"
+      },
+      {
+        "name": "verify / browser-ui (desktop-chromium, 3)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140878023543"
+      },
+      {
+        "name": "verify / browser-ui (desktop-chromium, 1)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140878023547"
+      },
+      {
+        "name": "verify / browser-ui (touch-chromium, 3)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140878023559"
+      },
+      {
+        "name": "verify / browser-ui (desktop-chromium, 2)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140878023564"
+      },
+      {
+        "name": "verify / browser-ui (touch-chromium, 1)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140878023567"
+      },
+      {
+        "name": "verify / browser-ui (touch-chromium, 2)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140878023706"
+      },
+      {
+        "name": "verify / campaign-soak",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140880648832"
+      },
+      {
+        "name": "verify / gate",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255/job/140883053156"
+      }
+    ]
+  },
+  "initial_ci": {
+    "commit": "39a368f11b1785b36a6845b181fc0473cec086c3",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203",
+    "created_at": "2026-11-28T05:16:50Z",
+    "updated_at": "2026-11-28T05:24:53Z",
+    "jobs": {
+      "success": 10,
+      "failure": 3,
+      "skipped": 2,
+      "cancelled": 20
+    },
+    "completed_jobs": [
+      {
+        "name": "verify / scope",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875455350"
+      },
+      {
+        "name": "verify / source-and-browser",
+        "conclusion": "failure",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875486491"
+      },
+      {
+        "name": "verify / resupply-ui",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875486495"
+      },
+      {
+        "name": "verify / native-rules",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875486502"
+      },
+      {
+        "name": "verify / web-build",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875486523"
+      },
+      {
+        "name": "verify / docs-check",
+        "conclusion": "skipped",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875487468"
+      },
+      {
+        "name": "verify / campaign-soak-replay (early, 3, both)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875794971"
+      },
+      {
+        "name": "verify / campaign-soak-replay (middle, 2026, python)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875794972"
+      },
+      {
+        "name": "verify / campaign-soak-replay (middle, 3, python)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795006"
+      },
+      {
+        "name": "verify / campaign-soak-replay (early, 2026, both)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795011"
+      },
+      {
+        "name": "verify / campaign-soak-replay (middle, 3, rust)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795027"
+      },
+      {
+        "name": "verify / campaign-soak-replay (late, 2026, both)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795029"
+      },
+      {
+        "name": "verify / campaign-soak-replay (middle, 2026, rust)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795037"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 1)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795049"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 3)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795052"
+      },
+      {
+        "name": "verify / campaign-rules (python, 1)",
+        "conclusion": "success",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795057"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 5)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795058"
+      },
+      {
+        "name": "verify / campaign-soak-replay (late, 3, both)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795059"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 4)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795063"
+      },
+      {
+        "name": "verify / campaign-rules (python, 6)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795064"
+      },
+      {
+        "name": "verify / campaign-rules (python, 4)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795085"
+      },
+      {
+        "name": "verify / campaign-rules (python, 3)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795087"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 6)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795096"
+      },
+      {
+        "name": "verify / campaign-rules (python, 5)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795100"
+      },
+      {
+        "name": "verify / campaign-rules (rust, 2)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795125"
+      },
+      {
+        "name": "verify / campaign-rules (python, 2)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875795166"
+      },
+      {
+        "name": "verify / scoped-tests",
+        "conclusion": "skipped",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875796224"
+      },
+      {
+        "name": "verify / browser-ui (desktop-chromium, 3)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875946475"
+      },
+      {
+        "name": "verify / browser-ui (desktop-chromium, 2)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875946484"
+      },
+      {
+        "name": "verify / browser-ui (desktop-chromium, 1)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875946488"
+      },
+      {
+        "name": "verify / browser-ui (touch-chromium, 3)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875946491"
+      },
+      {
+        "name": "verify / browser-ui (touch-chromium, 2)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875946495"
+      },
+      {
+        "name": "verify / browser-ui (touch-chromium, 1)",
+        "conclusion": "cancelled",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875946502"
+      },
+      {
+        "name": "verify / campaign-soak",
+        "conclusion": "failure",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140877139826"
+      },
+      {
+        "name": "verify / gate",
+        "conclusion": "failure",
+        "url": "https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140877325635"
+      }
+    ]
+  },
+  "regression_correction": {
+    "file": "docs/ruler-affiliation-audit-20261027.json",
+    "changed_field": "japanese_sha256",
+    "runtime_changed": false,
+    "failure": "The generated ruler audit carried the old Japanese message fingerprint."
+  },
+  "public_zip_downloads": {
+    "archive_commit": "347b2055dcc8f46c83abaf536cffbd96d295ad44",
+    "public_sha256_manifest_verified": true,
+    "package_count": 17,
+    "member_count": 899,
+    "packages": [
+      {
+        "path": "packages/v30412-baxi-final-01.zip",
+        "bytes": 265202,
+        "sha256": "1e152b828cb93299ce47f7614a0253de9f0d6c541cce25f6c1a8b701147929f5",
+        "verified_entries": 8
+      },
+      {
+        "path": "packages/v30412-constraints-01.zip",
+        "bytes": 1821362,
+        "sha256": "2271048ded1c6f8e96f411deb724b5193a339f14bcf126211f64bacdefd84360",
+        "verified_entries": 14
+      },
+      {
+        "path": "packages/v30412-equivalence-final-01.zip",
+        "bytes": 46898,
+        "sha256": "1dc9c2dc20e4c5154876d3083e4a24b311234888d7312b65dfc8a5fa130fb540",
+        "verified_entries": 22
+      },
+      {
+        "path": "packages/v30412-fixed-clean-01.zip",
+        "bytes": 4363097,
+        "sha256": "5adf8a39b1c27be809ca97ec06ced7d381794d5445cd38b6652b2419baecf43e",
+        "verified_entries": 62
+      },
+      {
+        "path": "packages/v30412-fixed-final-01.zip",
+        "bytes": 4357222,
+        "sha256": "39b1b39ada917eaed923eee1b74ae5e1f07304280c1c85a33bed2f32554f37ed",
+        "verified_entries": 62
+      },
+      {
+        "path": "packages/v30412-historical-3634-danger-01.zip",
+        "bytes": 280068,
+        "sha256": "7f436ce9018e5b377148d5b2cc93c539febe28827fcbf4c9b435bed3227e4730",
+        "verified_entries": 2
+      },
+      {
+        "path": "packages/v30412-historical-all-final-01.zip",
+        "bytes": 391731,
+        "sha256": "210c45f3ecdb441d7d3c1374bbe4a784419afff4f613bca100cb6656f0312036",
+        "verified_entries": 51
+      },
+      {
+        "path": "packages/v30412-observations-01.zip",
+        "bytes": 29403269,
+        "sha256": "e7e642a53f56775264a16fea31463e85095661b7df8820351412432a824d74e2",
+        "verified_entries": 275
+      },
+      {
+        "path": "packages/v30412-performance-final-01.zip",
+        "bytes": 121554,
+        "sha256": "d5d58177b9821d60515aa5c93fc3128878b644fa08676b57eeea6662346ed3ab",
+        "verified_entries": 91
+      },
+      {
+        "path": "packages/v30412-performance-isolated-north-01.zip",
+        "bytes": 55559,
+        "sha256": "87709a7382387a5fbff3a476e4fc61cb7cc627d9b1d0ccb2d549f4ab5009be24",
+        "verified_entries": 43
+      },
+      {
+        "path": "packages/v30412-performance-north-01.zip",
+        "bytes": 40458,
+        "sha256": "d74862a0692b994b18ad57303cefb93535063d5d5044d27543b35a2d7250baec",
+        "verified_entries": 33
+      },
+      {
+        "path": "packages/v30412-south-changsha-origin-01.zip",
+        "bytes": 260351,
+        "sha256": "4fed5e47d41038dbfa4782c72fccf638a32b579b6697e3ca85a0bd18c3c0aa10",
+        "verified_entries": 8
+      },
+      {
+        "path": "packages/v30412-south-final-01.zip",
+        "bytes": 3863377,
+        "sha256": "e4ae84c8a81efddd5d7aac5fb68a3a7f1b1730d2430491ecba37f16dbccfd954",
+        "verified_entries": 146
+      },
+      {
+        "path": "packages/v30412-technical-proof-01.zip",
+        "bytes": 46283755,
+        "sha256": "7a9d877e61a1ad6a59e4353f2e0e27235744888dc162739c8ea7d24f5ec13500",
+        "verified_entries": 64
+      },
+      {
+        "path": "packages/v30412-transit-ablation-01.zip",
+        "bytes": 499460,
+        "sha256": "f3749b3ca7cfbcc682a7d826d1d7d7b9ff0c4eae62e8e072f61e994ff7d81e74",
+        "verified_entries": 14
+      },
+      {
+        "path": "packages/v30412-weimieshu-proof-01.zip",
+        "bytes": 119666,
+        "sha256": "fb792bad61d2065662ca7fade0f6a363b580346a2167148b9357f08f023ed6ab",
+        "verified_entries": 2
+      },
+      {
+        "path": "packages/v30412-xuantu-proof-01.zip",
+        "bytes": 109098,
+        "sha256": "66d880134f1a1de0192128f6168cbad47d805fb1e9b56693a80cd1604b9cd36c",
+        "verified_entries": 2
+      }
+    ]
+  }
+}

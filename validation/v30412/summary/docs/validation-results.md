@@ -15,3 +15,9 @@
 ## 观测边界
 
 真实口粮事件通过只读订阅采样。观测关闭和打开的领域状态、实际运输凭证和 RNG 对照已通过。复算脚本为价格、粮耗、结果和实际命令书各保留凭证。南方初次回放领先于新增终点观测字段，巴西的最终到达由最终源码另行复放。快速观战记录了二十四个月的真实运行，五年及其后阶段状态见独立的准入报告。
+
+## GitHub Actions
+
+首轮源码构建发现君主归属审计的日文消息哈希过期。更新该生成字段后，最终提交的全量 GitHub Actions 校验通过。公开下载的 17 个 ZIP 和内部 899 项文件均通过校验。
+
+[首轮源代码检查](https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111379203/job/140875486491) · [最终 CI](https://github.com/kai987/Three-Kingdoms2-King-mainland/actions/runs/46111904255) · [GitHub 核对记录](../checks/github-verification.json)
