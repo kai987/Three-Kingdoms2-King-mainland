@@ -1363,10 +1363,11 @@ class ExpandedCampaign:
         occupation_budget.validate(self,state)
         if grain_market.FIELD in x:fields.add(grain_market.FIELD)
         fields.update({market_pricing.FIELD, market_pricing.STAGE, market_pricing.AUTOMATION, market_pricing.POOL} & x.keys())
-        from . import strategic_granary, transport_capacity, transport_coordination, transshipment
+        from . import strategic_granary, transport_capacity, transport_coordination, transport_infrastructure, transshipment
         fields.update({strategic_granary.FIELD, strategic_granary.POOL} & x.keys())
         fields.update({transport_capacity.FIELD, transport_capacity.POOL} & x.keys())
         fields.update({transshipment.FIELD, transshipment.POOL} & x.keys())
+        fields.update({transport_infrastructure.FIELD, transport_infrastructure.POOL} & x.keys())
         fields.update({transport_coordination.FIELD, transport_coordination.POOL} & x.keys())
         if battle_reinforcements.RETURNS in x:fields.add(battle_reinforcements.RETURNS)
         from . import dated_events, succession

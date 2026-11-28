@@ -190,9 +190,13 @@ def _create(game, state, payload, owner):
     keys = (*sources,*hubs,target)
     if any(type(k) is not str or k not in state.cities or state.cities[k].owner != owner for k in keys):
         raise GameError(INVALID)
-    if len(set(keys)) != len(keys) or len(_plans(state)) >= MAX_PLANS:
+    from . import transport_infrastructure
+    facilities = list(transport_infrastructure.jobs(state))
+    if len(set(keys)) != len(keys) or len(_plans(state))+len(facilities) >= MAX_PLANS:
         raise GameError(INVALID)
-    own = [plan for plan in _plans(state).values() if plan['owner'] == owner and plan['status'] == 'active']
+    own = [plan for plan in _plans(state).values() if plan['owner'] == owner and
+           (plan['status'] == 'active' or transport_infrastructure.enabled(state))]
+    own.extend(order for order in facilities if order['owner']==owner)
     if len(own) >= PER_OWNER or any(plan['target'] == target for plan in own):
         raise GameError(INVALID)
     promise = state.turn + turns

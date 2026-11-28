@@ -140,14 +140,15 @@ def wait_rate(state, region):
     return weather.WARMTH[snow]*rules.RATION_SCALE//100
 
 
-def day(state, parts, position, *, rest_region, moving=True, on_leg=False, stop=None):
+def day(state, parts, position, *, rest_region, moving=True, on_leg=False, stop=None, clear=False):
     """Take one actual day. Time left after a checkpoint pays a full meal."""
     remaining_day = Fraction(1)
     advanced = exposure = ration = cargo = normal_ration = normal_cargo = 0
     blocked = None
     if moving or on_leg:
         for part, available in _segments(parts, position, stop):
-            speed, weight, loss, ice = medium(state, part)
+            speed, weight, loss, ice = ((*_medium(part.mode,0,0,0,False),None)
+                                        if clear else medium(state,part))
             movement = moving and speed
             duration = min(remaining_day, Fraction(available, speed*rules.DAY_TICKS)) if movement else remaining_day
             if movement:
@@ -167,7 +168,7 @@ def day(state, parts, position, *, rest_region, moving=True, on_leg=False, stop=
     # The original engine charges a meal on the last march day. When a
     # journey reaches a node before nightfall, the remaining meal time uses
     # the node rate and there is no additional physical cargo exposure.
-    ration += remaining_day*wait_rate(state, rest_region)
+    ration += remaining_day*(rules.RATION_SCALE if clear else wait_rate(state,rest_region))
     normal_ration += remaining_day*rules.RATION_SCALE
     return Daily(int(advanced), int(ration), int(cargo), blocked, int(normal_ration),
                  int(normal_cargo), int(exposure*QUANTA-advanced))

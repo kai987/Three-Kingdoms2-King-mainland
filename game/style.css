@@ -1265,3 +1265,15 @@ dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;
 [data-transshipment] section{border-bottom:1px solid currentColor;margin-block:0 1rem;padding-bottom:.6rem}
 [data-transshipment] form{display:grid;gap:.5rem;max-width:32rem}
 [data-transshipment] li{overflow-wrap:anywhere}
+[data-map-wharf]{cursor:pointer;outline:none}
+[data-map-wharf] path:first-of-type{fill:#f8d484;stroke:#241809;stroke-width:2.5}
+[data-map-wharf] path:last-child{fill:none;stroke:#241809;stroke-width:1.7}
+[data-map-wharf]:focus path:first-of-type,[data-map-wharf]:hover path:first-of-type{stroke:#fff}
+[data-map-wharf][data-wharf-status="frozen"] path:first-of-type{fill:#b9ddf7}
+[data-map-wharf][data-wharf-status="inactive"] path:first-of-type{fill:#bdb8ae}
+.wharf-order{border-top:1px solid currentColor;padding-top:.55rem}
+.wharf-route-preview{display:block;width:100%;height:7rem;background:#f3a98422}
+.wharf-route-preview path{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.wharf-route-preview [data-wharf-preview-mode="land"]{stroke:#895a29}
+.wharf-route-preview [data-wharf-preview-mode="river"]{stroke:#155487}
+.wharf-route-preview circle{fill:#f8d484;stroke:#241809;stroke-width:1.5}

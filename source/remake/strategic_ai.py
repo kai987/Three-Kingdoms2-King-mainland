@@ -1055,6 +1055,9 @@ def run(campaign, state, payload):
             if owner != state.player:
                 finish_faction_turn(campaign, state, owner,
                                     outlook=None if ai.coordinated_transport else ai.grain_outlook(owner))
+                if 'transport_infrastructure' in x:
+                    from . import transport_infrastructure
+                    transport_infrastructure.consider_ai(campaign,state,owner)
                 if ai.adaptive:
                     ai.record_pressure(owner)
     campaign._complete_turn(state)

@@ -12,7 +12,7 @@ function load(value,options={}){
 }
 try{
  const full=scopes.loadBrowserScope({planPath:''});
- assert.equal(full.full,true);assert.equal(full.selectedCases.length,57);
+ assert.equal(full.full,true);assert.equal(full.selectedCases.length,58);
  assert.deepEqual(new Set(scopes.readCaseTitles(source)),new Set(scopes.CASE_REGISTRY.cases.map(row=>row.title)));
  const union=new Set();
  for(const group of scopes.CANONICAL_GROUPS){
@@ -37,6 +37,7 @@ try{
   assert(load(plan([group],[scenario])).selectedCases.some(row=>row.id==='map-march-preview'));
  }
  for(const group of ['battle','map','people','save'])assert(load(plan([group],['mainland208-10'])).selectedCases.some(row=>row.id==='general-tactic-gate'),'General tactic forecasts retain actual distance/tier acceptance in '+group);
+ for(const group of ['logistics','map','save'])assert(load(plan([group],['mainland227-02'])).selectedCases.some(row=>row.id==='transport-infrastructure'));
  const battle=new Set(load(plan(['battle'])).selectedCases.map(row=>row.id));
  assert(boot.selectedCases.every(row=>!battle.has(row.id)),'Boot and audio changes never pull unrelated battle acceptance');
  const soldierMedia=load(plan(['boot','battle','cloud']));

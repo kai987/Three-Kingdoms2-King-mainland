@@ -45,7 +45,7 @@ const logisticsScenario='mainland217-07';
 const regionalScenario='mainland208-10';
 const catalogs=new Map();
 for(const identity of new Set([initial,another,logisticsScenario,...(regionalSave||granarySave||transportSave?[regionalScenario]:[]),
- ...(transshipmentSave?['mainland227-02']:[])])){
+ 'mainland227-02'])){
  const row=manifest.catalogs.find(row=>row.id===identity);
  assert.match(row.path,/^\/tk2\/game\/data\/campaigns\/[a-zA-Z0-9-]+\.json$/);
  const bytes=gunzipSync(artifact(row.url));
@@ -453,6 +453,29 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
   transshipmentBatch=batch.convoy;
  }
 
+ let wharf=command(state(seat),'new',{scenario:'mainland227-02',faction:'shu',seed:2026,
+  transport_infrastructure_rules_version:3042},seat);
+ const relay={source:'fuling',route:'fuling:badong:river',batches:[6500,6500],deadline:90};
+ const beforeRelay=request('/api/save',{instance:seat});
+ const relayOffer=JSON.parse(request('/api/infrastructure-preview',{instance:seat,method:'POST',
+  body:JSON.stringify({...relay,revision:wharf.revision})}));
+ assert.equal(relayOffer.blocked,null);
+ assert.deepEqual(relayOffer.sections.map(row=>row.mode),['land','river','land']);
+ assert.equal(request('/api/save',{instance:seat}),beforeRelay);
+ wharf=command(wharf,'infrastructure_order',{action:'dispatch',id:1,...relay,escort:relayOffer.escort},seat);
+ assert.equal(wharf.game.extension.transport_infrastructure.jobs['1'].balances.cargo,13000);
+ wharf=command(wharf,'end_turn',{},seat);
+ if(wharf.game.phase==='ai')wharf=command(wharf,'ai',{turn:wharf.game.turn},seat);
+ assert.equal(wharf.game.turn,2);
+ const wharfHalf=wharf.game.extension.transport_infrastructure.jobs['1'];
+ assert.equal(wharfHalf.at,'wharf-fuling');
+ assert.ok(wharfHalf.balances.bank0>0&&wharfHalf.balances.cargo>0);
+ const wharfSave=request('/api/save?compact=1',{instance:seat});
+ wharf=load(wharfSave,wharf.revision,seat);
+ assert.deepEqual(wharf.game.extension.transport_infrastructure.jobs['1'],wharfHalf);
+ assert.equal(request('/api/save?compact=1',{instance:seat}),wharfSave);
+ request('/api/save',{instance:seat});
+
  // Exercise the real optional wire path, not only the legacy bridge used by
  // CPU replay. Hydration must reconstruct the same complete current view.
  const {default:wireModule}=await import(pathToFileURL(path.join(root,'game/view-cache.js')).href);
@@ -500,7 +523,9 @@ json.dumps({'maps':len(_battle_library()[0]),'cities':len(_battle_library()[1]),
   save_sha256:sha(finalSave),rng,cpu_save_bytes_equal:true,v212_observer_turns:candidateTurns,
   weather_observer_turns:winterTurns,weather_save_sha256:sha(winterSave),regional_market_roundtrip:regionalMarketOrder?.convoy??null,
   granary_convoy_roundtrip:granaryConvoy,transport_capacity_roundtrip:transportConvoys,
-  transshipment_batch_roundtrip:transshipmentBatch}));
+  transshipment_batch_roundtrip:transshipmentBatch,
+  wharf_partial_custody:wharfHalf.balances.bank0, wharf_compact_bytes:Buffer.byteLength(wharfSave),
+  node_max_rss_bytes:process.resourceUsage().maxRSS*1024}));
 }finally{
  for(const bridge of bridges.values())bridge.destroy();
  dispatchForSmoke?.destroy();

@@ -1117,6 +1117,15 @@
         "save"
       ]
     },
+    "tests/test_remake_transport_infrastructure.py": {
+      "tier": "related",
+      "groups": [
+        "logistics",
+        "economy",
+        "map",
+        "save"
+      ]
+    },
     "tests/test_remake_transshipment.py": {
       "tier": "related",
       "groups": [

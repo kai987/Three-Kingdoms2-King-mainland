@@ -11,6 +11,7 @@ let campaignGranary=false,campaignGranaryCandidate=false,campaignGranaryDispatch
 let campaignTransportCapacity=false;
 let campaignTransportCoordination=0;
 let campaignTransshipment=false;
+let campaignInfrastructure=false;
 const lifespanLabels={historical:['史實','史実'],none:['無','なし']};
 let allocationDialogContext=null,allocationCloseEpoch=0;
 let battleDestination=null,battleViewKey='';
@@ -79,7 +80,7 @@ const isRuler=id=>GameOfficerChoices.isRuler(id,view?.game?.extension?.leaders);
 const portraitHtml=(id,size='roster',source=false,personId=null,displayName=null)=>GamePortraits.html(personId||GamePortraits.personId(view.catalog,id),displayName??name(id),{size,source});
 const faction=id=>id==='neutral'?'无主':factionDisplayName(view.catalog.factions.find(f=>f.id===id))||'守备军';
 const capacity=()=>view.catalog.rules.city_officer_capacity;
-const marching=()=>new Set([...(view.game?.extension?.travel?.marches||[]).flatMap(r=>r.officers),...(view.catalog.logistics?.marching_officers||[])]);
+const marching=()=>new Set([...(view.game?.extension?.travel?.marches||[]).flatMap(r=>r.officers),...(view.catalog.logistics?.marching_officers||[]),...(view.catalog.transport_infrastructure?.marching_officers||[])]);
 const usesLogisticsV2=()=>view.game?.extension?.logistics_rules_version===2;
 const routeModes=()=>['fastest','land',...(view.catalog.river_routes?.length?['river']:[]),...(view.catalog.travel_hazards?['special','sea','explore']:[])];
 const routeModeSelect=(mode='fastest')=>`<div class="route-choice"><label class="field" id="route-field">行军路线<select id="route-mode" data-exploring="${mode==='explore'}"></select></label><p class="small" id="route-unavailable" hidden>没有已知的可用路线。</p><button type="button" id="route-explore" aria-pressed="false" hidden>探索未知航路</button></div>`;
@@ -548,6 +549,7 @@ function selectFaction(){
   <label class="setup-winter"><input id="strategic-granary-option" type="checkbox" ${campaignGranary?'checked':''}> ${battleText('啟用戰略糧倉 V3.0.2（實驗）','戦略備蓄 V3.0.2 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="strategic-granary-candidate-option" type="checkbox" ${campaignGranaryCandidate?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('使用 V3.0.2.1 候選調糧規則','V3.0.2.1 の候補ルールを使用する')}</label>
   <label class="setup-winter"><input id="transport-capacity-option" type="checkbox" ${campaignTransportCapacity?'checked':''}> ${battleText('啟用水陸運輸容量 V3.0.3（實驗）','水陸輸送容量 V3.0.3 を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="infrastructure-option" type="checkbox" ${campaignInfrastructure?'checked':''}> ${battleText('啟用河埠接駁 V3.0.4.2（實驗）','河港での積み替え V3.0.4.2 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="transshipment-option" type="checkbox" ${campaignTransshipment?'checked':''}> ${battleText('啟用城池中轉 V3.0.4（實驗）','都市間の積み替え V3.0.4 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="transport-coordination-option" type="checkbox" ${campaignTransportCoordination===3041?'checked':''}> ${battleText('啟用 AI 輸送統籌 V3.0.4.1（實驗）','AIの輸送調整 V3.0.4.1 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="transport-coordination-recovery-option" type="checkbox" ${campaignTransportCoordination===30411?'checked':''}> ${battleText('啟用 AI 輸送統籌 V3.0.4.1.1（實驗）','AIの輸送調整 V3.0.4.1.1 を有効にする（実験）')}</label>
@@ -618,6 +620,7 @@ function selectFaction(){
   $('#strategic-granary-candidate-option').onchange=event=>{campaignGranaryCandidate=event.target.checked;};
   $('#transport-capacity-option').onchange=event=>{campaignTransportCapacity=event.target.checked;};
   $('#transshipment-option').onchange=event=>{campaignTransshipment=event.target.checked;};
+  $('#infrastructure-option').onchange=event=>{campaignInfrastructure=event.target.checked;};
   const coordinationOptions={3041:$('#transport-coordination-option'),30411:$('#transport-coordination-recovery-option'),
    30412:$('#transport-coordination-consumption-option')};
   for(const [version,control] of Object.entries(coordinationOptions))control.onchange=()=>{
@@ -641,6 +644,7 @@ function selectFaction(){
        ...(campaignRegional?{regional_market_rules_version:301}:{}),
        ...(campaignTransportCapacity?{transport_capacity_rules_version:303}:{}),
        ...(campaignTransshipment?{transshipment_rules_version:304}:{}),
+       ...(campaignInfrastructure?{transport_infrastructure_rules_version:3042}:{}),
        ...(campaignTransportCoordination?{transport_coordination_rules_version:campaignTransportCoordination}:{}),
        ...(campaignRegionalTrade?{regional_trade_automation:true}:{}),
        ...(campaignGranary?{strategic_granary_rules_version:campaignGranaryCandidate?3021:302,
@@ -652,6 +656,7 @@ function selectFaction(){
     campaignGranary=campaignGranaryCandidate=campaignGranaryDispatch=campaignGranaryWinter=campaignGranaryRelay=false;
     campaignTransportCapacity=false;
     campaignTransshipment=false;
+    campaignInfrastructure=false;
     campaignTransportCoordination=0;
     cityCommandGroups.clear();
     selectedCity=view.catalog.factions.find(x=>x.id===f)?.city||pending.focus;actor=target=null;mapMode='all';dialog.close();render();
@@ -739,6 +744,7 @@ function renderMap(){
  const board=preview?.map_cities||view.catalog.cities;
  const active=board.filter(c=>(preview?.active_cities||view.catalog.active_cities).includes(c.id));
  const factions=preview?.factions||view.catalog.factions;
+ const wharves=preview?[]:view.catalog.transport_infrastructure?.nodes||[];
  const ownerName=(id,city)=>{
   if(id==='neutral'){
    const history=(preview?.city_history||view.catalog.city_history)?.[city];
@@ -771,6 +777,7 @@ function renderMap(){
   rivers:preview?.river_routes||view.catalog.river_routes||[],
   regional:preview?.regional_roads||view.catalog.regional_roads||[],
   winter:!preview&&!!view.catalog.weather,
+  ...(wharves.length?{wharves:wharves.map(n=>[n.id,n.owner,n.status,n.position])}:{}),
   action:mapAction?{kind:mapAction.kind,source:mapAction.source,targets:mapAction.targets}:null
  });
  const reuseMap=!!mapNavigation&&!!mapRenderCache?.matches($('#world-map'),sceneKey);
@@ -851,6 +858,10 @@ function renderMap(){
  const showName=c=>cityLabels==='all'||(['giant','large'].includes(cityLabels)?cityProfiles[c.id]?.tier===cityLabels:added.includes(c.id)||view.catalog.map_presentation.labelled_city_ids.includes(c.id)||c.id===focused);
  const labels=cityLabels==='none'?'':layoutCityLabels(active,offsets,world,mapCityName,showName)
   .map(({city,name,x,y,anchor})=>`<text class="map-city-name" x="${x}" y="${y}" text-anchor="${anchor}" data-city-label="${city.id}" aria-hidden="true">${escapeHtml(name)}</text>`).join('');
+ const infrastructure=wharves.map(n=>{
+  const [x,y]=n.position,label=escapeHtml(battlePlain(n.name_tc,n.name_ja));
+  return `<g data-map-wharf="${escapeHtml(n.id)}" data-wharf-status="${escapeHtml(n.status)}" role="button" tabindex="0" aria-label="${label}" transform="translate(${x} ${y})"><title>${label}</title><rect x="-12" y="-12" width="24" height="24" fill="transparent"/><path d="M0-8L8 0L0 8L-8 0Z"/><path d="M-4 0H4"/></g>`;
+ }).join('');
  const bridges=mapBridgeLayer([roads,expansionRoads,regionalRoads,navigableSeas,navigableRivers]);
  const labelName={major:'主城',giant:'巨大都市',large:'大都市',all:'全部',none:'关闭'}[cityLabels];
  const toolbar=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''} ${mapAction?.kind==='recruit'&&!mapAction.targets.includes(c.id)?'disabled':''}>${escapeHtml(mapCityName(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" data-label-mode="${cityLabels}" aria-label="切换城名显示" title="城名：${labelName}"><span class="map-labels-full">城名：${labelName}</span><span class="map-labels-compact">${{major:'名：主',giant:'名：巨',large:'名：大',all:'名：全',none:'名：隐'}[cityLabels]}</span></button></div>`;
@@ -858,7 +869,7 @@ function renderMap(){
  <defs>${mapMarchArrowMarker('map-march-arrow')}</defs>
  <g id="map-march-routes" aria-hidden="true" pointer-events="none"></g>`:'';
  const actionPrompt=mapAction?`<div class="map-action-prompt"><span role="status">${escapeHtml(cityName(mapAction.source))} · ${mapAction.kind==='depart'?cityCommandText('選擇目的地以查看行軍路線','行き先を選んで経路を確認'):'请选择高亮城池招募或劝降'}</span><button id="cancel-map-action">取消选城</button></div>`:'';
- $('#stage').innerHTML=`${marchMap?`${actionPrompt}<div class="march-map-board">`:''}<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker><marker id="oneway-river-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#d4e9ff" stroke="#224888" stroke-width="1"/></marker></defs><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${inactiveCastles}${mountainColors}${cityRoadBed}${!preview&&view.catalog.weather?'<g id="map-weather-layer" aria-hidden="true" pointer-events="none"></g>':''}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${marchRoutes}${castles}${labels}</svg>
+ $('#stage').innerHTML=`${marchMap?`${actionPrompt}<div class="march-map-board">`:''}<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker><marker id="oneway-river-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#d4e9ff" stroke="#224888" stroke-width="1"/></marker></defs><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${inactiveCastles}${mountainColors}${cityRoadBed}${!preview&&view.catalog.weather?'<g id="map-weather-layer" aria-hidden="true" pointer-events="none"></g>':''}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${marchRoutes}${castles}${labels}${infrastructure}</svg>
  ${!preview&&view.catalog.weather?`<div class="map-weather-control"><button id="map-weather" type="button" aria-pressed="false">${battleText('天氣','天候')}</button><div id="map-weather-key" hidden>${battleText('雪勢及積雪以圓點標示 · 水路由淺至深為浮冰、部分封凍、完全冰封','降雪・積雪は円で表示。水路は淡い順に流氷、一部結氷、全面結氷。')}</div></div>`:''}
  <div class="map-zoom-controls" role="group" aria-label="地图缩放比例（1–4倍）"><button id="map-zoom-out" aria-label="缩小地图" title="缩小地图">−</button><output id="map-zoom" aria-label="地图缩放比例（1–4倍）">100%</output><button id="map-zoom-in" aria-label="放大地图" title="放大地图">＋</button></div>
  <p id="map-gesture-help" class="visually-hidden">拖动地图；滚轮或双指缩放，范围1到4倍。</p>
@@ -913,6 +924,11 @@ function renderMap(){
  $('#map-labels').onclick=()=>{cityLabels={major:'giant',giant:'large',large:'all',all:'none',none:'major'}[cityLabels];renderMap();};
  updateMapWeather(active);
  if($('#cancel-map-action'))$('#cancel-map-action').onclick=cancelMapAction;
+ for(const el of wharves.length ? document.querySelectorAll('[data-map-wharf]') : []){
+  const open=()=>{if(!busy&&!mapAction)openInfrastructure(el.dataset.mapWharf);};
+  el.onclick=e=>{if(!mapNavigation.shouldSuppressClick(e))open();};
+  el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}};
+ }
  document.querySelectorAll('[data-city],[data-city-label]').forEach(el=>{const id=el.dataset.city||el.dataset.cityLabel;el.onclick=e=>{if(!mapNavigation.shouldSuppressClick(e)){if(!mapAction||mapAction.kind==='depart'||mapAction.targets.includes(id))gameAudio.play('click');choose(id,true);}};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!mapAction||mapAction.kind==='depart'||mapAction.targets.includes(id))gameAudio.play('click');choose(id,true);}};});
  if(mapAction?.kind==='depart')renderMapMarchPreview();
 }
@@ -1047,6 +1063,7 @@ async function showCityInformation(id){
    ${!preview&&typeof GameFacilities!=='undefined'?GameFacilities.summary(view,id):''}
    ${!preview&&view.catalog.regional_market?.cities[id]?`<p><button type="button" id="city-information-regional-market">${battleText('區域市場與調糧','地域市場・兵糧輸送')}</button></p>`:''}
    ${!preview&&view.catalog.strategic_granary?.cities[id]?`<p><button type="button" id="city-information-strategic-granary">${battleText('戰略糧倉','戦略備蓄')}</button></p>`:''}
+   ${!preview&&view.catalog.transport_infrastructure?.nodes.some(n=>n.anchor===id)?`<p><button type="button" id="city-infrastructure">${battleText('交通設施','交通施設')}</button></p>`:''}
    ${!preview&&view.catalog.transshipment?.cities.includes(id)?`<p><button type="button" id="city-information-transshipment">${battleText('水陸中轉運輸','水陸中継輸送')}</button></p>`:''}
    ${preview&&c.facilities?`<p class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">開局町等級 ${c.facilities.town}/3 · 防災 ${c.facilities.preparedness}/99${c.facilities.damage?` · 災損 ${c.facilities.damage}/50`:''} · ${c.facilities.services.map(service=>({hospital:'醫館',market:'市場',school:'學問所',armory:'武器屋'}[service])).join('、')}</p><p class="small" data-locale-only="ja" data-l10n-native="ja">開始時の町 ${c.facilities.town}/3・防災 ${c.facilities.preparedness}/99${c.facilities.damage?`・被害 ${c.facilities.damage}/50`:''}・${c.facilities.services.map(service=>({hospital:'医館',market:'市場',school:'学問所',armory:'武器屋'}[service])).join('・')}</p>`:''}
    ${preview?`<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">寶 ${c.treasure??0}/99</span><span data-locale-only="ja" data-l10n-native="ja">宝 ${c.treasure??0}/99</span></p>`:typeof GameTreasury!=='undefined'?GameTreasury.summary(view,id):''}
@@ -1069,6 +1086,8 @@ async function showCityInformation(id){
    if(marketButton)marketButton.onclick=()=>openRegionalMarket(id);
    const granaryButton=$('#city-information-strategic-granary');
    if(granaryButton)granaryButton.onclick=()=>openStrategicGranary(id,draw);
+   const wharfButton=$('#city-infrastructure');
+   if(wharfButton)wharfButton.onclick=()=>openInfrastructure(view.catalog.transport_infrastructure.nodes.find(n=>n.anchor===id)?.id,draw);
    const transshipmentButton=$('#city-information-transshipment');
    if(transshipmentButton)transshipmentButton.onclick=()=>openTransshipment(draw);
    for(const officer of c.officers)rosterButton(officer).onclick=()=>{
@@ -1159,6 +1178,109 @@ function cityDevelopmentInterface(){
 function facilitiesInterface(){
  if(!facilitiesUI&&typeof GameFacilities!=='undefined')facilitiesUI=GameFacilities.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),openRegional:openRegionalMarket,command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
  return facilitiesUI;
+}
+
+
+const WHARF_STATUS={
+ inactive:['尚未開放','未開放'],permission:['沒有通行或接收權','通行・受入権がありません'],
+ frozen:['河段封凍','河川が結氷'],storage:['庫容不足','保管枠が不足'],no_staff:['目前無作業人員','現在は作業員なし'],
+ working:['有押運人員在場','護送人員が作業中'],road_closed:['路段中斷','経路が閉鎖'],
+ no_facility:['路線沒有實體河埠','経路に実体のある河港がありません'],direction:['方向不可通行','この向きには通れません'],
+ in_transit:['來源城運位已滿','出発都市の輸送枠が満員'],already_dispatched:['來源城本旬已發運','出発都市は今旬発送済み'],
+ books:['等待命令書','命令書を待機'],staff:['沒有合資格押運武將','護送できる武将がいません'],
+ grain_or_capacity:['可供糧、庫容或載重不足','搬出可能な兵糧・保管枠・積載量が不足'],
+ deadline:['原定期限前無法送達','当初期限に間に合いません'],plan_limit:['已達接駁計畫上限','積み替え計画が上限'],
+ load:['請輸入有效貨糧','荷糧を正しく入力してください'],route:['等待合法退路','合法な帰路を待機'],queue:['等待裝卸作業位','荷役枠を待機'],
+ moving:['運輸中','輸送中'],unloading:['卸貨中','荷下ろし中'],loading:['裝貨中','積み込み中'],
+ returning:['返程中','帰路の途中'],waiting_return:['等待接收','受入待ち'],closed:['已結算','決済済み'],
+};
+function wharfStatus(status){return WHARF_STATUS[status]?battleText(...WHARF_STATUS[status]):'';}
+function wharfRoutePreview(host,route,source){
+ const row=view.catalog.river_routes?.find(r=>r.id===route);
+ if(!row?.draw?.length)return;
+ const points=row.draw.flatMap(part=>part.points);
+ const xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);
+ const left=Math.min(...xs)-16,top=Math.min(...ys)-16,width=Math.max(...xs)-left+16,height=Math.max(...ys)-top+16;
+ // The highlighted line uses the same river reaches and bank approaches as
+ // the campaign map. On the return the same parts are visited in reverse.
+ const rows=source===row.from?row.draw:[...row.draw].reverse();
+ const paths=rows.map(({mode,points:span})=>'<path data-wharf-preview-mode="'+escapeHtml(mode)+'" d="'+
+  escapeHtml(mode==='river'?smoothMapPath(span):landMapPath(span,{smooth:false}))+'"/>').join('');
+ const banks=(view.catalog.transport_infrastructure?.nodes||[]).filter(n=>n.anchor===row.from||n.anchor===row.to);
+ host.innerHTML='<svg class="wharf-route-preview" aria-hidden="true" viewBox="'+[left,top,width,height].join(' ')+'">'+
+  paths+banks.map(({position:[x,y]})=>'<circle cx="'+x+'" cy="'+y+'" r="4"/>').join('')+'</svg>';
+}
+
+function openInfrastructure(nodeId,back){
+ const ledger=view.catalog.transport_infrastructure;
+ if(!ledger||setupPreview)return;
+ const t=battleText,fmt=n=>Number.isFinite(n)?n.toLocaleString(GameI18n.locale):'—';
+ const node=ledger.nodes.find(row=>row.id===nodeId);
+ const heading=node?[node.name_tc,node.name_ja]:['交通設施','交通施設'];
+ const nodes=node?[node]:ledger.nodes;
+ const title=key=>{const n=ledger.nodes.find(r=>r.id===key);return n?t(n.name_tc,n.name_ja):escapeHtml(cityName(key));};
+ const offers=ledger.offers.filter(offer=>!node||offer.banks.includes(node.id));
+ const jobs=ledger.jobs.filter(job=>!node||job.banks.includes(node.id));
+ const interactive=view.game.phase==='city'&&!isObserver();
+ const body='<section data-infrastructure>'+nodes.map(n=>'<div data-wharf-stock="'+escapeHtml(n.id)+'">'+
+  '<h3>'+title(n.id)+'</h3><p>'+escapeHtml(factionDisplayName(view.catalog.factions.find(f=>f.id===n.owner))||cityName(n.anchor))+' · '+
+  wharfStatus(n.status)+'</p><p>'+t('實存糧／倉容','在庫／保管上限')+' '+fmt(n.grain)+' / '+fmt(n.capacity)+
+  ' · '+t('預留容量','予約枠')+' '+fmt(n.promised)+' · '+t('扣押存糧','押収在庫')+' '+fmt(n.seized)+
+  '</p><p>'+t('作業位','荷役枠')+' '+n.berths+' · '+t('每日裝卸上限','1日荷役上限')+' '+fmt(n.throughput)+
+  ' · '+t('排隊','待ち行列')+' '+n.queue+(n.staff.length?' · '+n.staff.map(id=>escapeHtml(name(id))).join('、'):'')+'</p></div>').join('')+
+  jobs.map(job=>'<section class="wharf-order" data-wharf-job="'+job.id+'"><h3>#'+job.id+' · '+escapeHtml(cityName(job.source))+' → '+
+   escapeHtml(cityName(job.target))+'</h3><p>'+escapeHtml(name(job.escort))+' · '+wharfStatus(job.phase)+
+   (job.blocked?' · '+wharfStatus(job.blocked):'')+(job.at?' · '+title(job.at):'')+'</p><p>'+
+   t('最終實收','最終受取')+' '+fmt(job.balances.delivery)+' · '+t('裝卸在庫','荷役在庫')+' '+fmt(job.balances.bank0+job.balances.bank1)+
+   ' · '+t('餘糧','携行食糧')+' '+fmt(job.balances.rations)+' · '+t('命令書','命令書')+' '+job.paid.length+'</p>'+
+   (interactive&&!job.terminal&&!job.cancel&&!job.returning?'<p><button type="button" data-wharf-cancel="'+job.id+'">'+t('取消並嘗試撤回','取消して帰路を探す')+'</button></p>':'')+
+   '</section>').join('')+
+  (interactive&&offers.length?'<form id="wharf-quote-form" class="wharf-order"><label class="field">'+t('接駁路線','積み替え経路')+
+   '<select id="wharf-route">'+offers.map((offer,i)=>'<option value="'+i+'">'+escapeHtml(cityName(offer.source)+' → '+cityName(offer.target))+'</option>').join('')+
+   '</select></label><label class="field">'+t('貨糧','荷糧')+amountInput('wharf-amount',ledger.capacity,offers[0].grain)+'</label>'+
+   '<label class="field">'+t('第二批貨糧（可留零）','第2便の荷糧（任意）')+amountInput('wharf-second',ledger.capacity,0,0)+'</label>'+
+   '<label class="field">'+t('期限距今天數','期限までの日数')+amountInput('wharf-deadline',900,60)+'</label>'+
+   '<div class="actions"><button type="submit">'+t('預覽直運及接駁','直送と積み替えを比較')+
+   '</button><button type="button" data-wharf-dispatch disabled>'+t('確定發運','発送する')+'</button></div><div data-wharf-quote role="status"></div></form>':'')+'</section>';
+ const generation=openDialog(battlePlain(...heading),body,back?
+  '<button type="button" data-wharf-back>'+t('返回','戻る')+'</button>':'<button type="button" data-cancel>'+t('關閉','閉じる')+'</button>');
+ if(generation===undefined)return;
+ const previous=$('[data-wharf-back]');if(previous)previous.onclick=back;
+ const send=async payload=>{
+  if(!busy&&dialogGeneration===generation&&await command('infrastructure_order',payload)&&dialogGeneration===generation)
+   openInfrastructure(nodeId,back);
+ };
+ for(const button of dialog.querySelectorAll('[data-wharf-cancel]'))
+  button.onclick=()=>send({action:'cancel',id:Number(button.dataset.wharfCancel)});
+ const form=$('#wharf-quote-form');
+ if(!form)return;
+ const details=$('[data-wharf-quote]'),dispatch=$('[data-wharf-dispatch]');
+ let serial=0;
+ form.oninput=()=>{serial++;details.replaceChildren();dispatch.disabled=true;};
+ form.onsubmit=async e=>{
+  e.preventDefault();
+  const number=++serial, revision=view.revision, offer=offers[$('#wharf-route').value];
+  const batches=[Number($('#wharf-amount').value),Number($('#wharf-second').value)].filter(n=>n>0);
+  const deadline=ledger.day+Number($('#wharf-deadline').value);
+  dispatch.disabled=true;
+  try{
+   const reply=await request('/api/infrastructure-preview',{route:offer.route,source:offer.source,batches,deadline,revision});
+   if(number!==serial||revision!==view.revision||dialogGeneration!==generation)return;
+   if(reply.blocked){details.innerHTML=wharfStatus(reply.blocked);return;}
+   const direct=reply.direct;
+   details.innerHTML='<div data-wharf-route-map></div><p>'+reply.sections.map(section=>title(section.start)+' → '+title(section.end)+
+    ' '+(section.mode==='land'?t('陸路','陸路'):t('河運','河川輸送'))+' '+section.days+t('日','日')).join(' · ')+'</p><p>'+
+    t('預計卸裝／排隊','荷役／待ち見込み')+' '+reply.handling_days+' / '+reply.queue_days+' '+t('日','日')+
+    ' · '+t('預計最終實收','最終受取見込み')+' '+fmt(reply.net)+' · '+t('到達／返抵距今','到着／帰還まで')+' '+
+    (reply.eta-ledger.day)+' / '+(reply.return_eta-ledger.day)+' '+t('日','日')+' · '+t('押運武將日','護送武将日')+' '+reply.officer_days+
+    ' · '+t('備糧','携行食糧')+' '+fmt(reply.rations)+' · '+t('各段命令書合計','区間合計の命令書')+' '+reply.command_books+'</p><p>'+
+    t('直運','直送')+' '+(direct?fmt(direct.net)+' · '+(direct.eta-ledger.day)+' '+t('日','日')+' · '+direct.books+' '+t('命令書','命令書'):
+     t('目前無有效報價','有効な見積りなし'))+'</p>';
+   wharfRoutePreview(details.querySelector('[data-wharf-route-map]'),offer.route,offer.source);
+   dispatch.disabled=false;
+   dispatch.onclick=()=>send({action:'dispatch',id:ledger.next_id,route:offer.route,source:offer.source,batches,deadline,escort:reply.escort});
+  }catch(error){if(number===serial&&dialogGeneration===generation)details.textContent=GameI18n.t(error.message);}
+ };
 }
 
 function openTransshipment(back){

@@ -61,6 +61,9 @@ class TravelCampaign:
         if 'logistics' in state.extension:
             from .logistics import marching_ids
             ids.update(marching_ids(state))
+        if 'transport_infrastructure' in state.extension:
+            from . import transport_infrastructure
+            ids.update(transport_infrastructure.marching_ids(state))
         return ids | battle_reinforcements.marching_ids(state)
 
     def _travel_modes(self):

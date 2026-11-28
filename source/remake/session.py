@@ -453,6 +453,26 @@ class CampaignSession:
                 return granary_planning.preview(self.game,state,state.player,payload['target'],
                                                 payload['quantity'],payload['source'])
 
+    def preview_infrastructure(self,payload):
+        from . import transport_infrastructure as infrastructure
+        with self.lock, grain_units.using(self.game.state):
+            state=self.game.state
+            if (state is None or state.phase!='city' or not isinstance(payload,dict)
+                    or set(payload)!={'route','source','batches','deadline','revision'}
+                    or type(payload['revision']) is not int or type(payload['route']) is not str
+                    or type(payload['source']) is not str or type(payload['batches']) is not list
+                    or not 1<=len(payload['batches'])<=2 or type(payload['deadline']) is not int
+                    or not (state.turn-1)*10<payload['deadline']<=(state.turn-1)*10+infrastructure.MAX_DEADLINE_DAYS):
+                raise GameError(infrastructure.INVALID)
+            if payload['revision']!=self.revision:
+                raise GameError('进度已更新，请重新选择操作。',409)
+            offer=infrastructure.quote(self.game,state,state.player,payload['route'],payload['source'],
+                                       payload['batches'],payload['deadline'])
+            if not offer['blocked']:
+                offer['direct']=infrastructure._direct_offer(self.game,state,offer['source'],offer['target'],
+                                                            offer['requested'],offer['escort'])
+            return offer
+
     def load_save(self, save, revision):
         with self.lock:
             if type(revision) is not int or revision!=self.revision:raise GameError('进度已更新。',409)

@@ -458,9 +458,13 @@ def process_march_supply(game,state,through_turn=None):
     pool=state.extension.get(winter_weather.POOL)
     if pool is not None:
         clocks.append(pool['tick'])
+    from . import battle_reinforcements, logistics, transport_infrastructure
+    facilities_clock=transport_infrastructure.clock(state)
+    if facilities_clock is not None:
+        clocks.append(facilities_clock)
     if not clocks or min(clocks)>=target:return 0
     used=0
-    from . import battle_reinforcements, logistics
+    facility_paths=transport_infrastructure.prepare_day(game,state) if facilities_clock is not None else None
     plans={};weather_plans={}
     def plan_for(journey):
         if book_version(journey['supply'])!=rules.CURRENT:
@@ -481,6 +485,8 @@ def process_march_supply(game,state,through_turn=None):
             winter_weather.advance(game,state,tick)
             if pool['stage']>=2:
                 battle_reinforcements.advance_returns_day(game,state,tick)
+        if facility_paths is not None:
+            transport_infrastructure.advance_day(game,state,tick,facility_paths)
         if not rows and not convoys:
             continue
         for row in list(rows):

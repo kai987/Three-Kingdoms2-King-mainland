@@ -14,7 +14,7 @@ import re
 from threading import RLock
 from types import SimpleNamespace
 
-from . import transport_coordination
+from . import transport_coordination, transport_infrastructure
 from .errors import GameError, INVALID_SAVE_MESSAGE
 from . import diplomacy, grain_relief, grain_units, historical_campaigns, observer, runan_campaign, southern_mission, three_visits
 from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment, command_books, battle_grid, officer_relations, city_development, battle_supply, battle_placement
@@ -174,6 +174,10 @@ class Catalog:
         expected_people = self.data['officer_count']
         integer(expected_people, 1, self.rules.runtime_capacity, 'catalog officer count')
         assert len(self.definitions) == expected_people and len(self.map_cities) == expected
+
+    @cached_property
+    def infrastructure_routes(self):
+        return transport_infrastructure.compile_routes(self)
 
     @cached_property
     def climate(self):
@@ -459,6 +463,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                    if strategic_granary.enabled(state) and state.player != observer.SEAT else {}),
                                 **({'transport_coordination':transport_coordination.view(state)}
                                    if transport_coordination.enabled(state) else {}),
+                                **({'transport_infrastructure':transport_infrastructure.view(self,state,state.player)}
+                                   if transport_infrastructure.enabled(state) else {}),
                                 **({'transshipment':transshipment.view(self,state,state.player)}
                                    if transshipment.enabled(state) and state.player != observer.SEAT else {}),
                                 **({'regional_market':regional_market.view(self,state)}
@@ -549,6 +555,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                                           payload.get(transport_coordination.OPTIONS))
                     if transshipment.FIELD in payload:
                         transshipment.initialize(candidate,payload[transshipment.FIELD])
+                    if transport_infrastructure.FIELD in payload:
+                        transport_infrastructure.initialize(self,candidate,payload[transport_infrastructure.FIELD])
                     if campaign_id is not None:
                         candidate.extension['campaign_id'] = campaign_id
                 else:
@@ -579,6 +587,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'dispatch_transport':self._dispatch_transport,
                                strategic_granary.COMMAND:lambda state,payload:strategic_granary.execute(self,state,payload,state.player),
                                transshipment.COMMAND:lambda state,payload:transshipment.execute(self,state,payload,state.player),
+                               transport_infrastructure.COMMAND:lambda state,payload:
+                                   transport_infrastructure.execute(self,state,payload,state.player),
                                regional_market.COMMAND:lambda state,payload:regional_market.execute(self,state,payload,state.player),
                                **{action: self._treasury_command(action) for action in
                                   ('search_treasure','reward_officer','sell_treasure','set_governor','set_treasury_policy')},
@@ -612,6 +622,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 diplomacy.synchronize(self,candidate)
                 civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
                 logistics.synchronize(self,candidate)
+                transport_infrastructure.synchronize(self,candidate)
                 domestic.synchronize(self,candidate)
                 treasures.synchronize(self,candidate)
                 if kind != 'new' and candidate.turn != self.state.turn:
@@ -1068,6 +1079,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         transport_capacity.validate(state)
         transshipment.validate(self,state)
         transport_coordination.validate(state)
+        transport_infrastructure.validate(self,state)
         logistics.validate(self,state)
         regional_market.validate(self,state)
         strategic_granary.validate(state)

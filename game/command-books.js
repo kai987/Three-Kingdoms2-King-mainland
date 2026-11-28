@@ -28,6 +28,9 @@
   if(kind==='strategic_granary_order'){
    const amount=view?.catalog?.strategic_granary?.order_costs?.[options.action];return integer(amount)?amount:null;
   }
+  if(kind==='infrastructure_order'){
+   const amount=view?.catalog?.transport_infrastructure?.order_costs?.[options.action];return integer(amount)?amount:null;
+  }
   if(kind==='transshipment_order'){
    const amount=view?.catalog?.transshipment?.order_costs?.[options.action];return integer(amount)?amount:null;
   }

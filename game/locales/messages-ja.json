@@ -4,6 +4,8 @@
   "scope": "Display-only text, never applied to state or save data. Japanese officer spellings reuse the existing supplied identity crosswalk; they do not verify historical biographies. Long original source quotations remain explicitly identified as original-language documents.",
   "official_japanese_scenario_source": "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html",
   "exact": {
+    "交通設施或河陸接駁指令無效。": "交通施設・河川輸送の操作指定が無効です。",
+    "接駁條件已改變，請重新確認報價。": "積み替え条件が変わりました。見積りを確認し直してください。",
     "呂宋正在進行宣化南行劇情，請從呂宋的築城計畫派遣船隊。": "ルソンの築城計画から船団を派遣してください。",
     "現在無法決定呂宋築城。": "現在、ルソンの築城を決定できません。",
     "呂宋已經設城。": "ルソンにはすでに都市があります。",

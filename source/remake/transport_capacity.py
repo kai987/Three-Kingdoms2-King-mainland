@@ -60,8 +60,11 @@ def origin_key(state, source, owner):
 
 
 def activity(state):
-    return Counter(origin_key(state, row['source'], row['owner'])
-                   for row in state.extension['logistics']['convoys'])
+    counts=Counter(origin_key(state,row['source'],row['owner']) for row in state.extension['logistics']['convoys'])
+    if 'transport_infrastructure' in state.extension:
+        from . import transport_infrastructure
+        counts.update(origin_key(state,city,owner) for city,owner in transport_infrastructure.leg_origins(state))
+    return counts
 
 
 def active_count(state, source, active=None):

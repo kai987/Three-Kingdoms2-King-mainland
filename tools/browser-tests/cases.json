@@ -770,6 +770,19 @@
       "scenario_ids": [
         "mainland208-10"
       ]
+    },
+    {
+      "id": "transport-infrastructure",
+      "title": "wharf facilities stay opt-in and dispatch a real river relay in both languages",
+      "groups": [
+        "logistics",
+        "map",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland227-02"
+      ],
+      "scenario_scope": "fixed"
     }
   ]
 }
