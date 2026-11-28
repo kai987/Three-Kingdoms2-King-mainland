@@ -18,8 +18,11 @@ OPTIONS = 'transport_coordination_options'
 POOL = 'transport_coordination'
 VERSION = 3041
 RECOVERY = 30411
+CONSUMPTION = 30412
+RECOVERY_VERSIONS = (RECOVERY, CONSUMPTION)
 FEATURES = frozenset(('pagination', 'diversity', 'requote', 'reserve', 'preparation',
                       'transit', 'economics', 'incremental'))
+CONSUMPTION_FEATURES = FEATURES | {'meal_priority', 'route_reuse'}
 TARGETS = 12
 SEARCH_TARGETS = 384
 PHASES = {'urgent': 2, 'followup': 4, 'elective': 6}
@@ -31,33 +34,39 @@ _observer = ContextVar('transport_coordination_observer', default=(None, False))
 
 
 def enabled(state):
-    return bool(state is not None and state.extension.get(FIELD) in (VERSION, RECOVERY))
+    return bool(state is not None and state.extension.get(FIELD) in (VERSION, *RECOVERY_VERSIONS))
 
 
 def feature(state, name):
-    return state.extension.get(FIELD) == RECOVERY and state.extension[POOL]['features'][name]
+    return (state.extension.get(FIELD) in RECOVERY_VERSIONS
+            and state.extension[POOL]['features'].get(name, False))
 
 
-def _features(options):
-    return (isinstance(options, dict) and set(options) <= FEATURES
+def transit_protection(state, owner):
+    return feature(state, 'transit') and (state.extension[FIELD] != CONSUMPTION or owner != state.player)
+
+
+def _features(options, names):
+    return (isinstance(options, dict) and set(options) <= names
             and all(type(value) is bool for value in options.values()))
 
 
 def initialize(state, version, options=None):
-    if (type(version) is not int or version not in (0, VERSION, RECOVERY)
+    names = CONSUMPTION_FEATURES if version == CONSUMPTION else FEATURES
+    if (type(version) is not int or version not in (0, VERSION, *RECOVERY_VERSIONS)
             or version and logistics_rules.version(state) != logistics_rules.CURRENT
             or options is not None and (
                 not isinstance(options, dict) or type(options.get('efficiency', True)) is not bool
                 or (set(options) != {'efficiency'} if version == VERSION else
-                    version != RECOVERY or set(options) - {'efficiency', 'features'}
-                    or not _features(options.get('features', {}))))):
+                    version not in RECOVERY_VERSIONS or set(options) - {'efficiency', 'features'}
+                    or not _features(options.get('features', {}), names)))):
         raise GameError(INVALID)
     if version:
         options = options or {}
         ledger = dict(efficiency=options.get('efficiency', True), phases={}, episodes={}, convoys={},
                       summaries={}, completed={}, support={})
-        if version == RECOVERY:
-            ledger['features'] = {key: options.get('features', {}).get(key, True) for key in sorted(FEATURES)}
+        if version in RECOVERY_VERSIONS:
+            ledger['features'] = {key: options.get('features', {}).get(key, True) for key in sorted(names)}
         state.extension.update({FIELD: version, POOL: ledger})
 
 
@@ -190,7 +199,7 @@ def _commit(game, state, row):
             convoy=convoy, immediate_received=receipt, retained_purchase=retained, reason=failure,
             books_used=cost, source_grain_before=grain, source_grain_after=source.grain,
             source_gold_before=gold, source_gold_after=source.gold, **_row_view(row))
-    recovery = state.extension.get(FIELD) == RECOVERY
+    recovery = state.extension.get(FIELD) in RECOVERY_VERSIONS
     credit_limit = min(demand.remaining, max(row.net, row.load))
     if convoy is not None:
         link = dict(
@@ -230,7 +239,7 @@ def run(game, state, owner, phase):
         if phases.get(phase) == state.turn:
             return False
         phases[phase] = state.turn
-    if state.extension.get(FIELD) == RECOVERY:
+    if state.extension.get(FIELD) in RECOVERY_VERSIONS:
         return _run_recovery(game, state, owner, phase)
     support = {} if shadow else state.extension[POOL]['support'].get(owner, {})
     goals = support['goals'] if support.get('turn') == state.turn else {}
@@ -316,10 +325,31 @@ def _pages(rows, paginate):
             yield same_priority[start:start+TARGETS]
 
 
+def _defer_city_quote(row, now):
+    """A later warehouse delivery cannot use the urgency of a missed meal."""
+    return (row.demand.kind == 'city' and row.demand.priority <= 2 and row.mode
+            and not any(row.conservative_arrival < due <= now + 30
+                        for due, _ in row.demand.installments))
+
+
+def _try_recovery(game, state, choices, books, reserve, operation, work, refused):
+    while (row := select(choices, books, efficient=operation.efficient, reserve_for_orders=reserve)) is not None:
+        success, spent, failure = _commit(game, state, row)
+        work['committed' if success else 'failed'] += 1
+        if failure:
+            refused.add(row.key)
+            operation.failures[row.demand.key]['revalidation'] += 1
+        if success or spent:
+            return True
+        choices.remove(row)
+    return False
+
+
 def _run_recovery(game, state, owner, phase):
     ledger = state.extension[POOL]
     efficient = ledger['efficiency']
     features = ledger['features']
+    meal_priority = features.get('meal_priority', False)
     support = ledger['support'].get(owner, {})
     if features['preparation'] and support and support['turn'] < state.turn:
         if _observer.get()[0] is not None:
@@ -349,10 +379,15 @@ def _run_recovery(game, state, owner, phase):
         reserve = _reserved_books(state, owner)
         stock = transport_demands.source_stock(state, plan) if recorder is not None else 0
         outcome = 'command_books' if not books else 'dispatch_limit' if work['committed'] >= TARGETS else None
-        checked, changed = set(), False
+        checked, changed, deferred = set(), False, []
         operation.next_plan()
         if not outcome:
             for page in _pages(actionable, features['pagination']):
+                if deferred and page[0].priority > 4:
+                    changed = _try_recovery(game, state, deferred, books, reserve, operation, work, refused)
+                    deferred.clear()
+                    if changed:
+                        break
                 budget = SEARCH_TARGETS - work['checked_demands']
                 if budget <= 0:
                     outcome = 'search_budget'
@@ -361,9 +396,20 @@ def _run_recovery(game, state, owner, phase):
                 work['checked_demands'] += len(page)
                 work['pages'] += 1
                 choices = operation.build(page, plan, army, convoys, refused)
-                eligible = {row.demand.key for row in choices
+                kept = choices
+                if meal_priority:
+                    kept = []
+                    for row in choices:
+                        if _defer_city_quote(row, operation.now):
+                            operation.failures[row.demand.key]['after_near_term_meals'] += 1
+                            work['deferred_city_quotes'] += 1
+                            if phase != 'urgent':
+                                deferred.append(row)
+                        else:
+                            kept.append(row)
+                eligible = {row.demand.key for row in kept
                             if row.command_books <= books - (reserve if row.demand.priority >= 3 else 0)}
-                available_sources.update(row.source for row in choices)
+                available_sources.update(row.source for row in kept)
                 checked.update(row.key for row in page)
                 if recorder is not None:
                     for demand in page:
@@ -372,18 +418,11 @@ def _run_recovery(game, state, owner, phase):
                                 donor_stock=stock, blockers=dict(operation.failures.get(demand.key, {})))
                     for row in choices:
                         observe('candidate', state, owner=owner, phase=phase, **_row_view(row))
-                while (row := select(choices, books, efficient=efficient, reserve_for_orders=reserve)) is not None:
-                    success, spent, failure = _commit(game, state, row)
-                    work['committed' if success else 'failed'] += 1
-                    if failure:
-                        refused.add(row.key)
-                        operation.failures[row.demand.key]['revalidation'] += 1
-                    if success or spent:
-                        changed = True
-                        break
-                    choices.remove(row)
+                changed = _try_recovery(game, state, kept, books, reserve, operation, work, refused)
                 if changed:
                     break
+            if not changed and deferred:
+                changed = _try_recovery(game, state, deferred, books, reserve, operation, work, refused)
         if recorder is not None:
             for demand in actionable:
                 if demand.key not in checked:
@@ -474,13 +513,15 @@ def validate(state):
     if FIELD not in state.extension and POOL not in state.extension:
         return
     ledger = state.extension.get(POOL)
-    recovery = state.extension.get(FIELD) == RECOVERY
+    version = state.extension.get(FIELD)
+    recovery = version in RECOVERY_VERSIONS
+    names = CONSUMPTION_FEATURES if version == CONSUMPTION else FEATURES
     fields = {'efficiency', 'phases', 'episodes', 'convoys', 'summaries', 'completed', 'support'}
     if (not enabled(state) or type(state.extension[FIELD]) is not int
             or logistics_rules.version(state) != logistics_rules.CURRENT
             or not isinstance(ledger, dict)
             or set(ledger) != fields | ({'features'} if recovery else set())
-            or recovery and (not _features(ledger['features']) or set(ledger['features']) != FEATURES)
+            or recovery and (not _features(ledger['features'], names) or set(ledger['features']) != names)
             or type(ledger['efficiency']) is not bool):
         raise ValueError('Transport coordination version')
     owners = state.extension['command_books']['factions']

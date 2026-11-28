@@ -61,7 +61,8 @@ def _reverse_shipments(state, owner):
         and row['turn'] >= state.turn - 2}
 
 
-def _options(game, state, plan, keys, *, route_cache=None, returns=None, donors=None, reserve=False):
+def _options(game, state, plan, keys, *, route_cache=None, returns=None, donors=None, reserve=False,
+             route_query=None):
     owner = plan.owner
     coordinated = route_cache is not None
     groups, failures = (_donors(game, state, plan, coordinated=coordinated, reserve=reserve)
@@ -81,7 +82,8 @@ def _options(game, state, plan, keys, *, route_cache=None, returns=None, donors=
             quotes, visited = route_cache.setdefault(signature, ({}, set()))
             missing = related - visited
             if missing:
-                quotes.update(logistics._supply_routes(game, state, owner, sorted(missing), donors[0][2]))
+                quotes.update((route_query or logistics._supply_routes)(
+                    game, state, owner, sorted(missing), donors[0][2]))
                 visited.update(missing)
         else:
             quotes = logistics._supply_routes(game, state, owner, sorted(related), donors[0][2])

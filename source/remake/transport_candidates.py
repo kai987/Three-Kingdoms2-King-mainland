@@ -2,7 +2,7 @@
 from collections import Counter, defaultdict
 
 from . import army_relief, command_books, facilities, grain_dispatch, granary_planning, logistics
-from . import logistics_rules, regional_market, strategic_granary, transport_capacity, transshipment
+from . import logistics_rules, logistics_strategy, regional_market, strategic_granary, transport_capacity, transshipment
 from . import winter_climate, winter_forecast, winter_transport, winter_travel
 from .errors import GameError
 from .officers import ref_sort_key
@@ -26,11 +26,30 @@ class Pass:
         self.failures = defaultdict(Counter)
         self.work = Counter()
         self.features = features or {}
+        self.prepared_directions = {}
+        self.route_query = self._search_routes if self.features.get('route_reuse') else None
         self.next_plan()
 
     def next_plan(self):
         self.donors = self.network = self.regional = None
         self.failures.clear()
+
+    def _search_routes(self, game, state, owner, pairs, policy):
+        # One scheduler phase changes money, stock and escorts. Its routes,
+        # calendar, weather and territorial access do not change. Adjacency
+        # stays private to each policy-filtered graph.
+        return logistics._supply_routes(game, state, owner, pairs, policy,
+                                        prepared_directions=self.prepared_directions)
+
+    def _army_routes(self, game, state, owner, pairs, policy):
+        signature = policy['allow_sea'], policy['allow_special']
+        quotes, visited = self.routes.setdefault(signature, ({}, set()))
+        missing = set(pairs) - visited
+        if missing:
+            quotes.update(self._search_routes(game, state, owner, sorted(missing), policy))
+            visited.update(missing)
+        self.work['relief_route_cache_hits'] += len(pairs) - len(missing)
+        return quotes
 
     def trip(self, quote, back, ids, *, strict):
         game, state = self.game, self.state
@@ -40,10 +59,12 @@ class Pass:
             self.work['trip_cache_hits'] += 1
             return self.trips[key]
         actual = logistics.escort_rations(game, state, ids, quote, back)
-        days, return_days = (winter_travel.quote_days(game, state, leg) for leg in (quote, back))
+        seasonal = winter_climate.forecast_enabled(state)
+        if not seasonal or not self.route_query:
+            days, return_days = (winter_travel.quote_days(game, state, leg) for leg in (quote, back))
         facts, conservative = None, None
         protected = actual
-        if winter_climate.forecast_enabled(state):
+        if seasonal:
             facts = winter_forecast.estimate(game, state, quote)
             returning = winter_forecast.estimate(game, state, back, start_in=facts['expected_arrival_days'])
             if any(result['bounded'] or result['currently_blocked'] for result in (facts, returning)):
@@ -193,6 +214,7 @@ class Pass:
         deadline = self.state.turn + max(1, (demand.deadline-self.now)//10)
         if trip and self.features.get('requote'):
             arrival = self._arrival(trip[2] if demand.priority <= 2 else trip[0])
+            previous_rations = row['rations']
             if trip[3] > row['rations']:
                 required = trip[3]
                 limit = min(row['limit'], row['free']-required)
@@ -206,7 +228,13 @@ class Pass:
                     return None
                 self.work['granary_requotes'] += 1
                 row = updated
-            return network.shipment(row, demand.after(arrival), deadline)
+            quote = network.shipment(row, demand.after(arrival), deadline)
+            if quote and row['rations'] > previous_rations and logistics_strategy.observed():
+                logistics_strategy.observe('forecast_requote', self.state, owner=demand.owner, channel='granary',
+                    source=row.get('source'), target=demand.target, previous_rations=previous_rations,
+                    protected_rations=row['rations'], load_limit=row['limit'], conservative_arrival=arrival,
+                    demand_deadline=demand.deadline)
+            return quote
         return network.shipment(row, demand.after(self._arrival(row['days'])), deadline)
 
     def _city_routes(self, demands, plan):
@@ -222,11 +250,13 @@ class Pass:
             self.donors = grain_dispatch._donors(game, state, plan, coordinated=True, reserve=reserve)
         ordinary, blocked = grain_dispatch._options(
             game, state, plan, outstanding, route_cache=self.routes, returns=returns,
-            donors=self.donors, reserve=reserve)
+            donors=self.donors, reserve=reserve, route_query=self.route_query)
         granular = [d.target for d in active if 'granary' in d.channels]
         if granular and strategic_granary.enabled(state, 'proactive'):
             network = self.network or granary_planning.Network(game, state, owner, plan, automatic=True)
             network.route_cache = self.routes
+            if self.route_query:
+                network.route_query = self.route_query
             if self.features.get('incremental'):
                 self.network = network
                 network.rejected.clear()
@@ -240,6 +270,8 @@ class Pass:
                     and command_books.can_spend(state, owner, BUY + BOOK) else None)
         if regional is not None:
             regional.routes = self.routes
+            if self.route_query:
+                regional.route_query = self.route_query
             if self.features.get('incremental'):
                 self.regional = regional
         assigned = {ident for row in state.extension['ai_strategy'].get(owner, {}).get('orders', ())
@@ -306,6 +338,8 @@ class Pass:
         stranded = [d for d in demands if d.kind == 'convoy']
         if not (marches or stranded):
             return
+        if marches and self.route_query:
+            army.route_query = self._army_routes
         for key, budget in plan.budgets.items():
             city = state.cities[key]
             if not logistics._pool(state)['cities'][key]['policy']['enabled']:

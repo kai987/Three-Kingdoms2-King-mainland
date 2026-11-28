@@ -378,7 +378,7 @@ def _safe_path(game, state, source, target, owner, mode, policy, **load):
     return _safe_engine(game,policy)._travel_path(state,source,target,owner,mode,**load)
 
 
-def _supply_routes(game, state, owner, pairs, policy):
+def _supply_routes(game, state, owner, pairs, policy, *, prepared_directions=None):
     from . import ai_core
     direct_water=transport_capacity.enabled(state,'mode_aware_ai_policy')
     if direct_water:
@@ -387,10 +387,14 @@ def _supply_routes(game, state, owner, pairs, policy):
         data = game.catalog.data
         excluded = [r['id'] for key in ('travel_routes', 'exploration_routes') for r in data.get(key, ())
                     if not _permitted_route(game, policy, r)]
-        result=ai_core.routes(game, state, owner, pairs, excluded=excluded)
+        extra = {} if prepared_directions is None else {'prepared_directions': prepared_directions}
+        result=ai_core.routes(game, state, owner, pairs, excluded=excluded, **extra)
     else:
         engine = _safe_engine(game, policy)
-        result=engine._python_supply_paths(state, owner, pairs)
+        if prepared_directions is None:
+            result=engine._python_supply_paths(state, owner, pairs)
+        else:
+            result=engine._python_supply_paths(state, owner, pairs, prepared_directions=prepared_directions)
     if direct_water:
         # One scan of active direct links per batch. The normal G2 land and
         # fastest searches also remain available, including mixed paths.

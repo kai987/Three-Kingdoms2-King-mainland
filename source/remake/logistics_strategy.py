@@ -14,6 +14,7 @@ VERSIONS_WITH_RELIEF = (CURRENT, CANDIDATE)
 DEFAULT_POLICY = None
 RELIEF, TRANSPORT, GARRISON, WAR = range(1, 5)
 _experiment = ContextVar('logistics_experiment', default=(WAR, True, True, DEFAULT_POLICY))
+_observer = ContextVar('logistics_strategy_observer', default=None)
 
 
 @contextmanager
@@ -105,5 +106,22 @@ def pressure(state, scope, key, active, *, write=True):
 
 
 
+@contextmanager
+def observing(callback):
+    token = _observer.set(callback)
+    try:
+        yield
+    finally:
+        _observer.reset(token)
+
+
+def observed():
+    return _observer.get() is not None
+
+
 def observe(kind, state, **values):
-    """Optional read-only hook for the offline observer; gameplay keeps no counters here."""
+    """Deliver facts at their rule boundary without recording them in the save."""
+    callback = _observer.get()
+    if callback is not None:
+        callback(kind, dict(event_turn=state.turn, event_year=state.year,
+                            event_month=state.month, event_day=state.day, **values))

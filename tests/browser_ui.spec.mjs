@@ -614,13 +614,19 @@ test('transport coordination is opt-in and its observer ledger follows the selec
  await opening(page);
  const option=page.locator('#transport-coordination-option');
  const recovery=page.locator('#transport-coordination-recovery-option');
+ const consumption=page.locator('#transport-coordination-consumption-option');
  await expect(option).not.toBeChecked();
  await expect(recovery).not.toBeChecked();
+ await expect(consumption).not.toBeChecked();
  await expect(option).toHaveAccessibleName(/AI 輸送統籌 V3\.0\.4\.1/);
  await option.check();
  await recovery.check();
  await expect(option).not.toBeChecked();
  await expect(recovery).toBeChecked();
+ await expect(consumption).toHaveAccessibleName(/AI 輸送統籌 V3\.0\.4\.1\.2/);
+ await consumption.check();
+ await expect(recovery).not.toBeChecked();
+ await expect(consumption).toBeChecked();
  for(const id of ['#transport-capacity-option','#transshipment-option','#winter-forecast-option']){
   await expect(page.locator(id)).not.toBeChecked();
  }
@@ -636,8 +642,10 @@ test('transport coordination is opt-in and its observer ledger follows the selec
  }
  await expect(ledger.locator('tbody tr')).not.toHaveCount(0,{timeout:120_000});
  const saved=await tacticalSave(page);
- expect(saved.state.extension.transport_coordination_rules_version).toBe(30411);
+ expect(saved.state.extension.transport_coordination_rules_version).toBe(30412);
  expect(saved.state.extension.transport_coordination.features.pagination).toBe(true);
+ expect(saved.state.extension.transport_coordination.features.meal_priority).toBe(true);
+ expect(saved.state.extension.transport_coordination.features.route_reuse).toBe(true);
  if(await ledger.getAttribute('open')===null)await ledger.locator('summary').click();
  await expect(ledger.getByRole('columnheader',{name:'未覆蓋糧'})).toBeVisible();
  await ledger.screenshot({path:test.info().outputPath('coordination-zh-Hant.png')});

@@ -12,7 +12,8 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'source'))
 
-from remake import command_books, domestic, faction_economy, grain_dispatch, grain_units, logistics, staging_supply
+from remake import city_economy, command_books, domestic, faction_economy, grain_dispatch, grain_units, logistics
+from remake import logistics_strategy, march_supply, staging_supply
 from remake import regional_market, transport_candidates, transport_coordination as coordination
 from remake.campaign import Campaign, Catalog, verified_save_content
 from remake.errors import GameError
@@ -368,9 +369,14 @@ class CoordinationTests(TestCase):
         network = SimpleNamespace(shipment=lambda row, amount, due: (row['rations'], min(row['limit'], amount), due))
         demand = Demand('wei', 'city', 'henan', 1, 40, 800, 800, installments=((40, 800),))
         terms = dict(days=10, rations=100, limit=800, free=900, capacity={'physical_capacity': 730})
-        self.assertEqual(operation._granary_quote(network, terms, demand, (10, 21, 20, 200, None, None)),
-                         (200, 530, 5))
-        self.assertIsNone(operation._granary_quote(network, terms, demand, (10, 21, 20, 950, None, None)))
+        events = []
+        with logistics_strategy.observing(lambda kind, row: events.append((kind, row))):
+            self.assertEqual(operation._granary_quote(network, terms, demand, (10, 21, 20, 200, None, None)),
+                             (200, 530, 5))
+            self.assertIsNone(operation._granary_quote(network, terms, demand, (10, 21, 20, 950, None, None)))
+        [(kind, row)] = events
+        self.assertEqual(kind, 'forecast_requote')
+        self.assertEqual((row['previous_rations'], row['protected_rations'], row['load_limit']), (100, 200, 530))
         self.assertEqual(terms['rations'], 100)
 
     def test_actual_appointments_and_ordinary_reserves_do_not_masquerade_as_approved_orders(self):
@@ -480,3 +486,131 @@ class CoordinationTests(TestCase):
                     restored = Headless(incremental.catalog, record_journal=False)
                     restored.load_save(save, 0)
                     self.assertEqual(restored.export_save(compact=compact), save)
+
+    def test_consumption_candidate_preserves_older_saves_and_has_a_separate_meal_switch(self):
+        old = self.recovery()
+        new = self.game(version=coordination.CONSUMPTION, capacity=True,
+                        strategic_granary_rules_version=302, regional_market_rules_version=301,
+                        transshipment_rules_version=304, weather_rules_version=23,
+                        weather_forecast_version=231, transport_emergency_rules_version=222)
+        self.assertNotIn('meal_priority', old.state.extension[coordination.POOL]['features'])
+        self.assertTrue(coordination.feature(new.state, 'meal_priority'))
+        self.assertTrue(coordination.feature(new.state, 'route_reuse'))
+        new.command('observe_turn', {}, new.revision)
+        for engine in (old, new):
+            for compact in (False, True):
+                saved = engine.export_save(compact=compact)
+                with using_backend('auto'):
+                    backends = ('python', 'rust') if backend_status()['engine'] == 'rust' else ('python',)
+                for backend in backends:
+                    with using_backend(backend):
+                        restored = Headless(engine.catalog, record_journal=False)
+                        restored.load_save(saved, 0)
+                        self.assertEqual(restored.export_save(compact=compact), saved)
+        with self.assertRaises(GameError):
+            self.recovery(**{coordination.OPTIONS: {'features': {'meal_priority': True}}})
+
+    def test_actual_meal_ledger_is_exhaustive_and_read_only(self):
+        unobserved = self.game(version=coordination.CONSUMPTION)
+        observed = self.game(version=coordination.CONSUMPTION)
+        rows = []
+        for turn in range(1, 4):
+            unobserved.command('observe_turn', {}, unobserved.revision)
+            with logistics_strategy.observing(lambda kind, row: rows.append((kind, row))):
+                observed.command('observe_turn', {}, observed.revision)
+            self.assertEqual(observed.export_save(), unobserved.export_save())
+            posted = [row for kind, row in rows if kind == 'city_meal_settled' and row['settlement_tick'] == turn*10]
+            owners = {(row['owner'], row['city']) for row in posted}
+            self.assertTrue(owners)
+            self.assertEqual(len(owners), len(posted))
+            for row in posted:
+                self.assertEqual(row['resident_due'] + row['garrison_due'], row['required_grain'])
+                self.assertEqual(row['grain_before_settlement'] - row['grain_after_settlement'], row['paid_grain'])
+                self.assertEqual(row['required_grain'] - row['paid_grain'], row['missing_grain'])
+
+    def test_near_term_meal_priority_respects_the_actual_debit_boundary(self):
+        demand = Demand('wei', 'city', 'henan', 0, 80, 900, 900, original=10,
+                        installments=((20, 400), (30, 200), (60, 300)))
+        self.assertFalse(coordination._defer_city_quote(offer(demand, tick=29), 0))
+        self.assertTrue(coordination._defer_city_quote(offer(demand, tick=30), 0))
+        self.assertFalse(coordination._defer_city_quote(offer(demand, tick=30), 30))
+        local = replace(offer(demand), mode=None)
+        self.assertFalse(coordination._defer_city_quote(local, 0))
+        army = offer(replace(demand, kind='march', target=4), tick=31)
+        self.assertFalse(coordination._defer_city_quote(army, 0))
+
+    def test_actual_march_refills_keep_player_orders_and_protect_ai_city_meals(self):
+        from browser_resupply_fixture import resupply_catalog
+
+        for player_controls_march, has_booking in ((True, False), (False, False), (False, True)):
+            with self.subTest(player=player_controls_march, booked=has_booking):
+                engine = Headless(resupply_catalog(), record_journal=False)
+                with logistics_strategy.experiment(4, army=True, recovery=True, candidate={'occupation': True,
+                                                     'after_six': 60, 'no_source': 55}):
+                    engine.command('new', dict(faction='shu', seed=2026, **{coordination.FIELD: 30412}), 0)
+                engine.command('set_domestic', dict(faction='shu', civil=None), engine.revision)
+                state = engine.state
+                source, city, target = (state.cities[key] for key in ('nanyang', 'nanjun', 'bajun'))
+                city.grain = 3000
+                ident = source.roster.officer_ids[1]
+                budget = dict(minimum_export_floor=0, safety_reserve=0, next_installment=0, reserved_grain=0)
+                with grain_units.using(state):
+                    engine._queue_march(state, source, target, [ident], 'transfer', 'land',
+                                        staging_budgets={city.id: budget} if has_booking else None)
+                    unit, = state.extension['travel']['marches']
+                    state.player = 'shu' if player_controls_march else 'observer'
+                    march_supply.advance_unit(engine, state, unit, unit, absolute_tick=10)
+                    self.assertEqual(march_supply.current_city(unit), city.id)
+                    floor = {}
+                    staging_supply.refill_budget(engine, state, city, unit['id'], 10, city.grain, floor,
+                                                 next_calendar=True)
+                    reserved = staging_supply.held(state, city.id)
+                    city.grain = floor[city.id] + reserved
+                    opening = city.grain
+                    events = []
+                    with logistics_strategy.observing(lambda kind, row: events.append((kind, row))):
+                        march_supply.advance_unit(engine, state, unit, unit, absolute_tick=11)
+                    row = next(row for kind, row in events if kind == 'unit_meal_settled')
+                    refill = row['refill']
+                    self.assertIsNotNone(refill)
+                    received = refill['actual_received_grain']
+                    self.assertEqual(opening - city.grain, received)
+                    if player_controls_march:
+                        self.assertGreater(received, 0)
+                        self.assertEqual(refill['city_essential_rations'], 0)
+                    elif has_booking:
+                        self.assertGreater(received, 0)
+                        self.assertLessEqual(received, reserved)
+                    else:
+                        self.assertEqual(received, 0)
+                        self.assertTrue(row['hunger_day'])
+                    if not player_controls_march:
+                        self.assertGreaterEqual(city.grain, floor[city.id])
+
+    def test_late_calendar_and_partially_used_commitment_use_real_warehouse_space(self):
+        game = self.game(version=coordination.CONSUMPTION)
+        state = game.state
+        state.day, state.month = 21, 12
+        city = state.cities['jiangxia']
+        current, later = {}, {}
+        with grain_units.using(state), patch.object(city_economy, 'monthly_income', return_value={'reserves': 3000}) as income:
+            staging_supply.refill_budget(game, state, city, 21, 4, city.grain, current)
+            staging_supply.refill_budget(game, state, city, 21, 4, city.grain, later, next_calendar=True)
+        income.assert_called_once_with(game, city.id, state, date=(state.year+1, 1))
+        self.assertGreater(later[city.id], current[city.id])
+        path = ['nanyang', city.id, 'jiangling', city.id, 'bajun']
+        unit = dict(id=21, owner=city.owner, status='outbound', departure_turn=1, quote={'path': path},
+                    supply=dict(route_days=4, clock_tick=4, retreat_requested=False))
+        state.extension['travel']['marches'].append(unit)
+        own = dict(city=city.id, owner=city.owner, army=21, turn=1, route_day=4, path=path, reserved=200, expires=7)
+        other = dict(own, route_day=10, reserved=100, expires=13)
+        state.extension[staging_supply.FIELD] = [own, other]
+        staging_supply.settle(state, unit, city.id, 37, 5, keep_undrawn=True)
+        self.assertEqual((own['reserved'], other['reserved']), (163, 100))
+        staging_supply.settle(state, unit, city.id, 0, 5, keep_undrawn=True)
+        self.assertEqual(staging_supply.held(state, city.id), 263)
+        unit['supply']['clock_tick'] = 7
+        self.assertEqual(staging_supply.held(state, city.id), 100)
+        city.owner = 'neutral'
+        staging_supply.synchronize(state)
+        self.assertNotIn(staging_supply.FIELD, state.extension)

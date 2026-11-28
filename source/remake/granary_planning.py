@@ -100,6 +100,7 @@ class Network:
                     for ident in order['officers']}
         self.stats = Counter()
         self.route_cache = {}
+        self.route_query = None
         self.rejected = defaultdict(Counter)
         self.temporal = {}
         self.physical = {}
@@ -241,7 +242,8 @@ class Network:
             if misses:
                 self.stats['route_pairs'] += len(misses)
                 self.stats['route_batches'] += 1
-                cached.update(logistics._supply_routes(self.game,state,self.owner,sorted(misses),donors[0][1]))
+                cached.update((self.route_query or logistics._supply_routes)(
+                    self.game,state,self.owner,sorted(misses),donors[0][1]))
                 visited.update(misses)
             for city,policy,escort,normal_floor,urgent_floor,ceiling in donors:
                 for key in targets:

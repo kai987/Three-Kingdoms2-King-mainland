@@ -3,7 +3,7 @@ from collections import Counter, defaultdict
 from hashlib import sha256
 
 from . import (army_relief, command_books, domestic, economic_regions, facilities,
-               grain_market, historical_campaigns, logistics, logistics_rules, march_supply,
+               grain_market, historical_campaigns, logistics, logistics_rules, logistics_strategy, march_supply,
                market_pricing, staging_supply, transport_capacity, winter_travel, winter_weather)
 
 BASE = 1_000
@@ -121,6 +121,7 @@ class Planner:
         self.absent=game._march_ids(state) | facilities._battle_ids(state)
         self.posts=domestic.appointments(state,owner)
         self.routes={}
+        self.route_query=None
         self.work=Counter()
         self.route_details = {} if include_routes else None
         self.coordinated = coordinated
@@ -135,7 +136,8 @@ class Planner:
             missing=pairs-self.routes.get(key,({},set()))[1]
             if missing:
                 pair_list=sorted(missing | {(b,a) for a,b in missing})
-                paths=logistics._supply_routes(self.game,self.state,self.owner,pair_list,entries[0][1])
+                paths=(self.route_query or logistics._supply_routes)(
+                    self.game,self.state,self.owner,pair_list,entries[0][1])
                 stored,visited=self.routes.setdefault(key,({},set()))
                 stored.update(paths)
                 visited.update(pair for pair in (pair_list if self.coordinated else missing))
@@ -210,6 +212,7 @@ class Planner:
                     continue
                 days, outbound=meal
                 protect=logistics_rules.ceil_div((outbound+back[1])*110,100)
+                previous_rations = protect
                 demand = requested
                 if coordination_safety is not None:
                     safety = coordination_safety(route, backward[0][1], escort)
@@ -285,6 +288,10 @@ class Planner:
                          source_region=economic_regions.region(city.id),target_region=economic_regions.region(target.id),
                          landed_cents=cost,sale_rate=sale,estimate_sale_grain=sold,estimated_revenue=revenue,
                          economic_result_milli=econ_milli)
+                if protect > previous_rations and logistics_strategy.observed():
+                    logistics_strategy.observe('forecast_requote', state, owner=owner, channel='regional',
+                        source=city.id, target=target.id, previous_rations=previous_rations,
+                        protected_rations=protect, load_limit=cap, quoted_cargo=cargo, quote_days=days)
                 row['token']=sha256(repr(tuple(sorted(row.items()))).encode()).hexdigest()[:24]
                 # These describe the same executable route and balances. They
                 # are independent of the signed terms used by the purchase.

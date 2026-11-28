@@ -551,6 +551,7 @@ function selectFaction(){
   <label class="setup-winter"><input id="transshipment-option" type="checkbox" ${campaignTransshipment?'checked':''}> ${battleText('啟用城池中轉 V3.0.4（實驗）','都市間の積み替え V3.0.4 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="transport-coordination-option" type="checkbox" ${campaignTransportCoordination===3041?'checked':''}> ${battleText('啟用 AI 輸送統籌 V3.0.4.1（實驗）','AIの輸送調整 V3.0.4.1 を有効にする（実験）')}</label>
   <label class="setup-winter"><input id="transport-coordination-recovery-option" type="checkbox" ${campaignTransportCoordination===30411?'checked':''}> ${battleText('啟用 AI 輸送統籌 V3.0.4.1.1（實驗）','AIの輸送調整 V3.0.4.1.1 を有効にする（実験）')}</label>
+  <label class="setup-winter"><input id="transport-coordination-consumption-option" type="checkbox" ${campaignTransportCoordination===30412?'checked':''}> ${battleText('啟用 AI 輸送統籌 V3.0.4.1.2（實驗，AI 過境補糧優先保障城內口糧）','AIの輸送調整 V3.0.4.1.2 を有効にする（実験、AIの途中補給時に都市の食糧を優先）')}</label>
   <label class="setup-winter"><input id="strategic-dispatch-option" type="checkbox" ${campaignGranaryDispatch?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用 AI 主動調糧','AIの事前輸送を有効にする')}</label>
   <label class="setup-winter"><input id="strategic-winter-option" type="checkbox" ${campaignGranaryWinter?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用冬季戰略儲備','冬季備蓄を有効にする')}</label>
   <label class="setup-winter"><input id="strategic-relay-option" type="checkbox" ${campaignGranaryRelay?'checked':''} ${campaignGranary?'':'disabled'}> ${battleText('啟用單站中轉（實驗）','1都市での積み替えを有効にする（実験）')}</label>
@@ -617,7 +618,8 @@ function selectFaction(){
   $('#strategic-granary-candidate-option').onchange=event=>{campaignGranaryCandidate=event.target.checked;};
   $('#transport-capacity-option').onchange=event=>{campaignTransportCapacity=event.target.checked;};
   $('#transshipment-option').onchange=event=>{campaignTransshipment=event.target.checked;};
-  const coordinationOptions={3041:$('#transport-coordination-option'),30411:$('#transport-coordination-recovery-option')};
+  const coordinationOptions={3041:$('#transport-coordination-option'),30411:$('#transport-coordination-recovery-option'),
+   30412:$('#transport-coordination-consumption-option')};
   for(const [version,control] of Object.entries(coordinationOptions))control.onchange=()=>{
    campaignTransportCoordination=control.checked?Number(version):0;
    for(const [other,option] of Object.entries(coordinationOptions))option.checked=Number(other)===campaignTransportCoordination;

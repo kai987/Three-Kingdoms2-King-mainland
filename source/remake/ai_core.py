@@ -40,7 +40,7 @@ def invoke(op, *, data=None, **payload):
     return _web_request(op=op, **payload)
 
 
-def routes(game, state, owner, pairs, *, excluded=()):
+def routes(game, state, owner, pairs, *, excluded=(), prepared_directions=None):
     from . import winter_weather
     if winter_weather.movement(state):
         engine=game
@@ -52,6 +52,8 @@ def routes(game, state, owner, pairs, *, excluded=()):
             engine.catalog.data={**game.catalog.data, **{
                 key:[row for row in game.catalog.data.get(key,()) if row['id'] not in denied]
                 for key in ('travel_routes','exploration_routes')}}
+        if prepared_directions is not None:
+            return engine._python_supply_paths(state, owner, pairs, prepared_directions=prepared_directions)
         return engine._python_supply_paths(state, owner, pairs)
     return invoke('strategic_routes', data=game.catalog.data, **march_core.state_input(state, owner),
                   owner=owner, pairs=pairs, excluded=excluded)

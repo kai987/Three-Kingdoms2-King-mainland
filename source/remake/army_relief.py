@@ -305,6 +305,7 @@ class Planner:
         self.active = transport_capacity.activity(state)
         self.stats = dict(predictions=len(self.demands), route_pairs=0, meeting_quotes=0, return_cache_hits=0)
         self.return_quotes = {}
+        self.route_query = None
 
     def estimates(self, ident, *, exclude=None):
         game, state = self.game, self.state
@@ -392,7 +393,7 @@ class Planner:
         origin = source if origin is None else origin
         pairs = sorted({(a,b) for city in slot_cities for a,b in ((origin.id,city),(city,home))
                         if a!=b and state.cities[a].owner==source.owner and state.cities[b].owner==source.owner})
-        quotes = logistics._supply_routes(game,state,source.owner,pairs,policy) if pairs else {}
+        quotes = (self.route_query or logistics._supply_routes)(game,state,source.owner,pairs,policy) if pairs else {}
         self.stats['route_pairs'] += len(pairs)
         results, blocked = [], 'no_route'
         for ident,(demand, booked) in remaining.items():
