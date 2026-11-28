@@ -265,7 +265,7 @@ def history_report(directory, out):
         summary.append(dict(group=case['group'], convoy=case['convoy'], checkpoint_sha256=case['checkpoint_sha256'],
             scenario=case['scenario'], start_turn=case['snapshots'][0]['turn'], end_turn=end['turn'],
             active=end['convoy'] is not None, actual_end=end_record.get('outcome'),
-            received_officers=end_record.get('received_officers'), returned_reserves=end_record.get('returned_reserves'),
+            received_officers=end_record.get('received_officers'), received_troops=end_record.get('troops_received'),
             observed_hunger=end_record.get('hunger_losses', last['convoy']['hunger']),
             last_onboard_grain=last['convoy']['bag'], last_original_city_owner=last['convoy']['source_owner'],
             actual_receipts=sum(row['cargo']['grain'] for row in grain)))
