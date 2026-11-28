@@ -234,7 +234,7 @@ def performance(args):
     to_csv(args.output/'scheduler-performance-profile.csv', ({key: row.get(key) for key in fields} for row in rows))
 
 
-def historical(args):
+def historical(args, *, capture_state=None):
     from v3021_checkpoints import campaign, configure
     from v3031_replays import convoy_snapshot
 
@@ -279,6 +279,8 @@ def historical(args):
                             convoy = next(row for row in logistics._pool(game.state)['convoys'] if row['id'] == ident)
                             state['aboard_resources'] = dict(convoy['cargo'])
                     snapshots.append(dict(turn=game.state.turn, convoy=state))
+                    if capture_state is not None and state is not None:
+                        capture_state(game, state)
                     if len(snapshots) > args.turns or game.state.phase == 'finished':
                         break
                     game.command('observe_turn', {}, game.revision)

@@ -9,7 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from common import to_csv, to_json
-from remake import command_books, faction_economy, grain_market, grain_units, logistics, strategic_granary
+from remake import command_books, faction_economy, grain_market, grain_units, logistics, logistics_strategy, strategic_granary
 from remake import transport_capacity, transport_coordination as coordination
 from remake.campaign import digest
 from v3021_checkpoints import campaign, configure
@@ -65,9 +65,9 @@ def fixed_consumption(targets, postings, meals):
             rations_through_deadline=[row for when,row in sorted(observations.items()) if when<=due])
 
 
-def safety_case(task, *, output):
+def safety_case(task, *, output, capacity_limit=None, actual=False):
     postings = TargetPostings(task[2])
-    audit = Audit(postings)
+    audit = Audit(postings, channels=actual)
     capacity, dispatches, deliveries = [], [], []
     meals = defaultdict(dict)
     market_checks = Counter()
@@ -149,17 +149,26 @@ def safety_case(task, *, output):
         settlement = row['turn'] + 1
         meals[row['owner'], row['city']][settlement] = dict(row, settlement_turn=settlement)
 
-    with (audit.install(), patch.object(grain_market, 'transfer', transfer),
+    def measured(kind, row):
+        if kind == 'city_meal_settled' and row['city'] in postings.targets:
+            actual_rows.append(dict(event=kind, **row))
+        elif kind in ('staging_node', 'forecast_requote') or kind == 'unit_meal_settled' and row['refill']:
+            actual_rows.append(dict(event=kind, **row))
+
+    actual_rows = []
+    with (ExitStack() as stack, audit.install(), patch.object(grain_market, 'transfer', transfer),
           patch.object(grain_market, 'restock', replenish),
           patch.object(command_books, 'spend', spend),
           patch.object(legacy.winter_replay.HeadlessCampaign, 'command', observed_command),
           patch.object(transport_capacity, 'observing', observe_capacity),
           patch.object(coordination, 'observing', observe_coord)):
-        targets, _, result = fixed_with_trace(task, output=output,
+        if actual:
+            stack.enter_context(logistics_strategy.observing(measured))
+        targets, sources, result = fixed_with_trace(task, output=output,
             record_meal=record_meal, include_deadline_settlement=True)
 
     departures = [row for row in capacity if row['event']=='departure']
-    limit = 2 if task[1] in ('V0','V1','V2') else 1
+    limit = capacity_limit if capacity_limit is not None else (2 if task[1] in ('V0','V1','V2') else 1)
     summary['transport_position_overruns'] = sum(row['active'] > limit for row in departures)
     summary['repeated_origin_dispatches'] = sum(row['dispatch_count'] > 1 for row in departures)
     escrows = Counter((row['owner'], row['turn'], ident) for row in departures for ident in row['officers'])
@@ -205,11 +214,14 @@ def safety_case(task, *, output):
                     first_load=earlier['cargo']['grain'], reverse_load=row['cargo']['grain'],
                     first_purpose=earlier['purpose'], reverse_purpose=row['purpose']))
         prior[key].append(row)
+    extras = dict(physical_targets=targets, returning_sources=sources, target_postings=dict(postings.rows),
+                  actual=actual_rows, market_buys=market_buys, capacity_events=capacity,
+                  related_dispatch_accounts=result['related_dispatch_accounts']) if actual else {}
     return dict(group=task[1], fixture=result['fixture'], sha256=result['fixture_sha256'],
                 grain_account=audit.metrics(), market=dict(market_checks), safety=dict(summary),
                 reversals=reversals, departures=departures, books=books, effective=effective,
                 checks=result['checks'],
-                consumption=list(fixed_consumption(targets, postings, meals)))
+                consumption=list(fixed_consumption(targets, postings, meals)), **extras)
 
 
 def fixed_tasks(root, index, groups):

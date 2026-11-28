@@ -280,7 +280,7 @@ def read_run(path):
     matured = [r for r in episodes if r['deadline_observed'] and r['earliest_priority'] <= 2]
     feasible = [r for r in matured if r['has_timely_quote']]
     source_audit = list(source_outcomes(climate, events['dispatch'], run['completed_turns']))
-    concurrent = 2 if case['variant'] in ('T4', 'T5') else 1
+    concurrent = 2 if case['options'].get('transport_capacity_options', {}).get('concurrency') else 1
     escrow = Counter((row['owner'], row['launch_turn'], escort) for row in slots for escort in row['officers'])
     score.update(simultaneous_escort_overlaps=sum(n-1 for n in escrow.values() if n > 1),
         transport_position_overruns=sum(row['active_at_dispatch'] > concurrent for row in slots),
@@ -360,14 +360,14 @@ def read_run(path):
     return manifest, score, result
 
 
-def comparisons(scores):
+def comparisons(scores, *, pairs_to_compare=PAIRS, extra=()):
     groups = defaultdict(dict)
     for row in scores:
         key = tuple(row[name] for name in IDENTITY[:-1])
         groups[key][row['variant']] = row
     warnings, pairs = [], []
     for group, rows in sorted(groups.items()):
-        for base, candidate in PAIRS:
+        for base, candidate in pairs_to_compare:
             if {base, candidate} - rows.keys():
                 continue
             a, b = rows[base], rows[candidate]
@@ -377,7 +377,7 @@ def comparisons(scores):
                 'timely_received_grain', 'unresolved_grain', 'no_dispatch_unresolved_grain',
                 'small_long_grain_orders', 'second_slot_grain_orders', 'net_per_slot_day',
                 'mean_completed_period', 'northern_survival_rate', 'maximum_city_shortage_streak',
-                'largest_region_grain_share', 'maximum_single_city_food_gap')))
+                'largest_region_grain_share', 'maximum_single_city_food_gap', *extra)))
             for metric in compared:
                 old, new = a.get(metric), b.get(metric)
                 same_months = a['full_months'] == b['full_months']
