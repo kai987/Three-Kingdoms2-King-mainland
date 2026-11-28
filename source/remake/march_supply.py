@@ -412,6 +412,7 @@ def advance_unit(game,state,unit,journey,through_turn=None,*,unit_kind='march',c
                 next_legal_supply_node=_next_legal_refill(state, quote, unit['owner'], progress) if refill else None,
                 refill=refill, remaining_rations=supply['remaining'], required_grain=required, paid_grain=used,
                 missing_grain=required-used, unserved_scaled=missing, hunger_day=bool(missing), losses=lost,
+                reached_route_endpoint=bool(moved and supply['route_days'] >= quote['days']),
                 retreat_requested=supply['retreat_requested'], unit_status=unit.get('status'))
         meal=[units,used,moved,missing]
         if dynamic is not None:
